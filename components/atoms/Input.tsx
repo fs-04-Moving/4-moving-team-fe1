@@ -23,7 +23,7 @@ function Input<
   } = useController(props);
 
   const defaultClassName = clsx(
-    'w-full text-xl h-16 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6]'
+    'w-full text-xl h-16 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
   );
 
   const errorClassName = clsx({
