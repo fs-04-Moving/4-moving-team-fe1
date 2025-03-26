@@ -1,7 +1,12 @@
-import React from 'react';
+import FormLogin from '@/components/organisms/FormLogin';
+import PageContainer from '@/components/templates/PageContainer';
 
 function LoginPage() {
-  return <div>LoginPage</div>;
+  return (
+    <PageContainer>
+      <FormLogin />
+    </PageContainer>
+  );
 }
 
 export default LoginPage;

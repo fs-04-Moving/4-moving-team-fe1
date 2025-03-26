@@ -1,7 +1,12 @@
-import React from 'react';
+import FormSignUp from '@/components/organisms/FormSignUp';
+import PageContainer from '@/components/templates/PageContainer';
 
 function SignUpPage() {
-  return <div>SignUpPage</div>;
+  return (
+    <PageContainer>
+      <FormSignUp />
+    </PageContainer>
+  );
 }
 
 export default SignUpPage;
