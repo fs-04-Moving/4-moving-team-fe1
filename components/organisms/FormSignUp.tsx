@@ -3,6 +3,7 @@
 import defaultRules from '@/constants/formValidation';
 import { UserSignUpDto } from '@/types/dtos/user.dto';
 import { useForm } from 'react-hook-form';
+import TempAuthRegistButton from '../atoms/TempAuthRegistButton';
 import InputEmail from '../molecules/InputEmail';
 import InputPassword from '../molecules/InputPassword';
 import InputText from '../molecules/InputText';
@@ -33,13 +34,16 @@ function FormSignUp() {
     });
 
   return (
-    <form className="w-[640px]" onSubmit={handleSubmit(handleClickSignUp)}>
+    <form
+      className="w-full flex flex-col gap-8"
+      onSubmit={handleSubmit(handleClickSignUp)}
+    >
       <InputText
         name="name"
         control={control}
         id="name"
         label="이름"
-        placeholder="가급적 실명을 사용해 주세요"
+        placeholder="실명을 입력해 주세요"
       />
       <InputEmail
         name="email"
@@ -85,9 +89,9 @@ function FormSignUp() {
           },
         }}
       />
-      <button disabled={!formState.isValid}>
-        {formState.isValid ? '회원가입' : '유효성체크실패'}
-      </button>
+      <TempAuthRegistButton isValid={formState.isValid}>
+        회원가입
+      </TempAuthRegistButton>
     </form>
   );
 }

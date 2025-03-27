@@ -6,7 +6,7 @@ export interface UserSignUpDto {
   passwordConfirm: string;
 }
 
-export type UserLoginDto = Omit<
+export type UserLogInDto = Omit<
   UserSignUpDto,
   'name' | 'phoneNumber' | 'passwordConfirm'
 >;

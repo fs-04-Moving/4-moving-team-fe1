@@ -1,12 +1,18 @@
-import FormLogin from '@/components/organisms/FormLogin';
-import PageContainer from '@/components/templates/PageContainer';
+'use client';
 
-function LoginPage() {
+import PageContainer from '@/components/templates/PageContainer';
+import TemplateLogIn from '@/components/templates/TemplateLogIn';
+import { useSearchParams } from 'next/navigation';
+
+function LogInPage() {
+  const params = useSearchParams();
+  const userType = params.get('type') || 'user';
+
   return (
     <PageContainer>
-      <FormLogin />
+      <TemplateLogIn userType={userType} />
     </PageContainer>
   );
 }
 
-export default LoginPage;
+export default LogInPage;

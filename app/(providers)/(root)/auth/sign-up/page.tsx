@@ -1,10 +1,16 @@
-import FormSignUp from '@/components/organisms/FormSignUp';
+'use client';
+
 import PageContainer from '@/components/templates/PageContainer';
+import TemplateSignUp from '@/components/templates/TemplateSignUp';
+import { useSearchParams } from 'next/navigation';
 
 function SignUpPage() {
+  const params = useSearchParams();
+  const userType = params.get('type') || 'user';
+
   return (
     <PageContainer>
-      <FormSignUp />
+      <TemplateSignUp userType={userType} />
     </PageContainer>
   );
 }
