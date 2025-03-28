@@ -1,6 +1,5 @@
 import icVisibilityOn from '@/assets/images/ic-visibility-on.svg';
 import icVisibility from '@/assets/images/ic-visibility.svg';
-import defaultRules from '@/constants/formValidation';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { FieldPath, FieldValues, UseControllerProps } from 'react-hook-form';
@@ -33,7 +32,6 @@ function InputPassword<
       <Input
         label={label}
         type={`${!isShowPassword ? 'password' : 'text'}`}
-        rules={defaultRules.password}
         {...props}
       />
       <Image

@@ -1,4 +1,3 @@
-import defaultRules from '@/constants/formValidation';
 import React from 'react';
 import { FieldPath, FieldValues, UseControllerProps } from 'react-hook-form';
 import Input from '../atoms/Input';
@@ -20,9 +19,7 @@ function InputEmail<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
-  return (
-    <Input label={label} type="email" rules={defaultRules.email} {...props} />
-  );
+  return <Input label={label} type="email" {...props} />;
 }
 
 export default InputEmail;
