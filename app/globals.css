@@ -2,8 +2,8 @@
 @import 'tailwindcss';
 
 @theme {
-  /* --breakpoint-sm: 743px;
-  --breakpoint-md: 1024px; */
+  --breakpoint-md: 743px;
+  --breakpoint-lg: 1024px;
   --font-pretenard: 'Pretenard';
 }
 
