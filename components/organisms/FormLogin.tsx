@@ -25,7 +25,7 @@ function FormLogIn() {
   });
   return (
     <div className="w-full flex justify-center">
-      <div className="w-[640px]">
+      <div className="w-[327px] lg:w-[640px]">
         <form
           className="flex flex-col gap-8"
           onSubmit={handleSubmit(handleClickLogIn)}
