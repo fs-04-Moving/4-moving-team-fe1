@@ -1,0 +1,84 @@
+'use client';
+
+import { signUpValidation } from '@/constants/formValidation';
+import { UserSignUpDto } from '@/types/dtos/user.dto';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import TempAuthRegistButton from '../atoms/TempAuthRegistButton';
+import InputEmail from '../molecules/InputEmail';
+import InputPassword from '../molecules/InputPassword';
+import InputText from '../molecules/InputText';
+
+export type FormSignUpInput = {
+  email: string;
+  name: string;
+  phoneNumber: string;
+  password: string;
+  passwordConfirm: string;
+};
+
+const handleClickSignUp = (inputData: UserSignUpDto) => {
+  console.log('회원가입!', inputData);
+};
+
+function FormSignUp() {
+  const { control, handleSubmit, formState } = useForm<FormSignUpInput>({
+    defaultValues: {
+      email: '',
+      name: '',
+      phoneNumber: '',
+      password: '',
+      passwordConfirm: '',
+    },
+    mode: 'onBlur',
+    resolver: zodResolver(signUpValidation),
+  });
+
+  return (
+    <form
+      className="w-full flex flex-col gap-8"
+      onSubmit={handleSubmit(handleClickSignUp)}
+    >
+      <InputText
+        name="name"
+        control={control}
+        id="name"
+        label="이름"
+        placeholder="실명을 입력해 주세요"
+      />
+      <InputEmail
+        name="email"
+        control={control}
+        id="email"
+        label="이메일"
+        placeholder="이메일 형식에 맞게 입력해 주세요"
+      />
+      <InputText
+        name="phoneNumber"
+        control={control}
+        id="phoneNumber"
+        label="휴대 전화번호"
+        placeholder="휴대 전화번호 형식에 맞게 입력해 주세요"
+      />
+      <InputPassword
+        name="password"
+        control={control}
+        id="password"
+        label="비밀번호"
+        placeholder="최소 8자 이상, 영문/숫자/특수문자 포함"
+      />
+      <InputPassword
+        name="passwordConfirm"
+        control={control}
+        id="passwordConfirm"
+        label="비밀번호 확인"
+        placeholder="비밀번호를 다시 한 번 입력해 주세요"
+      />
+      <TempAuthRegistButton isValid={formState.isValid}>
+        회원가입
+      </TempAuthRegistButton>
+    </form>
+  );
+}
+
+export default FormSignUp;

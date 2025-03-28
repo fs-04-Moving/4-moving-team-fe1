@@ -1,10 +1,10 @@
-import ImageLogo from '@/components/atoms/ImageLogo';
+import LogoIconText from '@/components/atoms/LogoIconText';
 import PageContainer from '@/components/templates/PageContainer';
 
 async function HomePage() {
   return (
     <PageContainer>
-      <ImageLogo width={114} />
+      <LogoIconText width={114} />
     </PageContainer>
   );
 }
