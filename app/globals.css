@@ -1,9 +1,11 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @import 'tailwindcss';
 
-/* @theme {
-  --breakpoint-sm: 743px;
-  --breakpoint-md: 1024px;
-} */
+@theme {
+  /* --breakpoint-sm: 743px;
+  --breakpoint-md: 1024px; */
+  --font-pretenard: 'Pretenard';
+}
 
 html,
 body {
