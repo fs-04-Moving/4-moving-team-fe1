@@ -1,5 +1,7 @@
+import StarLating from "@/components/molecules/StarLating";
+
 function page() {
-  return <div>컴포넌트 테스트페이지입니다.</div>;
+  return <div><StarLating></StarLating></div>;
 }
 
 export default page;
