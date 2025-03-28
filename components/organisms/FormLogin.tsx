@@ -1,6 +1,8 @@
 'use client';
 
+import { logInValidation } from '@/constants/formValidation';
 import { UserLogInDto } from '@/types/dtos/user.dto';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import TempAuthRegistButton from '../atoms/TempAuthRegistButton';
 import InputEmail from '../molecules/InputEmail';
@@ -19,6 +21,7 @@ function FormLogIn() {
   const { control, handleSubmit, formState } = useForm<FormLogInInput>({
     defaultValues: { email: '', password: '' },
     mode: 'onBlur',
+    resolver: zodResolver(logInValidation),
   });
   return (
     <div className="w-full flex justify-center">

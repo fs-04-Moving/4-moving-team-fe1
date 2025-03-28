@@ -1,7 +1,8 @@
 'use client';
 
-import defaultRules from '@/constants/formValidation';
+import { signUpValidation } from '@/constants/formValidation';
 import { UserSignUpDto } from '@/types/dtos/user.dto';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import TempAuthRegistButton from '../atoms/TempAuthRegistButton';
 import InputEmail from '../molecules/InputEmail';
@@ -21,17 +22,17 @@ const handleClickSignUp = (inputData: UserSignUpDto) => {
 };
 
 function FormSignUp() {
-  const { control, handleSubmit, getValues, formState } =
-    useForm<FormSignUpInput>({
-      defaultValues: {
-        email: '',
-        name: '',
-        phoneNumber: '',
-        password: '',
-        passwordConfirm: '',
-      },
-      mode: 'onBlur',
-    });
+  const { control, handleSubmit, formState } = useForm<FormSignUpInput>({
+    defaultValues: {
+      email: '',
+      name: '',
+      phoneNumber: '',
+      password: '',
+      passwordConfirm: '',
+    },
+    mode: 'onBlur',
+    resolver: zodResolver(signUpValidation),
+  });
 
   return (
     <form
@@ -58,7 +59,6 @@ function FormSignUp() {
         id="phoneNumber"
         label="휴대 전화번호"
         placeholder="휴대 전화번호 형식에 맞게 입력해 주세요"
-        rules={defaultRules.phoneNumber}
       />
       <InputPassword
         name="password"
@@ -73,21 +73,6 @@ function FormSignUp() {
         id="passwordConfirm"
         label="비밀번호 확인"
         placeholder="비밀번호를 다시 한 번 입력해 주세요"
-        rules={{
-          required: '필수 입력 항목입니다',
-          validate: {
-            isPasswordNotMatch: () => {
-              const {
-                password: passwordValue,
-                passwordConfirm: passwordConfirmValue,
-              } = getValues();
-              return (
-                passwordValue === passwordConfirmValue ||
-                '비밀번호가 일치하지 않습니다'
-              );
-            },
-          },
-        }}
       />
       <TempAuthRegistButton isValid={formState.isValid}>
         회원가입

@@ -1,4 +1,3 @@
-import defaultRules from '@/constants/formValidation';
 import React from 'react';
 import { FieldPath, FieldValues, UseControllerProps } from 'react-hook-form';
 import Input from '../atoms/Input';
@@ -20,7 +19,7 @@ function InputText<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
-  return <Input label={label} rules={defaultRules.text} {...props} />;
+  return <Input label={label} {...props} />;
 }
 
 export default InputText;
