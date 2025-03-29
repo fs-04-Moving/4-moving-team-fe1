@@ -22,11 +22,11 @@ function TextArea({
   ...props
 }: Props) {
   const defaultClassName = clsx(
-    'w-[327px] lg:w-full lg:text-xl h-40 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
+    'w-[327px] lg:w-full lg:text-xl h-40 px-[14px] py-4 rounded-2xl outline-Primary-blue-300 border border-solid border-Line-200 placeholder-GrayScale-400'
   );
-
   const errorClassName = clsx({
-    'outline-[#ff4f64] mb-2': !!errorMessage,
+    'outline-Secondary-Red-200 mb-2 border-solid border-2 border-Secondary-Red-200':
+      !!errorMessage,
   });
 
   const bgClassName = clsx({

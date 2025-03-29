@@ -4,7 +4,7 @@ function TempAuthRegistButton({
   isValid,
   children,
 }: {
-  isValid: boolean;
+  isValid?: boolean;
   children: ReactNode;
 }) {
   return (

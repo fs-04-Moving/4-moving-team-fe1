@@ -1,20 +1,25 @@
-import ChatBubbleLeft from '@/components/atoms/ChatBubbleLeft';
-import ChatBubbleRight from '@/components/atoms/ChatBubbleRight';
+import ChatBubbleTextLeft from '@/components/atoms/ChatBubbleTextLeft';
+import ChatBubbleTextRight from '@/components/atoms/ChatBubbleTextRight';
+import ChatBubbleAddress from '@/components/molecules/ChatBubbleAddress';
+import PageContainer from '@/components/templates/PageContainer';
 
 function page() {
   return (
-    <div>
-      <ChatBubbleRight>
-        brack-words 를 사용하면 자동으로 줄바꿈이 됩니다.brack-words 를 사용하면
-        자동으로 줄바꿈이 됩니다.brack-words 를 사용하면 자동으로 줄바꿈이
-        됩니다.brack-words 를 사용하면 자동으로 줄바꿈이 됩니다.
-      </ChatBubbleRight>
-      <ChatBubbleLeft>
-        brack-words 를 사용하면 자동으로 줄바꿈이 됩니다.brack-words 를 사용하면
-        자동으로 줄바꿈이 됩니다.brack-words 를 사용하면 자동으로 줄바꿈이
-        됩니다.brack-words 를 사용하면 자동으로 줄바꿈이 됩니다.
-      </ChatBubbleLeft>
-    </div>
+    <PageContainer>
+      <div>
+        <ChatBubbleTextRight>
+          break-words 를 사용하면 자동으로 줄바꿈이 됩니다.break-words 를
+          사용하면 자동으로 줄바꿈이 됩니다.braea-words 를 사용하면 자동으로
+          줄바꿈이 됩니다.break-words 를 사용하면 자동으로 줄바꿈이 됩니다.
+        </ChatBubbleTextRight>
+        <ChatBubbleTextLeft>
+          break-words 를 사용하면 자동으로 줄바꿈이 됩니다.break-words 를
+          사용하면 자동으로 줄바꿈이 됩니다.braea-words 를 사용하면 자동으로
+          줄바꿈이 됩니다.break-words 를 사용하면 자동으로 줄바꿈이 됩니다.
+        </ChatBubbleTextLeft>
+        <ChatBubbleAddress />
+      </div>
+    </PageContainer>
   );
 }
 
