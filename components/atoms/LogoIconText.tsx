@@ -4,10 +4,10 @@ import Image from 'next/image';
 /**
  * width={숫자}
  */
-function LogoIconText({ width }: { width: number }) {
+function LogoIconText({ ...props }) {
   return (
     <div>
-      <Image src={logoIconText} alt="로고" width={width} />
+      <Image src={logoIconText} alt="로고" {...props} />
     </div>
   );
 }

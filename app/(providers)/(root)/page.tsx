@@ -4,7 +4,7 @@ import PageContainer from '@/components/templates/PageContainer';
 async function HomePage() {
   return (
     <PageContainer>
-      <LogoIconText width={114} />
+      <LogoIconText />
     </PageContainer>
   );
 }

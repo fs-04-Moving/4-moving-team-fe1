@@ -1,5 +1,10 @@
 import React from 'react';
-import { FieldPath, FieldValues, UseControllerProps } from 'react-hook-form';
+import {
+  FieldPath,
+  FieldValues,
+  useController,
+  UseControllerProps,
+} from 'react-hook-form';
 import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
@@ -15,7 +20,21 @@ function InputText<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
-  return <Input label={label} {...props} />;
+  const {
+    field: { value, onChange, onBlur },
+    fieldState: { error },
+  } = useController(props);
+
+  return (
+    <Input
+      label={label}
+      value={value}
+      errorMessage={error?.message}
+      onChange={onChange}
+      onBlur={onBlur}
+      {...props}
+    />
+  );
 }
 
 export default InputText;

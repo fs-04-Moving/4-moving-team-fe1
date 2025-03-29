@@ -2,7 +2,12 @@ import icVisibilityOn from '@/assets/images/ic-visibility-on.svg';
 import icVisibility from '@/assets/images/ic-visibility.svg';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { FieldPath, FieldValues, UseControllerProps } from 'react-hook-form';
+import {
+  FieldPath,
+  FieldValues,
+  useController,
+  UseControllerProps,
+} from 'react-hook-form';
 import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
@@ -18,6 +23,11 @@ function InputPassword<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
+  const {
+    field: { value, onChange, onBlur },
+    fieldState: { error },
+  } = useController(props);
+
   const [isShowPassword, setIsShowPassword] = useState(false);
   const handleTogglePassword = () => {
     setIsShowPassword(!isShowPassword);
@@ -28,6 +38,10 @@ function InputPassword<
       <Input
         label={label}
         type={`${!isShowPassword ? 'password' : 'text'}`}
+        value={value}
+        errorMessage={error?.message}
+        onChange={onChange}
+        onBlur={onBlur}
         {...props}
       />
       <Image

@@ -21,11 +21,13 @@ const handleClickLogIn = (inputData: UserLogInDto) => {
 };
 
 function FormLogIn() {
-  const { control, handleSubmit, formState } = useForm<FormLogInInput>({
-    defaultValues: { email: '', password: '', search: '' },
-    mode: 'onBlur',
-    resolver: zodResolver(logInValidation),
-  });
+  const { control, handleSubmit, formState, setValue } =
+    useForm<FormLogInInput>({
+      defaultValues: { email: '', password: '', search: '' },
+      mode: 'onBlur',
+      resolver: zodResolver(logInValidation),
+    });
+
   return (
     <div className="w-full flex justify-center">
       <div className="w-[327px] lg:w-[640px]">
@@ -52,6 +54,7 @@ function FormLogIn() {
             <InputSearchRightIcon
               name="search"
               control={control}
+              onClickClear={() => setValue('search', '')}
               placeholder="텍스트를 입력해 주세요"
             />
             <InputSearchLeftIcon
