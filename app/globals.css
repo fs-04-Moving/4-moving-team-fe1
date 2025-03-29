@@ -5,6 +5,23 @@
   --breakpoint-md: 743px;
   --breakpoint-lg: 1200px;
   --font-pretenard: 'Pretenard';
+  --color-PrimayBlue-50: #f5faff;
+  --color-PrimayBlue-100: #e9f4ff;
+  --color-PrimayBlue-200: #4da9ff;
+  --color-PrimayBlue-300: #1b92ff;
+  --color-PrimayBlue-400: #242945;
+  --color-Black-100: #6b6b6b;
+  --color-Black-200: #525252;
+  --color-Black-300: #373737;
+  --color-Black-400: #1f1f1f;
+  --color-Black-500: #040404;
+  --color-GrayScale-50: #ffffff;
+  --color-GrayScale-100: #dedede;
+  --color-GrayScale-200: #c4c4c4;
+  --color-GrayScale-300: #ababab;
+  --color-GrayScale-400: #999999;
+  --color-GrayScale-500: #808080;
+  --color-secondary-yellow-100: #ffc149;
 }
 
 html,
