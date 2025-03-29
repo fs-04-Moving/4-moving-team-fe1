@@ -8,6 +8,8 @@ import {
 
 interface Props extends React.ComponentProps<'input'> {
   label?: string;
+  isSearchLeft?: boolean;
+  isSearchRight?: boolean;
 }
 
 /**
@@ -16,7 +18,12 @@ interface Props extends React.ComponentProps<'input'> {
 function Input<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
+>({
+  label,
+  isSearchLeft = false,
+  isSearchRight = false,
+  ...props
+}: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -30,6 +37,11 @@ function Input<
     'outline-[#ff4f64] mb-2': !!error,
   });
 
+  const searchClassName = clsx({
+    'pl-10 lg:pl-13': isSearchLeft,
+    'pr-21 lg:pr-28': isSearchRight,
+  });
+
   return (
     <div>
       {label && (
@@ -40,7 +52,7 @@ function Input<
         </div>
       )}
       <input
-        className={clsx(defaultClassName, errorClassName)}
+        className={clsx(defaultClassName, errorClassName, searchClassName)}
         value={value}
         onChange={onChange}
         onBlur={onBlur}

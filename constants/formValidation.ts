@@ -12,6 +12,7 @@ export const logInValidation = z.object({
     .min(1, { message: requiredStr })
     .email({ message: '잘못된 이메일 형식입니다' }),
   password: z.string().min(1, { message: requiredStr }),
+  search: z.string(),
 });
 
 export const signUpValidation = z

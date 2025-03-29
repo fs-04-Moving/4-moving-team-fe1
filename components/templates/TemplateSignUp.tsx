@@ -1,3 +1,5 @@
+'use client';
+
 import AuthPageFooter from '../molecules/AuthPageFooter';
 import AuthPageHeader from '../molecules/AuthPageHeader';
 import FormSignUp from '../organisms/FormSignUp';

@@ -1,4 +1,5 @@
-import useDeviceSize from '@/hooks/useDeviceSize';
+'use client';
+
 import Link from 'next/link';
 import LogoText from '../atoms/LogoText';
 
@@ -8,8 +9,6 @@ interface Props {
 }
 
 function AuthPageHeader({ isSignUpPage, userType }: Props) {
-  const { isDeskTop } = useDeviceSize();
-
   const text1: string =
     userType === 'user' ? '기사님이신가요?' : '일반 유저라면?';
   const text2: string =
@@ -21,7 +20,7 @@ function AuthPageHeader({ isSignUpPage, userType }: Props) {
   return (
     <div className="flex flex-col items-center mb-10 lg:mb-18">
       <div className="w-full h-[84px] lg:h-[100px] flex justify-center items-center lg:mb-2">
-        <LogoText width={isDeskTop ? 140 : 112} />
+        <LogoText className="w-[112px] lg:w-[140px]" />
       </div>
       <div className="flex justify-center">
         <p className="mr-2 text-xs lg:text-xl text-[#525252]">{text1}</p>
