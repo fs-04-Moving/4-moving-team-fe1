@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) return;
 
-        setIsLoggedIn(true);
+        // setIsLoggedIn(true);
       } catch (error) {
         console.error('refreshToken이 없거나 만료', error);
       } finally {

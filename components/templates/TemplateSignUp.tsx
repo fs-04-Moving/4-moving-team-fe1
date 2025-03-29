@@ -5,7 +5,7 @@ import FormSignUp from '../organisms/FormSignUp';
 function TemplateSignUp({ userType }: { userType: string }) {
   return (
     <div className="w-full flex flex-col justify-center items-center mt-[42px] mb-20">
-      <div className="w-[640px] flex flex-col justify-center">
+      <div className="w-full flex flex-col justify-center">
         <AuthPageHeader isSignUpPage={true} userType={userType} />
         <FormSignUp />
         <AuthPageFooter isSignUpPage={true} userType={userType} />

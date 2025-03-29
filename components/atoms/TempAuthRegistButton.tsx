@@ -12,7 +12,7 @@ function TempAuthRegistButton({
       disabled={!isValid}
       className={`h-16 ${
         isValid ? 'bg-[#4890f9] cursor-pointer' : 'bg-[#dedede]'
-      } mt-8 rounded-2xl text-xl text-gray-50`}
+      } rounded-2xl lg:text-xl text-gray-50`}
     >
       {children}
     </button>

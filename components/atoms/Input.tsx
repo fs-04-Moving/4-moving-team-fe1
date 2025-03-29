@@ -23,7 +23,7 @@ function Input<
   } = useController(props);
 
   const defaultClassName = clsx(
-    'w-[327px] lg:w-full text-xl h-16 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
+    'w-[327px] lg:w-full lg:text-xl h-[54px] lg:h-16 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
   );
 
   const errorClassName = clsx({
@@ -33,8 +33,8 @@ function Input<
   return (
     <div>
       {label && (
-        <div className="mb-4">
-          <label htmlFor={props.id} className="text-xl text-[#1f1f1f]">
+        <div className="mb-2 lg:mb-4">
+          <label htmlFor={props.id} className="lg:text-xl text-[#1f1f1f]">
             {label}
           </label>
         </div>

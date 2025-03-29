@@ -37,7 +37,7 @@ function InputPassword<
       <Image
         src={!isShowPassword ? icVisibility : icVisibilityOn}
         alt="패스워드보이기"
-        className="absolute top-[66px] right-[14px] cursor-pointer"
+        className="absolute top-[48px] lg:top-[66px] right-[14px] cursor-pointer"
         onClick={handleTogglePassword}
       />
     </div>
