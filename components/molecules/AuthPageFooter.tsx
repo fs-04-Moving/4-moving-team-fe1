@@ -18,9 +18,9 @@ function AuthPageFooter({ isSignUpPage, userType }: Props) {
   return (
     <div>
       <div className="flex justify-center mt-4 lg:mt-6">
-        <p className="mr-2 text-xs lg:text-xl text-[#525252]">{text1}</p>
+        <p className="mr-2 text-xs lg:text-xl text-Black-200">{text1}</p>
         <Link href={`${pageLink}${linkQuery}`}>
-          <p className="text-xs lg:text-xl text-[#4890f9] font-semibold underline">
+          <p className="text-xs lg:text-xl text-Primay-Blue-300 font-semibold underline">
             {text2}
           </p>
         </Link>

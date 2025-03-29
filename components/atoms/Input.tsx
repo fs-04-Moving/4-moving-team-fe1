@@ -26,11 +26,12 @@ function Input({
   ...props
 }: Props) {
   const defaultClassName = clsx(
-    'w-[327px] lg:w-full lg:text-xl h-[54px] lg:h-16 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
+    'w-[327px] lg:w-full text-Black-400 lg:text-xl h-[54px] lg:h-16 px-[14px] py-4 rounded-2xl outline-Primay-Blue-300 border border-solid border-Line-200 placeholder-GrayScale-400'
   );
 
   const errorClassName = clsx({
-    'outline-[#ff4f64] mb-2': !!errorMessage,
+    'outline-Secondary-Red-200 mb-2 border-solid border-2 border-Secondary-Red-200':
+      !!errorMessage,
   });
 
   const searchClassName = clsx({
@@ -46,7 +47,7 @@ function Input({
     <div>
       {label && (
         <div className="mb-2 lg:mb-4">
-          <label htmlFor={props.id} className="lg:text-xl text-[#1f1f1f]">
+          <label htmlFor={props.id} className="lg:text-xl text-Black-400">
             {label}
           </label>
         </div>
@@ -67,7 +68,7 @@ function Input({
       </div>
       {!!errorMessage && (
         <div className="flex justify-end">
-          <span className="text-[#ff4f64]">{errorMessage}</span>
+          <span className="text-Secondary-Red-200">{errorMessage}</span>
         </div>
       )}
     </div>
