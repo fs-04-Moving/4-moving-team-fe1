@@ -12,6 +12,7 @@ import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
   label?: string;
+  bgColor?: boolean;
   onClickClear: () => void;
 }
 
@@ -27,11 +28,7 @@ interface Props extends React.ComponentProps<'input'> {
 function InputSearchRightIcon<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-  label,
-  onClickClear,
-  ...props
-}: Props & UseControllerProps<TFieldValues, TName>) {
+>({ onClickClear, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { error },
@@ -44,7 +41,6 @@ function InputSearchRightIcon<
   return (
     <div className="relative">
       <Input
-        label={label}
         isSearchRight={true}
         value={value}
         errorMessage={error?.message}

@@ -1,41 +1,32 @@
 import clsx from 'clsx';
 import { ChangeEventHandler, FocusEventHandler } from 'react';
 
-interface Props extends React.ComponentProps<'input'> {
+interface Props extends React.ComponentProps<'textarea'> {
   label?: string;
   bgColor?: boolean;
   errorMessage?: string;
-  isSearchLeft?: boolean;
-  isSearchRight?: boolean;
   value: string | number | readonly string[];
   onChange:
-    | ChangeEventHandler<HTMLInputElement>
+    | ChangeEventHandler<HTMLTextAreaElement>
     | ((...event: unknown[]) => void);
-  onBlur: FocusEventHandler<HTMLInputElement>;
+  onBlur: FocusEventHandler<HTMLTextAreaElement>;
 }
 
-function Input({
+function TextArea({
   label,
   bgColor = false,
   errorMessage,
-  isSearchLeft = false,
-  isSearchRight = false,
   value,
   onBlur,
   onChange,
   ...props
 }: Props) {
   const defaultClassName = clsx(
-    'w-[327px] lg:w-full lg:text-xl h-[54px] lg:h-16 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
+    'w-[327px] lg:w-full lg:text-xl h-40 px-[14px] py-4 rounded-2xl outline-[#1b92ff] border border-solid border-[#e6e6e6] placeholder-gray-400'
   );
 
   const errorClassName = clsx({
     'outline-[#ff4f64] mb-2': !!errorMessage,
-  });
-
-  const searchClassName = clsx({
-    'pl-10 lg:pl-13': isSearchLeft,
-    'pr-21 lg:pr-28': isSearchRight,
   });
 
   const bgClassName = clsx({
@@ -52,13 +43,8 @@ function Input({
         </div>
       )}
       <div className="rel">
-        <input
-          className={clsx(
-            defaultClassName,
-            errorClassName,
-            searchClassName,
-            bgClassName
-          )}
+        <textarea
+          className={clsx(defaultClassName, errorClassName, bgClassName)}
           value={value}
           onChange={onChange}
           onBlur={onBlur}
@@ -74,4 +60,4 @@ function Input({
   );
 }
 
-export default Input;
+export default TextArea;

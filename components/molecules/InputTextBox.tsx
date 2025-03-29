@@ -5,9 +5,9 @@ import {
   useController,
   UseControllerProps,
 } from 'react-hook-form';
-import Input from '../atoms/Input';
+import TextArea from '../atoms/TextArea';
 
-interface Props extends React.ComponentProps<'input'> {
+interface Props extends React.ComponentProps<'textarea'> {
   label?: string;
   bgColor?: boolean;
 }
@@ -17,7 +17,7 @@ interface Props extends React.ComponentProps<'input'> {
  * - name과 control은 필수 항목
  * - id는 label 포커싱을 위해 필요 (불필요 시 생략 가능)
  */
-function InputText<
+function InputTextBox<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
@@ -27,7 +27,7 @@ function InputText<
   } = useController(props);
 
   return (
-    <Input
+    <TextArea
       value={value}
       errorMessage={error?.message}
       onChange={onChange}
@@ -37,4 +37,4 @@ function InputText<
   );
 }
 
-export default InputText;
+export default InputTextBox;

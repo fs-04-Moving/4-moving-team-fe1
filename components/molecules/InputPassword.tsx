@@ -12,17 +12,19 @@ import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
   label?: string;
+  bgColor?: boolean;
 }
 
 /**
  * 참고 사항
  * - name과 control은 필수 항목
  * - id는 label 포커싱을 위해 필요 (불필요 시 생략 가능)
+ * - 배경색이 있을 경우 bgColor={true}
  */
 function InputPassword<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
+>({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -36,7 +38,6 @@ function InputPassword<
   return (
     <div className="relative">
       <Input
-        label={label}
         type={`${!isShowPassword ? 'password' : 'text'}`}
         value={value}
         errorMessage={error?.message}

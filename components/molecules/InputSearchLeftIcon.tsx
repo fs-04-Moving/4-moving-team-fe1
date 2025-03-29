@@ -11,6 +11,7 @@ import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
   label?: string;
+  bgColor?: boolean;
 }
 
 /**
@@ -21,7 +22,7 @@ interface Props extends React.ComponentProps<'input'> {
 function InputSearchLeftIcon<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({ label, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
+>({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur },
     fieldState: { error },
@@ -30,7 +31,6 @@ function InputSearchLeftIcon<
   return (
     <div className="relative">
       <Input
-        label={label}
         isSearchLeft={true}
         value={value}
         errorMessage={error?.message}
