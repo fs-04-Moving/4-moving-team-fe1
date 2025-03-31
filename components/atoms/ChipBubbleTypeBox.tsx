@@ -16,7 +16,7 @@ function ChipBubbleTypeBox({
   return (
     <div
       className={clsx(
-        'rounded-full px-5 py-2.5 text-lg font-medium transition-colors duration-200 border',
+        'rounded-full px-3 lg:px-5 py-1.5 lg:py-2.5 text-sm lg:text-lg font-medium transition-colors duration-200 border',
         isSelectable &&
           'cursor-pointer hover:border-[#1B92FF] hover:text-[#1B92FF] hover:bg-[#1B92FF10]',
         isSelected
