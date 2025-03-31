@@ -1,3 +1,5 @@
+import icSearch from '@/assets/images/ic-search.svg';
+import Image from 'next/image';
 import React from 'react';
 import {
   FieldPath,
@@ -17,7 +19,7 @@ interface Props extends React.ComponentProps<'input'> {
  * - name과 control은 필수 항목
  * - id는 label 포커싱을 위해 필요 (불필요 시 생략 가능)
  */
-function InputText<
+function InputSearchLeftIcon<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 >({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
@@ -27,14 +29,23 @@ function InputText<
   } = useController(props);
 
   return (
-    <Input
-      value={value}
-      errorMessage={error?.message}
-      onChange={onChange}
-      onBlur={onBlur}
-      {...props}
-    />
+    <div className="relative">
+      <Input
+        isSearchLeft={true}
+        value={value}
+        errorMessage={error?.message}
+        onChange={onChange}
+        onBlur={onBlur}
+        {...props}
+      />
+
+      <Image
+        src={icSearch}
+        alt="검색아이콘"
+        className="lg:w-9 absolute top-[15px] lg:top-[14px] left-[14px] cursor-pointer"
+      />
+    </div>
   );
 }
 
-export default InputText;
+export default InputSearchLeftIcon;
