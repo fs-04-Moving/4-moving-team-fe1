@@ -11,7 +11,11 @@ export const logInValidation = z.object({
     .string()
     .min(1, { message: requiredStr })
     .email({ message: '잘못된 이메일 형식입니다' }),
-  password: z.string().min(1, { message: requiredStr }),
+  password: z
+    .string()
+    .min(1, { message: requiredStr })
+    .min(8, { message: '최소 8자 이상이어야 합니다' })
+    .regex(passwordRegex, '영문/숫자/특수문자를 모두 포함해야 합니다'),
 });
 
 export const signUpValidation = z

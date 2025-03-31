@@ -1,10 +1,13 @@
 'use client';
 
+import usersApi from '@/api/users/users.api';
 import { signUpValidation } from '@/constants/formValidation';
-import { UserSignUpDto } from '@/types/dtos/user.dto';
+import { Role, UserSignUpDto } from '@/types/dtos/user.dto';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import TempAuthRegistButton from '../atoms/TempAuthRegistButton';
+import ButtonSolid from '../atoms/ButtonSolid';
 import InputEmail from '../molecules/InputEmail';
 import InputPassword from '../molecules/InputPassword';
 import InputText from '../molecules/InputText';
@@ -17,22 +20,40 @@ export type FormSignUpInput = {
   passwordConfirm: string;
 };
 
-const handleClickSignUp = (inputData: UserSignUpDto) => {
-  console.log('회원가입!', inputData);
-};
+function FormSignUp({ userType }: { userType: Role }) {
+  const { control, handleSubmit, formState, setError } =
+    useForm<FormSignUpInput>({
+      defaultValues: {
+        email: '',
+        name: '',
+        phoneNumber: '',
+        password: '',
+        passwordConfirm: '',
+      },
+      mode: 'onBlur',
+      resolver: zodResolver(signUpValidation),
+    });
 
-function FormSignUp() {
-  const { control, handleSubmit, formState } = useForm<FormSignUpInput>({
-    defaultValues: {
-      email: '',
-      name: '',
-      phoneNumber: '',
-      password: '',
-      passwordConfirm: '',
+  const { mutate: signUp } = useMutation({
+    mutationFn: (data: UserSignUpDto) => usersApi.singUp(data),
+    onSuccess: () => {
+      alert('회원가입 완료!!');
     },
-    mode: 'onBlur',
-    resolver: zodResolver(signUpValidation),
+    onError: (error: AxiosError) => {
+      const errorMessage = error.response?.data || '';
+      console.log(errorMessage);
+      console.log(errorMessage);
+      if (errorMessage === '이미 존재하는 이메일입니다.') {
+        setError('email', { message: '이미 사용중인 이메일입니다' });
+      } else {
+        alert('에러가 발생했습니다. 다시 시도해 주세요.');
+      }
+    },
   });
+
+  const handleClickSignUp = (inputData: FormSignUpInput) => {
+    signUp({ ...inputData, role: userType });
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -78,9 +99,7 @@ function FormSignUp() {
               placeholder="비밀번호를 다시 한 번 입력해 주세요"
             />
           </div>
-          <TempAuthRegistButton isValid={formState.isValid}>
-            회원가입
-          </TempAuthRegistButton>
+          <ButtonSolid disabled={formState.isValid}>회원가입</ButtonSolid>
         </form>
       </div>
     </div>

@@ -2,11 +2,20 @@
 
 import PageContainer from '@/components/templates/PageContainer';
 import TemplateSignUp from '@/components/templates/TemplateSignUp';
+import { Role } from '@/types/dtos/user.dto';
 import { useSearchParams } from 'next/navigation';
 
 function SignUpPage() {
   const params = useSearchParams();
-  const userType = params.get('type') || 'user';
+  const paramString = params.get('type');
+  let userType: Role;
+  if (!paramString) {
+    userType = 'user';
+  } else if (paramString === 'user') {
+    userType = paramString;
+  } else {
+    userType = 'worker';
+  }
 
   return (
     <PageContainer>

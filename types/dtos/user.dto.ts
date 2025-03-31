@@ -4,9 +4,12 @@ export interface UserSignUpDto {
   phoneNumber: string;
   password: string;
   passwordConfirm: string;
+  role: Role;
 }
 
 export type UserLogInDto = Omit<
   UserSignUpDto,
   'name' | 'phoneNumber' | 'passwordConfirm'
 >;
+
+export type Role = 'user' | 'worker';
