@@ -1,13 +1,12 @@
+'use-client';
+
 import logoText from '@/assets/images/logo-text.svg';
 import Image from 'next/image';
 
-/**
- * width={숫자}
- */
-function LogoText({ width }: { width: number }) {
+function LogoText({ ...props }) {
   return (
     <div>
-      <Image src={logoText} alt="로고" width={width} />
+      <Image src={logoText} alt="로고" {...props} />
     </div>
   );
 }
