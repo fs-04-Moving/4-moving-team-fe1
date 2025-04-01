@@ -2,20 +2,25 @@
 
 import RegionDisplay from '@/components/molecules/RegionDisplay';
 import RegionSelector from '@/components/molecules/RegionSelector';
+import { RegionEntity } from '@/types/entities/region.entity';
 import { useState } from 'react';
 
 function Page() {
   // 일반 사용자용 (단일 선택)
-  const [selectedRegion, setSelectedRegion] = useState<string>('서울');
+  const [selectedRegion, setSelectedRegion] = useState<RegionEntity>(
+    RegionEntity.seoul
+  );
 
   // 기사님용 (다중 선택)
-  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
+  const [selectedRegions, setSelectedRegions] = useState<RegionEntity[]>([]);
 
-  const handleRegionSelect = (region: string) => {
+  const handleRegionSelect = (region: RegionEntity) => {
     setSelectedRegion(region);
   };
 
-  const handleMultipleRegionSelect = (regions: string | string[]) => {
+  const handleMultipleRegionSelect = (
+    regions: RegionEntity | RegionEntity[]
+  ) => {
     if (Array.isArray(regions)) {
       setSelectedRegions(regions);
     }
@@ -42,7 +47,9 @@ function Page() {
         </h2>
         <div className='p-4'>
           <RegionSelector
-            onRegionSelect={(region) => handleRegionSelect(region as string)}
+            onRegionSelect={(region) =>
+              handleRegionSelect(region as RegionEntity)
+            }
             selectedRegion={selectedRegion}
           />
         </div>

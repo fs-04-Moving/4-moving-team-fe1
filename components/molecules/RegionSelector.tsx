@@ -6,49 +6,53 @@
  *
  * @example
  *  일반 사용자용 (단일 선택)
- * const [selectedRegion, setSelectedRegion] = useState<string>('서울');
+ * import { RegionEntity } from '@/types/entities/region.entity';
+ * const [selectedRegion, setSelectedRegion] = useState<RegionEntity>(RegionEntity.seoul);
  *
  * <RegionSelector
- *   onRegionSelect={(region) => setSelectedRegion(region as string)}
+ *   onRegionSelect={(region) => setSelectedRegion(region as RegionEntity)}
  *   selectedRegion={selectedRegion}
  * />
  *
  *  기사님용 (다중 선택)
- * const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
+ * import { RegionEntity } from '@/types/entities/region.entity';
+ * const [selectedRegions, setSelectedRegions] = useState<RegionEntity[]>([]);
  *
  * <RegionSelector
- *   onRegionSelect={(regions) => setSelectedRegions(regions as string[])}
+ *   onRegionSelect={(regions) => setSelectedRegions(regions as RegionEntity[])}
  *   selectedRegion={selectedRegions}
  *   multipleSelect={true}
  * />
  *
  * @param {Function} props.onRegionSelect - 지역 선택 시 호출되는 콜백 함수
- * @param {string|string[]} props.selectedRegion - 선택된 지역(들)
+ * @param {RegionEntity|RegionEntity[]} props.selectedRegion - 선택된 지역(들)
  * @param {boolean} props.multipleSelect - 다중 선택 모드 활성화 여부 (기본값: false)
  */
 
 import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
+import { RegionEntity, REGIONS } from '@/types/entities/region.entity';
 
 interface RegionSelectorProps {
-  onRegionSelect: (region: string | string[]) => void;
-  selectedRegion?: string | string[];
+  onRegionSelect: (region: RegionEntity | RegionEntity[]) => void;
+  selectedRegion?: RegionEntity | RegionEntity[];
   multipleSelect?: boolean; // 다중 선택 여부
 }
 
-const REGIONS = [
-  ['서울', '경기', '인천', '강원', '충북'],
-  ['충남', '대전', '경북', '대구', '울산'],
-  ['부산', '경남', '전북', '전남', '광주'],
-  ['제주', '세종'],
+// 기존에서 동적으로 구현
+const REGION_ROWS = [
+  REGIONS.slice(0, 5),
+  REGIONS.slice(5, 10),
+  REGIONS.slice(10, 15),
+  REGIONS.slice(15),
 ];
 
 function RegionSelector({
   onRegionSelect,
-  selectedRegion = '',
+  selectedRegion,
   multipleSelect = false,
 }: RegionSelectorProps) {
   // 다중 선택 일대
-  const handleMultipleSelect = (region: string) => {
+  const handleMultipleSelect = (region: RegionEntity) => {
     if (Array.isArray(selectedRegion)) {
       const isSelected = selectedRegion.includes(region);
       const newSelection = isSelected
@@ -61,12 +65,12 @@ function RegionSelector({
   };
 
   // 단일 선택일때
-  const handleSingleSelect = (region: string) => {
+  const handleSingleSelect = (region: RegionEntity) => {
     onRegionSelect(region);
   };
 
   // 선택 상태 확인 함수
-  const isRegionSelected = (region: string) => {
+  const isRegionSelected = (region: RegionEntity) => {
     if (multipleSelect && Array.isArray(selectedRegion)) {
       return selectedRegion.includes(region);
     }
@@ -75,7 +79,7 @@ function RegionSelector({
 
   return (
     <div className='flex flex-col gap-2'>
-      {REGIONS.map((row, rowIndex) => (
+      {REGION_ROWS.map((row, rowIndex) => (
         <div key={`row-${rowIndex}`} className='flex flex-wrap gap-2'>
           {row.map((region) => (
             <ChipBubbleTypeBox
@@ -87,7 +91,7 @@ function RegionSelector({
                   ? handleMultipleSelect(region)
                   : handleSingleSelect(region)
               }
-              isSelectable={true}
+              canClick={true}
             />
           ))}
         </div>
