@@ -3,10 +3,17 @@
 import { JSX, ReactNode } from "react";
 import ReactDOM from "react-dom/client";
 import Swal, { SweetAlertOptions } from "sweetalert2";
+import Image from "next/image";
+import X from "@/assets/images/ic-X2.svg";
 
 interface ModalProps {
   children: ReactNode;
   buttonText: string;
+  onConfirm?: () => void;
+}
+
+{
+  /* <Image src={X} alt="창닫기" width={18} /> */
 }
 
 export default function ModalUse({
@@ -22,7 +29,17 @@ export default function ModalUse({
         const modalRoot = document.getElementById("modal-root");
 
         if (modalRoot) {
-          ReactDOM.createRoot(modalRoot).render(children);
+          ReactDOM.createRoot(modalRoot).render(
+            <div className="relative">
+              <button
+                className="cursor-pointer absolute top-[10px] right-[10px]"
+                onClick={() => Swal.close()} // 모달을 닫는 함수
+              >
+                <Image src={X} alt="창닫기" width={18} />
+              </button>
+              {children}
+            </div>
+          );
         }
       },
       customClass: {

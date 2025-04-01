@@ -3,8 +3,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputSearchRightIcon from "../molecules/InputSearchRightIcon";
-import Image from "next/image";
-import X from "@/assets/images/ic-X2.svg";
 import { mockData } from "@/libs/mockData";
 import AddressCard from "../organisms/AddressCard";
 
@@ -43,9 +41,7 @@ export default function AddressModalRoot() {
       <div className="w-[95%]  flex flex-row justify-between items-center">
         {/* Header */}
         <h1 className="text-[24px] font-bold">출발지를 선택해주세요</h1>
-        <button className="cursor-pointer">
-          <Image src={X} alt="창닫기" width={18} />
-        </button>
+        <button className="cursor-pointer"></button>
       </div>
 
       {/* 주소 검색 Input */}
