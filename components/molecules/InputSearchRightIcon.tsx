@@ -1,19 +1,22 @@
-import icSearch from '@/assets/images/ic-search.svg';
-import icX from '@/assets/images/ic-x.svg';
-import Image from 'next/image';
-import React from 'react';
+import icSearch from "@/assets/images/ic-search.svg";
+import icX from "@/assets/images/ic-x.svg";
+import Image from "next/image";
+import React from "react";
 import {
   FieldPath,
   FieldValues,
   useController,
   UseControllerProps,
-} from 'react-hook-form';
-import Input from '../atoms/Input';
+} from "react-hook-form";
+import Input from "../atoms/Input";
 
-interface Props extends React.ComponentProps<'input'> {
+interface Props extends React.ComponentProps<"input"> {
   label?: string;
   bgColor?: boolean;
+  inputClassName?: string;
+  inputBoxClassName?: string;
   onClickClear: () => void;
+  onClickSearch: () => void;
 }
 
 /**
@@ -28,7 +31,13 @@ interface Props extends React.ComponentProps<'input'> {
 function InputSearchRightIcon<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({ onClickClear, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
+>({
+  onClickClear,
+  inputClassName,
+  inputBoxClassName,
+  onClickSearch,
+  ...props
+}: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { error },
@@ -39,8 +48,9 @@ function InputSearchRightIcon<
   };
 
   return (
-    <div className="relative">
+    <div className={`relative ${inputBoxClassName}`}>
       <Input
+        inputClassName={inputClassName}
         isSearchRight={true}
         value={value}
         errorMessage={error?.message}
@@ -61,6 +71,7 @@ function InputSearchRightIcon<
         src={icSearch}
         alt="검색아이콘"
         className="lg:w-9 absolute top-[15px] lg:top-[14px] right-[14px] cursor-pointer"
+        onClick={onClickSearch}
       />
     </div>
   );
