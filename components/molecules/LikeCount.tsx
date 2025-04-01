@@ -28,7 +28,7 @@ function LikeCount({
         height={12}
         alt="like heart"
       />
-      <span className="text-[13px] lg:text-[18px] leading-none relative top-[1px]">
+      <span className="text-[13px] lg:text-[18px] relative top-[1px]">
         {countLike}
       </span>
     </span>

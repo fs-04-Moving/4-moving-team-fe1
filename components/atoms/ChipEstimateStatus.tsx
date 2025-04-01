@@ -29,10 +29,12 @@ function ChipEstimateStatus({ type }: EstimateStatus) {
   const { icon, text, color } = config[type];
   return (
     <span
-      className={`inline-flex items-center gap-0.5 align-middle rounded-sm h-[26px] text-[13px] px-1 pr-1 font-semibold w-fit ${color}`}
+      className={`inline-flex items-center gap-0.5 align-middle rounded-sm h-[26px] lg:h-[34px] px-1 pl-0.5 pr-1.5 lg:pl-[3px] lg:pr-[5px] font-semibold w-fit ${color}`}
     >
-      <Image src={icon} width={20} alt={'icon'} />
-      <span className="leading-none relative top-[1px]">{text}</span>
+      <Image src={icon} width={20} alt={'icon'} className="lg:w-[24px]" />
+      <span className="leading-none relative top-[1px] text-[13px] lg:text-[16px]">
+        {text}
+      </span>
     </span>
   );
 }
