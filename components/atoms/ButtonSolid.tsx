@@ -11,7 +11,7 @@ interface Props {
 }
 
 /**
- * 가장 많이 사용되는 solid button 컴포넌트입니다.
+ * solid button 컴포넌트입니다.
  * - UI상태: default, hover, disabled
  * @param
  * - children: 버튼명
@@ -28,7 +28,7 @@ function ButtonSolid({
 }: Props) {
   console.log(children);
   const defaultClassName = clsx(
-    'flex justify-center items-center h-[54px] lg:h-16 bg-Primay-Blue-300 hover:bg-Primay-Blue-200 cursor-pointer rounded-2xl lg:text-xl text-GrayScale-50'
+    'w-full flex justify-center items-center h-[54px] lg:h-16 bg-Primay-Blue-300 hover:bg-Primay-Blue-200 cursor-pointer rounded-2xl lg:text-xl font-semibold text-GrayScale-50'
   );
 
   const disableClassName = clsx({
@@ -44,7 +44,7 @@ function ButtonSolid({
       <div className="flex">
         <span>{children}</span>
         {showIcon && (
-          <Image src={icWriting} alt="dkd" className="ml:1 lg:ml-2" />
+          <Image src={icWriting} alt="연필 아이콘" className="ml:1 lg:ml-2" />
         )}
       </div>
     </button>
