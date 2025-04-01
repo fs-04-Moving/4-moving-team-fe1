@@ -75,9 +75,7 @@ function FormLogIn({ userType }: { userType: Role }) {
               placeholder="비밀번호를 입력해 주세요"
             />
           </div>
-          <ButtonSolid disabled={!formState.isValid} showIcon={true}>
-            로그인
-          </ButtonSolid>
+          <ButtonSolid disabled={!formState.isValid}>로그인</ButtonSolid>
         </form>
       </div>
     </div>

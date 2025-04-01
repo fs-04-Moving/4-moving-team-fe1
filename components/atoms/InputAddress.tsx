@@ -7,6 +7,13 @@ interface Props {
   placeholder: string;
 }
 
+/**
+ * 주소를 표시하는 컴포넌트입니다.
+ * 명칭과 형태는 Input이지만 input태그가 아닌 div를 사용합니다.
+ * @param param0
+ * - label:
+ * @returns
+ */
 function InputAddress({ label, placeholder }: Props) {
   const [address, setAddress] = useState('');
 

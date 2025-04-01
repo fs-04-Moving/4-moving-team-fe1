@@ -99,7 +99,7 @@ function FormSignUp({ userType }: { userType: Role }) {
               placeholder="비밀번호를 다시 한 번 입력해 주세요"
             />
           </div>
-          <ButtonSolid disabled={formState.isValid}>회원가입</ButtonSolid>
+          <ButtonSolid disabled={!formState.isValid}>회원가입</ButtonSolid>
         </form>
       </div>
     </div>
