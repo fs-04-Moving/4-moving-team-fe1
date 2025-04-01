@@ -37,7 +37,7 @@ function ChipMovingType({ type }: MovingType) {
       className={`inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] text-[13px] px-1 pr-1 font-semibold w-fit bg-[#E9F4FF] text-[#1B92FF] `}
     >
       <Image src={icon} width={20} alt={'box'} />
-      <span>{text}</span>
+      <span className="leading-none relative top-[1px]">{text}</span>
     </span>
   );
 }

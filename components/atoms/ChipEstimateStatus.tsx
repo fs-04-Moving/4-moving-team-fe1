@@ -22,7 +22,7 @@ function ChipEstimateStatus({ type }: EstimateStatus) {
     assigned: {
       icon: icDocument,
       text: '지정 견적 요청',
-      color: 'bg-[#FFEEF0] text-[#FF4F64] ',
+      color: 'bg-[#FFEEF0] text-[#FF4F64]',
     },
   };
 
@@ -32,7 +32,7 @@ function ChipEstimateStatus({ type }: EstimateStatus) {
       className={`inline-flex items-center gap-0.5 align-middle rounded-sm h-[26px] text-[13px] px-1 pr-1 font-semibold w-fit ${color}`}
     >
       <Image src={icon} width={20} alt={'icon'} />
-      <span>{text}</span>
+      <span className="leading-none relative top-[1px]">{text}</span>
     </span>
   );
 }

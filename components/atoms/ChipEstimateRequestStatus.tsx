@@ -28,7 +28,7 @@ function ChipEstimateRequestStatus({ type }: EstimateRequestStatus) {
     <span
       className={`inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] text-[13px] px-1 pr-1 font-semibold w-fit bg-[#F2F3F8] text-[#242945] `}
     >
-      {text}
+      <span className="leading-none relative top-[1px]">{text}</span>
     </span>
   );
 }
