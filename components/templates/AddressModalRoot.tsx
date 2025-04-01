@@ -38,7 +38,7 @@ export default function AddressModalRoot() {
   return (
     <div
       id="address-Modal-Root"
-      className="m-auto w-[608px] h-auto px-[24px] pt-[32px] pb-[40px] border flex flex-col justify-center gap-y-10 rounded-[32px]"
+      className="m-auto w-[608px] h-auto pl-[2%] pt-[2%] pb-[40px] flex flex-col justify-center gap-y-10"
     >
       <div className="w-[95%]  flex flex-row justify-between items-center">
         {/* Header */}
