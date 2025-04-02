@@ -7,13 +7,8 @@ import Image from "next/image";
 import X from "@/assets/images/ic-X2.svg";
 
 interface ModalProps {
-  children: ReactNode;
+  children: (closeModal: () => void) => ReactNode;
   buttonText: string;
-  onConfirm?: () => void;
-}
-
-{
-  /* <Image src={X} alt="창닫기" width={18} /> */
 }
 
 export default function ModalUse({
@@ -21,6 +16,8 @@ export default function ModalUse({
   buttonText,
 }: ModalProps): JSX.Element {
   const onClickOpenModal = async (): Promise<void> => {
+    const closeModal = () => Swal.close(); // 모달 닫기 함수
+
     const options: SweetAlertOptions = {
       html: `<div id='modal-root'></div>`,
       showCancelButton: false,
@@ -33,11 +30,11 @@ export default function ModalUse({
             <div className="relative">
               <button
                 className="cursor-pointer absolute top-[10px] right-[10px]"
-                onClick={() => Swal.close()} // 모달을 닫는 함수
+                onClick={closeModal} // 모달을 닫는 함수
               >
                 <Image src={X} alt="창닫기" width={18} />
               </button>
-              {children}
+              {children(closeModal)}
             </div>
           );
         }
