@@ -1,16 +1,16 @@
-import icSearch from '@/assets/images/ic-search.svg';
-import icX from '@/assets/images/ic-x.svg';
-import Image from 'next/image';
-import React from 'react';
+import icSearch from "@/assets/images/ic-search.svg";
+import icX from "@/assets/images/ic-x.svg";
+import Image from "next/image";
+import React from "react";
 import {
   FieldPath,
   FieldValues,
   useController,
   UseControllerProps,
-} from 'react-hook-form';
-import Input from '../atoms/Input';
+} from "react-hook-form";
+import Input from "../atoms/Input";
 
-interface Props extends React.ComponentProps<'input'> {
+interface Props extends React.ComponentProps<"input"> {
   label?: string;
   bgColor?: boolean;
   onClickClear: () => void;
