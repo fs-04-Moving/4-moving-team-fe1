@@ -1,8 +1,8 @@
 import icBox from '@/assets/images/ic-box.svg';
-import icHome from '@/assets/images/ic-home.svg';
 import icCompany from '@/assets/images/ic-company.svg';
+import icHome from '@/assets/images/ic-home.svg';
+import { ServiceType } from '@/types/move.type';
 import Image from 'next/image';
-import { MovingType } from '@/types/move.type';
 
 /**
  * ChipMovingType 컴포넌트
@@ -10,12 +10,12 @@ import { MovingType } from '@/types/move.type';
  * 이 컴포넌트는 이사 서비스의 종류(소형이사, 가정이사, 사무실이사)에 따라
  * 아이콘, 텍스트, 색상을 표시하는 칩 형태의 UI 요소를 렌더링합니다.
  *
- * @param {MovingType} props.type - 'smallMove', 'homeMove', 'officeMove' 중 하나의 이사 타입 값.
+ * @param {ServiceType} props.type - 'smallMove', 'homeMove', 'officeMove' 중 하나의 이사 타입 값.
  *                                    해당 값에 따라 적절한 아이콘, 텍스트, 색상 설정이 적용됩니다.
  * @returns {JSX.Element} 선택된 이사 타입에 맞는 스타일이 적용된 칩 컴포넌트.
  *
  */
-function ChipMovingType({ type }: MovingType) {
+function ChipMovingType({ type }: ServiceType) {
   const config = {
     smallMove: {
       icon: icBox,

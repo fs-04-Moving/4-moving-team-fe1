@@ -2,7 +2,7 @@
 
 import PageContainer from '@/components/templates/PageContainer';
 import TemplateLogIn from '@/components/templates/TemplateLogIn';
-import { Role } from '@/types/dtos/user.dto';
+import { Role } from '@/types/entities/user.entity';
 import { useSearchParams } from 'next/navigation';
 
 function LogInPage() {
