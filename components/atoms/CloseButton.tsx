@@ -1,3 +1,5 @@
+import icClose from '@/assets/images/ic-x.svg';
+
 type CloseButtonProps = {
   onClick: () => void;
   size?: number;
@@ -6,12 +8,7 @@ type CloseButtonProps = {
 const CloseButton = ({ onClick, size = 24 }: CloseButtonProps) => {
   return (
     <button type="button" onClick={onClick}>
-      <img
-        src="@/assets/images/ic-x.svg"
-        alt="닫기"
-        width={size}
-        height={size}
-      />
+      <img src={icClose.src} alt="닫기" width={size} height={size} />
     </button>
   );
 };
