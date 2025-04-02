@@ -1,10 +1,13 @@
 'use client';
 
+import usersApi from '@/api/users/users.api';
 import { logInValidation } from '@/constants/formValidation';
-import { UserLogInDto } from '@/types/dtos/user.dto';
+import { Role, UserLogInDto } from '@/types/dtos/user.dto';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import TempAuthRegistButton from '../atoms/TempAuthRegistButton';
+import ButtonSolid from '../atoms/ButtonSolid';
 import InputEmail from '../molecules/InputEmail';
 import InputPassword from '../molecules/InputPassword';
 
@@ -13,16 +16,41 @@ export type FormLogInInput = {
   password: string;
 };
 
-const handleClickLogIn = (inputData: UserLogInDto) => {
-  console.log('로그인sdf!', inputData);
-};
+function FormLogIn({ userType }: { userType: Role }) {
+  const { control, handleSubmit, formState, setError } =
+    useForm<FormLogInInput>({
+      defaultValues: { email: '', password: '' },
+      mode: 'onBlur',
+      resolver: zodResolver(logInValidation),
+    });
 
-function FormLogIn() {
-  const { control, handleSubmit, formState } = useForm<FormLogInInput>({
-    defaultValues: { email: '', password: '' },
-    mode: 'onBlur',
-    resolver: zodResolver(logInValidation),
+  const { mutate: logIn } = useMutation({
+    mutationFn: (data: UserLogInDto) => usersApi.logIn(data),
+    onSuccess: () => {
+      alert('로그인 성공!!!');
+    },
+    onError: (error: AxiosError) => {
+      const errorMessage = error.response?.data || '';
+      console.log(errorMessage);
+      if (errorMessage === '유저가 존재하지 않습니다.') {
+        setError('email', { message: '존재하지 않는 이메일입니다' });
+      } else if (errorMessage === 'Incorrect password') {
+        setError('password', { message: '비밀번호가 일치하지 않습니다' });
+      } else if (
+        errorMessage === 'password must be 8 or more characters long'
+      ) {
+        setError('password', { message: '비밀번호는 8자 이상이어야 합니다' });
+      } else {
+        alert('에러가 발생했습니다. 다시 시도해 주세요.');
+      }
+    },
   });
+
+  const handleClickLogIn = (inputData: FormLogInInput) => {
+    // logIn({ ...inputData, role: userType });
+    console.log('dsaf', { ...inputData, role: userType });
+    logIn({ ...inputData, role: userType });
+  };
 
   return (
     <div className="w-full flex justify-center">
@@ -47,9 +75,7 @@ function FormLogIn() {
               placeholder="비밀번호를 입력해 주세요"
             />
           </div>
-          <TempAuthRegistButton isValid={formState.isValid}>
-            로그인
-          </TempAuthRegistButton>
+          <ButtonSolid disabled={!formState.isValid}>로그인</ButtonSolid>
         </form>
       </div>
     </div>

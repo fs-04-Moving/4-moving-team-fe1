@@ -29,7 +29,7 @@ function InputSearchLeftIcon<
   } = useController(props);
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Input
         isSearchLeft={true}
         value={value}
