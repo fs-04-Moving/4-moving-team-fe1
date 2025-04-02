@@ -12,4 +12,4 @@ export type UserLogInDto = Omit<
   'name' | 'phoneNumber' | 'passwordConfirm'
 >;
 
-export type Role = 'user' | 'worker';
+export type Role = 'customer' | 'worker';

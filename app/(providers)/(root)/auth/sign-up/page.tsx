@@ -10,8 +10,8 @@ function SignUpPage() {
   const paramString = params.get('type');
   let userType: Role;
   if (!paramString) {
-    userType = 'user';
-  } else if (paramString === 'user') {
+    userType = 'customer';
+  } else if (paramString === 'customer') {
     userType = paramString;
   } else {
     userType = 'worker';
