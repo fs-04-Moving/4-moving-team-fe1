@@ -7,7 +7,6 @@ interface Props extends React.ComponentProps<"input"> {
   errorMessage?: string;
   isSearchLeft?: boolean;
   isSearchRight?: boolean;
-  inputClassName?: string;
   value: string | number | readonly string[];
   onChange:
     | ChangeEventHandler<HTMLInputElement>
@@ -24,7 +23,6 @@ function Input({
   value,
   onBlur,
   onChange,
-  inputClassName,
   ...props
 }: Props) {
   // 아래 코드에는 clsx를 굳이 쓰지 않아도 되지만, 쓰지 않을 경우 tailwind 문법으로 인식을 하지 못하여 자동 완성이 안 됨
@@ -61,8 +59,7 @@ function Input({
             defaultClassName,
             errorClassName,
             searchClassName,
-            bgClassName,
-            inputClassName
+            bgClassName
           )}
           value={value}
           onChange={onChange}

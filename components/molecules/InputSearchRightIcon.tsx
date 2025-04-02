@@ -13,10 +13,7 @@ import Input from "../atoms/Input";
 interface Props extends React.ComponentProps<"input"> {
   label?: string;
   bgColor?: boolean;
-  inputClassName?: string;
-  inputBoxClassName?: string;
   onClickClear: () => void;
-  onClickSearch: () => void;
 }
 
 /**
@@ -31,13 +28,7 @@ interface Props extends React.ComponentProps<"input"> {
 function InputSearchRightIcon<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-  onClickClear,
-  inputClassName,
-  inputBoxClassName,
-  onClickSearch,
-  ...props
-}: Props & UseControllerProps<TFieldValues, TName>) {
+>({ onClickClear, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { error },
@@ -48,9 +39,8 @@ function InputSearchRightIcon<
   };
 
   return (
-    <div className={`relative ${inputBoxClassName}`}>
+    <div className="relative">
       <Input
-        inputClassName={inputClassName}
         isSearchRight={true}
         value={value}
         errorMessage={error?.message}
@@ -71,7 +61,6 @@ function InputSearchRightIcon<
         src={icSearch}
         alt="검색아이콘"
         className="lg:w-9 absolute top-[15px] lg:top-[14px] right-[14px] cursor-pointer"
-        onClick={onClickSearch}
       />
     </div>
   );
