@@ -6,53 +6,46 @@
  *
  * @example
  *  일반 사용자용 (단일 선택)
- * import { RegionEntity } from '@/types/entities/region.entity';
- * const [selectedRegion, setSelectedRegion] = useState<RegionEntity>(RegionEntity.seoul);
+ * import { AreaType } from '@/types/move.type';
+ * const [selectedRegion, setSelectedRegion] = useState<keyof AreaType>('seoul');
  *
  * <RegionSelector
- *   onRegionSelect={(region) => setSelectedRegion(region as RegionEntity)}
+ *   onRegionSelect={(region) => setSelectedRegion(region as keyof AreaType)}
  *   selectedRegion={selectedRegion}
  * />
  *
  *  기사님용 (다중 선택)
- * import { RegionEntity } from '@/types/entities/region.entity';
- * const [selectedRegions, setSelectedRegions] = useState<RegionEntity[]>([]);
+ * import { AreaType } from '@/types/move.type';
+ * const [selectedRegions, setSelectedRegions] = useState<Array<keyof AreaType>>([]);
  *
  * <RegionSelector
- *   onRegionSelect={(regions) => setSelectedRegions(regions as RegionEntity[])}
+ *   onRegionSelect={(regions) => setSelectedRegions(regions as Array<keyof AreaType>)}
  *   selectedRegion={selectedRegions}
  *   multipleSelect={true}
  * />
  *
  * @param {Function} props.onRegionSelect - 지역 선택 시 호출되는 콜백 함수
- * @param {RegionEntity|RegionEntity[]} props.selectedRegion - 선택된 지역(들)
+ * @param {keyof AreaType|Array<keyof AreaType>} props.selectedRegion - 선택된 지역(들)
  * @param {boolean} props.multipleSelect - 다중 선택 모드 활성화 여부 (기본값: false)
  */
 
 import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
-import { RegionEntity, REGIONS } from '@/types/entities/region.entity';
+import { AREA_CONSTANTS, AREA_ROWS } from '@/constants/areaConstants';
+import { AreaType } from '@/types/move.type';
 
 interface RegionSelectorProps {
-  onRegionSelect: (region: RegionEntity | RegionEntity[]) => void;
-  selectedRegion?: RegionEntity | RegionEntity[];
+  onRegionSelect: (region: keyof AreaType | Array<keyof AreaType>) => void;
+  selectedRegion?: keyof AreaType | Array<keyof AreaType>;
   multipleSelect?: boolean; // 다중 선택 여부
 }
-
-// 기존에서 동적으로 구현
-const REGION_ROWS = [
-  REGIONS.slice(0, 5),
-  REGIONS.slice(5, 10),
-  REGIONS.slice(10, 15),
-  REGIONS.slice(15),
-];
 
 function RegionSelector({
   onRegionSelect,
   selectedRegion,
   multipleSelect = false,
 }: RegionSelectorProps) {
-  // 다중 선택 일대
-  const handleMultipleSelect = (region: RegionEntity) => {
+  // 다중 선택 일때
+  const handleMultipleSelect = (region: keyof AreaType) => {
     if (Array.isArray(selectedRegion)) {
       const isSelected = selectedRegion.includes(region);
       const newSelection = isSelected
@@ -65,12 +58,12 @@ function RegionSelector({
   };
 
   // 단일 선택일때
-  const handleSingleSelect = (region: RegionEntity) => {
+  const handleSingleSelect = (region: keyof AreaType) => {
     onRegionSelect(region);
   };
 
   // 선택 상태 확인 함수
-  const isRegionSelected = (region: RegionEntity) => {
+  const isRegionSelected = (region: keyof AreaType) => {
     if (multipleSelect && Array.isArray(selectedRegion)) {
       return selectedRegion.includes(region);
     }
@@ -79,12 +72,12 @@ function RegionSelector({
 
   return (
     <div className='flex flex-col gap-2'>
-      {REGION_ROWS.map((row, rowIndex) => (
+      {AREA_ROWS.map((row, rowIndex) => (
         <div key={`row-${rowIndex}`} className='flex flex-wrap gap-2'>
           {row.map((region) => (
             <ChipBubbleTypeBox
               key={region}
-              text={region}
+              text={AREA_CONSTANTS[region]} // 한글 지역명 표시
               isSelected={isRegionSelected(region)}
               onClick={() =>
                 multipleSelect
