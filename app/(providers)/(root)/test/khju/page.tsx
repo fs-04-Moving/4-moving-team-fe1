@@ -1,11 +1,20 @@
 'use client';
 import { useState } from 'react';
 import GNBMenu from '@/components/molecules/GNBMenu';
+import HeaderDefault from '@/components/organisms/HeaderDefault';
+import HeaderLanding from '@/components/organisms/HeaderLanding';
 
 function Page() {
   const [isMenuOpen, setMenuOpen] = useState(true);
+
   return (
     <div>
+      <HeaderLanding />
+      <HeaderDefault
+        isLoggedIn={true}
+        userName="김가나"
+        onMenuClick={() => setMenuOpen(true)}
+      />
       컴포넌트 테스트페이지입니다.
       {isMenuOpen && (
         <GNBMenu
