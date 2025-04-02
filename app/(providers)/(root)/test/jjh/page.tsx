@@ -2,6 +2,7 @@ import DriverCardInSearch from '@/components/organisms/DriverCardInSearch';
 import { DriverWithMeta } from '@/types/move.type';
 import imgAvartar from '@/assets/images/avatartion-3.svg';
 import DriverCardInEstimate from '@/components/organisms/DriverCardInEstimate';
+import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
 
 const mock: DriverWithMeta = {
   id: '12df02342-234234',
@@ -23,7 +24,7 @@ function page() {
   return (
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
-
+      <DriverCardInLiked {...mock} />
       <DriverCardInSearch {...mock} />
       <DriverCardInEstimate {...mock} />
     </div>
