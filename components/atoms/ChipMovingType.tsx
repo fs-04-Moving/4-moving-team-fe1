@@ -34,10 +34,12 @@ function ChipMovingType({ type }: MovingType) {
   const { icon, text } = config[type];
   return (
     <span
-      className={`inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] text-[13px] px-1 pr-1 font-semibold w-fit bg-[#E9F4FF] text-[#1B92FF] `}
+      className={`inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] lg:gap-1 lg:h-[34px] px-1 pr-1 font-semibold w-fit bg-Primay-Blue-100 text-Primay-Blue-300 `}
     >
-      <Image src={icon} width={20} alt={'box'} />
-      <span className="leading-none relative top-[1px]">{text}</span>
+      <Image src={icon} width={20} alt={'box'} className="lg:w-[24px]" />
+      <span className="leading-none relative top-[1px] text-[13px] lg:text-[16px]">
+        {text}
+      </span>
     </span>
   );
 }
