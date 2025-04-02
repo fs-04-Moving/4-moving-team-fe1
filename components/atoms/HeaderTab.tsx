@@ -17,7 +17,7 @@ const HeaderTab = ({ items, onChange }: HeaderTabProps) => {
   const [active, setActive] = useState(items[0]?.label);
 
   return (
-    <div className="flex gap-6 text-sm">
+    <div className="flex gap-8 text-sm font-medium">
       {items.map(({ label }) => (
         <button
           key={label}
@@ -25,9 +25,9 @@ const HeaderTab = ({ items, onChange }: HeaderTabProps) => {
             setActive(label);
             onChange?.(label);
           }}
-          className={`pb-1 border-b-2 transition-colors duration-200 ${
+          className={`pb-2 border-b-2 transition-colors duration-200 ${
             active === label
-              ? 'font-semibold border-blue-500 text-basalack'
+              ? 'border-[#1c1c2b] text-black font-bold'
               : 'border-transparent text-gray-400'
           }`}
         >
