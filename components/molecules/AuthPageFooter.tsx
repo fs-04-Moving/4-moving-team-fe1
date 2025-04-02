@@ -1,4 +1,4 @@
-import { Role } from '@/types/dtos/user.dto';
+import { Role } from '@/types/entities/user.entity';
 import Link from 'next/link';
 import SocialLogIn from './SocialLogIn';
 

@@ -1,4 +1,4 @@
-export interface MovingType {
+export interface ServiceType {
   type: 'smallMove' | 'homeMove' | 'officeMove';
 }
 
@@ -37,7 +37,7 @@ export interface Driver {
   experience: number;
   summary: string;
   description: string;
-  services: MovingType;
+  services: ServiceType;
   serviceAreas: Partial<AreaType>;
 }
 
