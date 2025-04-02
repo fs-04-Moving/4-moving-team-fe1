@@ -1,10 +1,7 @@
-import RatingSummary from '@/components/molecules/RatingSummary';
-import UserAvartar from '@/components/atoms/UserAvartar';
-import LikeCount from '@/components/molecules/LikeCount';
 import DriverCardInSearch from '@/components/organisms/DriverCardInSearch';
-import ChipMovingType from '@/components/atoms/ChipMovingType';
 import { DriverWithMeta } from '@/types/move.type';
 import imgAvartar from '@/assets/images/avatartion-3.svg';
+import DriverCardInEstimate from '@/components/organisms/DriverCardInEstimate';
 
 const mock: DriverWithMeta = {
   id: '12df02342-234234',
@@ -17,22 +14,18 @@ const mock: DriverWithMeta = {
   isLiked: true,
   countLike: 132,
   serviceAreas: { seoul: '서울', incheon: '인천' },
-  services: { type: 'smallMove' },
+  services: ['smallMove', 'officeMove'],
+  isDirectEstimate: true,
+  estimatePrice: 180000,
 };
 
 function page() {
   return (
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
-      <ChipMovingType type="smallMove" />
-      <ChipMovingType type="officeMove" />
-      <ChipMovingType type="homeMove" />
-      <UserAvartar />
-      <UserAvartar />
-      <RatingSummary rating={4.5} reviewCount={231} />
-      <LikeCount isLiked={true} countLike={136} />
-      <LikeCount isLiked={false} countLike={209} />
+
       <DriverCardInSearch {...mock} />
+      <DriverCardInEstimate {...mock} />
     </div>
   );
 }

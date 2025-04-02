@@ -1,14 +1,8 @@
-export interface MovingType {
-  type: 'smallMove' | 'homeMove' | 'officeMove';
-}
+export type MovingType = 'smallMove' | 'homeMove' | 'officeMove';
 
-export interface EstimateStatus {
-  type: 'general' | 'assigned' | 'rejected';
-}
+export type EstimateStatus = 'general' | 'assigned' | 'rejected';
 
-export interface EstimateRequestStatus {
-  type: 'active' | 'inactive' | 'confirmed';
-}
+export type EstimateRequestStatus = 'active' | 'inactive' | 'confirmed';
 
 export interface AreaType {
   seoul: '서울';
@@ -37,7 +31,7 @@ export interface Driver {
   experience: number;
   summary: string;
   description: string;
-  services: MovingType;
+  services: MovingType[];
   serviceAreas: Partial<AreaType>;
 }
 
@@ -45,4 +39,6 @@ export interface DriverWithMeta extends Driver {
   countCompleteMoving: number;
   isLiked: boolean;
   countLike: number;
+  isDirectEstimate: boolean;
+  estimatePrice: number;
 }

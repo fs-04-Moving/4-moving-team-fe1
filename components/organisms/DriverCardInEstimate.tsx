@@ -6,15 +6,15 @@ import LikeCount from '../molecules/LikeCount';
 import RatingSummary from '../molecules/RatingSummary';
 
 /**
- * DriverCardInSearch 컴포넌트
+ * DriverCardInEstimate 컴포넌트
  *
- * 검색 결과나 기사 리스트에서 사용되는 카드 컴포넌트입니다.
- * 기사 요약 정보(프로필 이미지, 이름, 경력, 한줄 소개, 별점, 후기 수, 찜 여부, 확정 건수)를 시각적으로 구성하여 보여줍니다.
+ * 견적내역에서 사용되는 카드 컴포넌트입니다.
+ * 기사 요약 정보를 카드로 구성하여 보여줍니다.
  *
  * @param {DriverWithMeta} props - 기사 정보와 메타 데이터를 포함한 Driver 확장 타입
  *
  * @example
- * <DriverCardInSearch
+ * <DriverCardInEstimate
  *   id="1"
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
@@ -28,7 +28,7 @@ import RatingSummary from '../molecules/RatingSummary';
  *   isDirectEstimate={true}
  * />
  */
-function DriverCardInSearch({
+function DriverCardInEstimate({
   profileImage,
   nickname,
   experience,
@@ -38,10 +38,10 @@ function DriverCardInSearch({
   countLike,
   services,
   isDirectEstimate,
+  estimatePrice,
 }: DriverWithMeta) {
-  console.log(services);
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[188px] md:w-[600px] lg:w-[955px] lg:h-[230px] px-3.5 py-4">
+    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] lg:w-[688px] lg:h-[280px] px-3.5 py-4">
       <div className="flex gap-2.5">
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
@@ -51,7 +51,7 @@ function DriverCardInSearch({
       {/* 기사 한줄 소개 */}
       <div className="text-[14px] lg:text-2xl">{summary}</div>
       {/* 기사 소개 박스 */}
-      <div className="flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:h-[92px] lg:gap-6">
+      <div className="flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 h-[78px] lg:pr-4 lg:h-[92px] lg:gap-6">
         <UserAvartar imgUrl={profileImage} />
         <div className="flex-1 flex flex-col justify-between h-[58px]">
           {/* 기사 이름 */}
@@ -75,8 +75,12 @@ function DriverCardInSearch({
           </div>
         </div>
       </div>
+      <div className="flex justify-end items-end gap-2 lg:gap-4">
+        <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
+        <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${estimatePrice.toLocaleString()}원`}</span>
+      </div>
     </div>
   );
 }
 
-export default DriverCardInSearch;
+export default DriverCardInEstimate;
