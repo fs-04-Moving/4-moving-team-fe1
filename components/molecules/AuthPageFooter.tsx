@@ -1,8 +1,9 @@
+import { Role } from '@/types/entities/user.entity';
 import Link from 'next/link';
 import SocialLogIn from './SocialLogIn';
 
 interface Props {
-  userType: string | null;
+  userType: Role | null;
   isSignUpPage: boolean;
 }
 
@@ -13,7 +14,8 @@ function AuthPageFooter({ isSignUpPage, userType }: Props) {
   const text2: string = isSignUpPage ? '로그인' : '이메일로 회원가입하기';
 
   const pageLink: string = isSignUpPage ? '/auth/log-in' : '/auth/sign-up';
-  const linkQuery: string = userType === 'user' ? '?type=user' : '?type=worker';
+  const linkQuery: string =
+    userType === 'customer' ? '?type=customer' : '?type=worker';
 
   return (
     <div>

@@ -1,21 +1,23 @@
 'use client';
 
+import { Role } from '@/types/entities/user.entity';
 import Link from 'next/link';
 import LogoText from '../atoms/LogoText';
 
 interface Props {
-  userType: string | null;
+  userType: Role | null;
   isSignUpPage: boolean;
 }
 
 function AuthPageHeader({ isSignUpPage, userType }: Props) {
   const text1: string =
-    userType === 'user' ? '기사님이신가요?' : '일반 유저라면?';
+    userType === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
   const text2: string =
-    userType === 'user' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
+    userType === 'customer' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
 
   const pageLink: string = isSignUpPage ? '/auth/sign-up' : '/auth/log-in';
-  const linkQuery: string = userType === 'user' ? '?type=worker' : '?type=user';
+  const linkQuery: string =
+    userType === 'customer' ? '?type=worker' : '?type=customer';
 
   return (
     <div className="flex flex-col items-center mb-10 lg:mb-18">

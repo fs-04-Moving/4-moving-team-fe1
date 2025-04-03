@@ -1,4 +1,4 @@
-export type MovingType = 'smallMove' | 'homeMove' | 'officeMove';
+export type ServiceType = 'smallMove' | 'homeMove' | 'officeMove';
 
 export type EstimateStatus = 'general' | 'assigned' | 'rejected';
 
@@ -31,7 +31,7 @@ export interface Driver {
   experience: number;
   summary: string;
   description: string;
-  services: MovingType[];
+  services: ServiceType[];
   serviceAreas: Partial<AreaType>;
 }
 

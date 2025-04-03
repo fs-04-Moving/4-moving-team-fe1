@@ -39,7 +39,7 @@ function InputSearchRightIcon<
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Input
         isSearchRight={true}
         value={value}
