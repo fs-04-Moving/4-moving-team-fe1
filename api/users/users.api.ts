@@ -1,8 +1,8 @@
-import { UserLogInDto, UserSignUpDto } from '@/types/dtos/user.dto';
+import { LogInDto, RefreshTokenDto, SignUpDto } from '@/types/dtos/auth.dto';
 import { client, errorHandler } from '../client';
 
 // 회원가입
-const singUp = async (dto: UserSignUpDto) => {
+const singUp = async (dto: SignUpDto) => {
   const url = '/auth/sign-up';
   const response = await client.post(url, dto);
 
@@ -10,7 +10,7 @@ const singUp = async (dto: UserSignUpDto) => {
 };
 
 // 로그인
-const logIn = async (dto: UserLogInDto) => {
+const logIn = async (dto: LogInDto) => {
   const url = '/auth/log-in';
   const response = await client.post(url, dto);
 
@@ -23,7 +23,7 @@ const logIn = async (dto: UserLogInDto) => {
 };
 
 // 토큰 재발급
-const refreshToken = async (prevRefreshToken: string) => {
+const refreshToken = async (prevRefreshToken: RefreshTokenDto) => {
   try {
     const url = '/users/refresh-token';
     const response = await client.post(url, { prevRefreshToken });
@@ -32,18 +32,6 @@ const refreshToken = async (prevRefreshToken: string) => {
 
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
-
-    return response.data;
-  } catch (error) {
-    errorHandler(error);
-  }
-};
-
-// 닉네임 중복 체크
-const checkIsAvailableNickname = async (nickname: string) => {
-  try {
-    const url = '/users/check-nickname';
-    const response = await client.post(url, nickname);
 
     return response.data;
   } catch (error) {
@@ -67,7 +55,6 @@ const usersApi = {
   singUp,
   logIn,
   refreshToken,
-  checkIsAvailableNickname,
   getMe,
 };
 

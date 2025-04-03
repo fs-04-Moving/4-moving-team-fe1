@@ -1,72 +1,55 @@
-import { Role, User } from '../entities/user.entity';
+import { User } from '../entities/user.entity';
 
-// 회원가입 요청 시 사용합니다.
-export interface UserSignUpDto {
-  name: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-  passwordConfirm: string;
-  role: Role;
-}
-
-// 로그인 요청 시 사용합니다.
-export type UserLogInDto = Omit<
-  UserSignUpDto,
-  'name' | 'phoneNumber' | 'passwordConfirm'
->;
-
-// '기사님 찾기' 페이지의 기사 목록에 사용합니다.
-export type WorkerListDto = Pick<
+// 사용자 기본 정보 수정 시 사용합니다.
+export type UpdateUserInfoDto = Pick<
   User,
-  | 'id'
-  | 'serviceTypes'
-  | 'summary'
-  | 'profileImage'
-  | 'nickname'
-  | 'reviewsCount'
-  | 'reviewsEverage'
-  | 'experience'
-  | 'favoritesCount'
-  | 'confirmedEstimatesCount'
+  | 'name'
+  | 'email'
+  | 'phoneNumber'
+  | 'password'
+  | 'passwordConfirm'
+  | 'newPassword'
 >;
 
-// 고객의 '기사님 상세 페이지'에 사용합니다.
-export type WorkerDetailDto =
-  | WorkerListDto
-  | Pick<User, 'serviceAreas' | 'reviews'>;
-
-// 고객의 '찜한 기사님 목록'에 사용합니다.
-export type FavoriteWorkerList = Pick<
-  User,
-  | 'id'
-  | 'nickname'
-  | 'profileImage'
-  | 'favoritesCount'
-  | 'reviewsCount'
-  | 'reviewsEverage'
-  | 'experience'
-  | 'confirmedEstimatesCount'
-  | 'serviceAreas'
->;
+// 로그인한 사용자의 정보를 가져옵니다.
+export type GetUserMeDto = Pick<User, 'name' | 'profileImage' | 'hasProfile'>;
 
 // (고객/기사님 공통) '기본정보 수정' 페이지에 사용합니다.
 export type UserInfoEditDto = Pick<User, 'name' | 'email' | 'phoneNumber'>;
 
-// 기사 '프로필 등록/수정' 페이지에 사용합니다.
-export type WorkerProfileDto = Pick<
+/* ------------------- 백엔드 API 비교 완료 --------------------- */
+
+// '기사님 찾기' 페이지의 기사 목록에 사용합니다.
+export type GetWorkersDto = Pick<
   User,
-  | 'nickname'
-  | 'profileImage'
-  | 'experience'
+  | 'id'
+  | 'services'
   | 'summary'
-  | 'description'
-  | 'serviceAreas'
-  | 'serviceTypes'
+  | 'profileImage'
+  | 'nickname'
+  | 'reviewsCount'
+  | 'reviewsEverage'
+  | 'experience'
+  | 'favoritesCount'
+  | 'confirmedEstimatesCount'
+  | 'isFavorite'
 >;
 
-// 고객 '프로필 등록/ 수정' 페이지에 사용합니다.
-export type CustomerProfileDto = Pick<
+// 고객의 '기사님 상세 페이지'에 사용합니다.
+export type GetWorkerDetailDto = GetWorkersDto &
+  Pick<User, 'serviceAreas' | 'reviews'>;
+
+// 고객의 '찜한 기사님 목록'에 사용합니다.
+export type GetMyFavoriteWorkersDto = Pick<
   User,
-  'profileImage' | 'livingArea' | 'serviceTypes'
+  | 'id'
+  | 'nickname'
+  | 'profileImage'
+  | 'favoritesCount'
+  | 'reviewsCount'
+  | 'reviewsEverage'
+  | 'experience'
+  | 'confirmedEstimatesCount'
+  | 'isFavorite'
+  | 'services'
 >;
