@@ -2,11 +2,11 @@ import { EstimateStatus, ServiceType } from '../move.type';
 
 export interface Estimate {
   id: string;
-  price?: number;
+  price: number;
   serviceType: ServiceType;
   status: EstimateStatus;
   customerName: string;
-  workerProfileImage?: string;
+  workerProfileImage: string;
   workerSummary: string;
   workerNickname: string;
   workerFavoritesCount: number;
@@ -17,5 +17,5 @@ export interface Estimate {
   movingDate: Date;
   departure: string;
   destination: string;
-  requestDate?: Date;
+  requestDate: Date;
 }

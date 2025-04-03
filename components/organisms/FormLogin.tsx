@@ -2,7 +2,7 @@
 
 import usersApi from '@/api/users/users.api';
 import { logInValidation } from '@/constants/formValidation';
-import { Role, UserLogInDto } from '@/types/dtos/user.dto';
+import { LogInDto, Role } from '@/types/dtos/user.dto';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
@@ -25,7 +25,7 @@ function FormLogIn({ userType }: { userType: Role }) {
     });
 
   const { mutate: logIn } = useMutation({
-    mutationFn: (data: UserLogInDto) => usersApi.logIn(data),
+    mutationFn: (data: LogInDto) => usersApi.logIn(data),
     onSuccess: () => {
       alert('로그인 성공!!!');
     },
