@@ -5,6 +5,6 @@ export const movingTypes = [
 ];
 
 export const filterLists = [
-  { id: 1, name: "서비스 가능 지역" },
-  { id: 2, name: "지정 견적 요청" },
+  { id: 1, name: "서비스 가능 지역", count: 6 },
+  { id: 2, name: "지정 견적 요청", count: 10 },
 ];

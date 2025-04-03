@@ -1,6 +1,6 @@
 "use client";
 
-import CheckLists from "@/components/molecules/CheckLists";
+import CheckLists from "@/components/organisms/CheckLists";
 import { movingTypes, filterLists } from "@/libs/mockData";
 import { useState } from "react";
 import ButtonSolid from "../atoms/ButtonSolid";
@@ -38,7 +38,9 @@ function CheckModalRoot() {
         {/* countOnOff 값에 따라 movingTypes 또는 filterLists 전달 */}
         <CheckLists
           items={countOnOff ? movingTypes : filterLists}
-          countOnOff={countOnOff}
+          type={true}
+          // type true => 전체선택 가로배치
+          // type false => 전체선택 헤더 옆에 배치
         />
       </div>
       <ButtonSolid onClick={() => alert("버튼 클릭됨!")}>선택 하기</ButtonSolid>

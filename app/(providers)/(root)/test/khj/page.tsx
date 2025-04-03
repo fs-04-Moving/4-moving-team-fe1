@@ -1,4 +1,4 @@
-import CheckModalRoot from "@/components/organisms/CheckModalRoot";
+import CheckModalRoot from "@/components/templates/CheckModalRoot";
 
 function page() {
   return (
