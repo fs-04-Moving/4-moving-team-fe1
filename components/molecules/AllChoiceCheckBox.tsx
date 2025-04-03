@@ -1,4 +1,5 @@
 interface Props {
+  BoxClassName: string;
   onClickTotalCheck: () => void;
   totalQuantity: number;
   isAllSelected: boolean;
@@ -7,7 +8,7 @@ interface Props {
 function AllChoiceCheckBox(props: Props) {
   return (
     <div
-      className="flex justify-between items-center text-[16px] text-[#ABABAB] px-[10px] py-[8px] border-b-[1px] border-[#F2F2F2] cursor-pointer"
+      className={`${props.BoxClassName} items-center text-[16px] text-[#ABABAB] px-[16px]  py-[8px] border-b-[1px] border-[#F2F2F2] cursor-pointer`}
       onClick={props.onClickTotalCheck}
     >
       <p>{`전체선택${`(${props.totalQuantity})`}`}</p>
