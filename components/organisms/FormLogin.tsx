@@ -2,7 +2,8 @@
 
 import usersApi from '@/api/users/users.api';
 import { logInValidation } from '@/constants/formValidation';
-import { LogInDto, Role } from '@/types/dtos/user.dto';
+import { LogInDto } from '@/types/dtos/auth.dto';
+import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';

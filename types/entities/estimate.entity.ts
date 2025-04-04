@@ -18,4 +18,5 @@ export interface Estimate {
   departure: string;
   destination: string;
   requestDate: Date;
+  rejectionMessage?: string;
 }
