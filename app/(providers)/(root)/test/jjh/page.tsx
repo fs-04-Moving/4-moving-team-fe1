@@ -3,6 +3,9 @@ import { DriverWithMeta } from '@/types/move.type';
 import imgAvartar from '@/assets/images/avatartion-3.svg';
 import DriverCardInEstimate from '@/components/organisms/DriverCardInEstimate';
 import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
+import DriverCardInPendingReview from '@/components/organisms/DriverCardInPendingReview';
+import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
+import { CustomerMyReviewListDto } from '@/types/dtos/review.dto';
 
 const mock: DriverWithMeta = {
   id: '12df02342-234234',
@@ -20,13 +23,22 @@ const mock: DriverWithMeta = {
   estimatePrice: 180000,
 };
 
+const mockCustomerMyReviewListDto: CustomerMyReviewListDto = {
+  serviceType: 'smallMove',
+  workerProfileImage: imgAvartar,
+  workerNickname: '김주영',
+  movingDate: new Date(2024, 11, 17),
+  price: 2100000,
+};
+
 function page() {
   return (
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
       <DriverCardInLiked {...mock} />
-      <DriverCardInSearch {...mock} />
+      {/* <DriverCardInSearch {...mock} /> */}
       <DriverCardInEstimate {...mock} />
+      <DriverCardInCompletedReview {...mockCustomerMyReviewListDto} />
     </div>
   );
 }

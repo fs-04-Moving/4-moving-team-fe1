@@ -2,6 +2,7 @@ import { DriverWithMeta } from '@/types/move.type';
 import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
 import DriverInfoBoxA from './DriverInfoBoxA';
+import { WorkerListDto } from '@/types/dtos/user.dto';
 
 /**
  * DriverCardInSearch 컴포넌트
@@ -26,24 +27,35 @@ import DriverInfoBoxA from './DriverInfoBoxA';
  *   isDirectEstimate={true}
  * />
  */
-function DriverCardInSearch({
-  profileImage,
-  nickname,
-  experience,
-  summary,
-  countCompleteMoving,
-  isLiked,
-  countLike,
-  services,
-  isDirectEstimate,
-}: DriverWithMeta) {
+
+| 'id'
+  | 'serviceTypes'
+  | 'summary'
+  | 'profileImage'
+  | 'nickname'
+  | 'reviewsCount'
+  | 'reviewsEverage'
+  | 'experience'
+  | 'favoritesCount'
+  | 'confirmedEstimatesCount'
+
+function DriverCardInSearch(props : WorkerListDto) {
+  const {
+    profileImage,
+    nickname,
+    experience,
+    summary,
+    countCompleteMoving,
+    isLiked,
+    favoritesCount,
+    serviceTypes,
+  } = props
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[188px] md:w-[600px] lg:w-[955px] lg:h-[230px] px-3.5 py-4">
       <div className="flex gap-2.5">
-        {services.map((service, index) => (
+        {serviceTypes.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
-        {isDirectEstimate ? <ChipEstimateStatus type="assigned" /> : ''}
       </div>
       {/* 기사 한줄 소개 */}
       <div className="text-[14px] lg:text-2xl">{summary}</div>
@@ -54,7 +66,7 @@ function DriverCardInSearch({
         experience={experience}
         countCompleteMoving={countCompleteMoving}
         isLiked={isLiked}
-        countLike={countLike}
+        countLike={favoritesCount}
       />
     </div>
   );
