@@ -14,7 +14,9 @@ interface Props {
  * @returns
  */
 function PageLabel({ children, intent = 'lg' }: Props) {
-  const defaultClassName = clsx('text-Black-400 font-semibold text-[32px]');
+  const defaultClassName = clsx(
+    'text-Black-400 font-semibold text-lg lg:text-[32px]'
+  );
   const mediumClassName = clsx({
     '!text-[24px]': intent === 'md',
   });
