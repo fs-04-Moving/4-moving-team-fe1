@@ -1,6 +1,10 @@
 'use client';
 
+import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
+import ButtonLikeOutlined from '@/components/atoms/ButtonLikeOutlined';
 import ButtonPopFilter from '@/components/atoms/ButtonPopFilter';
+import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
+import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
 import ChatBubbleTextLeft from '@/components/atoms/ChatBubbleTextLeft';
 import ChatBubbleTextRight from '@/components/atoms/ChatBubbleTextRight';
 import ChatBubbleAddress from '@/components/molecules/ChatBubbleAddress';
@@ -35,6 +39,10 @@ function page() {
             console.log('pop!');
           }}
         />
+        <ButtonLikeOutlined onClick={() => {}} />
+        <ButtonShareKakao onClick={() => {}} />
+        <ButtonShareFacebook onClick={() => {}} />
+        <ButtonClipOutlined onClick={() => {}} />
         <div className="h-100 w-full mt-10">
           <Dropdown options={options} defaultValue="전체" />
         </div>
