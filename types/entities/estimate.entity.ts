@@ -5,6 +5,7 @@ export interface Estimate {
   price: number;
   serviceType: ServiceType;
   status: EstimateStatus;
+  isConfirmed: boolean;
   customerName: string;
   workerProfileImage: string;
   workerSummary: string;
