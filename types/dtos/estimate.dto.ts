@@ -9,3 +9,5 @@ export type CreateGeneralEstimateDto = Pick<Estimate, 'price'>;
 export type RejectEstimateRequestDto = Pick<Estimate, 'rejectionMessage'>;
 
 /* ------------------- 백엔드 API 비교 완료 --------------------- */
+
+export type FilterReceivedEstimateList = '전체' | '확정한 견적서';
