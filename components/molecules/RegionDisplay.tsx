@@ -8,20 +8,22 @@
  *
  * @example
  * -단일 지역 표시
- * const [selectedRegion, setSelectedRegion] = useState<string>('서울');
+ * const [selectedRegion, setSelectedRegion] = useState<keyof AreaType>('seoul');
  * <RegionDisplay region={selectedRegion} />
  *
  * - 다중지역 표시
- * const [selectedRegions, setSelectedRegions] = useState<string[]>(['서울', '경기']);
+ * const [selectedRegions, setSelectedRegions] = useState<Array<keyof AreaType>>(['seoul', 'gyeonggi']);
  * <RegionDisplay region={selectedRegions} />
  *
- * @param {string|string[]} props.region - 표시할 지역명 또는 지역명 배열
+ * @param {keyof AreaType|Array<keyof AreaType>} props.region - 표시할 지역 코드 또는 지역 코드 배열
  */
 
 import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
+import { AREA_CONSTANTS } from '@/constants/areaConstants';
+import { AreaType } from '@/types/move.type';
 
 interface RegionDisplayProps {
-  region: string | string[];
+  region: keyof AreaType | Array<keyof AreaType>;
 }
 
 function RegionDisplay({ region }: RegionDisplayProps) {
@@ -30,7 +32,7 @@ function RegionDisplay({ region }: RegionDisplayProps) {
       <div className='flex flex-wrap gap-2'>
         {region.map((item) => (
           <div key={item} className='inline-block'>
-            <ChipBubbleTypeBox text={item} isSelectable={false} />
+            <ChipBubbleTypeBox text={AREA_CONSTANTS[item]} canClick={false} />
           </div>
         ))}
       </div>
@@ -39,7 +41,7 @@ function RegionDisplay({ region }: RegionDisplayProps) {
 
   return (
     <div className='inline-block'>
-      <ChipBubbleTypeBox text={region} isSelectable={false} />
+      <ChipBubbleTypeBox text={AREA_CONSTANTS[region]} canClick={false} />
     </div>
   );
 }

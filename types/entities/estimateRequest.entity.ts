@@ -1,4 +1,4 @@
-import { ServiceType } from '../move.type';
+import { EstimateRequestStatus, ServiceType } from '../move.type';
 
 export interface EstimateRequest {
   id: string;
@@ -8,4 +8,5 @@ export interface EstimateRequest {
   destination: string;
   departure: string;
   isAssigned: boolean;
+  status: EstimateRequestStatus;
 }
