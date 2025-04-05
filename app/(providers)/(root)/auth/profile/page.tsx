@@ -1,17 +1,25 @@
-import DividerHor from '@/components/atoms/DividerHor';
-import PageLabel from '@/components/atoms/PageLabel';
+'use client';
+
 import PageContainer from '@/components/templates/PageContainer';
+import TemplateProfile from '@/components/templates/TemplateProfile';
+import { Role } from '@/types/entities/user.entity';
+import { useSearchParams } from 'next/navigation';
 
 function ProfilePage() {
+  const params = useSearchParams();
+  const paramString = params.get('userType');
+  let userType: Role;
+  if (!paramString) {
+    userType = 'customer';
+  } else if (paramString === 'customer') {
+    userType = paramString;
+  } else {
+    userType = 'worker';
+  }
+
   return (
     <PageContainer>
-      <div className="flex flex-col w-[640px]">
-        <PageLabel>프로필 등록</PageLabel>
-        <p className="text-xs lg:text-xl text-Black-200 my-4 lg:my-8">
-          추가 정보를 입력하여 회원가입을 완료해 주세요.
-        </p>
-        <DividerHor />
-      </div>
+      <TemplateProfile userType={userType} />
     </PageContainer>
   );
 }

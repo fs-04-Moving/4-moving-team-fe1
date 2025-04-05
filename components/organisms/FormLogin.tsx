@@ -7,6 +7,7 @@ import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
 import InputEmail from '../molecules/InputEmail';
@@ -25,10 +26,22 @@ function FormLogIn({ userType }: { userType: Role }) {
       resolver: zodResolver(logInValidation),
     });
 
+  const router = useRouter();
+
   const { mutate: logIn } = useMutation({
     mutationFn: (data: LogInDto) => usersApi.logIn(data),
-    onSuccess: () => {
-      alert('로그인 성공!!!');
+    onSuccess: (resData) => {
+      // 프로필 입력 여부에 따라 페이지 이동 분기
+      if (!resData.hasProfile) {
+        // 사용자 권한(유형)에 따라 페이지 이동 분기
+        if (userType === 'customer') {
+          router.push('/customer/request');
+        } else {
+          router.push('/worker/requests');
+        }
+      } else {
+        router.push(`/auth/profile?userType=${userType}`);
+      }
     },
     onError: (error: AxiosError) => {
       const errorMessage = error.response?.data || '';

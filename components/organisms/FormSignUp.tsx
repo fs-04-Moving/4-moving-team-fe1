@@ -7,6 +7,7 @@ import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
 import InputEmail from '../molecules/InputEmail';
@@ -35,10 +36,12 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
+  const router = useRouter();
+
   const { mutate: signUp } = useMutation({
     mutationFn: (data: SignUpDto) => usersApi.singUp(data),
     onSuccess: () => {
-      alert('회원가입 완료!!');
+      router.push(`/auth/profile?userType=${userType}`);
     },
     onError: (error: AxiosError) => {
       const errorMessage = error.response?.data || '';

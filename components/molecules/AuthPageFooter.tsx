@@ -1,12 +1,17 @@
 import { Role } from '@/types/entities/user.entity';
 import Link from 'next/link';
-import SocialLogIn from './SocialLogIn';
+import AuthSocialLogIn from './AuthSocialLogIn';
 
 interface Props {
   userType: Role | null;
   isSignUpPage: boolean;
 }
 
+/**
+ * 로그인/회원가입 페이지 하단
+ * @param param0
+ * @returns
+ */
 function AuthPageFooter({ isSignUpPage, userType }: Props) {
   const text1: string = isSignUpPage
     ? '이미 무빙 회원이신가요?'
@@ -15,7 +20,7 @@ function AuthPageFooter({ isSignUpPage, userType }: Props) {
 
   const pageLink: string = isSignUpPage ? '/auth/log-in' : '/auth/sign-up';
   const linkQuery: string =
-    userType === 'customer' ? '?type=customer' : '?type=worker';
+    userType === 'customer' ? '?userType=customer' : '?userType=worker';
 
   return (
     <div>
@@ -27,7 +32,7 @@ function AuthPageFooter({ isSignUpPage, userType }: Props) {
           </p>
         </Link>
       </div>
-      <SocialLogIn />
+      <AuthSocialLogIn />
     </div>
   );
 }
