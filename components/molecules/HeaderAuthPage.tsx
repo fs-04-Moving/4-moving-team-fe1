@@ -14,7 +14,7 @@ interface Props {
  * @param param0
  * @returns
  */
-function AuthPageHeader({ isSignUpPage, userType }: Props) {
+function HeaderAuthPage({ isSignUpPage, userType }: Props) {
   const text1: string =
     userType === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
   const text2: string =
@@ -41,4 +41,4 @@ function AuthPageHeader({ isSignUpPage, userType }: Props) {
   );
 }
 
-export default AuthPageHeader;
+export default HeaderAuthPage;

@@ -32,7 +32,7 @@ function FormLogIn({ userType }: { userType: Role }) {
     mutationFn: (data: LogInDto) => usersApi.logIn(data),
     onSuccess: (resData) => {
       // 프로필 입력 여부에 따라 페이지 이동 분기
-      if (!resData.hasProfile) {
+      if (resData.hasProfile) {
         // 사용자 권한(유형)에 따라 페이지 이동 분기
         if (userType === 'customer') {
           router.push('/customer/request');

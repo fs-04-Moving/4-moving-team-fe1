@@ -18,11 +18,11 @@ interface Props {
 function ButtonOutlined({ intent = 'default', children, onClick }: Props) {
   console.log(children);
   const defaultClassName = clsx(
-    'w-full flex items-center pl-6 h-[54px] lg:h-16 border border-Primay-Blue-300 cursor-pointer rounded-2xl lg:text-xl font-semibold text-Primay-Blue-300'
+    'w-full flex items-center pl-6 h-[54px] lg:h-16 border border-Primay-Blue-300 cursor-pointer rounded-2xl lg:text-xl font-semibold text-Primay-Blue-300 hover:bg-[#f3f3f3]'
   );
 
   const activeClassName = clsx({
-    '!bg-Primay-Blue-50': intent === 'active',
+    '!bg-Primay-Blue-50 hover:!bg-Primay-Blue-100': intent === 'active',
   });
 
   const doneClassName = clsx({

@@ -12,7 +12,7 @@ interface Props {
  * @param param0
  * @returns
  */
-function AuthPageFooter({ isSignUpPage, userType }: Props) {
+function FooterAuthPage({ isSignUpPage, userType }: Props) {
   const text1: string = isSignUpPage
     ? '이미 무빙 회원이신가요?'
     : '아직 무빙 회원이 아니신가요?';
@@ -37,4 +37,4 @@ function AuthPageFooter({ isSignUpPage, userType }: Props) {
   );
 }
 
-export default AuthPageFooter;
+export default FooterAuthPage;
