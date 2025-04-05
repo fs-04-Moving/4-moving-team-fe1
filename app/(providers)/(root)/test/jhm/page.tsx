@@ -8,7 +8,7 @@ import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
 import ChatBubbleTextLeft from '@/components/atoms/ChatBubbleTextLeft';
 import ChatBubbleTextRight from '@/components/atoms/ChatBubbleTextRight';
 import DividerHor from '@/components/atoms/DividerHor';
-import PageLabel from '@/components/atoms/PageLabel';
+import Label from '@/components/atoms/Label';
 import ChatBubbleAddress from '@/components/molecules/ChatBubbleAddress';
 import Dropdown from '@/components/molecules/Dropdown';
 import PageContainer from '@/components/templates/PageContainer';
@@ -45,8 +45,8 @@ function page() {
         <ButtonShareKakao onClick={() => {}} />
         <ButtonShareFacebook onClick={() => {}} />
         <ButtonClipOutlined onClick={() => {}} />
-        <PageLabel>페이지 상단 라벨(32사이즈)</PageLabel>
-        <PageLabel intent="md">페이지 상단 라벨(24사이즈)</PageLabel>
+        <Label>페이지 상단 라벨(32사이즈)</Label>
+        <Label intent="md">페이지 상단 라벨(24사이즈)</Label>
         <div className="h-5"></div>
         <DividerHor />
         <div className="h-100 w-full mt-10">

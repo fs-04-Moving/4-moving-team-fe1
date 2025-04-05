@@ -41,7 +41,7 @@ function FormSignUp({ userType }: { userType: Role }) {
   const { mutate: signUp } = useMutation({
     mutationFn: (data: SignUpDto) => usersApi.singUp(data),
     onSuccess: () => {
-      router.push(`/auth/profile?userType=${userType}`);
+      router.push(`/${userType}/profile`);
     },
     onError: (error: AxiosError) => {
       const errorMessage = error.response?.data || '';
