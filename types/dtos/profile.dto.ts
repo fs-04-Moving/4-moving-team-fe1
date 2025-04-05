@@ -17,7 +17,7 @@ export type CreateWorkerProfileDto = Pick<
   | 'experience'
   | 'summary'
   | 'description'
-> & { profileImage?: string };
+> & { profileImage?: File };
 
 // // 기사님의 프로필 수정 시 사용합니다.
 export type UpdateWorkerProfileDto = Partial<CreateWorkerProfileDto>;

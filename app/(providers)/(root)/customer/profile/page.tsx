@@ -1,9 +1,9 @@
-import CustomerProfile from '@/components/templates/CustomerProfile';
+import ProfileCustomer from '@/components/templates/ProfileCustomer';
 
 function CustomerProfilePage() {
   return (
     <div className="flex justify-center">
-      <CustomerProfile />
+      <ProfileCustomer />
     </div>
   );
 }

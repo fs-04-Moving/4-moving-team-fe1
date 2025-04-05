@@ -23,7 +23,7 @@ interface FormProfileInput {
   profileImage: File | undefined;
 }
 
-function CustomerProfile() {
+function ProfileCustomer() {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
     defaultValues: { profileImage: undefined },
   });
@@ -145,4 +145,4 @@ function CustomerProfile() {
   );
 }
 
-export default CustomerProfile;
+export default ProfileCustomer;
