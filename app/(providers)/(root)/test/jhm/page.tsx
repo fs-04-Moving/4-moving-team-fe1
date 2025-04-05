@@ -14,8 +14,9 @@ import Dropdown from '@/components/molecules/Dropdown';
 import PageContainer from '@/components/templates/PageContainer';
 import { FilterReceivedEstimateList } from '@/types/dtos/estimate.dto';
 
-function page() {
+function Page() {
   const options: FilterReceivedEstimateList[] = ['전체', '확정한 견적서'];
+
   return (
     <PageContainer>
       <div>
@@ -57,4 +58,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

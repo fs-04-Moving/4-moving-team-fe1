@@ -32,7 +32,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // 로그인된 상태에서 로그인 또는 회원가입 페이지에 접근하면 마켓플레이스(홈) 페이지로 이동
   useEffect(() => {
-    console.log(isLoggedIn, pathName);
     if (
       isLoggedIn &&
       // (pathName.startsWith('/auth/sign-up') ||

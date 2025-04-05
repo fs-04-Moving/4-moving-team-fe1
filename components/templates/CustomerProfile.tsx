@@ -1,5 +1,6 @@
 'use client';
 
+import profilesApi from '@/api/profiles/profiles.api';
 import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
 import {
   ServiceTypeEng,
@@ -7,6 +8,8 @@ import {
   ServiceTypeObject,
 } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
+import { AreaType } from '@/types/move.type';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -14,6 +17,7 @@ import ChipBubbleTypeBoxGen from '../atoms/ChipBubbleTypeBoxGen';
 import DividerHor from '../atoms/DividerHor';
 import Label from '../atoms/Label';
 import InputFile from '../molecules/InputFile';
+import RegionSelector from '../molecules/RegionSelector';
 
 interface FormProfileInput {
   profileImage: File | undefined;
@@ -30,14 +34,19 @@ function CustomerProfile() {
       services,
       livingArea,
     };
-    console.log(data);
+    // console.log(data);
+    createCustomerProfile(data);
   };
+
+  const { mutate: createCustomerProfile } = useMutation({
+    mutationFn: (data: CreateCustomerProfileDto) =>
+      profilesApi.createCustomerProfile(data),
+  });
 
   const serviceTypeKors: ServiceTypeKor[] = Object.values(ServiceTypeObject);
 
   const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
   const [livingArea, setLivingArea] = useState<Area>('seoul');
-  console.log(setLivingArea);
 
   const handleClickServiceChip = (serviceKor: ServiceTypeKor) => {
     if (!serviceKor) return;
@@ -59,7 +68,9 @@ function CustomerProfile() {
     }
   };
 
-  console.log(services);
+  const handleRegionSelect = (region: keyof AreaType) => {
+    setLivingArea(region);
+  };
 
   return (
     <div className="flex flex-col w-[327px] lg:w-[640px]">
@@ -90,7 +101,7 @@ function CustomerProfile() {
             <p className="text-GrayScale-400 text-xs lg:text-base mb-6 lg:mb-8">
               * 중복 선택 및 수정 가능, 견적 요청 시 선택 가능
             </p>
-            <div className="flex gap-[6px] lg:gap-3">
+            <div className="flex gap-[6px] lg:gap-3 mb-5 lg:mb-8">
               {serviceTypeKors.map((serviceType) => {
                 const serviceEng = Object.keys(ServiceTypeObject).find(
                   (key) =>
@@ -108,6 +119,23 @@ function CustomerProfile() {
                   />
                 );
               })}
+            </div>
+            <DividerHor />
+            <div className="mb-2 mt-5 lg:mt-8">
+              <Label intent="sm" required={true}>
+                내가 사는 지역
+              </Label>
+            </div>
+            <p className="text-GrayScale-400 text-xs lg:text-base mb-6 lg:mb-8">
+              * * 견적 요청 시 다시 설정 가능
+            </p>
+            <div className="mb-8 lg:mb-14">
+              <RegionSelector
+                selectedRegion={livingArea}
+                onRegionSelect={(region) =>
+                  handleRegionSelect(region as keyof AreaType)
+                }
+              />
             </div>
             <ButtonSolid disabled={!formState.isValid}>시작하기</ButtonSolid>
           </form>

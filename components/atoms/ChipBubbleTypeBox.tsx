@@ -20,7 +20,6 @@ function ChipBubbleTypeBox({
   onClick,
   canClick = true,
 }: ChipBubbleTypeBoxProps) {
-  console.log(onClick);
   return (
     <div
       className={clsx(

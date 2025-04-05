@@ -36,7 +36,6 @@ function FormLogIn({ userType }: { userType: Role }) {
     },
     onError: (error: AxiosError) => {
       const errorMessage = error.response?.data || '';
-      console.log(errorMessage);
       if (errorMessage === '유저가 존재하지 않습니다.') {
         setError('email', { message: '존재하지 않는 이메일입니다' });
       } else if (errorMessage === 'Incorrect password') {
@@ -53,7 +52,6 @@ function FormLogIn({ userType }: { userType: Role }) {
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
     // logIn({ ...inputData, role: userType });
-    console.log('dsaf', { ...inputData, role: userType });
     logIn({ ...inputData, role: userType });
   };
 
