@@ -14,7 +14,7 @@ interface Props {
 function LabelInput({ id, text }: Props) {
   return (
     <div className="mb-2 lg:mb-4">
-      <label htmlFor={id} className="lg:text-xl text-Black-400">
+      <label htmlFor={id} className="lg:text-xl text-Black-400 font-semibold">
         {text}
       </label>
     </div>

@@ -1,23 +1,65 @@
 'use client';
 
+import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
+import {
+  ServiceTypeEng,
+  ServiceTypeKor,
+  ServiceTypeObject,
+} from '@/types/entities/estimate.entity';
+import { Area } from '@/types/entities/user.entity';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
+import ChipBubbleTypeBoxGen from '../atoms/ChipBubbleTypeBoxGen';
 import DividerHor from '../atoms/DividerHor';
 import Label from '../atoms/Label';
 import InputFile from '../molecules/InputFile';
 
 interface FormProfileInput {
-  profileImage: File | null;
+  profileImage: File | undefined;
 }
 
 function CustomerProfile() {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
-    defaultValues: { profileImage: null },
+    defaultValues: { profileImage: undefined },
   });
 
   const handleClickStart = (inputData: FormProfileInput) => {
-    console.log(inputData.profileImage);
+    const data: CreateCustomerProfileDto = {
+      profileImage: inputData.profileImage,
+      services,
+      livingArea,
+    };
+    console.log(data);
   };
+
+  const serviceTypeKors: ServiceTypeKor[] = Object.values(ServiceTypeObject);
+
+  const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
+  const [livingArea, setLivingArea] = useState<Area>('seoul');
+  console.log(setLivingArea);
+
+  const handleClickServiceChip = (serviceKor: ServiceTypeKor) => {
+    if (!serviceKor) return;
+    // 한글로 선택된 값을 영문으로 변경
+    const serviceEng = Object.keys(ServiceTypeObject).find(
+      (key) =>
+        ServiceTypeObject[key as keyof typeof ServiceTypeObject] === serviceKor
+    ) as ServiceTypeEng;
+
+    const index = services.indexOf(serviceEng);
+    // 이미 선택된 값일 경우 삭제, 아닐 경우 추가
+    if (index === -1) {
+      setServices((prev) => [...prev, serviceEng]);
+    } else {
+      // 선택된 값이 1개일 경우에는 삭제하지 않음
+      if (services.length === 1) return;
+      const newServices = services.filter((_, i) => i !== index);
+      setServices(newServices);
+    }
+  };
+
+  console.log(services);
 
   return (
     <div className="flex flex-col w-[327px] lg:w-[640px]">
@@ -27,15 +69,49 @@ function CustomerProfile() {
       </p>
       <DividerHor />
       <div className="mt-5 lg:mt-16">
-        <form onSubmit={handleSubmit(handleClickStart)}>
-          <InputFile
-            name="profileImage"
-            control={control}
-            id="profileImage"
-            label="프로필 이미지"
-          />
-          <ButtonSolid disabled={!formState.isValid}>시작하기</ButtonSolid>
-        </form>
+        <div className="mb-10 lg:mb-16">
+          <form onSubmit={handleSubmit(handleClickStart)}>
+            <div className="mb-5 lg:mb-8">
+              <div className="mb-4 lg:mb-6">
+                <Label intent="sm">프로필 이미지</Label>
+              </div>
+              <InputFile
+                name="profileImage"
+                control={control}
+                id="profileImage"
+              />
+            </div>
+            <DividerHor />
+            <div className="mb-2 mt-5 lg:mt-8">
+              <Label intent="sm" required={true}>
+                이용 서비스
+              </Label>
+            </div>
+            <p className="text-GrayScale-400 text-xs lg:text-base mb-6 lg:mb-8">
+              * 중복 선택 및 수정 가능, 견적 요청 시 선택 가능
+            </p>
+            <div className="flex gap-[6px] lg:gap-3">
+              {serviceTypeKors.map((serviceType) => {
+                const serviceEng = Object.keys(ServiceTypeObject).find(
+                  (key) =>
+                    ServiceTypeObject[key as keyof typeof ServiceTypeObject] ===
+                    serviceType
+                ) as ServiceTypeEng;
+                const isSelected = services.includes(serviceEng);
+                return (
+                  <ChipBubbleTypeBoxGen
+                    key={serviceType}
+                    text={serviceType}
+                    onClick={() => handleClickServiceChip(serviceType)}
+                    canClick={true}
+                    isSelected={isSelected}
+                  />
+                );
+              })}
+            </div>
+            <ButtonSolid disabled={!formState.isValid}>시작하기</ButtonSolid>
+          </form>
+        </div>
       </div>
     </div>
   );

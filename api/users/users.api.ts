@@ -23,7 +23,7 @@ const logIn = async (dto: LogInDto) => {
 };
 
 // 토큰 재발급
-const refreshToken = async (prevRefreshToken: RefreshTokenDto) => {
+const refreshToken = async (prevRefreshToken: RefreshTokenDto | string) => {
   try {
     const url = '/users/refresh-token';
     const response = await client.post(url, { prevRefreshToken });

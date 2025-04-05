@@ -2,7 +2,7 @@ import { User } from '../entities/user.entity';
 
 // 고객의 프로필 생성 시 사용합니다.
 export type CreateCustomerProfileDto = Pick<User, 'livingArea' | 'services'> & {
-  profileImage?: string;
+  profileImage?: File;
 };
 
 // // 고객의 프로필 수정 시 사용합니다.

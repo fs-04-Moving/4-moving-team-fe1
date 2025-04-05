@@ -1,4 +1,4 @@
-import { EstimateStatus, ServiceType } from '../move.type';
+import { EstimateStatus } from '../move.type';
 
 export interface Estimate {
   id: string;
@@ -21,3 +21,16 @@ export interface Estimate {
   requestDate: Date;
   rejectionMessage?: string;
 }
+
+export type ServiceTypeKor = '소형이사' | '가정이사' | '사무실이사';
+export type ServiceTypeEng = 'smallMove' | 'homeMove' | 'officeMove';
+
+type ServiceType = {
+  [name in ServiceTypeEng]: ServiceTypeKor;
+};
+
+export const ServiceTypeObject: ServiceType = {
+  smallMove: '소형이사',
+  homeMove: '가정이사',
+  officeMove: '사무실이사',
+};

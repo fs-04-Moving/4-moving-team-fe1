@@ -77,13 +77,17 @@ function InputFile<
               />
             </div>
           ) : (
-            <Image src={icGallery} alt="갤러리 아이콘" />
+            <Image
+              src={icGallery}
+              alt="갤러리 아이콘"
+              className="w-8 lg:w-10"
+            />
           )}
         </div>
         {pickedFileUrl && (
           <p
             onClick={handleClickDelete}
-            className="ml-3 mb-2 text-red-500 underline cursor-pointer"
+            className="ml-3 mb-2 text-xs lg:text-base text-GrayScale-400 underline cursor-pointer"
           >
             삭제
           </p>
