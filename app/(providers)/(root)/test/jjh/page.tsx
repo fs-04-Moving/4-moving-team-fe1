@@ -3,6 +3,7 @@ import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
 import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { User } from '@/types/entities/user.entity';
+import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
 
 const mockDriverCommonData: Pick<
   User,
@@ -25,6 +26,7 @@ const mockDriverCommonData: Pick<
   content: string;
   createdAt: Date;
   rating: number;
+  isReviewWritten: boolean;
 } = {
   id: 'driver-001',
   profileImage: imgAvartar,
@@ -39,13 +41,14 @@ const mockDriverCommonData: Pick<
   services: ['smallMove', 'homeMove'],
   isDirectEstimate: true,
   estimatePrice: 180000,
-  serviceType: 'smallMove',
+  serviceType: 'homeMove',
   workerProfileImage: imgAvartar,
   workerNickname: '이삿짐마스터',
   movingDate: new Date(2024, 11, 17),
   price: 180000,
   createdAt: new Date(2024, 11, 17),
   rating: 5,
+  isReviewWritten: true,
   content:
     '처음 견적 받아봤는데, 엄청 친절하시고 꼼꼼하세요! 귀찮게 이것저것 물어봤는데 잘 알려주셨습니다. 원룸 이사는 믿고 맡기세요! :) 곧 이사 앞두고 있는 지인분께 추천드릴 예정입니다!',
 };
@@ -55,6 +58,7 @@ function page() {
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
       <DriverCardInLiked {...mockDriverCommonData} />
+      <DriverCardInWritableReview {...mockDriverCommonData} />
       <DriverCardInCompletedReview {...mockDriverCommonData} />
     </div>
   );

@@ -71,7 +71,7 @@ function DriverCardInCompletedReview({
         <ChipMovingType type={serviceType} />
         {/* 상단 위치 (lg 화면용) */}
         <span className="hidden text-lg text-GrayScale-300 font-normal lg:block">
-          {'작성일 2024.07.02'}
+          {`작성일 ${formattedCreateDate}`}
         </span>
       </div>
       {/* 기사 소개 박스 */}
