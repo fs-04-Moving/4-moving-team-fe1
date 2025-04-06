@@ -1,10 +1,10 @@
 import icChevronDownBlack from '@/assets/images/ic-chevron-down-black.svg';
-import { SortOption } from '@/constants/DropdownSort';
+import { sortOption } from '@/constants/dropdownSortConstants';
 import clsx from 'clsx';
 import Image from 'next/image';
 
 interface Props {
-  selectedValue: SortOption;
+  selectedValue: sortOption;
   isOpen?: boolean;
   onClick: () => void;
 }

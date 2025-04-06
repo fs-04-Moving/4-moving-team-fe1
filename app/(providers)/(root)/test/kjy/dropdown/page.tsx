@@ -4,7 +4,7 @@ import DropdownArea from '@/components/molecules/DropdownArea';
 import DropdownService from '@/components/molecules/DropdownService';
 import DropdownSort from '@/components/molecules/DropdownSort';
 import PageContainer from '@/components/templates/PageContainer';
-import { SORT_OPTIONS, SortOption } from '@/constants/DropdownSort';
+import { SORT_OPTIONS, sortOption } from '@/constants/dropdownSortConstants';
 
 function page() {
   const handleAreaSelect = (area: string, code?: string) => {
@@ -13,7 +13,7 @@ function page() {
   };
 
   // 정렬 변경 핸들러
-  const handleSortChange = (value: SortOption) => {
+  const handleSortChange = (value: sortOption) => {
     console.log(`정렬 방식 변경: ${value}`);
     // 여기에 정렬 로직 추가
   };

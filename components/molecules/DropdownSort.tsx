@@ -1,12 +1,15 @@
-import { DEFAULT_SORT_OPTION, SortOption } from '@/constants/DropdownSort';
+import {
+  DEFAULT_SORT_OPTION,
+  sortOption,
+} from '@/constants/dropdownSortConstants';
 import { useEffect, useRef, useState } from 'react';
 import DropdownButtonSort from '../atoms/DropdownButtonSort';
 import DropdownListSort from '../atoms/DropdownListSort';
 
 interface Props {
-  options: SortOption[];
-  defaultValue?: SortOption;
-  onChange?: (value: SortOption) => void;
+  options: sortOption[];
+  defaultValue?: sortOption;
+  onChange?: (value: sortOption) => void;
   className?: string;
 }
 
@@ -17,14 +20,14 @@ function DropdownSort({
   className = '',
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<SortOption>(defaultValue);
+  const [selectedValue, setSelectedValue] = useState<sortOption>(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (value: SortOption) => {
+  const handleSelect = (value: sortOption) => {
     setSelectedValue(value);
     setIsOpen(false);
     onChange?.(value);

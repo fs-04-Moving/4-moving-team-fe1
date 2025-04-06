@@ -1,11 +1,11 @@
-import { SortOption } from '@/constants/DropdownSort';
+import { sortOption } from '@/constants/dropdownSortConstants';
 import clsx from 'clsx';
 
 interface Props {
-  options: SortOption[];
-  selectedValue: SortOption;
+  options: sortOption[];
+  selectedValue: sortOption;
   isOpen: boolean;
-  onSelect: (value: SortOption) => void;
+  onSelect: (value: sortOption) => void;
 }
 
 function DropdownListSort({ options, selectedValue, isOpen, onSelect }: Props) {
