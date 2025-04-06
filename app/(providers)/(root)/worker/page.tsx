@@ -3,7 +3,11 @@
  * @returns
  */
 function ReceivedRequestsPage() {
-  return <div>ReceivedRequestsPage</div>;
+  return (
+    <div className="flex justify-center h-100 items-center text-4xl">
+      받은 요청 목록
+    </div>
+  );
 }
 
 export default ReceivedRequestsPage;

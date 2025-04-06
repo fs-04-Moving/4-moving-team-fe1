@@ -10,7 +10,7 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        // staleTime: 1000 * 60 * 5, // 5분(상황에 따라 조정)
+        staleTime: 1000 * 60 * 5, // 5분(상황에 따라 조정)
         // retry: 0,
       },
     },
@@ -37,6 +37,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+      {children}
+      {/* </HydrationBoundary> */}
+    </QueryClientProvider>
   );
 }

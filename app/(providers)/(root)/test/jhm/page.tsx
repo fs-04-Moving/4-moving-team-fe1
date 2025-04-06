@@ -13,9 +13,16 @@ import ChatBubbleAddress from '@/components/molecules/ChatBubbleAddress';
 import Dropdown from '@/components/molecules/Dropdown';
 import PageContainer from '@/components/templates/PageContainer';
 import { FilterReceivedEstimateList } from '@/types/dtos/estimate.dto';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 function Page() {
   const options: FilterReceivedEstimateList[] = ['전체', '확정한 견적서'];
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData(['me']);
+  console.log('testPage', user);
+
+  const router = useRouter();
 
   return (
     <PageContainer>
@@ -43,7 +50,11 @@ function Page() {
           }}
         />
         <ButtonLikeOutlined onClick={() => {}} />
-        <ButtonShareKakao onClick={() => {}} />
+        <ButtonShareKakao
+          onClick={() => {
+            router.push('/customer');
+          }}
+        />
         <ButtonShareFacebook onClick={() => {}} />
         <ButtonClipOutlined onClick={() => {}} />
         <Label>페이지 상단 라벨(32사이즈)</Label>

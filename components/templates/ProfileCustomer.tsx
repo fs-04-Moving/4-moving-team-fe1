@@ -1,6 +1,7 @@
 'use client';
 
 import profilesApi from '@/api/profiles/profiles.api';
+import { useAuth } from '@/contexts/AuthContext';
 import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
 import {
   ServiceTypeEng,
@@ -10,43 +11,56 @@ import {
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
 import ChipBubbleTypeBoxGen from '../atoms/ChipBubbleTypeBoxGen';
 import DividerHor from '../atoms/DividerHor';
 import Label from '../atoms/Label';
+import Loader from '../atoms/Loader';
 import InputFile from '../molecules/InputFile';
 import RegionSelector from '../molecules/RegionSelector';
 
 interface FormProfileInput {
-  profileImage: File | undefined;
+  profileImage: File | null;
 }
 
 function ProfileCustomer() {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
-    defaultValues: { profileImage: undefined },
+    defaultValues: { profileImage: null },
   });
 
+  const { isLoggedIn } = useAuth();
+
+  console.log('isLoggedIn', isLoggedIn);
+
+  const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
+
   const handleClickStart = (inputData: FormProfileInput) => {
+    setIsProcessing(true);
     const data: CreateCustomerProfileDto = {
       profileImage: inputData.profileImage,
       services,
       livingArea,
     };
-    // console.log(data);
     createCustomerProfile(data);
   };
 
   const { mutate: createCustomerProfile } = useMutation({
     mutationFn: (data: CreateCustomerProfileDto) =>
       profilesApi.createCustomerProfile(data),
+    onSuccess: () => {
+      router.replace('/customer');
+      setIsProcessing(false);
+    },
   });
 
   const serviceTypeKors: ServiceTypeKor[] = Object.values(ServiceTypeObject);
 
-  const [services, setServices] = useState<ServiceTypeEng[]>([]);
-  const [livingArea, setLivingArea] = useState<Area>();
+  const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
+  const [livingArea, setLivingArea] = useState<Area>('seoul');
 
   const handleClickServiceChip = (serviceKor: ServiceTypeKor) => {
     if (!serviceKor) return;
@@ -72,7 +86,8 @@ function ProfileCustomer() {
     setLivingArea(region);
   };
 
-  const isValidAll = formState.isValid && services.length !== 0 && !!livingArea;
+  const isEnabledButton =
+    formState.isValid && services.length !== 0 && !!livingArea && !isProcessing;
 
   return (
     <div className="flex flex-col w-[327px] lg:w-[640px]">
@@ -139,7 +154,9 @@ function ProfileCustomer() {
                 }
               />
             </div>
-            <ButtonSolid disabled={!isValidAll}>시작하기</ButtonSolid>
+            <ButtonSolid disabled={!isEnabledButton}>
+              {isProcessing ? <Loader /> : '시작하기'}
+            </ButtonSolid>
           </form>
         </div>
       </div>

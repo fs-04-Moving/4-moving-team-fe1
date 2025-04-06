@@ -28,7 +28,7 @@ export interface User {
   favoritesCount: number; // 기사: 받은 찜 횟수
   confirmedEstimatesCount: number; // 기사: 확정을 받은 견적 개수
   nickname: string; // 기사: 별명
-  experience: number; // 기사: 경력
+  experience: string; // 기사: 경력
   summary: string; // 기사: 한 줄 요약
   description: string; // 기사: 상세 설명
   serviceAreas: Area[]; // 기사: 서비스 가능 지역 목록

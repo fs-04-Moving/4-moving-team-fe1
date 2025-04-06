@@ -2,7 +2,7 @@ import { User } from '../entities/user.entity';
 
 // 고객의 프로필 생성 시 사용합니다.
 export type CreateCustomerProfileDto = Pick<User, 'livingArea' | 'services'> & {
-  profileImage?: File;
+  profileImage?: File | null;
 };
 
 // // 고객의 프로필 수정 시 사용합니다.
@@ -17,7 +17,7 @@ export type CreateWorkerProfileDto = Pick<
   | 'experience'
   | 'summary'
   | 'description'
-> & { profileImage?: File };
+> & { profileImage?: File | null };
 
 // // 기사님의 프로필 수정 시 사용합니다.
 export type UpdateWorkerProfileDto = Partial<CreateWorkerProfileDto>;

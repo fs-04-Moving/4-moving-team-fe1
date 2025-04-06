@@ -5,6 +5,7 @@ const phoneNumberRegex = new RegExp(/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/);
 const passwordRegex = new RegExp(
   /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+~`\-={}[\]:;"'<>,.?/\\]).{8,}$/
 );
+const isNumberRegex = /^[0-9]*$/; // 숫자만 체크
 
 export const logInValidation = z.object({
   email: z
@@ -49,3 +50,25 @@ export const signUpValidation = z
       });
     }
   });
+
+export const createWorkerProfileValiation = z.object({
+  profileImage: z.instanceof(File).nullable(),
+  nickname: z
+    .string()
+    .trim()
+    .min(1, { message: requiredStr })
+    .min(2, { message: '10자 이상이어야 합니다' }),
+  experience: z.string().regex(isNumberRegex, '숫자만 입력해야 합니다'),
+  summary: z
+    .string()
+    .trim()
+    .min(1, { message: requiredStr })
+    .min(10, { message: '10자 이상이어야 합니다' })
+    .max(30, { message: '30자 이내여야 합니다' }),
+  description: z
+    .string()
+    .trim()
+    .min(1, { message: requiredStr })
+    .min(10, { message: '10자 이상이어야 합니다' })
+    .max(300, { message: '300자 이내여야 합니다' }),
+});

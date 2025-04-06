@@ -24,7 +24,7 @@ function Label({ children, intent = 'lg', required = false }: Props) {
     '!text-[24px]': intent === 'md',
   });
   const smallClassName = clsx({
-    'text-base lg:!text-[20px]': intent === 'sm',
+    '!text-base lg:!text-[20px]': intent === 'sm',
   });
   const extraSmallClassName = clsx({
     '!text-[16px]': intent === 'xs',
@@ -34,13 +34,13 @@ function Label({ children, intent = 'lg', required = false }: Props) {
     'text-Primay-Blue-300 text-lg lg:text-[32px]'
   );
   const meidumRequierdClassName = clsx({
-    'text-Primay-Blue-300 text-base lg:text-[24px]': intent === 'md',
+    '!text-Primay-Blue-300 !text-base lg:!text-[24px]': intent === 'md',
   });
   const smallRequierdClassName = clsx({
-    'text-Primay-Blue-300 text-base lg:!text-[20px]': intent === 'sm',
+    '!text-Primay-Blue-300 !text-base lg:!text-[20px]': intent === 'sm',
   });
   const extraSmallRequierdClassName = clsx({
-    'text-Primay-Blue-300 !text-[16px]': intent === 'xs',
+    '!text-Primay-Blue-300 !text-[16px]': intent === 'xs',
   });
   return (
     <h1

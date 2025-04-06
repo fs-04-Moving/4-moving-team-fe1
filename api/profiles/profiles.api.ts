@@ -9,7 +9,9 @@ const createCustomerProfile = async (data: CreateCustomerProfileDto) => {
   try {
     const { livingArea, services, profileImage } = data;
     const formData = new FormData();
-    formData.append('livingArea', livingArea);
+    if (livingArea) {
+      formData.append('livingArea', livingArea);
+    }
     services.forEach((service) => formData.append('services', service));
     if (profileImage) {
       formData.append('profileImage', profileImage);
@@ -38,7 +40,7 @@ const createWorkerProfile = async (data: CreateWorkerProfileDto) => {
     } = data;
     const formData = new FormData();
     formData.append('description', description);
-    formData.append('experience', experience.toString());
+    formData.append('experience', experience);
     formData.append('nickname', nickname);
     formData.append('summary', summary);
     serviceAreas.forEach((serviceArea) =>
