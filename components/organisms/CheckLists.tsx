@@ -43,7 +43,7 @@ export default function CheckLists({ isModalType = true }: Props) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-5">
       <div className="flex flex-row justify-between items-center gap-x-6">
         <div className="flex flex-row gap-x-4">
           <button

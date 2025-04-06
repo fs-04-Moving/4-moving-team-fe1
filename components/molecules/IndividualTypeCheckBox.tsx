@@ -24,7 +24,7 @@ function IndividualTypeCheckBox({ items, selected, toggleCheckbox }: Props) {
           key={item.id}
           className={`flex justify-between items-center p-4 border-b-[2px] border-[#F2F2F2] last:border-b-0 cursor-pointer`}
         >
-          <span className="text-lg">
+          <span className="text-[14px] font-bold">
             {item.name} ({item.count})
           </span>
           <input
