@@ -8,7 +8,7 @@ type Props = {
   profileImage: string;
   nickname: string;
   experience: number;
-  countCompleteMoving: boolean;
+  countCompleteMoving: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
@@ -23,7 +23,7 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
- * @param {boolean} countCompleteMoving - 확정 이사 건수
+ * @param {number} countCompleteMoving - 확정 이사 건수
  * @param {boolean} isFavorite - 사용자가 이 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 서비스 유형 리스트

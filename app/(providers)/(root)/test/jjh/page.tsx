@@ -1,50 +1,61 @@
-import { DriverWithMeta } from '@/types/move.type';
 import imgAvartar from '@/assets/images/avatartion-3.svg';
-import DriverCardInEstimate from '@/components/organisms/DriverCardInEstimate';
 import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
 import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
-import { Review } from '@/types/entities/review.entity';
 import { Estimate } from '@/types/entities/estimate.entity';
+import { User } from '@/types/entities/user.entity';
 
-const mock: DriverWithMeta = {
-  id: '12df02342-234234',
+const mockDriverCommonData: Pick<
+  User,
+  'id' | 'nickname' | 'profileImage' | 'experience'
+> & {
+  summary: string;
+  description: string;
+  countCompleteMoving: number;
+  isFavorite: boolean;
+  favoritesCount: number;
+  serviceAreas: { seoul?: string; gyeonggi?: string; incheon?: string };
+  services: Estimate['serviceType'][];
+  isDirectEstimate: boolean;
+  estimatePrice: number;
+  serviceType: Estimate['serviceType'];
+  workerProfileImage: string;
+  workerNickname: string;
+  movingDate: Date;
+  price: number;
+  content: string;
+  createdAt: Date;
+  rating: number;
+} = {
+  id: 'driver-001',
   profileImage: imgAvartar,
-  nickname: '몽고르',
-  experience: 7,
-  summary: '고객님의 물품을 안전하게 운송해 드립니다.',
-  description: '이것은 디스크립션',
-  countCompleteMoving: 223,
-  isLiked: true,
-  countLike: 132,
+  nickname: '이삿짐마스터',
+  experience: 8,
+  summary: '빠르고 안전한 이사를 약속드립니다.',
+  description: '서울 및 수도권 전문',
+  countCompleteMoving: 342,
+  isFavorite: true,
+  favoritesCount: 128,
   serviceAreas: { seoul: '서울', incheon: '인천' },
-  services: ['smallMove', 'officeMove'],
+  services: ['smallMove', 'homeMove'],
   isDirectEstimate: true,
   estimatePrice: 180000,
-};
-
-const mockCustomerMyReviewListDto: Pick<
-  Review & Estimate,
-  | 'serviceType'
-  | 'workerProfileImage'
-  | 'workerNickname'
-  | 'movingDate'
-  | 'price'
-> = {
   serviceType: 'smallMove',
   workerProfileImage: imgAvartar,
-  workerNickname: '김주영',
+  workerNickname: '이삿짐마스터',
   movingDate: new Date(2024, 11, 17),
-  price: 2100000,
+  price: 180000,
+  createdAt: new Date(2024, 11, 17),
+  rating: 5,
+  content:
+    '처음 견적 받아봤는데, 엄청 친절하시고 꼼꼼하세요! 귀찮게 이것저것 물어봤는데 잘 알려주셨습니다. 원룸 이사는 믿고 맡기세요! :) 곧 이사 앞두고 있는 지인분께 추천드릴 예정입니다!',
 };
 
 function page() {
   return (
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
-      <DriverCardInLiked {...mock} />
-      {/* <DriverCardInSearch {...mock} /> */}
-      <DriverCardInEstimate {...mock} />
-      <DriverCardInCompletedReview {...mockCustomerMyReviewListDto} />
+      <DriverCardInLiked {...mockDriverCommonData} />
+      <DriverCardInCompletedReview {...mockDriverCommonData} />
     </div>
   );
 }
