@@ -12,12 +12,12 @@ function DropdownListSort({ options, selectedValue, isOpen, onSelect }: Props) {
   if (!isOpen) return null;
 
   return (
-    <ul className='absolute z-10 w-full mt-1 bg-white rounded-lg shadow-md overflow-hidden'>
+    <ul className='absolute mt-1 bg-white rounded-lg shadow-md overflow-hidden text-xs md:text-sm lg:text-sm'>
       {options.map((option) => (
         <li
           key={option}
           className={clsx(
-            'px-4 py-3 cursor-pointer hover:bg-Primay-Blue-50 transition-colors',
+            'w-[91px] md:w-[114px] lg:w-[114px] h-[32px] md:h-[40px] lg:h-[40px] px-1.5 md:px-2.5 lg:px-2.5 flex items-center cursor-pointer hover:bg-Primay-Blue-50 transition-colors',
             {
               'font-medium': option === selectedValue,
             }
