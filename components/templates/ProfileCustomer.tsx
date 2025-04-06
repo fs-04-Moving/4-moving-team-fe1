@@ -45,8 +45,8 @@ function ProfileCustomer() {
 
   const serviceTypeKors: ServiceTypeKor[] = Object.values(ServiceTypeObject);
 
-  const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
-  const [livingArea, setLivingArea] = useState<Area>('seoul');
+  const [services, setServices] = useState<ServiceTypeEng[]>([]);
+  const [livingArea, setLivingArea] = useState<Area>();
 
   const handleClickServiceChip = (serviceKor: ServiceTypeKor) => {
     if (!serviceKor) return;
@@ -71,6 +71,8 @@ function ProfileCustomer() {
   const handleRegionSelect = (region: keyof AreaType) => {
     setLivingArea(region);
   };
+
+  const isValidAll = formState.isValid && services.length !== 0 && !!livingArea;
 
   return (
     <div className="flex flex-col w-[327px] lg:w-[640px]">
@@ -127,7 +129,7 @@ function ProfileCustomer() {
               </Label>
             </div>
             <p className="text-GrayScale-400 text-xs lg:text-base mb-6 lg:mb-8">
-              * * 견적 요청 시 다시 설정 가능
+              * 견적 요청 시 다시 설정 가능
             </p>
             <div className="mb-8 lg:mb-14">
               <RegionSelector
@@ -137,7 +139,7 @@ function ProfileCustomer() {
                 }
               />
             </div>
-            <ButtonSolid disabled={!formState.isValid}>시작하기</ButtonSolid>
+            <ButtonSolid disabled={!isValidAll}>시작하기</ButtonSolid>
           </form>
         </div>
       </div>
