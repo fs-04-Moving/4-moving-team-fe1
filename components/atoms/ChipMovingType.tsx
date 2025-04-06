@@ -14,7 +14,7 @@ interface Props {
  * 이 컴포넌트는 이사 서비스의 종류(소형이사, 가정이사, 사무실이사)에 따라
  * 아이콘, 텍스트, 색상을 표시하는 칩 형태의 UI 요소를 렌더링합니다.
  *
- * @param {ServiceType} props.type - 'smallMove', 'homeMove', 'officeMove' 중 하나의 이사 타입 값.
+ * @param {string} props.type - 'smallMove', 'homeMove', 'officeMove' 중 하나의 이사 타입 값.
  *                                    해당 값에 따라 적절한 아이콘, 텍스트, 색상 설정이 적용됩니다.
  * @param {boolean} isShort - ture 이면 짧은 텍스트로 보여집니다. 예) '소형이사' -> '소형'
  *

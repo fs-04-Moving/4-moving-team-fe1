@@ -1,36 +1,29 @@
-import { DriverWithMeta } from '@/types/move.type';
 import UserAvartar from '../atoms/UserAvartar';
 import RatingSummary from '../molecules/RatingSummary';
-import { CustomerMyReviewListDto } from '@/types/dtos/review.dto';
 import ChipMovingType from '../atoms/ChipMovingType';
+import { ServiceType } from '@/types/move.type';
 
-/**
- * DriverCardInLiked 컴포넌트
- *
- * 찜한 기사 목록에서 사용되는 카드 컴포넌트입니다.
- * 기사 요약 정보를 카드로 구성하여 보여줍니다.
- *
- * @param {DriverWithMeta} props - 기사 정보와 메타 데이터를 포함한 Driver 확장 타입
- *
- * @example
- * <DriverCardInEstimate
- *   id="1"
- *   profileImage="/images/sample.jpg"
- *   nickname="김코드"
- *   experience={7}
- *   countCompleteMoving={334}
- *   isLiked={true}
- *   countLike={136}
- *   services={['smallMove', 'homeMove']}
- * />
- */
+type Props = {
+  serviceType: ServiceType;
+  workerProfileImage: string;
+  workerNickname: string;
+  movingDate: Date;
+  price: number;
+};
+
 function DriverCardInCompletedReview({
   serviceType,
   workerProfileImage,
   workerNickname,
   movingDate,
   price,
-}: CustomerMyReviewListDto) {
+}: Props) {
+  const formattedDate = movingDate.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
@@ -52,7 +45,7 @@ function DriverCardInCompletedReview({
             <span className="text-GrayScale-100">|</span>
             <span>
               <span className="text-GrayScale-300">이사일</span>
-              {movingDate}
+              {formattedDate}
             </span>
             <span className="text-GrayScale-100">|</span>
             <span>

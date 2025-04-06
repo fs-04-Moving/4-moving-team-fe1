@@ -1,11 +1,10 @@
-import DriverCardInSearch from '@/components/organisms/DriverCardInSearch';
 import { DriverWithMeta } from '@/types/move.type';
 import imgAvartar from '@/assets/images/avatartion-3.svg';
 import DriverCardInEstimate from '@/components/organisms/DriverCardInEstimate';
 import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
-import DriverCardInPendingReview from '@/components/organisms/DriverCardInPendingReview';
 import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
-import { CustomerMyReviewListDto } from '@/types/dtos/review.dto';
+import { Review } from '@/types/entities/review.entity';
+import { Estimate } from '@/types/entities/estimate.entity';
 
 const mock: DriverWithMeta = {
   id: '12df02342-234234',
@@ -23,7 +22,14 @@ const mock: DriverWithMeta = {
   estimatePrice: 180000,
 };
 
-const mockCustomerMyReviewListDto: CustomerMyReviewListDto = {
+const mockCustomerMyReviewListDto: Pick<
+  Review & Estimate,
+  | 'serviceType'
+  | 'workerProfileImage'
+  | 'workerNickname'
+  | 'movingDate'
+  | 'price'
+> = {
   serviceType: 'smallMove',
   workerProfileImage: imgAvartar,
   workerNickname: '김주영',
