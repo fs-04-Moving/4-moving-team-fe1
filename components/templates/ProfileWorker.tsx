@@ -13,7 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
-import ChipBubbleTypeBoxGen from '../atoms/ChipBubbleTypeBoxGen';
+import ChipBubbleTypeBox from '../atoms/ChipBubbleTypeBox';
 import DividerHor from '../atoms/DividerHor';
 import Label from '../atoms/Label';
 import InputFile from '../molecules/InputFile';
@@ -86,10 +86,6 @@ function ProfileWorker() {
       setServices(newServices);
     }
   };
-
-  // const handleRegionSelect = (region: keyof AreaType) => {
-  //   setServiceAreas(region);
-  // };
 
   const handleMultipleRegionSelect = (
     regions: keyof AreaType | Array<keyof AreaType>
@@ -192,7 +188,7 @@ function ProfileWorker() {
                 ) as ServiceTypeEng;
                 const isSelected = services.includes(serviceEng);
                 return (
-                  <ChipBubbleTypeBoxGen
+                  <ChipBubbleTypeBox
                     key={serviceType}
                     text={serviceType}
                     onClick={() => handleClickServiceChip(serviceType)}

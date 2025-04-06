@@ -8,19 +8,19 @@
 
 import clsx from 'clsx';
 
-interface ChipBubbleTypeBoxProps<T> {
-  text: T;
+interface ChipBubbleTypeBoxProps {
+  text: string;
   isSelected?: boolean;
   onClick?: () => void;
   canClick?: boolean;
 }
 
-function ChipBubbleTypeBoxGen<T extends string>({
+function ChipBubbleTypeBoxGen({
   text,
   isSelected = false,
   onClick,
   canClick = true,
-}: ChipBubbleTypeBoxProps<T>) {
+}: ChipBubbleTypeBoxProps) {
   return (
     <div
       className={clsx(
