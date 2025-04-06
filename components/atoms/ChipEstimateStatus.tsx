@@ -40,7 +40,8 @@ function ChipEstimateStatus({ type, isShort }: Props) {
     >
       <Image src={icon} width={20} alt={'icon'} className="lg:w-[24px]" />
       <span className="leading-none relative top-[1px] text-[13px] lg:text-[16px]">
-        {isShort ? shortenText : text}
+        <span className="lg:hidden">{isShort ? shortenText : text}</span>
+        <span className="hidden lg:inline-block">{text}</span>
       </span>
     </span>
   );

@@ -8,7 +8,7 @@ type Props = {
   profileImage: string;
   nickname: string;
   experience: number;
-  countCompleteMoving: number;
+  workerConfirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
@@ -23,7 +23,7 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
- * @param {number} countCompleteMoving - 확정 이사 건수
+ * @param {number} workerConfirmedEstimatesCount - 확정 이사 건수
  * @param {boolean} isFavorite - 사용자가 이 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 서비스 유형 리스트
@@ -43,7 +43,7 @@ function DriverCardInLiked({
   profileImage,
   nickname,
   experience,
-  countCompleteMoving,
+  workerConfirmedEstimatesCount,
   isFavorite,
   favoritesCount,
   services,
@@ -77,7 +77,7 @@ function DriverCardInLiked({
             </span>
             <span className="text-GrayScale-100">|</span>
             <span>
-              {`${countCompleteMoving}건 `}
+              {`${workerConfirmedEstimatesCount}건 `}
               <span className="text-GrayScale-300">확정</span>
             </span>
           </div>
