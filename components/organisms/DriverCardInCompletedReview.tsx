@@ -11,6 +11,29 @@ type Props = {
   price: number;
 };
 
+/**
+ * DriverCardInCompletedReview 컴포넌트
+ *
+ * 사용자가 작성한 리뷰 페이지 등에서 보여지는 기사 카드입니다.
+ * 서비스 타입, 기사 프로필, 기사 이름, 이사일, 견적가, 별점 등의 정보를 표시합니다.
+ * 주로 리뷰 완료된 기사 정보를 요약해서 보여주는 데 사용됩니다.
+ *
+ * @param {ServiceType} serviceType - 이사 서비스 유형 ('smallMove', 'homeMove', 'officeMove')
+ * @param {string} workerProfileImage - 기사 프로필 이미지 URL
+ * @param {string} workerNickname - 기사 닉네임
+ * @param {Date} movingDate - 이사 완료 날짜 (Date 객체)
+ * @param {number} price - 견적 금액
+ *
+ * @example
+ * <DriverCardInCompletedReview
+ *   serviceType="smallMove"
+ *   workerProfileImage="/images/driver1.png"
+ *   workerNickname="김코드"
+ *   movingDate={new Date('2024-03-15')}
+ *   price={250000}
+ * />
+ */
+
 function DriverCardInCompletedReview({
   serviceType,
   workerProfileImage,

@@ -9,7 +9,7 @@ type Props = {
   experience: number;
   summary: string;
   countCompleteMoving: number;
-  isLiked: boolean;
+  isFavorite: boolean;
   favoritesCount: number;
   serviceTypes: ServiceType[];
   isDirectEstimate: boolean;
@@ -18,23 +18,30 @@ type Props = {
 /**
  * DriverCardInSearch 컴포넌트
  *
- * 검색 결과나 기사 리스트에서 사용되는 카드 컴포넌트입니다.
- * 기사 요약 정보(프로필 이미지, 이름, 경력, 한줄 소개, 별점, 후기 수, 찜 여부, 확정 건수)를 시각적으로 구성하여 보여줍니다.
+ * 기사 검색 결과 또는 기사 리스트 페이지에서 사용되는 카드 UI 컴포넌트입니다.
+ * 기사 한줄 소개, 제공 서비스 유형, 프로필 정보(사진, 이름, 경력, 찜 상태 등)를 시각적으로 구성하여 표시합니다.
+ * '지정 견적 요청 여부'에 따라 ChipEstimateStatus가 함께 표시됩니다.
  *
- * @param {DriverWithMeta} props - 기사 정보와 메타 데이터를 포함한 Driver 확장 타입
+ * @param {string} profileImage - 기사 프로필 이미지 URL
+ * @param {string} nickname - 기사 닉네임
+ * @param {number} experience - 기사 경력 (년 단위)
+ * @param {string} summary - 기사 한줄 소개
+ * @param {number} countCompleteMoving - 기사 완료 이사 건수
+ * @param {boolean} isFavorite - 사용자가 찜한 기사 여부
+ * @param {number} favoritesCount - 이 기사를 찜한 총 사용자 수
+ * @param {ServiceType[]} serviceTypes - 기사가 제공하는 이사 서비스 유형 리스트
+ * @param {boolean} isDirectEstimate - 지정 견적 요청 여부
  *
  * @example
  * <DriverCardInSearch
- *   id="1"
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
  *   summary="안전하고 깔끔한 이사 도와드립니다."
- *   description="20년 경력의 베테랑 이사 전문가입니다."
  *   countCompleteMoving={334}
- *   isLiked={true}
- *   countLike={136}
- *   services={['smallMove', 'homeMove']}
+ *   isFavorite={true}
+ *   favoritesCount={136}
+ *   serviceTypes={['smallMove', 'homeMove']}
  *   isDirectEstimate={true}
  * />
  */
@@ -45,7 +52,7 @@ function DriverCardInSearch({
   experience,
   summary,
   countCompleteMoving,
-  isLiked,
+  isFavorite,
   favoritesCount,
   serviceTypes,
   isDirectEstimate,
@@ -66,8 +73,8 @@ function DriverCardInSearch({
         nickname={nickname}
         experience={experience}
         countCompleteMoving={countCompleteMoving}
-        isLiked={isLiked}
-        countLike={favoritesCount}
+        isFavorite={isFavorite}
+        favoritesCount={favoritesCount}
       />
     </div>
   );

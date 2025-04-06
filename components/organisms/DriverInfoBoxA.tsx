@@ -6,30 +6,41 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  isLiked: boolean;
-  countLike: number;
+  isFavorite: boolean;
+  favoritesCount: number;
   experience: number;
   countCompleteMoving: number;
 };
 
 /**
- * DriverInfoBox
+ * DriverInfoBoxA 컴포넌트
  *
- * 기사님의 프로필 정보 및 활동 정보를 요약해서 보여주는 카드 컴포넌트입니다.
- * 닉네임, 프로필 이미지, 경력, 완료 건수, 찜 상태 등 주요 정보를 전달받아 표시합니다.
+ * 기사님의 프로필 정보를 요약해서 보여주는 카드형 UI 컴포넌트입니다.
+ * 기사님의 닉네임, 프로필 이미지, 경력, 완료한 이사 건수, 찜 여부 및 찜 수, 평점 요약 등을 표시합니다.
+ * 사용자에게 기사 선택에 필요한 핵심 정보들을 한눈에 제공하는 역할을 합니다.
  *
- * @param {string} profileImage - 프로필 이미지 URL
- * @param {string} nickname - 기사님의 닉네임
- * @param {boolean} isLiked - 현재 유저가 찜했는지 여부
- * @param {number} countLike - 총 찜 수
- * @param {number} experience - 기사님의 경력 (단위: 년)
- * @param {number} countCompleteMoving - 완료한 이사 건수
+ * @param {string} profileImage - 기사 프로필 이미지 URL
+ * @param {string} nickname - 기사 닉네임
+ * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지 여부
+ * @param {number} favoritesCount - 해당 기사를 찜한 전체 사용자 수
+ * @param {number} experience - 기사 경력 (단위: 년)
+ * @param {number} countCompleteMoving - 기사 완료 이사 건수
+ *
+ * @example
+ * <DriverInfoBoxA
+ *   profileImage="/images/driver1.png"
+ *   nickname="김코드"
+ *   isFavorite={true}
+ *   favoritesCount={136}
+ *   experience={7}
+ *   countCompleteMoving={334}
+ * />
  */
 function DriverInfoBoxA({
   profileImage,
   nickname,
-  isLiked,
-  countLike,
+  isFavorite,
+  favoritesCount,
   experience,
   countCompleteMoving,
 }: Props) {
@@ -42,7 +53,7 @@ function DriverInfoBoxA({
         {/* 기사 이름 */}
         <div className="flex justify-between">
           <span className="text-[14px] lg:text-lg">{nickname} 기사님</span>
-          <LikeCount isLiked={isLiked} countLike={countLike} />
+          <LikeCount isFavorite={isFavorite} favoritesCount={favoritesCount} />
         </div>
         {/* 별점, 경력, 확정 건수 */}
         <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">

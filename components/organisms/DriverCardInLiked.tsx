@@ -1,26 +1,41 @@
-import { DriverWithMeta } from '@/types/move.type';
+import { ServiceType } from '@/types/move.type';
 import ChipMovingType from '../atoms/ChipMovingType';
 import UserAvartar from '../atoms/UserAvartar';
 import LikeCount from '../molecules/LikeCount';
 import RatingSummary from '../molecules/RatingSummary';
 
+type Props = {
+  profileImage: string;
+  nickname: string;
+  experience: number;
+  countCompleteMoving: boolean;
+  isFavorite: boolean;
+  favoritesCount: number;
+  services: ServiceType[];
+};
+
 /**
  * DriverCardInLiked 컴포넌트
  *
- * 찜한 기사 목록에서 사용되는 카드 컴포넌트입니다.
- * 기사 요약 정보를 카드로 구성하여 보여줍니다.
+ * 사용자가 찜한 기사 리스트에서 보여지는 카드 컴포넌트입니다.
+ * 기사 서비스 타입(Chip), 프로필 이미지, 이름, 경력, 찜 수, 별점, 리뷰 수, 확정 건수 등의 정보를 시각적으로 표시합니다.
  *
- * @param {DriverWithMeta} props - 기사 정보와 메타 데이터를 포함한 Driver 확장 타입
+ * @param {string} profileImage - 기사 프로필 이미지 URL
+ * @param {string} nickname - 기사 닉네임
+ * @param {number} experience - 기사 경력 연수
+ * @param {boolean} countCompleteMoving - 확정 이사 건수
+ * @param {boolean} isFavorite - 사용자가 이 기사를 찜했는지 여부
+ * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
+ * @param {ServiceType[]} services - 기사가 제공하는 서비스 유형 리스트
  *
  * @example
- * <DriverCardInEstimate
- *   id="1"
+ * <DriverCardInLiked
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
  *   countCompleteMoving={334}
- *   isLiked={true}
- *   countLike={136}
+ *   isFavorite={true}
+ *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
  * />
  */
@@ -29,10 +44,10 @@ function DriverCardInLiked({
   nickname,
   experience,
   countCompleteMoving,
-  isLiked,
-  countLike,
+  isFavorite,
+  favoritesCount,
   services,
-}: DriverWithMeta) {
+}: Props) {
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
@@ -47,7 +62,10 @@ function DriverCardInLiked({
           {/* 기사 이름 */}
           <div className="flex justify-between">
             <span className="text-[14px] lg:text-lg">{nickname} 기사님</span>
-            <LikeCount isLiked={isLiked} countLike={countLike} />
+            <LikeCount
+              isFavorite={isFavorite}
+              favoritesCount={favoritesCount}
+            />
           </div>
           {/* 별점, 경력, 확정 건수 */}
           <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
