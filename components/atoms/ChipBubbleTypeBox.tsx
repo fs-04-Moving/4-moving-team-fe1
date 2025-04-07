@@ -33,7 +33,7 @@ function ChipBubbleTypeBox({
           'cursor-pointer hover:border-[#FF4F64] hover:text-[#FF4F64] hover:bg-[#FF4F6410]',
         isSelected
           ? 'border-Primay-Blue-300 text-Primay-Blue-300 bg-Primay-Blue-300/10'
-          : 'border-GrayScale-100 text-black bg-BackGround-100'
+          : 'border-GrayScale-100 text-black bg-BackGround-100/10'
       )}
       onClick={canClick ? onClick : undefined}
       role={canClick ? 'button' : 'presentation'}

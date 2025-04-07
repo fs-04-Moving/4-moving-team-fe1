@@ -2,24 +2,24 @@
 
 import RegionDisplay from '@/components/molecules/RegionDisplay';
 import RegionSelector from '@/components/molecules/RegionSelector';
-import { RegionEntity } from '@/types/entities/region.entity';
+import { AreaType } from '@/types/move.type';
 import { useState } from 'react';
 
 function Page() {
   // 일반 사용자용 (단일 선택)
-  const [selectedRegion, setSelectedRegion] = useState<RegionEntity>(
-    RegionEntity.seoul
-  );
+  const [selectedRegion, setSelectedRegion] = useState<keyof AreaType>('seoul');
 
   // 기사님용 (다중 선택)
-  const [selectedRegions, setSelectedRegions] = useState<RegionEntity[]>([]);
+  const [selectedRegions, setSelectedRegions] = useState<Array<keyof AreaType>>(
+    []
+  );
 
-  const handleRegionSelect = (region: RegionEntity) => {
+  const handleRegionSelect = (region: keyof AreaType) => {
     setSelectedRegion(region);
   };
 
   const handleMultipleRegionSelect = (
-    regions: RegionEntity | RegionEntity[]
+    regions: keyof AreaType | Array<keyof AreaType>
   ) => {
     if (Array.isArray(regions)) {
       setSelectedRegions(regions);
@@ -48,7 +48,7 @@ function Page() {
         <div className='p-4'>
           <RegionSelector
             onRegionSelect={(region) =>
-              handleRegionSelect(region as RegionEntity)
+              handleRegionSelect(region as keyof AreaType)
             }
             selectedRegion={selectedRegion}
           />
