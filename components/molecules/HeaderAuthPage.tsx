@@ -9,7 +9,12 @@ interface Props {
   isSignUpPage: boolean;
 }
 
-function AuthPageHeader({ isSignUpPage, userType }: Props) {
+/**
+ * 로그인/회원가입 페이지 상단
+ * @param param0
+ * @returns
+ */
+function HeaderAuthPage({ isSignUpPage, userType }: Props) {
   const text1: string =
     userType === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
   const text2: string =
@@ -17,7 +22,7 @@ function AuthPageHeader({ isSignUpPage, userType }: Props) {
 
   const pageLink: string = isSignUpPage ? '/auth/sign-up' : '/auth/log-in';
   const linkQuery: string =
-    userType === 'customer' ? '?type=worker' : '?type=customer';
+    userType === 'customer' ? '?userType=worker' : '?userType=customer';
 
   return (
     <div className="flex flex-col items-center mb-10 lg:mb-18">
@@ -36,4 +41,4 @@ function AuthPageHeader({ isSignUpPage, userType }: Props) {
   );
 }
 
-export default AuthPageHeader;
+export default HeaderAuthPage;

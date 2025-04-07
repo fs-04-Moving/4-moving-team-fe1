@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 
 function SignUpPage() {
   const params = useSearchParams();
-  const paramString = params.get('type');
+  const paramString = params.get('userType');
   let userType: Role;
   if (!paramString) {
     userType = 'customer';
