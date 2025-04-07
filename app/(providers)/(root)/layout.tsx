@@ -1,8 +1,6 @@
-'use client';
-
 import { ReactNode } from 'react';
 
-function RootLayout({ children }: { children: ReactNode }) {
+async function RootLayout({ children }: { children: ReactNode }) {
   return <div>{children}</div>;
 }
 

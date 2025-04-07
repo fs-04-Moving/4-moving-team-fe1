@@ -3,7 +3,11 @@ import icSocialKakao from '@/assets/images/ic-social-kakao.svg';
 import icSocialNaver from '@/assets/images/ic-social-naver.svg';
 import Image from 'next/image';
 
-function SocialLogIn() {
+/**
+ * 로그인/회원가입 페이지의 '소셜 로그인' 위젯
+ * @returns
+ */
+function AuthSocialLogIn() {
   return (
     <div className="flex flex-col items-center gap-6 lg:gap-8 mt-12 lg:mt-18 text-xs lg:text-xl text-Black-200">
       <p>SNS 계정으로 간편하게 시작하기</p>
@@ -16,4 +20,4 @@ function SocialLogIn() {
   );
 }
 
-export default SocialLogIn;
+export default AuthSocialLogIn;

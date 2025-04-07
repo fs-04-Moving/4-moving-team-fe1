@@ -2,13 +2,17 @@
 
 import usersApi from '@/api/users/users.api';
 import { logInValidation } from '@/constants/formValidation';
+import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
+import Loader from '../atoms/Loader';
 import InputEmail from '../molecules/InputEmail';
 import InputPassword from '../molecules/InputPassword';
 
@@ -25,14 +29,22 @@ function FormLogIn({ userType }: { userType: Role }) {
       resolver: zodResolver(logInValidation),
     });
 
+  const { logIn: authLogin } = useAuth();
+
+  const router = useRouter();
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const { mutate: logIn } = useMutation({
     mutationFn: (data: LogInDto) => usersApi.logIn(data),
-    onSuccess: () => {
-      alert('로그인 성공!!!');
+    onSuccess: (resData) => {
+      const routePath = resData.hasProfile ? '' : '/profile';
+      router.push(`/${userType}${routePath}`);
+      authLogin?.(userType);
+      setIsProcessing(false);
     },
     onError: (error: AxiosError) => {
+      setIsProcessing(false);
       const errorMessage = error.response?.data || '';
-      console.log(errorMessage);
       if (errorMessage === '유저가 존재하지 않습니다.') {
         setError('email', { message: '존재하지 않는 이메일입니다' });
       } else if (errorMessage === 'Incorrect password') {
@@ -48,8 +60,8 @@ function FormLogIn({ userType }: { userType: Role }) {
   });
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
+    setIsProcessing(true);
     // logIn({ ...inputData, role: userType });
-    console.log('dsaf', { ...inputData, role: userType });
     logIn({ ...inputData, role: userType });
   };
 
@@ -76,7 +88,9 @@ function FormLogIn({ userType }: { userType: Role }) {
               placeholder="비밀번호를 입력해 주세요"
             />
           </div>
-          <ButtonSolid disabled={!formState.isValid}>로그인</ButtonSolid>
+          <ButtonSolid disabled={!formState.isValid || isProcessing}>
+            {isProcessing ? <Loader /> : '로그인'}
+          </ButtonSolid>
         </form>
       </div>
     </div>

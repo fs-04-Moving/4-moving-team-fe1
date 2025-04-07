@@ -14,7 +14,8 @@ interface ChipBubbleTypeBoxProps {
   onClick?: () => void;
   canClick?: boolean;
 }
-function ChipBubbleTypeBox({
+
+function ChipBubbleTypeBoxGen({
   text,
   isSelected = false,
   onClick,
@@ -23,13 +24,13 @@ function ChipBubbleTypeBox({
   return (
     <div
       className={clsx(
-        'rounded-full px-3 lg:px-5 py-1.5 lg:py-2.5 text-sm lg:text-lg font-medium transition-colors duration-200 border',
+        'text-center rounded-full px-3 lg:px-5 py-1.5 lg:py-2.5 text-sm lg:text-lg font-medium transition-colors duration-200 border',
         canClick &&
-          !isSelected &&
-          'cursor-pointer hover:border-Primay-Blue-300 hover:text-Primay-Blue-300 hover:bg-Primay-Blue-300/10',
-        canClick &&
-          isSelected &&
-          'cursor-pointer hover:border-[#FF4F64] hover:text-[#FF4F64] hover:bg-[#FF4F6410]',
+          // !isSelected &&
+          'cursor-pointer hover:text-Primay-Blue-300',
+        // canClick &&
+        //   isSelected &&
+        //   'cursor-pointer hover:border-[#FF4F64] hover:text-[#FF4F64] hover:bg-[#FF4F6410]',
         isSelected
           ? 'border-Primay-Blue-300 text-Primay-Blue-300 bg-Primay-Blue-300/10'
           : 'border-GrayScale-100 text-black bg-BackGround-100/10'
@@ -42,4 +43,4 @@ function ChipBubbleTypeBox({
   );
 }
 
-export default ChipBubbleTypeBox;
+export default ChipBubbleTypeBoxGen;

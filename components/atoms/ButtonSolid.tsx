@@ -26,7 +26,6 @@ function ButtonSolid({
   children,
   onClick,
 }: Props) {
-  console.log(children);
   const defaultClassName = clsx(
     'w-full flex justify-center items-center h-[54px] lg:h-16 bg-Primay-Blue-300 hover:bg-Primay-Blue-200 cursor-pointer rounded-2xl lg:text-xl font-semibold text-GrayScale-50'
   );

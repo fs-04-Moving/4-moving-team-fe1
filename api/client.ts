@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import usersApi from './users/users.api';
 
+// const baseURL = 'http://192.168.123.100:5050';
 const baseURL = 'http://localhost:5050';
 
 export const client = axios.create({

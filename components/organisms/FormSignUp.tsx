@@ -7,8 +7,11 @@ import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
+import Loader from '../atoms/Loader';
 import InputEmail from '../molecules/InputEmail';
 import InputPassword from '../molecules/InputPassword';
 import InputText from '../molecules/InputText';
@@ -35,15 +38,18 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
+  const router = useRouter();
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const { mutate: signUp } = useMutation({
     mutationFn: (data: SignUpDto) => usersApi.singUp(data),
     onSuccess: () => {
-      alert('회원가입 완료!!');
+      router.push(`/${userType}/profile`);
+      setIsProcessing(false);
     },
     onError: (error: AxiosError) => {
+      setIsProcessing(false);
       const errorMessage = error.response?.data || '';
-      console.log(errorMessage);
-      console.log(errorMessage);
       if (errorMessage === '이미 존재하는 이메일입니다.') {
         setError('email', { message: '이미 사용중인 이메일입니다' });
       } else {
@@ -100,7 +106,9 @@ function FormSignUp({ userType }: { userType: Role }) {
               placeholder="비밀번호를 다시 한 번 입력해 주세요"
             />
           </div>
-          <ButtonSolid disabled={!formState.isValid}>회원가입</ButtonSolid>
+          <ButtonSolid disabled={!formState.isValid || isProcessing}>
+            {isProcessing ? <Loader /> : '회원가입'}
+          </ButtonSolid>
         </form>
       </div>
     </div>
