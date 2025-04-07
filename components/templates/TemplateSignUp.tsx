@@ -1,6 +1,6 @@
 'use client';
 
-import { Role } from '@/types/dtos/user.dto';
+import { Role } from '@/types/entities/user.entity';
 import AuthPageFooter from '../molecules/AuthPageFooter';
 import AuthPageHeader from '../molecules/AuthPageHeader';
 import FormSignUp from '../organisms/FormSignUp';
