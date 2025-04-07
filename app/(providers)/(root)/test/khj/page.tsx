@@ -1,5 +1,6 @@
 "use client";
 import CheckModalRoot from "@/components/templates/CheckModalRoot";
+import ModalUse from "@/components/templates/ModalUse";
 import ResponsiveModal from "@/components/templates/ResponsiveModal";
 import { useState } from "react";
 
@@ -21,6 +22,18 @@ function Page() {
           }}
         />
       </ResponsiveModal>
+
+      <div className="">
+        <ModalUse buttonText="모달 열기">
+          {(closeModal) => (
+            <CheckModalRoot
+              closeModal={() => {
+                closeModal();
+              }}
+            />
+          )}
+        </ModalUse>
+      </div>
     </div>
   );
 }

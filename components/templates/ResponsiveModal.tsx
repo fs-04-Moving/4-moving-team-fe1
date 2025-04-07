@@ -18,15 +18,15 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Overlay */}
+          {/* sm일때, 아래에서 위 적용 */}
           <div
             onClick={onClose}
             className="fixed inset-0 z-40
-              bg-gray-300/30 backdrop-blur-[1px]
-              transition-all duration-300"
+            bg-gray-300/30 backdrop-blur-[1px]
+            transition-all duration-300"
           />
 
-          {/* Modal */}
+          {/* sm이 아닐때, 일반적인 모달 */}
           <motion.div
             key="modal"
             initial={{ opacity: 0, y: "100%" }}
