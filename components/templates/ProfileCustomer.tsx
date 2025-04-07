@@ -1,7 +1,6 @@
 'use client';
 
 import profilesApi from '@/api/profiles/profiles.api';
-import { useAuth } from '@/contexts/AuthContext';
 import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
 import {
   ServiceTypeEng,
@@ -10,7 +9,7 @@ import {
 } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -31,12 +30,11 @@ function ProfileCustomer() {
     defaultValues: { profileImage: null },
   });
 
-  const { isLoggedIn } = useAuth();
+  const queryClient = new QueryClient();
 
-  console.log('isLoggedIn', isLoggedIn);
+  const router = useRouter();
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
 
   const handleClickStart = (inputData: FormProfileInput) => {
     setIsProcessing(true);
@@ -52,6 +50,7 @@ function ProfileCustomer() {
     mutationFn: (data: CreateCustomerProfileDto) =>
       profilesApi.createCustomerProfile(data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['me'] });
       router.replace('/customer');
       setIsProcessing(false);
     },

@@ -14,10 +14,9 @@ export const client = axios.create({
 client.interceptors.request.use(
   (config) => {
     if (
-      config.url === '/users/refresh-token' ||
-      config.url === '/users/sign-up' ||
-      config.url === '/users/log-in' ||
-      config.url === '/users/check-nickname'
+      config.url === '/auth/refresh-token' ||
+      config.url === '/auth/sign-up' ||
+      config.url === '/auth/log-in'
     )
       return config;
     let accessToken;
@@ -43,6 +42,7 @@ client.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const statusCode = error.response?.status;
+    console.log('interceptor statusCode', error.response);
     if ((statusCode === 401 || statusCode === 419) && !originalRequest._retry) {
       console.log('토큰 만료');
       originalRequest._retry = true;

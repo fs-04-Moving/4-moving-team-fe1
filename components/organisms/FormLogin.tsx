@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -30,6 +30,7 @@ function FormLogIn({ userType }: { userType: Role }) {
     });
 
   const { logIn: authLogin } = useAuth();
+  const queryClient = new QueryClient();
 
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -37,9 +38,10 @@ function FormLogIn({ userType }: { userType: Role }) {
   const { mutate: logIn } = useMutation({
     mutationFn: (data: LogInDto) => usersApi.logIn(data),
     onSuccess: (resData) => {
+      queryClient.invalidateQueries({ queryKey: ['me'] });
       const routePath = resData.hasProfile ? '' : '/profile';
       router.push(`/${userType}${routePath}`);
-      authLogin?.(userType);
+      authLogin?.();
       setIsProcessing(false);
     },
     onError: (error: AxiosError) => {

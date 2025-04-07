@@ -2,10 +2,11 @@
 
 import usersApi from '@/api/users/users.api';
 import { signUpValidation } from '@/constants/formValidation';
-import { SignUpDto } from '@/types/dtos/auth.dto';
+import { useAuth } from '@/contexts/AuthContext';
+import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { QueryClient, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -38,14 +39,19 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
+  const queryClient = new QueryClient();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
+  const { logIn: authLogin } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const { mutate: signUp } = useMutation({
     mutationFn: (data: SignUpDto) => usersApi.singUp(data),
     onSuccess: () => {
-      router.push(`/${userType}/profile`);
-      setIsProcessing(false);
+      logIn({ email, password, role: userType });
+      // router.push(`/${userType}/profile`);
+      // setIsProcessing(false);
     },
     onError: (error: AxiosError) => {
       setIsProcessing(false);
@@ -58,7 +64,20 @@ function FormSignUp({ userType }: { userType: Role }) {
     },
   });
 
+  const { mutate: logIn } = useMutation({
+    mutationFn: (data: LogInDto) => usersApi.logIn(data),
+    onSuccess: (resData) => {
+      queryClient.invalidateQueries({ queryKey: ['me'] });
+      const routePath = resData.hasProfile ? '' : '/profile';
+      router.push(`/${userType}${routePath}`);
+      authLogin?.();
+      setIsProcessing(false);
+    },
+  });
+
   const handleClickSignUp = (inputData: FormSignUpInput) => {
+    setEmail(inputData.email);
+    setPassword(inputData.password);
     signUp({ ...inputData, role: userType });
   };
 

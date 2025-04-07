@@ -7,6 +7,7 @@ interface Props {
   disabled?: boolean;
   showIcon?: boolean;
   children: ReactNode;
+  isGnb?: boolean;
   onClick?: () => void;
 }
 
@@ -24,7 +25,9 @@ function ButtonSolid({
   disabled = false,
   showIcon = false,
   children,
+  isGnb = false,
   onClick,
+  ...props
 }: Props) {
   const defaultClassName = clsx(
     'w-full flex justify-center items-center h-[54px] lg:h-16 bg-Primay-Blue-300 hover:bg-Primay-Blue-200 cursor-pointer rounded-2xl lg:text-xl font-semibold text-GrayScale-50'
@@ -34,11 +37,14 @@ function ButtonSolid({
     '!bg-GrayScale-100 !cursor-default': disabled,
   });
 
+  const gnbClassName = clsx({ '!h-11 lg:!text-lg': isGnb });
+
   return (
     <button
       disabled={disabled}
-      className={clsx(defaultClassName, disableClassName)}
+      className={clsx(defaultClassName, disableClassName, gnbClassName)}
       onClick={onClick}
+      {...props}
     >
       <div className="flex">
         <span>{children}</span>
