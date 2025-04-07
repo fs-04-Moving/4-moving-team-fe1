@@ -9,7 +9,7 @@ import {
 } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -30,7 +30,7 @@ function ProfileCustomer() {
     defaultValues: { profileImage: null },
   });
 
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
 

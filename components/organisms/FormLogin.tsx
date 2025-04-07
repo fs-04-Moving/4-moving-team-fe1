@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -30,7 +30,7 @@ function FormLogIn({ userType }: { userType: Role }) {
     });
 
   const { logIn: authLogin } = useAuth();
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);

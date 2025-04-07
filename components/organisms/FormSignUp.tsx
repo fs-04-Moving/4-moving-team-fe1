@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -39,7 +39,7 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const { logIn: authLogin } = useAuth();
@@ -76,6 +76,7 @@ function FormSignUp({ userType }: { userType: Role }) {
   });
 
   const handleClickSignUp = (inputData: FormSignUpInput) => {
+    setIsProcessing(true);
     setEmail(inputData.email);
     setPassword(inputData.password);
     signUp({ ...inputData, role: userType });

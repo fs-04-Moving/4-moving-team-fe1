@@ -1,78 +1,133 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import usersApi from './users/users.api';
 
-// const baseURL = 'http://192.168.123.100:5050';
-const baseURL = 'http://localhost:5050';
+const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const client = axios.create({
   baseURL,
+  withCredentials: true, // 쿠키를 요청에 포함시킴 (SSR에서도 사용 가능)
 });
 
-// ---------------- axios interceptors 설정하기
-// request interceptor
-// - headers에 accessToken 실어 보내기
+// ✅ request interceptor: 클라이언트 환경에서만 accessToken 헤더에 포함
 client.interceptors.request.use(
   (config) => {
+    // Auth 관련 경로는 제외
     if (
       config.url === '/auth/refresh-token' ||
       config.url === '/auth/sign-up' ||
       config.url === '/auth/log-in'
-    )
+    ) {
       return config;
-    let accessToken;
-    if (typeof window !== 'undefined') {
-      accessToken = localStorage.getItem('accessToken');
     }
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
+
+    // SSR 환경에서는 Authorization 건드리지 않음
+    if (typeof window === 'undefined') {
+      return config;
     }
+
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken && !config.headers?.Authorization) {
+      config.headers = config.headers || {};
+      config.headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// response interceptor
-// - 401 에러 시 refreshToken 요청(accessToken 재발급) 후 -에러가 발생한- 기존 요청을 재요청
+// ✅ response interceptor: accessToken 만료 시 refreshToken 쿠키로 재요청
+
+// refreshToken 무한 루프로 다시 입력한 코드
 client.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
     const statusCode = error.response?.status;
-    console.log('interceptor statusCode', error.response);
-    if ((statusCode === 401 || statusCode === 419) && !originalRequest._retry) {
-      console.log('토큰 만료');
-      originalRequest._retry = true;
-      let prevRefreshToken;
-      if (typeof window !== 'undefined') {
-        prevRefreshToken = localStorage.getItem('refreshToken');
-      }
-      if (!prevRefreshToken) {
-        return;
-      }
-      const { accessToken } = await usersApi.refreshToken(prevRefreshToken);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('accessToken', accessToken);
-      }
-      originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-      return client.request(originalRequest);
+
+    // ✅ refreshToken 요청 자체에서 에러면 빠져나가기
+    if (
+      originalRequest.url.includes('/auth/refresh-token') ||
+      originalRequest._retry
+    ) {
+      return Promise.reject(error);
     }
+
+    if (statusCode === 401 || statusCode === 419) {
+      originalRequest._retry = true;
+
+      try {
+        const res = await usersApi.refreshToken();
+
+        if (!res || !res.accessToken) {
+          console.warn('❌ Failed to refresh token.');
+          return Promise.reject(error);
+        }
+
+        const { accessToken } = res;
+
+        // ✅ 새 토큰을 헤더에 반영
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+        return client(originalRequest); // 재요청
+      } catch (refreshError) {
+        // ✅ refreshToken도 만료됐거나 문제 생긴 경우 → 로그아웃
+        console.error('🔥 Refresh token failed', refreshError);
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('accessToken');
+        }
+        return Promise.reject(refreshError);
+      }
+    }
+
     return Promise.reject(error);
   }
 );
 
-export function errorHandler(error: AxiosError | Error | unknown) {
+export function errorHandler(error: unknown) {
   console.log('AxiosError', error);
+
   if (axios.isAxiosError(error) && error.response) {
-    throw new Error(`${error.response.status}: ${error.response.data}`);
+    const status = error.response.status;
+    const data = error.response.data;
+
+    // 인증 관련 에러는 부드럽게 무시
+    if (
+      status === 401 &&
+      typeof data === 'string' &&
+      data.includes('No refresh token')
+    ) {
+      console.warn('🚫 No refresh token. Skipping silently.');
+      return null;
+    }
+
+    if (status === 403) {
+      console.warn('🚫 Forbidden. Maybe token expired.');
+      return null;
+    }
+
+    // 기타 에러는 에러 메세지 포함해서 throw
+    throw new Error(
+      `${status}: ${typeof data === 'string' ? data : JSON.stringify(data)}`
+    );
   } else {
+    // Axios가 아니거나 응답이 없는 경우
     if (error instanceof Error) {
       throw new Error(error.message);
     } else {
-      throw new Error('알 수 없는 에러로 요청에 실패하였습니다.');
+      throw new Error('Unknown error occurred');
     }
   }
 }
+// export function errorHandler(error: AxiosError | Error | unknown) {
+//   console.log('AxiosError', error);
+//   if (axios.isAxiosError(error) && error.response) {
+//     throw new Error(`${error.response.status}: ${error.response.data}`);
+//   } else {
+//     if (error instanceof Error) {
+//       throw new Error(error.message);
+//     } else {
+//       throw new Error('알 수 없는 에러로 요청에 실패하였습니다.');
+//     }
+//   }
+// }

@@ -1,15 +1,34 @@
 'use client';
 
+import usersApi from '@/api/users/users.api';
 import icAlarm from '@/assets/images/ic-alarm.svg';
 import icMenu from '@/assets/images/ic-menu.svg';
 import icProfile from '@/assets/images/ic-profile.svg';
 import { useAuth } from '@/contexts/AuthContext';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import ButtonSolid from '../atoms/ButtonSolid';
 
 function ButtonAuth() {
-  const { isLoggedIn, authUser, logOut } = useAuth();
+  const { logOut } = useAuth();
+  const queryClient = useQueryClient();
+
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Hydration 후 렌더링 시작
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  const { data: user } = useQuery({
+    queryKey: ['me'],
+    queryFn: usersApi.getUserMe,
+    initialData: () => queryClient.getQueryData(['me']),
+    staleTime: 1000 * 60 * 5, // 5분 동안은 재요청 안함 (CSR 시 중복 방지)
+    enabled: typeof window !== 'undefined', // CSR에서만 실행되게
+  });
 
   const router = useRouter();
   const handleClickLogIn = () => {
@@ -19,7 +38,9 @@ function ButtonAuth() {
   const handleClickLogOut = () => {
     logOut?.();
   };
-  if (isLoggedIn && authUser) {
+
+  if (!isHydrated) return null; // 👈 hydration이 끝날 때까지 렌더링 안함
+  if (user) {
     return (
       <div className="flex items-center">
         <Image
@@ -29,9 +50,9 @@ function ButtonAuth() {
         />
 
         <div className="flex items-center relative w-6 h-6 lg:w-9 lg:h-9 ml-6 lg:ml-8 cursor-pointer">
-          {authUser.profileImage ? (
+          {user.profileImage ? (
             <Image
-              src={authUser.profileImage}
+              src={user.profileImage}
               alt="프로필 이미지"
               fill
               className="rounded-full"
@@ -45,7 +66,7 @@ function ButtonAuth() {
           )}
         </div>
         <p className="hidden ml-4 lg:block text-lg font-medium text-Black-400 cursor-pointer">
-          {authUser.name}
+          {user.name}
         </p>
         <Image
           src={icMenu}
