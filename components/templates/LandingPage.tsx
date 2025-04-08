@@ -1,16 +1,11 @@
-'use client';
-
 import landing01 from '@/assets/images/landing-img-01.svg';
 import landing02 from '@/assets/images/landing-img-02.svg';
 import landing03 from '@/assets/images/landing-img-03.svg';
-import useHasFinishedSsr from '@/hooks/useHasFinishedSsr';
 import Image from 'next/image';
 import ButtonsLandingPage from '../atoms/ButtonsLandingPage';
 import TitleLandingImage from '../atoms/TitleLandingImage';
 
 function LandingPage() {
-  const hasFinishedSsr = useHasFinishedSsr();
-  if (!hasFinishedSsr) return null;
   return (
     <div className="h-[100%] bg-[#f5f7fb]">
       <div className="flex flex-col justify-center items-center gap-11 lg:gap-12">

@@ -41,7 +41,7 @@ export const useAuth = () => useContext(AuthContext);
 /**
  * - SSR로 받은 유저 정보(user)가 있다면 isLoggedIn = true로 초기화
  * - useEffect로 user 상태에 따라 isLoggedIn, isAuthInitialized 세팅
- * - isAuthInitialized가 false일 땐 아무 것도 하지 않도록(useAuthRedirect 훅에서 처리)
+ * - isAuthInitialized가 false일 땐 아무 것도 하지 않도록
  * @param param0
  * @returns
  */
@@ -83,24 +83,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     queryClient.removeQueries({ queryKey: ['me'] });
     router.replace('/');
   };
-
-  // useEffect(() => {
-  //   async function initAuthStatus() {
-  //     try {
-  //       const accessToken = localStorage.getItem('accessToken');
-  //       if (!accessToken) return;
-
-  //       setIsLoggedIn(true);
-  //       console.log('setIsLoggedIn', isLoggedIn);
-  //     } catch (error) {
-  //       console.error('refreshToken이 없거나 만료', error);
-  //     } finally {
-  //       setIsAuthInitialized(true);
-  //     }
-  //   }
-
-  //   initAuthStatus();
-  // }, []);
 
   const value: AuthContextValue = {
     isLoggedIn,

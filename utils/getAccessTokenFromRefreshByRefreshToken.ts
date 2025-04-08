@@ -1,4 +1,10 @@
-export async function getAccessTokenFromRefreshWithRefreshToken(
+/**
+ * 미들웨어에서 사용
+ * - getAccessTokenFromRefresh와의 차이는 파라미터로 token을 받는지 안 받는지
+ * @param refreshToken
+ * @returns
+ */
+export async function getAccessTokenFromRefreshByRefreshToken(
   refreshToken: string | { value: string }
 ): Promise<string | null> {
   try {

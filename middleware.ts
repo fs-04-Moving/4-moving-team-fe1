@@ -1,40 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserMeServer } from './api/user/user.api'; // 너가 이미 만들어둔 서버 유저 정보 fetch 함수
-import { getAccessTokenFromRefreshWithRefreshToken } from './utils/getAccessTokenFromRefreshByRefreshTokenWithRefreshToken';
+import { getUserFromRequest } from './utils/getUserFromRequest';
 
 // 접근 가능한 경로 정의
 const PUBLIC_ROUTES = ['/', '/auth/log-in', '/auth/sign-up'];
 const PROFILE_ROUTES = ['/customer/profile', '/worker/profile'];
+// 테스트 라우트 임시 등록
+// TODO: 추후 삭제
+const TEST_ROUTES = [
+  '/test/jhm',
+  '/test/jjh',
+  '/test/kem',
+  '/test/khj',
+  '/test/khjoo',
+  '/test/khju',
+  '/test/kjy',
+  '/test/usm',
+];
 
 /**
- * 쿠키로부터 accessToken을 얻고 유저 정보를 반환하는 함수
- */
-async function getUserFromRequest(req: NextRequest) {
-  const refreshToken = req.cookies.get('refreshToken');
-  if (!refreshToken) return null;
-
-  const accessToken = await getAccessTokenFromRefreshWithRefreshToken(
-    refreshToken
-  );
-  if (!accessToken) return null;
-
-  try {
-    const user = await getUserMeServer(accessToken);
-    return { accessToken, user };
-  } catch (error) {
-    console.error('Failed to fetch user from access token', error);
-    return null;
-  }
-}
-
-/**
- * 미들웨어 메인 함수
+ * 라우트 리다이렉트 미들웨어
+ * - 퍼블릭 라우트 외에도 user정보 fetch를 통해 모든 리다이렉트 처리
+ * - 클라이언트에서의 리다이렉트 최소화(깜박임이 UX를 너무너무 저해시키므로)
  */
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // 1. 퍼블릭 라우트: 로그인하지 않은 사용자 접근 허용
-  if (PUBLIC_ROUTES.includes(pathname)) {
+  if (PUBLIC_ROUTES.includes(pathname) || TEST_ROUTES.includes(pathname)) {
     const result = await getUserFromRequest(req);
     if (!result) return NextResponse.next();
 
@@ -76,9 +68,11 @@ export const config = {
 };
 
 /**
+ * 퍼블릭 라우트만 리다이렉트
+ *
  * refreshToken을 이용해 accessToken을 받아오는 유틸 함수
  */
-// async function getAccessTokenFromRefreshWithRefreshToken(
+// async function getAccessTokenFromRefreshByRefreshToken(
 //   refreshToken: string | { value: string }
 // ): Promise<string | null> {
 //   try {

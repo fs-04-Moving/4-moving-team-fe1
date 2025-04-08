@@ -34,7 +34,7 @@ export async function getUserMeServer(accessToken: string) {
 
   if (!res.ok) {
     const text = await res.text();
-    console.error('❌ SSR fetch 실패', text);
+    console.error('SSR fetch 실패', text);
     throw new Error(`Failed to fetch user info: ${res.status}`);
   }
 

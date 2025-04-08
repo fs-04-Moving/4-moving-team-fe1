@@ -43,6 +43,7 @@ function FormLogIn({ userType }: { userType: Role }) {
       if (user) {
         authLogin?.();
         // AuthContext에서 리다이렉트를 처리하는 것에 비해 유연하고, 깜박거림의 현상도 확실히 줄일 수 있었음
+        // useAuthRedirect나 middleware에서 리다이렉트를 처리하더라도 로그인/회원가입에서는 이렇게 직접 처리해야 정상 작동
         const routePath = user.hasProfile ? '' : '/profile';
         router.push(`/${userType}${routePath}`);
         setIsProcessing(false);
@@ -67,7 +68,6 @@ function FormLogIn({ userType }: { userType: Role }) {
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
     setIsProcessing(true);
-    // logIn({ ...inputData, role: userType });
     logIn({ ...inputData, role: userType });
   };
 

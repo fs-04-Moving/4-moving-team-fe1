@@ -50,8 +50,6 @@ function FormSignUp({ userType }: { userType: Role }) {
     mutationFn: (data: SignUpDto) => authApi.singUp(data),
     onSuccess: () => {
       logIn({ email, password, role: userType });
-      // router.push(`/${userType}/profile`);
-      // setIsProcessing(false);
     },
     onError: (error: AxiosError) => {
       setIsProcessing(false);
