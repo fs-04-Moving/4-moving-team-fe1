@@ -12,7 +12,7 @@ import { ko } from 'date-fns/locale';
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: number;
+  experience: string;
   workerConfirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;

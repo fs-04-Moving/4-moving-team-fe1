@@ -1,4 +1,3 @@
-import { ServiceType } from '@/types/move.type';
 import ChipMovingType from '../atoms/ChipMovingType';
 import UserAvartar from '../atoms/UserAvartar';
 import LikeCount from '../molecules/LikeCount';
@@ -7,11 +6,11 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: number;
+  experience: string;
   workerConfirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
-  services: ServiceType[];
+  services: string[];
 };
 
 /**

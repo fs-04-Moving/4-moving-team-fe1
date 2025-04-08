@@ -14,7 +14,6 @@ interface ChipBubbleTypeBoxProps {
   onClick?: () => void;
   canClick?: boolean;
 }
-
 function ChipBubbleTypeBox({
   text,
   isSelected = false,

@@ -1,17 +1,17 @@
 'use client';
 
-import { Role } from '@/types/dtos/user.dto';
-import AuthPageFooter from '../molecules/AuthPageFooter';
-import AuthPageHeader from '../molecules/AuthPageHeader';
+import { Role } from '@/types/entities/user.entity';
+import FooterAuthPage from '../molecules/FooterAuthPage';
+import HeaderAuthPage from '../molecules/HeaderAuthPage';
 import FormLogIn from '../organisms/FormLogin';
 
 function TemplateLogIn({ userType }: { userType: Role }) {
   return (
     <div className="w-full flex flex-col justify-center items-center mt-[42px] mb-20">
       <div className="w-full flex flex-col justify-center">
-        <AuthPageHeader isSignUpPage={false} userType={userType} />
+        <HeaderAuthPage isSignUpPage={false} userType={userType} />
         <FormLogIn userType={userType} />
-        <AuthPageFooter isSignUpPage={false} userType={userType} />
+        <FooterAuthPage isSignUpPage={false} userType={userType} />
       </div>
     </div>
   );

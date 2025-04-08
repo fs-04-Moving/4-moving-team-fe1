@@ -1,6 +1,6 @@
 import imgAvartar from '@/assets/images/avatartion-3.svg';
 import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
-import { Estimate } from '@/types/entities/estimate.entity';
+import { ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { User } from '@/types/entities/user.entity';
 import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
 import DriverCardInWating from '@/components/organisms/DriverCardInWating';
@@ -10,18 +10,17 @@ import DriverCardInCompletedReview from '@/components/organisms/DriverCardInComp
 
 const mockDriverCommonData: Pick<
   User,
-  'id' | 'nickname' | 'profileImage' | 'experience'
+  'id' | 'nickname' | 'profileImage' | 'experience' | 'serviceAreas'
 > & {
   summary: string;
   description: string;
   workerConfirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
-  serviceAreas: { seoul?: string; gyeonggi?: string; incheon?: string };
-  services: Estimate['serviceType'][];
+  services: ServiceTypeEng[];
   isDirectEstimate: boolean;
   estimatePrice: number;
-  serviceType: Estimate['serviceType'];
+  serviceType: ServiceTypeEng;
   workerProfileImage: string;
   workerNickname: string;
   movingDate: Date;
@@ -37,13 +36,13 @@ const mockDriverCommonData: Pick<
   id: 'driver-001',
   profileImage: imgAvartar,
   nickname: '이삿짐마스터',
-  experience: 8,
+  experience: '8',
   summary: '빠르고 안전한 이사를 약속드립니다.',
   description: '서울 및 수도권 전문',
   workerConfirmedEstimatesCount: 342,
   isFavorite: true,
   favoritesCount: 128,
-  serviceAreas: { seoul: '서울', incheon: '인천' },
+  serviceAreas: ['seoul', 'gyeonggi', 'incheon', 'gangwon', 'chungbuk'],
   services: ['smallMove', 'homeMove'],
   isDirectEstimate: true,
   estimatePrice: 180000,

@@ -1,4 +1,4 @@
-import { AreaType, ServiceType } from '@/types/move.type';
+import { AREA_DATA, ServiceType } from '@/types/move.type';
 import ButtonSolid from '../atoms/ButtonSolid';
 import ButtonOutlined from '../atoms/ButtonOutlined';
 import ChipText from '../atoms/ChipText';
@@ -6,17 +6,18 @@ import UserAvartar from '../atoms/UserAvartar';
 import RatingSummary from '../molecules/RatingSummary';
 import Image from 'next/image';
 import icWriting from '@/assets/images/ic-writing.svg';
+import { Area } from '@/types/entities/user.entity';
 
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: number;
+  experience: string;
   workerConfirmedEstimatesCount: number;
   services: ServiceType[];
   onConfirm?: () => void;
   onViewDetail?: () => void;
   summary: string;
-  serviceAreas: AreaType;
+  serviceAreas: Area[];
 };
 
 /**
@@ -71,6 +72,10 @@ function DriverCardInProfile({
         return '사무실이사';
     }
   });
+
+  const formattedServiceAreas: string[] = serviceAreas.map(
+    (aera) => AREA_DATA[aera]
+  );
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -142,7 +147,7 @@ function DriverCardInProfile({
               </span>
               <span className="flex items-center gap-2 lg:gap-3">
                 <ChipText>지역</ChipText>
-                <span>{Object.values(serviceAreas).join(', ')}</span>
+                <span>{Object.values(formattedServiceAreas).join(', ')}</span>
               </span>
             </div>
           </div>

@@ -23,7 +23,7 @@ const logIn = async (dto: LogInDto) => {
 };
 
 // 토큰 재발급
-const refreshToken = async (prevRefreshToken: RefreshTokenDto) => {
+const refreshToken = async (prevRefreshToken: RefreshTokenDto | string) => {
   try {
     const url = '/users/refresh-token';
     const response = await client.post(url, { prevRefreshToken });
@@ -40,9 +40,9 @@ const refreshToken = async (prevRefreshToken: RefreshTokenDto) => {
 };
 
 // 내 정보 조회
-const getMe = async () => {
+const getUserMe = async () => {
   try {
-    const url = '/users/me';
+    const url = '/user/me';
     const response = await client.get(url);
 
     return response.data;
@@ -55,7 +55,7 @@ const usersApi = {
   singUp,
   logIn,
   refreshToken,
-  getMe,
+  getUserMe,
 };
 
 export default usersApi;

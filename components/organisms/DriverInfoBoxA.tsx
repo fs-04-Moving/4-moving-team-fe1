@@ -8,7 +8,7 @@ type Props = {
   nickname: string;
   isFavorite: boolean;
   favoritesCount: number;
-  experience: number;
+  experience: string;
   countCompleteMoving: number;
 };
 

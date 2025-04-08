@@ -1,27 +1,29 @@
 import icBox from '@/assets/images/ic-box.svg';
 import icCompany from '@/assets/images/ic-company.svg';
 import icHome from '@/assets/images/ic-home.svg';
-import { ServiceType } from '@/types/move.type';
 import Image from 'next/image';
 
 interface Props {
-  type: ServiceType;
+  type: string;
   isShort?: boolean;
 }
 /**
  * ChipMovingType 컴포넌트
  *
- * 이 컴포넌트는 이사 서비스의 종류(소형이사, 가정이사, 사무실이사)에 따라
+ * 이 컴포넌트는 이사 서비스의 종류(예: 'smallMove', 'homeMove', 'officeMove')에 따라
  * 아이콘, 텍스트, 색상을 표시하는 칩 형태의 UI 요소를 렌더링합니다.
+ * 만약 전달된 type 값에 해당하는 설정이 없으면 컴포넌트는 아무것도 렌더링하지 않습니다.
  *
- * @param {string} props.type - 'smallMove', 'homeMove', 'officeMove' 중 하나의 이사 타입 값.
- *                                    해당 값에 따라 적절한 아이콘, 텍스트, 색상 설정이 적용됩니다.
- * @param {boolean} isShort - ture 이면 짧은 텍스트로 보여집니다. 예) '소형이사' -> '소형'
+ * @param {string} props.type - 이사 서비스 타입 문자열 (예: 'smallMove', 'homeMove', 'officeMove')
+ * @param {boolean} [isShort] - true이면 짧은 텍스트(예: '소형')를, false이면 전체 텍스트(예: '소형이사')를 표시합니다.
  *
- * @returns {JSX.Element} 선택된 이사 타입에 맞는 스타일이 적용된 칩 컴포넌트.
+ * @returns {JSX.Element | null} 선택된 이사 타입에 맞는 스타일의 칩 컴포넌트. 타입에 해당하는 설정이 없으면 null을 반환합니다.
  */
 function ChipMovingType({ type, isShort }: Props) {
-  const config = {
+  const config: Record<
+    string,
+    { icon: string; text: string; shortenText: string }
+  > = {
     smallMove: {
       icon: icBox,
       text: '소형이사',
@@ -38,6 +40,9 @@ function ChipMovingType({ type, isShort }: Props) {
       shortenText: '사무실',
     },
   };
+
+  // type에 해당하는 값이 없으면 null 반환 (안전하게 처리)
+  if (!config[type]) return null;
 
   const { icon, text, shortenText } = config[type];
   return (
