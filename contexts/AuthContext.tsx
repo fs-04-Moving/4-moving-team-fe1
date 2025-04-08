@@ -4,6 +4,7 @@ import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
 import { Role } from '@/types/entities/user.entity';
 import { useQueryClient } from '@tanstack/react-query';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -39,6 +40,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const user: User | undefined = queryClient.getQueryData(['me']);
 
+  const pathName = usePathname();
+  const router = useRouter();
+
   const logIn = () => {
     setIsLoggedIn(true);
     setIsAuthInitialized(true);
@@ -58,12 +62,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    if (isLoggedIn) return;
+
+    if (
+      !(
+        pathName === '/auth/log-in' ||
+        pathName === '/auth/sign-up' ||
+        pathName === '/'
+      )
+    ) {
+      router.replace('/');
+    }
+  }, [isLoggedIn, pathName, router]);
+
+  useEffect(() => {
     async function initAuthStatus() {
       try {
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) return;
 
         setIsLoggedIn(true);
+        console.log('setIsLoggedIn', isLoggedIn);
       } catch (error) {
         console.error('refreshToken이 없거나 만료', error);
       } finally {
