@@ -13,7 +13,6 @@ const TEST_ROUTES = [
   '/test/jjh',
   '/test/kem',
   '/test/khj',
-  '/test/khjoo',
   '/test/khju',
   '/test/kjy',
   '/test/usm',
