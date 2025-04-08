@@ -5,7 +5,8 @@ import { User } from '@/types/entities/user.entity';
 import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
 import DriverCardInWating from '@/components/organisms/DriverCardInWating';
 import { EstimateRequestStatus } from '@/types/move.type';
-import ChipText from '@/components/atoms/ChipText';
+import DriverCardInProfile from '@/components/organisms/DriverCardInProfile';
+import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
 
 const mockDriverCommonData: Pick<
   User,
@@ -66,7 +67,8 @@ function page() {
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
       <DriverCardInLiked {...mockDriverCommonData} />
-      <ChipText children="이사일" />
+      <DriverCardInProfile {...mockDriverCommonData} />
+      <DriverCardInCompletedReview {...mockDriverCommonData} />
       <DriverCardInWating {...mockDriverCommonData} />
       <DriverCardInWritableReview {...mockDriverCommonData} />
     </div>
