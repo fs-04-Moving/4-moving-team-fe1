@@ -1,6 +1,6 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
+import usersApi from '@/api/user/user.api';
 import { logInValidation } from '@/constants/formValidation';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';

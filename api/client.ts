@@ -1,5 +1,5 @@
 import axios from 'axios';
-import usersApi from './users/users.api';
+import usersApi from './user/user.api';
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 

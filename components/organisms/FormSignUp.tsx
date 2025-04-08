@@ -1,6 +1,6 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
+import usersApi from '@/api/user/user.api';
 import { signUpValidation } from '@/constants/formValidation';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';

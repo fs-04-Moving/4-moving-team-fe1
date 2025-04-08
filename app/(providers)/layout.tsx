@@ -1,4 +1,4 @@
-import { getUserMeServer } from '@/api/users/getUserMeServer';
+import { getUserMeServer } from '@/api/user/user.api';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ModalProvider } from '@/contexts/ModalContext';
 import TanstackQueryProvider from '@/libs/tanstack-query';

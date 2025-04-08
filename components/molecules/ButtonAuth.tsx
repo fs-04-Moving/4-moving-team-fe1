@@ -1,6 +1,6 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
+import usersApi from '@/api/user/user.api';
 import icAlarm from '@/assets/images/ic-alarm.svg';
 import icMenu from '@/assets/images/ic-menu.svg';
 import icProfile from '@/assets/images/ic-profile.svg';
