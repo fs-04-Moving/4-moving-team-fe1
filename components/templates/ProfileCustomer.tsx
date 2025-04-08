@@ -1,6 +1,8 @@
 'use client';
 
 import profilesApi from '@/api/profiles/profiles.api';
+import { useAuth } from '@/contexts/AuthContext';
+import useHasFinishedSsr from '@/hooks/useHasFinishedSsr';
 import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
 import {
   ServiceTypeEng,
@@ -30,6 +32,7 @@ function ProfileCustomer() {
   });
 
   const queryClient = useQueryClient();
+  const { isAuthInitialized } = useAuth();
 
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -83,6 +86,9 @@ function ProfileCustomer() {
 
   const isEnabledButton =
     formState.isValid && services.length !== 0 && !!livingArea && !isProcessing;
+
+  const hasFinishedSsr = useHasFinishedSsr();
+  if (!hasFinishedSsr || !isAuthInitialized) return null;
 
   return (
     <div className="flex flex-col w-[327px] lg:w-[640px]">
