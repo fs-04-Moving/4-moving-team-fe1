@@ -18,6 +18,7 @@ async function ProvidersLayout({ children }: { children: ReactNode }) {
     await queryClient.prefetchQuery({
       queryKey: ['me'],
       queryFn: () => getUserMeServer(accessToken),
+      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신
     });
   }
   const dehydratedState = dehydrate(queryClient);

@@ -54,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     client.defaults.headers['Authorization'] = '';
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);
-    setIsAuthInitialized(false);
+    // setIsAuthInitialized(false);
   };
 
   useEffect(() => {

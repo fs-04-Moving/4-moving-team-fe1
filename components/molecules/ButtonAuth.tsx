@@ -26,9 +26,10 @@ function ButtonAuth() {
     queryKey: ['me'],
     queryFn: userApi.getUserMe,
     initialData: () => queryClient.getQueryData(['me']),
-    staleTime: 1000 * 60 * 5, // 5분 동안은 재요청 안함 (CSR 시 중복 방지)
+    staleTime: Infinity, // 5분 동안은 재요청 안함 (CSR 시 중복 방지)
     enabled: typeof window !== 'undefined', // CSR에서만 실행되게
   });
+  // const user: User | undefined = queryClient.getQueryData(['me']);
 
   const router = useRouter();
   const handleClickLogIn = () => {
@@ -37,7 +38,10 @@ function ButtonAuth() {
 
   const handleClickLogOut = () => {
     logOut?.();
+    queryClient.removeQueries({ queryKey: ['me'] });
   };
+
+  console.log('button auth', user);
 
   if (!isHydrated) return null; // 👈 hydration이 끝날 때까지 렌더링 안함
   if (user) {
