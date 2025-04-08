@@ -10,7 +10,6 @@ import {
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -32,8 +31,6 @@ function ProfileCustomer() {
 
   const queryClient = useQueryClient();
 
-  const router = useRouter();
-
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleClickStart = (inputData: FormProfileInput) => {
@@ -51,7 +48,6 @@ function ProfileCustomer() {
       profilesApi.createCustomerProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me'] });
-      router.replace('/customer');
       setIsProcessing(false);
     },
   });

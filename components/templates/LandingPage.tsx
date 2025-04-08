@@ -3,37 +3,14 @@
 import landing01 from '@/assets/images/landing-img-01.svg';
 import landing02 from '@/assets/images/landing-img-02.svg';
 import landing03 from '@/assets/images/landing-img-03.svg';
-import { User } from '@/contexts/AuthContext';
-import { useQueryClient } from '@tanstack/react-query';
+import useHasFinishedSsr from '@/hooks/useHasFinishedSsr';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import ButtonsLandingPage from '../atoms/ButtonsLandingPage';
 import TitleLandingImage from '../atoms/TitleLandingImage';
 
 function LandingPage() {
-  const router = useRouter();
-
-  // const { isLoggedIn, role, hasProfile } = useAuth();
-  // useEffect(() => {
-  //   if (!isLoggedIn) return;
-  //   if (!hasProfile) {
-  //     router.replace(`/${role}/profile`);
-  //   } else {
-  //     router.replace(`/${role}/`);
-  //   }
-  // }, [isLoggedIn, hasProfile, router, role]);
-  const queryClient = useQueryClient();
-  const user: User | undefined = queryClient.getQueryData(['me']);
-  useEffect(() => {
-    if (!user) return;
-    if (!user.hasProfile) {
-      router.replace(`/${user.role}/profile`);
-    } else {
-      router.replace(`/${user.role}/`);
-    }
-  }, [user, router]);
-
+  const hasFinishedSsr = useHasFinishedSsr();
+  if (!hasFinishedSsr) return null;
   return (
     <div className="h-[100%] bg-[#f5f7fb]">
       <div className="flex flex-col justify-center items-center gap-11 lg:gap-12">

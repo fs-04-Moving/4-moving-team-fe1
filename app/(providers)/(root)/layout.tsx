@@ -1,7 +1,11 @@
+'use client';
+
 import Gnb from '@/components/organisms/Gnb';
+import { useAuthRedirect } from '@/hooks/useAuthRedirect';
 import { ReactNode } from 'react';
 
-async function RootLayout({ children }: { children: ReactNode }) {
+function RootLayout({ children }: { children: ReactNode }) {
+  useAuthRedirect();
   return (
     <div>
       <Gnb />

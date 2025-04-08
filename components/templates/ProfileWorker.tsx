@@ -12,7 +12,6 @@ import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -47,7 +46,6 @@ function ProfileWorker() {
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const handleClickStart = (inputData: FormProfileInput) => {
@@ -71,7 +69,6 @@ function ProfileWorker() {
       profilesApi.createWorkerProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['me'] });
-      router.replace('/worker');
       setIsProcessing(false);
     },
   });

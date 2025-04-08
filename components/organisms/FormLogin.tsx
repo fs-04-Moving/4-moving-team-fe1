@@ -2,7 +2,7 @@
 
 import authApi from '@/api/auth/auth.api';
 import { logInValidation } from '@/constants/formValidation';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, User } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,18 +31,22 @@ function FormLogIn({ userType }: { userType: Role }) {
 
   const { logIn: authLogin } = useAuth();
   const queryClient = useQueryClient();
-
   const router = useRouter();
+
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { mutate: logIn } = useMutation({
     mutationFn: (data: LogInDto) => authApi.logIn(data),
-    onSuccess: (resData) => {
-      queryClient.invalidateQueries({ queryKey: ['me'] });
-      const routePath = resData.hasProfile ? '' : '/profile';
-      router.push(`/${userType}${routePath}`);
-      authLogin?.();
-      setIsProcessing(false);
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+      const user: User | undefined = queryClient.getQueryData(['me']);
+      if (user) {
+        authLogin?.();
+        // AuthContext에서 리다이렉트를 처리하는 것에 비해 유연하고, 깜박거림의 현상도 확실히 줄일 수 있었음
+        const routePath = user.hasProfile ? '' : '/profile';
+        router.push(`/${userType}${routePath}`);
+        setIsProcessing(false);
+      }
     },
     onError: (error: AxiosError) => {
       setIsProcessing(false);

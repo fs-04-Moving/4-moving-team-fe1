@@ -4,7 +4,7 @@ import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
 import { Role } from '@/types/entities/user.entity';
 import { useQueryClient } from '@tanstack/react-query';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -29,10 +29,22 @@ interface AuthContextValue {
   hasProfile?: boolean;
 }
 
-const AuthContext = createContext<AuthContextValue>({});
+const AuthContext = createContext<AuthContextValue>({
+  isLoggedIn: false,
+  isAuthInitialized: false,
+  logIn: () => {},
+  logOut: () => {},
+});
 
 export const useAuth = () => useContext(AuthContext);
 
+/**
+ * - SSR로 받은 유저 정보(user)가 있다면 isLoggedIn = true로 초기화
+ * - useEffect로 user 상태에 따라 isLoggedIn, isAuthInitialized 세팅
+ * - isAuthInitialized가 false일 땐 아무 것도 하지 않도록(useAuthRedirect 훅에서 처리)
+ * @param param0
+ * @returns
+ */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
@@ -40,8 +52,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
   const user: User | undefined = queryClient.getQueryData(['me']);
 
-  const pathName = usePathname();
+  // const pathName = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+    setIsAuthInitialized(true);
+  }, [user]);
 
   const logIn = () => {
     setIsLoggedIn(true);
@@ -58,42 +79,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     client.defaults.headers['Authorization'] = '';
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);
-    // setIsAuthInitialized(false);
+    setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
+    queryClient.removeQueries({ queryKey: ['me'] });
+    router.replace('/');
   };
 
-  useEffect(() => {
-    if (isLoggedIn) return;
+  // useEffect(() => {
+  //   async function initAuthStatus() {
+  //     try {
+  //       const accessToken = localStorage.getItem('accessToken');
+  //       if (!accessToken) return;
 
-    if (
-      !(
-        pathName === '/auth/log-in' ||
-        pathName === '/auth/sign-up' ||
-        pathName === '/'
-      )
-    ) {
-      router.replace('/');
-    }
-  }, [isLoggedIn, pathName, router]);
+  //       setIsLoggedIn(true);
+  //       console.log('setIsLoggedIn', isLoggedIn);
+  //     } catch (error) {
+  //       console.error('refreshToken이 없거나 만료', error);
+  //     } finally {
+  //       setIsAuthInitialized(true);
+  //     }
+  //   }
 
-  useEffect(() => {
-    async function initAuthStatus() {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken) return;
+  //   initAuthStatus();
+  // }, []);
 
-        setIsLoggedIn(true);
-        console.log('setIsLoggedIn', isLoggedIn);
-      } catch (error) {
-        console.error('refreshToken이 없거나 만료', error);
-      } finally {
-        setIsAuthInitialized(true);
-      }
-    }
-
-    initAuthStatus();
-  }, []);
-
-  const value = {
+  const value: AuthContextValue = {
     isLoggedIn,
     isAuthInitialized,
     logIn,
