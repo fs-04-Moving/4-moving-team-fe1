@@ -1,6 +1,6 @@
 'use client';
 
-import usersApi from '@/api/user/user.api';
+import authApi from '@/api/auth/auth.api';
 import { logInValidation } from '@/constants/formValidation';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
@@ -36,7 +36,7 @@ function FormLogIn({ userType }: { userType: Role }) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { mutate: logIn } = useMutation({
-    mutationFn: (data: LogInDto) => usersApi.logIn(data),
+    mutationFn: (data: LogInDto) => authApi.logIn(data),
     onSuccess: (resData) => {
       queryClient.invalidateQueries({ queryKey: ['me'] });
       const routePath = resData.hasProfile ? '' : '/profile';

@@ -23,7 +23,7 @@ const logIn = async (dto: LogInDto) => {
 const logOut = async () => {
   try {
     const url = '/auth/log-out';
-    await client.post(url); // refreshToken은 쿠키로 자동 전송됨
+    await client.delete(url); // refreshToken은 쿠키로 자동 전송됨
   } catch (error) {
     errorHandler(error);
   }

@@ -1,6 +1,6 @@
 'use client';
 
-import usersApi from '@/api/user/user.api';
+import userApi from '@/api/user/user.api';
 import icAlarm from '@/assets/images/ic-alarm.svg';
 import icMenu from '@/assets/images/ic-menu.svg';
 import icProfile from '@/assets/images/ic-profile.svg';
@@ -24,7 +24,7 @@ function ButtonAuth() {
 
   const { data: user } = useQuery({
     queryKey: ['me'],
-    queryFn: usersApi.getUserMe,
+    queryFn: userApi.getUserMe,
     initialData: () => queryClient.getQueryData(['me']),
     staleTime: 1000 * 60 * 5, // 5분 동안은 재요청 안함 (CSR 시 중복 방지)
     enabled: typeof window !== 'undefined', // CSR에서만 실행되게

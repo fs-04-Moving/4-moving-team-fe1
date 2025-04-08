@@ -1,6 +1,6 @@
 'use client';
 
-import usersApi from '@/api/user/user.api';
+import userApi from '@/api/user/user.api';
 import { signUpValidation } from '@/constants/formValidation';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
@@ -47,7 +47,7 @@ function FormSignUp({ userType }: { userType: Role }) {
   const [password, setPassword] = useState('');
 
   const { mutate: signUp } = useMutation({
-    mutationFn: (data: SignUpDto) => usersApi.singUp(data),
+    mutationFn: (data: SignUpDto) => userApi.singUp(data),
     onSuccess: () => {
       logIn({ email, password, role: userType });
       // router.push(`/${userType}/profile`);
@@ -65,7 +65,7 @@ function FormSignUp({ userType }: { userType: Role }) {
   });
 
   const { mutate: logIn } = useMutation({
-    mutationFn: (data: LogInDto) => usersApi.logIn(data),
+    mutationFn: (data: LogInDto) => userApi.logIn(data),
     onSuccess: (resData) => {
       queryClient.invalidateQueries({ queryKey: ['me'] });
       const routePath = resData.hasProfile ? '' : '/profile';

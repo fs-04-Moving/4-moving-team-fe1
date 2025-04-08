@@ -1,5 +1,6 @@
 'use client';
 
+import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
 import { Role } from '@/types/entities/user.entity';
 import { useQueryClient } from '@tanstack/react-query';
@@ -45,11 +46,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logOut = async () => {
     // 쿠키 방식으로 로그아웃
-    // try {
-    //   await usersApi.logOut();
-    // } catch (e) {
-    //   console.error('서버 로그아웃 실패', e);
-    // }
+    try {
+      await authApi.logOut();
+    } catch (e) {
+      console.error('서버 로그아웃 실패', e);
+    }
     client.defaults.headers['Authorization'] = '';
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);

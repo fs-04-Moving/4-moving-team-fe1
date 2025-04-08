@@ -42,9 +42,9 @@ export async function getUserMeServer(accessToken: string) {
   return user;
 }
 
-const usersApi = {
+const userApi = {
   getUserMe,
   getUserMeServer,
 };
 
-export default usersApi;
+export default userApi;

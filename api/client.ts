@@ -1,5 +1,5 @@
 import axios from 'axios';
-import usersApi from './user/user.api';
+import authApi from './auth/auth.api';
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -57,7 +57,7 @@ client.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const res = await usersApi.refreshToken();
+        const res = await authApi.refreshToken();
 
         if (!res || !res.accessToken) {
           console.warn('❌ Failed to refresh token.');
@@ -119,15 +119,3 @@ export function errorHandler(error: unknown) {
     }
   }
 }
-// export function errorHandler(error: AxiosError | Error | unknown) {
-//   console.log('AxiosError', error);
-//   if (axios.isAxiosError(error) && error.response) {
-//     throw new Error(`${error.response.status}: ${error.response.data}`);
-//   } else {
-//     if (error instanceof Error) {
-//       throw new Error(error.message);
-//     } else {
-//       throw new Error('알 수 없는 에러로 요청에 실패하였습니다.');
-//     }
-//   }
-// }
