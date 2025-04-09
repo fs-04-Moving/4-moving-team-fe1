@@ -1,3 +1,4 @@
+import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
 import RequestEstimate from '@/components/templates/RequestEstimate';
 
 /**
@@ -5,7 +6,11 @@ import RequestEstimate from '@/components/templates/RequestEstimate';
  * @returns
  */
 function RequestEstimatePage() {
-  return <RequestEstimate />;
+  return (
+    <ProtectedPageWrapper>
+      <RequestEstimate />
+    </ProtectedPageWrapper>
+  );
 }
 
 export default RequestEstimatePage;
