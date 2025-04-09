@@ -1,7 +1,5 @@
-import { EstimateRequestStatus } from '@/types/move.type';
-
 type Props = {
-  type: EstimateRequestStatus;
+  type: string;
 };
 
 /**
