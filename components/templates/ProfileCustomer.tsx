@@ -2,6 +2,7 @@
 
 import profilesApi from '@/api/profiles/profiles.api';
 import { useAuth } from '@/contexts/AuthContext';
+import useHasFinishedSsr from '@/hooks/useHasFinishedSsr';
 import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
 import {
   ServiceTypeEng,
@@ -10,8 +11,7 @@ import {
 } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -31,12 +31,10 @@ function ProfileCustomer() {
     defaultValues: { profileImage: null },
   });
 
-  const { isLoggedIn } = useAuth();
-
-  console.log('isLoggedIn', isLoggedIn);
+  const queryClient = useQueryClient();
+  const { isAuthInitialized } = useAuth();
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
 
   const handleClickStart = (inputData: FormProfileInput) => {
     setIsProcessing(true);
@@ -52,7 +50,7 @@ function ProfileCustomer() {
     mutationFn: (data: CreateCustomerProfileDto) =>
       profilesApi.createCustomerProfile(data),
     onSuccess: () => {
-      router.replace('/customer');
+      queryClient.invalidateQueries({ queryKey: ['me'] });
       setIsProcessing(false);
     },
   });
@@ -88,6 +86,9 @@ function ProfileCustomer() {
 
   const isEnabledButton =
     formState.isValid && services.length !== 0 && !!livingArea && !isProcessing;
+
+  const hasFinishedSsr = useHasFinishedSsr();
+  if (!hasFinishedSsr || !isAuthInitialized) return null;
 
   return (
     <div className="flex flex-col w-[327px] lg:w-[640px]">

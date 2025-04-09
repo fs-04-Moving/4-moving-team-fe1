@@ -11,8 +11,7 @@ import {
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -47,7 +46,7 @@ function ProfileWorker() {
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleClickStart = (inputData: FormProfileInput) => {
     setIsProcessing(true);
@@ -69,7 +68,7 @@ function ProfileWorker() {
     mutationFn: (data: CreateWorkerProfileDto) =>
       profilesApi.createWorkerProfile(data),
     onSuccess: () => {
-      router.replace('/worker');
+      queryClient.invalidateQueries({ queryKey: ['me'] });
       setIsProcessing(false);
     },
   });

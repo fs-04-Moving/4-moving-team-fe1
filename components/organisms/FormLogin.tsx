@@ -1,12 +1,12 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
+import authApi from '@/api/auth/auth.api';
 import { logInValidation } from '@/constants/formValidation';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, User } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -30,17 +30,24 @@ function FormLogIn({ userType }: { userType: Role }) {
     });
 
   const { logIn: authLogin } = useAuth();
-
+  const queryClient = useQueryClient();
   const router = useRouter();
+
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { mutate: logIn } = useMutation({
-    mutationFn: (data: LogInDto) => usersApi.logIn(data),
-    onSuccess: (resData) => {
-      const routePath = resData.hasProfile ? '' : '/profile';
-      router.push(`/${userType}${routePath}`);
-      authLogin?.(userType);
-      setIsProcessing(false);
+    mutationFn: (data: LogInDto) => authApi.logIn(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+      const user: User | undefined = queryClient.getQueryData(['me']);
+      if (user) {
+        authLogin?.();
+        // AuthContext에서 리다이렉트를 처리하는 것에 비해 유연하고, 깜박거림의 현상도 확실히 줄일 수 있었음
+        // useAuthRedirect나 middleware에서 리다이렉트를 처리하더라도 로그인/회원가입에서는 이렇게 직접 처리해야 정상 작동
+        const routePath = user.hasProfile ? '' : '/profile';
+        router.push(`/${userType}${routePath}`);
+        setIsProcessing(false);
+      }
     },
     onError: (error: AxiosError) => {
       setIsProcessing(false);
@@ -61,7 +68,6 @@ function FormLogIn({ userType }: { userType: Role }) {
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
     setIsProcessing(true);
-    // logIn({ ...inputData, role: userType });
     logIn({ ...inputData, role: userType });
   };
 
