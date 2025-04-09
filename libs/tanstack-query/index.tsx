@@ -37,10 +37,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
-      {children}
-      {/* </HydrationBoundary> */}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }

@@ -5,17 +5,12 @@ interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   alt: string;
 }
 
-const IconButton = ({ src, alt }: IconButtonProps) => {
+const IconButton = ({ src, alt, ...props }: IconButtonProps) => {
   return (
-    <button type="button">
+    <button type="button" {...props}>
       <img src={src} alt={alt} />
     </button>
   );
 };
 
 export default IconButton;
-
-/*<IconButton 
-src='@/assets/images/ic-alarm.svg'
-alt ='알람 버튼'
-onClick={/AlarmMenu} /> */
