@@ -8,7 +8,7 @@ interface Props {
 }
 
 /**
- * outlined button 컴포넌트입니다.
+ * outlined button 컴포넌트를 복제한 체크박스용 아웃라인입니다.
  * - UI상태: default, hover, disabled
  * @param
  * - children: 버튼명
