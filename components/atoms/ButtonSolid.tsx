@@ -14,7 +14,7 @@ interface Props {
 }
 
 /**
- * solid button 컴포넌트입니다.
+ * solid button 컴포넌트의 복제 아웃라인 컴포넌트입니다.
  * - UI상태: default, hover, disabled
  * @param
  * - children: 버튼명
