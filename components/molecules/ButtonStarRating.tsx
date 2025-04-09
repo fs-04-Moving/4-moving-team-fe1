@@ -4,6 +4,12 @@ import React, { memo, useState, useEffect } from 'react';
 import FullStar from '@/components/atoms/IconFullStar';
 import EmptyStar from '@/components/atoms/IconEmptyStar';
 
+type Props = {
+  disabled?: boolean;
+  initialRating: number;
+  starSize?: number;
+};
+
 /**
  * ⭐⭐⭐⭐⭐별점 컴포넌트입니다.
  *
@@ -33,8 +39,11 @@ import EmptyStar from '@/components/atoms/IconEmptyStar';
 const MemoizedFullStar = memo(FullStar);
 const MemoizedEmptyStar = memo(EmptyStar);
 
-function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
-
+function ButtonStarRating({
+  disabled = false,
+  initialRating,
+  starSize = 20,
+}: Props) {
   const ArrayIndexes = [1, 2, 3, 4, 5];
   const [ratingIndex, setRatingIndex] = useState(5);
 
@@ -42,10 +51,9 @@ function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
     if (initialRating !== undefined) {
       setRatingIndex(Math.round(initialRating));
     }
-  }, [initialRating]); 
+  }, [initialRating]);
 
-  const handleStarClick = (arrayindex) => {
-
+  const handleStarClick = (arrayindex: number) => {
     if (!disabled) {
       setRatingIndex(arrayindex);
     }
@@ -56,10 +64,16 @@ function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
       {ArrayIndexes.map((arrayindex, index) => (
         <div
           key={`rating_${index}`}
-          className={`size-[${starSize}px] ${disabled ? 'cursor-default' : 'cursor-pointer'}`}
+          className={`size-[${starSize}px] ${
+            disabled ? 'cursor-default' : 'cursor-pointer'
+          }`}
           onClick={() => handleStarClick(arrayindex)}
         >
-          {arrayindex <= ratingIndex ? <MemoizedFullStar width={starSize} /> : <MemoizedEmptyStar width={starSize} />}
+          {arrayindex <= ratingIndex ? (
+            <MemoizedFullStar width={starSize} />
+          ) : (
+            <MemoizedEmptyStar width={starSize} />
+          )}
         </div>
       ))}
     </div>
