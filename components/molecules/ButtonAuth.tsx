@@ -5,7 +5,6 @@ import icAlarm from '@/assets/images/ic-alarm.svg';
 import icMenu from '@/assets/images/ic-menu.svg';
 import icProfile from '@/assets/images/ic-profile.svg';
 import { useAuth } from '@/contexts/AuthContext';
-import useHasFinishedSsr from '@/hooks/useHasFinishedSsr';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -13,10 +12,8 @@ import ButtonSolid from '../atoms/ButtonSolid';
 
 function ButtonAuth() {
   const { logOut } = useAuth();
+
   const queryClient = useQueryClient();
-
-  const hasFinishedSsr = useHasFinishedSsr();
-
   const { data: user } = useQuery({
     queryKey: ['me'],
     queryFn: userApi.getUserMe,
@@ -36,7 +33,6 @@ function ButtonAuth() {
     queryClient.removeQueries({ queryKey: ['me'] });
   };
 
-  if (!hasFinishedSsr) return null; // 👈 hydration이 끝날 때까지 렌더링 안함
   if (user) {
     return (
       <div className="flex items-center">

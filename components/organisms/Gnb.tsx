@@ -1,12 +1,9 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
 import LogoIconText from '../atoms/LogoIconText';
 import ButtonAuth from '../molecules/ButtonAuth';
 
 function Gnb() {
-  const { isAuthInitialized } = useAuth();
-
   return (
     <header className="sticky z-20 top-0 justify-center">
       <div
@@ -18,7 +15,7 @@ function Gnb() {
         // }`}
       >
         <LogoIconText className="w-[116px]" />
-        {isAuthInitialized && <ButtonAuth />}
+        <ButtonAuth />
       </div>
     </header>
   );
