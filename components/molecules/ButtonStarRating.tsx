@@ -34,7 +34,6 @@ const MemoizedFullStar = memo(FullStar);
 const MemoizedEmptyStar = memo(EmptyStar);
 
 function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
-
   const ArrayIndexes = [1, 2, 3, 4, 5];
   const [ratingIndex, setRatingIndex] = useState(5);
 
@@ -42,10 +41,9 @@ function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
     if (initialRating !== undefined) {
       setRatingIndex(Math.round(initialRating));
     }
-  }, [initialRating]); 
+  }, [initialRating]);
 
   const handleStarClick = (arrayindex) => {
-
     if (!disabled) {
       setRatingIndex(arrayindex);
     }
@@ -56,10 +54,16 @@ function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
       {ArrayIndexes.map((arrayindex, index) => (
         <div
           key={`rating_${index}`}
-          className={`size-[${starSize}px] ${disabled ? 'cursor-default' : 'cursor-pointer'}`}
+          className={`size-[${starSize}px] ${
+            disabled ? 'cursor-default' : 'cursor-pointer'
+          }`}
           onClick={() => handleStarClick(arrayindex)}
         >
-          {arrayindex <= ratingIndex ? <MemoizedFullStar width={starSize} /> : <MemoizedEmptyStar width={starSize} />}
+          {arrayindex <= ratingIndex ? (
+            <MemoizedFullStar width={starSize} />
+          ) : (
+            <MemoizedEmptyStar width={starSize} />
+          )}
         </div>
       ))}
     </div>
