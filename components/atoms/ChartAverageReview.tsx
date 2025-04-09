@@ -1,5 +1,10 @@
 import React from 'react';
 
+interface ChartAverageReviewProps {
+  ratingData?: number;
+}
+
+
 /**
  * 평균 별점 컴포넌트입니다.
  *
@@ -16,7 +21,7 @@ import React from 'react';
  * <ChartAverageReview ratingData={null} /> - 평균 별점 데이터가 없는 경우
  */
 
-function ChartAverageReview({ ratingData }) {
+function ChartAverageReview({ ratingData }:ChartAverageReviewProps) {
   const ratingValue = ratingData ? ratingData.toFixed(1) : '0.0';
   return (
     <p>

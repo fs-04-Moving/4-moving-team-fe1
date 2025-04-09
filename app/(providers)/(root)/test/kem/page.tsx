@@ -20,7 +20,9 @@ function page() {
       <div className="mb-8">
         <ProgressBar totalSteps={4} currentStep={4} />
       </div>
+      <div className="flex justify-center">
       <ChatBubbleMovingChoice onSubmit={(selectedService) => alert(`선택된 서비스 서비스타입 이사: ${selectedService}`)} />
+      </div>
     </div>
   );
 }
