@@ -1,23 +1,11 @@
-import AverageRating from "@/components/atoms/AverageRating";
-import StarRatingProgressBar from "@/components/atoms/StarRatingProgressBar";
-import StarLating from "@/components/molecules/StarLating";
-import StarRatingCard from "@/components/organisms/StarRatingCard";
+import ChartStarRatingReview from "@/components/organisms/ChartStarRatingReview";
 
 function page() {
-  const exampleRatingData = [
-    { rating: 1, count: 10 },
-    { rating: 2, count: 100 },
-    { rating: 3, count: 0 },
-    { rating: 4, count: 200 },
-    { rating: 5, count: 0 },
-  ];
+  const exampleRatingData = [0, 0, 0, 8, 170];
 
   return (
-    <div>
-      <StarLating />
-      <AverageRating />
-      <StarRatingProgressBar />
-      <StarRatingCard ratingData={exampleRatingData} />
+    <div className="bg-Black-300">
+      <ChartStarRatingReview ratingData={exampleRatingData} />
     </div>
   );
 }
