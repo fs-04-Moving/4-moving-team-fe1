@@ -1,5 +1,5 @@
 import React from 'react'
-import IcFullStar from '@/assets/images/ic-fullStar.svg';
+import IcFullStar from '@/assets/images/ic-star-yellow.svg';
 import Image from 'next/image';
 
 function FullStar({ width }: { width: number }) {

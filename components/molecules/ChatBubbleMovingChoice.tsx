@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 import ButtonCheckBoxRequest from '@/components/molecules/ButtonCheckBoxRequest';
 import ButtonSolid from '../atoms/ButtonSolid';
 
+interface ChatBubbleMovingChoiceProps {
+  onSubmit: (selectedService: 'smallMove' | 'homeMove' | 'officeMove') => void;
+}
+
 /**
  * @component ChatBubbleMovingChoice
  * @description 이사 서비스 유형 선택 및 제출 기능을 제공하는 컴포넌트입니다.
@@ -20,10 +24,10 @@ import ButtonSolid from '../atoms/ButtonSolid';
  * <ChatBubbleMovingChoice onSubmit={(selectedService) => alert(`선택된 서비스: ${selectedService}`)} />
  */
 
-function ChatBubbleMovingChoice({ onSubmit }) {
-  const [selectedService, setSelectedService] = useState('small');
+function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
+  const [selectedService, setSelectedService] = useState<'smallMove' | 'homeMove' | 'officeMove'>('smallMove');
 
-  const handleServiceChange = (service) => {
+  const handleServiceChange = (service: 'smallMove' | 'homeMove' | 'officeMove') => {
     setSelectedService(service);
   };
 

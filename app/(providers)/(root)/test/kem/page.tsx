@@ -1,7 +1,6 @@
 'use client';
 
 import ChartStarRatingReview from "@/components/organisms/ChartStarRatingReview";
-import ButtonStarRating from "@/components/molecules/ButtonStarRating";
 import ProgressBar from "@/components/molecules/ProgressBar";
 import ChatBubbleMovingChoice from "@/components/molecules/ChatBubbleMovingChoice";
 
@@ -11,7 +10,6 @@ function page() {
   return (
     <div className="bg-Black-300 p-4 g-6">
       <ChartStarRatingReview ratingData={exampleRatingData} />
-      <ButtonStarRating starSize={20} />
       <div className="mb-8">
         <ProgressBar totalSteps={4} currentStep={1} />
       </div>
@@ -20,7 +18,9 @@ function page() {
       <div className="mb-8">
         <ProgressBar totalSteps={4} currentStep={4} />
       </div>
+      <div className="flex justify-center">
       <ChatBubbleMovingChoice onSubmit={(selectedService) => alert(`선택된 서비스 서비스타입 이사: ${selectedService}`)} />
+      </div>
     </div>
   );
 }
