@@ -2,8 +2,9 @@
 
 import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
+import userApi from '@/api/user/user.api';
 import { Role } from '@/types/entities/user.entity';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -50,7 +51,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
   const queryClient = useQueryClient();
-  const user: User | undefined = queryClient.getQueryData(['me']);
+  const { data: user } = useQuery<User>({
+    queryFn: userApi.getUserMe,
+    queryKey: ['me'],
+    staleTime: Infinity,
+  });
 
   // const pathName = usePathname();
   const router = useRouter();
