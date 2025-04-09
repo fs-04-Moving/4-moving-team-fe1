@@ -1,5 +1,9 @@
 import { EstimateRequestStatus } from '@/types/move.type';
 
+type Props = {
+  type: EstimateRequestStatus;
+};
+
 /**
  * ChipEstimateRequestStatus 컴포넌트
  *
@@ -11,7 +15,7 @@ import { EstimateRequestStatus } from '@/types/move.type';
  * @returns {JSX.Element} 선택된 견적 상태에 맞는 스타일이 적용된 칩 컴포넌트.
  *
  */
-function ChipEstimateRequestStatus({ type }: EstimateRequestStatus) {
+function ChipEstimateRequestStatus({ type }: Props) {
   if (type === 'inactive') return null;
 
   const config = {
@@ -26,7 +30,7 @@ function ChipEstimateRequestStatus({ type }: EstimateRequestStatus) {
   const { text } = config[type];
   return (
     <span
-      className={`inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] text-[13px] px-1 pr-1 font-semibold w-fit bg-[#F2F3F8] text-[#242945] `}
+      className={`inline-flex items-center align-middle gap-0.5 rounded-sm text-[13px] lg:text-[16px] px-1.5 py-0.5 lg:py-1 font-semibold w-fit bg-[#F2F3F8] text-[#242945] `}
     >
       <span className="leading-none relative top-[1px]">{text}</span>
     </span>
