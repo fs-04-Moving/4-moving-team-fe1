@@ -1,12 +1,16 @@
+'use client';
+
 import imgAvartar from '@/assets/images/avatartion-3.svg';
 import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
-import { ServiceTypeEng } from '@/types/entities/estimate.entity';
+import { Estimate, ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { User } from '@/types/entities/user.entity';
 import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
 import DriverCardInWating from '@/components/organisms/DriverCardInWating';
-import { EstimateRequestStatus } from '@/types/move.type';
+import { EstimateRequestStatus, EstimateStatus } from '@/types/move.type';
 import DriverCardInProfile from '@/components/organisms/DriverCardInProfile';
 import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import PageContainer from '@/components/templates/PageContainer';
 
 const mockDriverCommonData: Pick<
   User,
@@ -61,10 +65,30 @@ const mockDriverCommonData: Pick<
   departure: '서울시 중구',
 };
 
+const mockCustomerEstimate: Estimate = {
+  id: 'estimate_001',
+  serviceType: 'smallMove', // smallMove | homeMove | officeMove
+  status: 'assigned', // 지정 견적 요청 여부
+  customerName: '김인서',
+  movingDate: new Date('2024-07-10'),
+  departure: '서울시 중구',
+  destination: '경기도 수원시',
+  // price: 180000,
+};
+
+const onSendEstimate = () => console.log('견적 보내기 클릭됨');
+const onReject = () => console.log('반려 클릭됨');
+
 function page() {
   return (
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
+      <div className="container mx-auto px-4"></div>
+      <CustomerCardInEstimate
+        {...mockCustomerEstimate}
+        onSendEstimate={onSendEstimate}
+        onReject={onReject}
+      />
       <DriverCardInLiked {...mockDriverCommonData} />
       <DriverCardInProfile {...mockDriverCommonData} />
       <DriverCardInCompletedReview {...mockDriverCommonData} />

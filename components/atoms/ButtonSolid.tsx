@@ -1,3 +1,5 @@
+'use client';
+
 import icWriting from '@/assets/images/ic-writing.svg';
 import clsx from 'clsx';
 import Image from 'next/image';
