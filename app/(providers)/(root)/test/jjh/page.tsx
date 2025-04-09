@@ -37,6 +37,7 @@ const mockDriverCommonData: Pick<
   estimateRequestStatus: EstimateRequestStatus;
   departure: string;
   destination: string;
+  status: EstimateStatus;
 } = {
   id: 'driver-001',
   profileImage: imgAvartar,
@@ -64,6 +65,7 @@ const mockDriverCommonData: Pick<
   estimateRequestStatus: 'active',
   destination: '경기도 수원시',
   departure: '서울시 중구',
+  status: 'rejected',
 };
 
 const mockCustomerEstimate: Estimate = {
@@ -71,10 +73,11 @@ const mockCustomerEstimate: Estimate = {
   serviceType: 'smallMove', // smallMove | homeMove | officeMove
   status: 'assigned', // 지정 견적 요청 여부
   customerName: '김인서',
-  movingDate: new Date('2024-07-10'),
+  movingDate: new Date('2025-04-08T08:58:24.038Z'),
   departure: '서울시 중구',
   destination: '경기도 수원시',
-  // price: 180000,
+  requestDate: new Date('2025-04-09T15:00:00.000Z'),
+  price: 180000,
 };
 
 const mockReview: {
