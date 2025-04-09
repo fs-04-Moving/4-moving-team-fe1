@@ -5,9 +5,10 @@ import ChatBubbleMovingChoice from "@/components/molecules/ChatBubbleMovingChoic
 
 
 
+
 function page() {
   const exampleRatingData = [0, 0, 0, 8, 170];
-
+  
   return (
     <div className="bg-Black-300 p-4 g-6">
       <ChartStarRatingReview ratingData={exampleRatingData} />

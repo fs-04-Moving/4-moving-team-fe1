@@ -16,6 +16,7 @@ import EmptyStar from '@/components/atoms/IconEmptyStar';
  * @param {object} props - 컴포넌트 props 받습니다.
  * @param {boolean} [props.disabled=false] - true이면 클릭이 비활성화되고, false이면 클릭이 활성화됩니다.
  * @param {number} [props.initialRating] - 초기 별점 값입니다. 이 값이 기준으로 별이 채워집니다.
+
  * @param {number} [props.starSize=20] - 별의 크기를 설정합니다. 기본값은 20px 입니다.
  *
  * @example
@@ -33,6 +34,7 @@ const MemoizedFullStar = memo(FullStar);
 const MemoizedEmptyStar = memo(EmptyStar);
 
 function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
+
   const ArrayIndexes = [1, 2, 3, 4, 5];
   const [ratingIndex, setRatingIndex] = useState(5);
 
@@ -43,6 +45,7 @@ function ButtonStarRating({ disabled = false, initialRating, starSize = 20 }) {
   }, [initialRating]); 
 
   const handleStarClick = (arrayindex) => {
+
     if (!disabled) {
       setRatingIndex(arrayindex);
     }

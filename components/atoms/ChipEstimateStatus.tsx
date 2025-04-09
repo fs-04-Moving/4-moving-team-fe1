@@ -2,6 +2,10 @@ import icDocument from '@/assets/images/ic-document.svg';
 import Image from 'next/image';
 import { EstimateStatus } from '@/types/move.type';
 
+interface Props {
+  type: EstimateStatus;
+  isShort?: boolean;
+}
 /**
  * ChipEstimateStatus 컴포넌트
  *
@@ -10,10 +14,12 @@ import { EstimateStatus } from '@/types/move.type';
  *
  * @param {EstimateStatus} props.type - 현재 'assigned' 하나의 값만을 받고 렌더링합니다.
  *                                    해당 값에 따라 적절한 텍스트, 색상 설정이 적용됩니다.
+ * @param {boolean} isShort - ture 이면 짧은 텍스트로 보여집니다. 예) '지정 견적 요청' -> '지정 견적'
+ *
  * @returns {JSX.Element} 선택된 상태에 맞는 스타일이 적용된 칩 컴포넌트.
  *
  */
-function ChipEstimateStatus({ type }: EstimateStatus) {
+function ChipEstimateStatus({ type, isShort }: Props) {
   if (type !== 'assigned') {
     return null;
   }
@@ -22,18 +28,20 @@ function ChipEstimateStatus({ type }: EstimateStatus) {
     assigned: {
       icon: icDocument,
       text: '지정 견적 요청',
+      shortenText: '지정 견적',
       color: 'bg-Secondary-Red-100 text-Secondary-Red-200',
     },
   };
 
-  const { icon, text, color } = config[type];
+  const { icon, text, shortenText, color } = config[type];
   return (
     <span
       className={`inline-flex items-center gap-0.5 align-middle rounded-sm h-[26px] lg:h-[34px] px-1 pl-0.5 pr-1.5 lg:pl-[3px] lg:pr-[5px] font-semibold w-fit ${color}`}
     >
       <Image src={icon} width={20} alt={'icon'} className="lg:w-[24px]" />
       <span className="leading-none relative top-[1px] text-[13px] lg:text-[16px]">
-        {text}
+        <span className="lg:hidden">{isShort ? shortenText : text}</span>
+        <span className="hidden lg:inline-block">{text}</span>
       </span>
     </span>
   );
