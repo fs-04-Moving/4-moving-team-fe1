@@ -1,11 +1,12 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
+import authApi from '@/api/auth/auth.api';
 import { signUpValidation } from '@/constants/formValidation';
-import { SignUpDto } from '@/types/dtos/auth.dto';
+import { useAuth, User } from '@/contexts/AuthContext';
+import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -38,14 +39,17 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
+  const { logIn: authLogin } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const { mutate: signUp } = useMutation({
-    mutationFn: (data: SignUpDto) => usersApi.singUp(data),
+    mutationFn: (data: SignUpDto) => authApi.singUp(data),
     onSuccess: () => {
-      router.push(`/${userType}/profile`);
-      setIsProcessing(false);
+      logIn({ email, password, role: userType });
     },
     onError: (error: AxiosError) => {
       setIsProcessing(false);
@@ -58,7 +62,24 @@ function FormSignUp({ userType }: { userType: Role }) {
     },
   });
 
+  const { mutate: logIn } = useMutation({
+    mutationFn: (data: LogInDto) => authApi.logIn(data),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['me'] });
+      const user: User | undefined = queryClient.getQueryData(['me']);
+      if (user) {
+        authLogin?.();
+        const routePath = user.hasProfile ? '' : '/profile';
+        router.push(`/${userType}${routePath}`);
+        setIsProcessing(false);
+      }
+    },
+  });
+
   const handleClickSignUp = (inputData: FormSignUpInput) => {
+    setIsProcessing(true);
+    setEmail(inputData.email);
+    setPassword(inputData.password);
     signUp({ ...inputData, role: userType });
   };
 
