@@ -110,3 +110,12 @@ export async function getAccessTokenFromRefresh(): Promise<string | null> {
     return null;
   }
 }
+
+/**
+ * 로컬 스토리지에서 accessToken불러오기
+ * @returns
+ */
+export const getAccessTokenFromStorage = () => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('accessToken');
+};

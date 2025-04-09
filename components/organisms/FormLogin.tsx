@@ -70,6 +70,7 @@ function FormLogIn({ userType }: { userType: Role }) {
     setIsProcessing(true);
     logIn({ ...inputData, role: userType });
   };
+  console.log(isProcessing);
 
   return (
     <div className="w-full flex justify-center">
