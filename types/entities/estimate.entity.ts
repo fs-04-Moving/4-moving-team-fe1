@@ -3,7 +3,7 @@ import { EstimateStatus } from '../move.type';
 export interface Estimate {
   id: string;
   price: number;
-  serviceType: ServiceType;
+  serviceType: ServiceTypeEng;
   status: EstimateStatus;
   isConfirmed: boolean;
   customerName: string;

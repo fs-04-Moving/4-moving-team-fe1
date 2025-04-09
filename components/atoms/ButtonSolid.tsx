@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import icWriting from '@/assets/images/ic-writing.svg';
 import clsx from 'clsx';

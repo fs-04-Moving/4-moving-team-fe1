@@ -1,7 +1,7 @@
 import UserAvartar from '../atoms/UserAvartar';
 import ChipMovingType from '../atoms/ChipMovingType';
 import { ServiceType } from '@/types/move.type';
-import StarLating from '../molecules/StarLating';
+import ButtonStarRating from '../molecules/ButtonStarRating';
 
 type Props = {
   serviceType: ServiceType;
@@ -98,7 +98,7 @@ function DriverCardInCompletedReview({
           </div>
           <div className="hidden lg:block">
             {/* 이 컴포넌트 다시보기 */}
-            <StarLating initialRating={rating} />
+            <ButtonStarRating initialRating={rating} />
           </div>
         </div>
       </div>
