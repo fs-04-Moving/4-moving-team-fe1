@@ -12,22 +12,22 @@ import React from 'react';
  * @param {number} [props.ratingData] - 평균 별점 데이터
  *
  * @example
- * <AverageRating ratingData={4.5} /> - 평균 별점이 4.5인 경우
- * <AverageRating ratingData={null} /> - 평균 별점 데이터가 없는 경우
+ * <ChartAverageReview ratingData={4.5} /> - 평균 별점이 4.5인 경우
+ * <ChartAverageReview ratingData={null} /> - 평균 별점 데이터가 없는 경우
  */
 
-function AverageRating({ ratingData }) {
+function ChartAverageReview({ ratingData }) {
   const ratingValue = ratingData ? ratingData.toFixed(1) : '0.0';
   return (
     <p>
-      <span className="text-[64px] text-black-400 font-bold mobile:text-[40px]">
+      <span className="text-[40px] lg:text-[64px] md:text-[40px]  text-Black-400 font-bold ">
         {ratingValue}
       </span>
-      <span className="text-[38px] text-gray-300 font-bold mobile:text-[24px]">
+      <span className="text-[24px] lg:text-[38px] md:text-[24px] text-[24px] text-GrayScale-100 font-bold ">
         /5
       </span>
     </p>
   );
 }
 
-export default AverageRating;
+export default ChartAverageReview;

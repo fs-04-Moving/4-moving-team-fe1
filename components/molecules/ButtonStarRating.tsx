@@ -1,8 +1,8 @@
 'use client';
 
 import React, { memo, useState, useEffect } from 'react';
-import FullStar from '@/components/atoms/FullStar';
-import EmptyStar from '@/components/atoms/EmptyStar';
+import FullStar from '@/components/atoms/IconFullStar';
+import EmptyStar from '@/components/atoms/IconEmptyStar';
 
 /**
  * ⭐⭐⭐⭐⭐별점 컴포넌트입니다.
@@ -29,7 +29,7 @@ import EmptyStar from '@/components/atoms/EmptyStar';
 const MemoizedFullStar = memo(FullStar);
 const MemoizedEmptyStar = memo(EmptyStar);
 
-function StarLating({ disabled = false, initialRating }) {
+function ButtonStarRating({ disabled = false, initialRating }) {
   const ArrayIndexes = [1, 2, 3, 4, 5];
   const [ratingIndex, setRatingIndex] = useState(5);
 
@@ -60,4 +60,4 @@ function StarLating({ disabled = false, initialRating }) {
   );
 }
 
-export default StarLating;
+export default ButtonStarRating;
