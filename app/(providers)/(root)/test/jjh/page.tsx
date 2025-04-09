@@ -11,6 +11,7 @@ import DriverCardInProfile from '@/components/organisms/DriverCardInProfile';
 import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
 import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
 import PageContainer from '@/components/templates/PageContainer';
+import ReviewCard from '@/components/organisms/ReviewCard';
 
 const mockDriverCommonData: Pick<
   User,
@@ -76,6 +77,19 @@ const mockCustomerEstimate: Estimate = {
   // price: 180000,
 };
 
+const mockReview: {
+  nickname: string;
+  createdAt: Date;
+  rating: number;
+  content: string;
+} = {
+  nickname: 'kimkirin',
+  createdAt: new Date('2024-07-10'),
+  rating: 5,
+  content:
+    '듣던대로 정말 친절하시고 물건도 잘 옮겨주셨어요! 나중에 또 짐 옮길 일 있으면 김코드 기사님께 부탁드릴 예정입니다!! 비 오는데 꼼꼼히 잘 해주셔서 감사드립니다 :)',
+};
+
 const onSendEstimate = () => console.log('견적 보내기 클릭됨');
 const onReject = () => console.log('반려 클릭됨');
 
@@ -84,6 +98,7 @@ function page() {
     <div>
       <p>컴포넌트 테스트페이지입니다.</p>
       <div className="container mx-auto px-4"></div>
+      <ReviewCard {...mockReview} />
       <CustomerCardInEstimate
         {...mockCustomerEstimate}
         onSendEstimate={onSendEstimate}
