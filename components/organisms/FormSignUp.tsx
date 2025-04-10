@@ -1,14 +1,10 @@
 'use client';
 
-import authApi from '@/api/auth/auth.api';
 import { signUpValidation } from '@/constants/formValidation';
-import { useAuth, User } from '@/contexts/AuthContext';
-import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
+import { useLoginMutation } from '@/hooks/useLoginMutation';
+import { useSignUpMutation } from '@/hooks/useSignUpMutation';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -39,47 +35,17 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
-  const queryClient = useQueryClient();
-  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
-  const { logIn: authLogin } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
-  const { mutate: signUp } = useMutation({
-    mutationFn: (data: SignUpDto) => authApi.singUp(data),
-    onSuccess: () => {
-      logIn({ email, password, role: userType });
-    },
-    onError: (error: AxiosError) => {
-      setIsProcessing(false);
-      const errorMessage = error.response?.data || '';
-      if (errorMessage === '이미 존재하는 이메일입니다.') {
-        setError('email', { message: '이미 사용중인 이메일입니다' });
-      } else {
-        alert('에러가 발생했습니다. 다시 시도해 주세요.');
-      }
-    },
-  });
-
-  const { mutate: logIn } = useMutation({
-    mutationFn: (data: LogInDto) => authApi.logIn(data),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['me'] });
-      const user: User | undefined = queryClient.getQueryData(['me']);
-      if (user) {
-        authLogin?.();
-        const routePath = user.hasProfile ? '' : '/profile';
-        router.push(`/${userType}${routePath}`);
-        setIsProcessing(false);
-      }
-    },
+  const { mutate: logIn } = useLoginMutation({ setIsProcessing });
+  const { mutate: signUp } = useSignUpMutation({
+    setError,
+    setIsProcessing,
+    logIn,
   });
 
   const handleClickSignUp = (inputData: FormSignUpInput) => {
     setIsProcessing(true);
-    setEmail(inputData.email);
-    setPassword(inputData.password);
     signUp({ ...inputData, role: userType });
   };
 
