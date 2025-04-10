@@ -71,13 +71,13 @@ const mockDriverCommonData: Pick<
 const mockCustomerEstimate: Estimate = {
   id: 'estimate_001',
   serviceType: 'smallMove', // smallMove | homeMove | officeMove
-  status: 'assigned', // 지정 견적 요청 여부
+  status: 'rejected', // 지정 견적 요청 여부
   customerName: '김인서',
   movingDate: new Date('2025-04-08T08:58:24.038Z'),
   departure: '서울시 중구',
   destination: '경기도 수원시',
   requestDate: new Date('2025-04-09T15:00:00.000Z'),
-  price: 180000,
+  // price: 180000,
 };
 
 const mockReview: {
