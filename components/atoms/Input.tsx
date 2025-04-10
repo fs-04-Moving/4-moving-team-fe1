@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import ErrorMessage from './ErrorMessage';
 import LabelInput from './LabelInput';
 
 interface Props extends React.ComponentProps<'input'> {
@@ -7,11 +8,6 @@ interface Props extends React.ComponentProps<'input'> {
   errorMessage?: string;
   isSearchLeft?: boolean;
   isSearchRight?: boolean;
-  // value: string | number | readonly string[];
-  // onChange:
-  //   | ChangeEventHandler<HTMLInputElement>
-  //   | ((...event: unknown[]) => void);
-  // onBlur: FocusEventHandler<HTMLInputElement>;
 }
 
 /**
@@ -30,9 +26,6 @@ function Input({
   errorMessage,
   isSearchLeft = false,
   isSearchRight = false,
-  // value,
-  // onBlur,
-  // onChange,
   ...props
 }: Props) {
   // 아래 코드에는 clsx를 굳이 쓰지 않아도 되지만, 쓰지 않을 경우 tailwind 문법으로 인식을 하지 못하여 자동 완성이 안 됨
@@ -65,17 +58,10 @@ function Input({
             searchClassName,
             bgClassName
           )}
-          // value={value}
-          // onChange={onChange}
-          // onBlur={onBlur}
           {...props}
         />
       </div>
-      {!!errorMessage && (
-        <div className="flex justify-end">
-          <span className="text-Secondary-Red-200">{errorMessage}</span>
-        </div>
-      )}
+      <ErrorMessage message={errorMessage} />
     </div>
   );
 }
