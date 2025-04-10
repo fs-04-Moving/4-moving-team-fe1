@@ -53,7 +53,7 @@ function ChartStarRatingReview({ ratingData }:ChartStarRatingReviewProps) {
       <div className="lg:w-[837px] lg:h-[216px] flex flex-col lg:flex-row md:flex-row items-center justify-between">
         <div className="lg:w-[244px] lg:h-[139px] sm:p-b-[40px] md: p-[44.5px] flex flex-col items-center justify-center lg: gap-4">
           <ChartAverageReview ratingData={averageRating} />
-          <ButtonStarRating initialRating={averageRating} disabled={true} width={20}/>
+          <ButtonStarRating initialRating={averageRating} disabled={true} starSize={20}/>
         </div>
         <ProgressBarStarRating ratings={ratingData} />
       </div>

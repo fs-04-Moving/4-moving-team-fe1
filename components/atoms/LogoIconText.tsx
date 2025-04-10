@@ -1,5 +1,6 @@
 import logoIconText from '@/assets/images/logo-icon-text.svg';
 import Image from 'next/image';
+import Link from 'next/link';
 
 /**
  * 아이콘과 함께 있는 로고입니다.
@@ -10,8 +11,10 @@ import Image from 'next/image';
  */
 function LogoIconText({ ...props }) {
   return (
-    <div>
-      <Image src={logoIconText} alt="로고" {...props} />
+    <div className="shrink-0">
+      <Link href="/">
+        <Image src={logoIconText} alt="로고" {...props} />
+      </Link>
     </div>
   );
 }

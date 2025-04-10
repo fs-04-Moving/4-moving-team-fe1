@@ -1,14 +1,10 @@
 'use client';
 
-import authApi from '@/api/auth/auth.api';
 import { logInValidation } from '@/constants/formValidation';
-import { useAuth, User } from '@/contexts/AuthContext';
-import { LogInDto } from '@/types/dtos/auth.dto';
+import { useLoginMutation } from '@/hooks/useLoginMutation';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -29,28 +25,11 @@ function FormLogIn({ userType }: { userType: Role }) {
       resolver: zodResolver(logInValidation),
     });
 
-  const { logIn: authLogin } = useAuth();
-  const queryClient = useQueryClient();
-  const router = useRouter();
-
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const { mutate: logIn } = useMutation({
-    mutationFn: (data: LogInDto) => authApi.logIn(data),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['me'] });
-      const user: User | undefined = queryClient.getQueryData(['me']);
-      if (user) {
-        authLogin?.();
-        // AuthContext에서 리다이렉트를 처리하는 것에 비해 유연하고, 깜박거림의 현상도 확실히 줄일 수 있었음
-        // useAuthRedirect나 middleware에서 리다이렉트를 처리하더라도 로그인/회원가입에서는 이렇게 직접 처리해야 정상 작동
-        const routePath = user.hasProfile ? '' : '/profile';
-        router.push(`/${userType}${routePath}`);
-        setIsProcessing(false);
-      }
-    },
+  const { mutate: logIn } = useLoginMutation({
+    setIsProcessing,
     onError: (error: AxiosError) => {
-      setIsProcessing(false);
       const errorMessage = error.response?.data || '';
       if (errorMessage === '유저가 존재하지 않습니다.') {
         setError('email', { message: '존재하지 않는 이메일입니다' });
@@ -70,6 +49,7 @@ function FormLogIn({ userType }: { userType: Role }) {
     setIsProcessing(true);
     logIn({ ...inputData, role: userType });
   };
+  console.log(isProcessing);
 
   return (
     <div className="w-full flex justify-center">

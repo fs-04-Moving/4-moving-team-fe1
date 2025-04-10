@@ -29,11 +29,11 @@ const ProgressBar = ({ totalSteps, currentStep }:{
     }, [currentStep, totalSteps]);
 
     return (
-        <div className='md:w-[1920px] md:h-[128px] w-[375px] h-[96px] bg-GrayScale-50 p-6 md:pt-8 md:pb-8 md:pl-[260px] md:pr-[260px] '>
-            <h1 className="text-[18px] lg:text-[24px] md:text-[24px] text-Black-400 font-semibold mb-4">견적요청</h1>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+        <div className=' w-full w-[375px] h-[96px] lg:h-[128px] md:h-[128px] bg-GrayScale-50 p-6 md:pt-8 md:pb-8 lg:pl-[260px] lg:pr-[260px] '>
+            <h1 className="text-[18px] lg:text-[24px] md:text-[24px] text-Black-400 font-semibold mb-4 lg:mb-6">견적요청</h1>
+            <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                    className="bg-Primay-Blue-300 h-2.5 rounded-full"
+                    className="bg-Primay-Blue-300 h-2 rounded-full"
                     style={{ width: `${progress}%` }}
                 ></div>
             </div>

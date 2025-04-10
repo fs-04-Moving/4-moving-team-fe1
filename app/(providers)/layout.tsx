@@ -2,7 +2,7 @@ import { getUserMeServer } from '@/api/user/user.api';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ModalProvider } from '@/contexts/ModalContext';
 import TanstackQueryProvider from '@/libs/tanstack-query';
-import { getAccessTokenFromRefresh } from '@/utils/getAccessTokenFromRefresh';
+import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
 import {
   dehydrate,
   HydrationBoundary,
