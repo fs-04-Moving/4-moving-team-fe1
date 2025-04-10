@@ -1,12 +1,15 @@
-// ✅ components/profile/FormProfileWorker.tsx
 'use client';
 
+import profilesApi from '@/api/profiles/profiles.api';
 import { createWorkerProfileValiation } from '@/constants/formValidation';
 import { CreateWorkerProfileDto } from '@/types/dtos/profile.dto';
 import { ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+import { useCreateProfileMutation } from '@/hooks/useCreateProfileMutation';
 import ButtonSolid from '../atoms/ButtonSolid';
 import DividerHor from '../atoms/DividerHor';
 import Loader from '../atoms/Loader';
@@ -26,25 +29,7 @@ export interface FormProfileInput {
   description: string;
 }
 
-interface FormProfileWorkerProps {
-  services: ServiceTypeEng[];
-  setServices: (v: ServiceTypeEng[]) => void;
-  serviceAreas: Area[];
-  setServiceAreas: (v: Area[]) => void;
-  isProcessing: boolean;
-  setIsProcessing: (v: boolean) => void;
-  createWorkerProfile: (data: CreateWorkerProfileDto) => void;
-}
-
-function FormProfileWorker({
-  services,
-  setServices,
-  serviceAreas,
-  setServiceAreas,
-  isProcessing,
-  setIsProcessing,
-  createWorkerProfile,
-}: FormProfileWorkerProps) {
+function FormProfileWorker() {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
     defaultValues: {
       profileImage: null,
@@ -56,6 +41,14 @@ function FormProfileWorker({
     mode: 'onBlur',
     resolver: zodResolver(createWorkerProfileValiation),
   });
+
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
+  const [serviceAreas, setServiceAreas] = useState<Area[]>(['seoul']);
+
+  const { mutate: createWorkerProfile } = useCreateProfileMutation(
+    profilesApi.createWorkerProfile
+  );
 
   const handleClickStart = (inputData: FormProfileInput) => {
     setIsProcessing(true);
@@ -97,7 +90,7 @@ function FormProfileWorker({
         />
         <GroupRegionSelect
           selectedRegion={serviceAreas}
-          onRegionSelect={(v) => setServiceAreas(v)}
+          onRegionSelect={setServiceAreas}
           multipleSelect
         />
         <ButtonSolid disabled={!isEnabledButton}>

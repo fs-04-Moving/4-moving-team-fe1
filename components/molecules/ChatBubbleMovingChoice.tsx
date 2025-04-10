@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
 import ButtonCheckBoxRequest from '@/components/molecules/ButtonCheckBoxRequest';
+import { ServiceType } from '@/types/move.type';
+import { useState } from 'react';
 import ButtonSolid from '../atoms/ButtonSolid';
 
 interface ChatBubbleMovingChoiceProps {
-  onSubmit: (selectedService: 'smallMove' | 'homeMove' | 'officeMove') => void;
+  onSubmit: (selectedService: ServiceType) => void;
 }
 
 /**
@@ -25,9 +26,10 @@ interface ChatBubbleMovingChoiceProps {
  */
 
 function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
-  const [selectedService, setSelectedService] = useState<'smallMove' | 'homeMove' | 'officeMove'>('smallMove');
+  const [selectedService, setSelectedService] =
+    useState<ServiceType>('smallMove');
 
-  const handleServiceChange = (service: 'smallMove' | 'homeMove' | 'officeMove') => {
+  const handleServiceChange = (service: ServiceType) => {
     setSelectedService(service);
   };
 
@@ -46,10 +48,7 @@ function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
         selectedService={selectedService}
         onChange={handleServiceChange}
       />
-      <ButtonSolid
-        children={'선택완료'}
-        onClick={handleSubmit}
-      />
+      <ButtonSolid onClick={handleSubmit}>선택완료</ButtonSolid>
     </div>
   );
 }
