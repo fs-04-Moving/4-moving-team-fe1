@@ -61,7 +61,6 @@ function Page() {
         <Label intent="md">페이지 상단 라벨(24사이즈)</Label>
         <div className="h-5"></div>
         <DividerHor />
-
         <div className="h-100 w-full mt-10">
           <Dropdown options={options} defaultValue="전체" />
         </div>

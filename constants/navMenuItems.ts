@@ -27,7 +27,11 @@ export const navMenuItems: NavMenuItemData[] = [
     label: '내 견적 관리',
     condition: (_, hasProfile) => hasProfile,
     onClick: (router, role) => {
-      if (role) router.push(`/${role}/estimates`);
+      if (role === 'customer') {
+        router.push('/customer/estimates/pending');
+      } else if (role === 'worker') {
+        router.push('/worker/estimates/sending');
+      }
     },
   },
 ];
