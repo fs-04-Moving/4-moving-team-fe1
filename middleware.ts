@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getUserFromRequest } from './utils/getUserFromRequest';
 
 // 접근 가능한 경로 정의
-const PUBLIC_ROUTES = ['/', '/auth/log-in', '/auth/sign-up'];
+const OPEN_ROUTES = ['/find-worker'];
+const PUBLIC_ROUTES = ['/', '/auth/log-in', '/auth/sign-up', '/find-worker'];
 const PROFILE_ROUTES = ['/customer/profile', '/worker/profile'];
 // 테스트 라우트 임시 등록
 // TODO: 추후 삭제
@@ -24,8 +25,13 @@ const TEST_ROUTES = [
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // 1. 테스트 라우트: 로그인 여부와 관계없이 항상 허용
+  //TODO 추후 삭제 -> 테스트 라우트: 로그인 여부와 관계없이 항상 허용
   if (TEST_ROUTES.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  // 1. 오픈 라우트 (로그인 여부 관계없이 접근 허용)
+  if (OPEN_ROUTES.includes(pathname)) {
     return NextResponse.next();
   }
 
