@@ -1,13 +1,11 @@
 'use client';
 
 import profilesApi from '@/api/profiles/profiles.api';
+import { useCreateProfileMutation } from '@/hooks/useCreateProfileMutation';
 import { CreateCustomerProfileDto } from '@/types/dtos/profile.dto';
 import { ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { AreaType } from '@/types/move.type';
-import { handleProfileSuccess } from '@/utils/handlerUtils';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -27,8 +25,6 @@ function FormProfileCustomer() {
     mode: 'onChange',
   });
 
-  const queryClient = useQueryClient();
-  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
   const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
   const [livingArea, setLivingArea] = useState<Area>('seoul');
@@ -40,19 +36,9 @@ function FormProfileCustomer() {
   const isEnabledButton =
     formState.isValid && services.length !== 0 && !!livingArea && !isProcessing;
 
-  const { mutate: createCustomerProfile } = useMutation({
-    mutationFn: (data: CreateCustomerProfileDto) =>
-      profilesApi.createCustomerProfile(data),
-
-    onSuccess: async (res) => {
-      await handleProfileSuccess({
-        accessToken: res.accessToken,
-        router,
-        queryClient,
-      });
-      setIsProcessing(false);
-    },
-  });
+  const { mutate: createCustomerProfile } = useCreateProfileMutation(
+    profilesApi.createCustomerProfile
+  );
 
   const handleClickStart = (inputData: FormProfileInput) => {
     setIsProcessing(true);

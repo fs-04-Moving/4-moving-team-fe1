@@ -1,17 +1,16 @@
 'use client';
 
 import imgAvartar from '@/assets/images/avatartion-3.svg';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
 import DriverCardInLiked from '@/components/organisms/DriverCardInLiked';
+import DriverCardInProfile from '@/components/organisms/DriverCardInProfile';
+import DriverCardInWating from '@/components/organisms/DriverCardInWating';
+import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
+import ReviewCard from '@/components/organisms/ReviewCard';
 import { Estimate, ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { User } from '@/types/entities/user.entity';
-import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
-import DriverCardInWating from '@/components/organisms/DriverCardInWating';
 import { EstimateRequestStatus, EstimateStatus } from '@/types/move.type';
-import DriverCardInProfile from '@/components/organisms/DriverCardInProfile';
-import DriverCardInCompletedReview from '@/components/organisms/DriverCardInCompletedReview';
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
-import PageContainer from '@/components/templates/PageContainer';
-import ReviewCard from '@/components/organisms/ReviewCard';
 
 const mockDriverCommonData: Pick<
   User,

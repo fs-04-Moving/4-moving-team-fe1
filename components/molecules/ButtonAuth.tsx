@@ -65,7 +65,7 @@ function ButtonAuth() {
           alt="메뉴 아이콘"
           className="w-6 h-6 ml-6 cursor-pointer lg:hidden"
         />
-        <p onClick={handleClickLogOut} className="ml-4">
+        <p onClick={handleClickLogOut} className="ml-4 hidden lg:inline">
           로그아웃
         </p>
       </div>

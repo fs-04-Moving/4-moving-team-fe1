@@ -17,6 +17,7 @@ export async function handleProfileSuccess({
   router: AppRouterInstance;
   queryClient: QueryClient;
 }) {
+  console.log('handleProfileSuccess start');
   if (accessToken) {
     // 1. Axios 헤더와 로컬스토리지에 저장
     client.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
@@ -33,4 +34,6 @@ export async function handleProfileSuccess({
 
   // 3. 리다이렉트
   router.push(`/${newUser.role}`);
+
+  console.log('handleProfileSuccess end');
 }
