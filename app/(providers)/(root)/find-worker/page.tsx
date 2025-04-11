@@ -87,10 +87,11 @@ export const mockDriverList = [
 
 function FindWorkerPage() {
   return (
-    <main className="mx-auto w-9/12">
+    <main className="mx-auto max-w-9/12 px-4">
       <h2 className="font-semibold text-2xl py-8">기사님 찾기</h2>
+      {/* 왼쪽 필터 부분 */}
       <div className="flex gap-28">
-        <section className="min-w-[328px]">
+        <aside className="hidden w-full max-w-[328px] lg:w-[32%] lg:block">
           <div className="flex flex-col gap-11">
             <div className="flex justify-between px-2.5 py-4 border-b-[1px] border-Line-200">
               <span className="text-xl">필터</span>
@@ -109,8 +110,9 @@ function FindWorkerPage() {
               <DropdownService />
             </div>
           </div>
-        </section>
-        <section className="">
+        </aside>
+        {/* 기사님 카드 */}
+        <section className="flex-1 min-w-0">
           <div className="flex flex-col items-end gap-6 mb-8">
             <DropdownSort
               options={[

@@ -57,7 +57,7 @@ function DriverCardInSearch({
   isLiked,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[188px] md:w-[600px] lg:w-[955px] lg:h-[230px] px-3.5 py-4 lg:px-6 lg:py-5 shadow-xs">
+    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl min-w-[327px] h-[188px] md:w-full lg:h-[230px] px-3.5 py-4 lg:px-6 lg:py-5 shadow-xs">
       <div className="flex gap-2.5">
         {serviceTypes.map((service, index) => (
           <ChipMovingType key={index} type={service} />

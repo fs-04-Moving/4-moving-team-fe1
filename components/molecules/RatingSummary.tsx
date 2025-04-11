@@ -21,7 +21,7 @@ function RatingSummary({
   reviewCount: number;
 }) {
   return (
-    <span className="inline-flex items-center gap-0.5 lg:gap-1.5 align-middle">
+    <span className="inline-flex items-center justify-center gap-0.5 lg:gap-1.5 align-middle">
       <Image
         src={iconStar}
         width={14}
