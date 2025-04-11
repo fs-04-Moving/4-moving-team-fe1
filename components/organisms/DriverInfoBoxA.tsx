@@ -6,10 +6,12 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  isFavorite: boolean;
+  isLiked: boolean;
   favoritesCount: number;
-  experience: string;
-  countCompleteMoving: number;
+  experience: number;
+  reviewsEverage: number;
+  reviewsCount: number;
+  confirmedEstimatesCount: number;
 };
 
 /**
@@ -21,10 +23,9 @@ type Props = {
  *
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
- * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지 여부
+ * @param {boolean} isLiked - 현재 사용자가 이 기사를 찜했는지 여부
  * @param {number} favoritesCount - 해당 기사를 찜한 전체 사용자 수
  * @param {number} experience - 기사 경력 (단위: 년)
- * @param {number} countCompleteMoving - 기사 완료 이사 건수
  *
  * @example
  * <DriverInfoBoxA
@@ -33,31 +34,32 @@ type Props = {
  *   isFavorite={true}
  *   favoritesCount={136}
  *   experience={7}
- *   countCompleteMoving={334}
  * />
  */
 function DriverInfoBoxA({
   profileImage,
   nickname,
-  isFavorite,
+  isLiked,
   favoritesCount,
   experience,
-  countCompleteMoving,
+  reviewsEverage,
+  reviewsCount,
+  confirmedEstimatesCount,
 }: Props) {
   return (
     <div
-      className={`flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:[92px]`}
+      className={`flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:px-[18px] lg:py-4 h-[78px] lg:gap-6 lg:[92px] shadow-2xs`}
     >
       <UserAvartar imgUrl={profileImage} />
       <div className="flex-1 flex flex-col justify-between h-[58px]">
         {/* 기사 이름 */}
         <div className="flex justify-between">
           <span className="text-[14px] lg:text-lg">{nickname} 기사님</span>
-          <LikeCount isFavorite={isFavorite} favoritesCount={favoritesCount} />
+          <LikeCount isLiked={isLiked} favoritesCount={favoritesCount} />
         </div>
         {/* 별점, 경력, 확정 건수 */}
         <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-          <RatingSummary rating={4.9} reviewCount={178} />
+          <RatingSummary rating={reviewsEverage} reviewCount={reviewsCount} />
           <span className="text-GrayScale-100">|</span>
           <span>
             <span className="text-GrayScale-300">경력</span>
@@ -65,7 +67,7 @@ function DriverInfoBoxA({
           </span>
           <span className="text-GrayScale-100">|</span>
           <span>
-            {`${countCompleteMoving}건 `}
+            {`${confirmedEstimatesCount}건 `}
             <span className="text-GrayScale-300">확정</span>
           </span>
         </div>

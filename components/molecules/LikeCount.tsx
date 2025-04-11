@@ -3,7 +3,7 @@ import icHeartNavy from '@/assets/images/ic-heart-navy.svg';
 import Image from 'next/image';
 
 type Props = {
-  isFavorite: boolean;
+  isLiked: boolean;
   favoritesCount: number;
 };
 /**
@@ -11,17 +11,17 @@ type Props = {
  *
  * 하트 아이콘과 사용자의 좋아요 여부(`isLiked`)과 기사의 좋아요 개수(`countLike`)를 함께 표시하는 UI 컴포넌트입니다.
  *
- * @param {boolean} isFavorite - 로그인 사용자가 해당 기사를 '좋아요'했는지 여부
+ * @param {boolean} isLiked - 로그인 사용자가 해당 기사를 '좋아요'했는지 여부
  * @param {number} favoritesCount - 해당 기사를 좋아요한 유저의 개수
  *
  * @example
  * <LikeCount isLiked={true} countLike={128} />
  */
-function LikeCount({ isFavorite, favoritesCount }: Props) {
+function LikeCount({ isLiked, favoritesCount }: Props) {
   return (
     <span className="inline-flex gap-0.5 lg:gap-1 align-middle">
       <Image
-        src={isFavorite ? icHeartNavy : icHeartGray}
+        src={isLiked ? icHeartNavy : icHeartGray}
         width={14}
         height={12}
         alt="like heart"

@@ -1,5 +1,4 @@
 import { ServiceType } from '@/types/move.type';
-import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
 import DriverInfoBoxA from './DriverInfoBoxA';
 
@@ -8,11 +7,12 @@ type Props = {
   nickname: string;
   experience: number;
   summary: string;
-  countCompleteMoving: number;
-  isFavorite: boolean;
+  isLiked: boolean;
   favoritesCount: number;
   serviceTypes: ServiceType[];
-  isDirectEstimate: boolean;
+  reviewsEverage: number;
+  reviewsCount: number;
+  confirmedEstimatesCount: number;
 };
 
 /**
@@ -30,7 +30,6 @@ type Props = {
  * @param {boolean} isFavorite - 사용자가 찜한 기사 여부
  * @param {number} favoritesCount - 이 기사를 찜한 총 사용자 수
  * @param {ServiceType[]} serviceTypes - 기사가 제공하는 이사 서비스 유형 리스트
- * @param {boolean} isDirectEstimate - 지정 견적 요청 여부
  *
  * @example
  * <DriverCardInSearch
@@ -42,7 +41,6 @@ type Props = {
  *   isFavorite={true}
  *   favoritesCount={136}
  *   serviceTypes={['smallMove', 'homeMove']}
- *   isDirectEstimate={true}
  * />
  */
 
@@ -51,19 +49,19 @@ function DriverCardInSearch({
   nickname,
   experience,
   summary,
-  countCompleteMoving,
-  isFavorite,
-  favoritesCount,
   serviceTypes,
-  isDirectEstimate,
+  reviewsEverage,
+  reviewsCount,
+  confirmedEstimatesCount,
+  favoritesCount,
+  isLiked,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[188px] md:w-[600px] lg:w-[955px] lg:h-[230px] px-3.5 py-4">
+    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[188px] md:w-[600px] lg:w-[955px] lg:h-[230px] px-3.5 py-4 lg:px-6 lg:py-5 shadow-xs">
       <div className="flex gap-2.5">
         {serviceTypes.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
-        {isDirectEstimate ? <ChipEstimateStatus type="assigned" /> : ''}
       </div>
       {/* 기사 한줄 소개 */}
       <div className="text-[14px] lg:text-2xl">{summary}</div>
@@ -72,8 +70,10 @@ function DriverCardInSearch({
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        countCompleteMoving={countCompleteMoving}
-        isFavorite={isFavorite}
+        reviewsEverage={reviewsEverage}
+        reviewsCount={reviewsCount}
+        confirmedEstimatesCount={confirmedEstimatesCount}
+        isLiked={isLiked}
         favoritesCount={favoritesCount}
       />
     </div>

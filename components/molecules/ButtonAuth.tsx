@@ -32,6 +32,8 @@ function ButtonAuth() {
     queryClient.removeQueries({ queryKey: ['me'] });
   };
 
+  console.log(user);
+
   if (user) {
     return (
       <div className="flex items-center">
