@@ -3,7 +3,7 @@
 
 @theme {
   --breakpoint-md: 743px;
-  --breakpoint-lg: 1200px;
+  --breakpoint-lg: 1400px;
   --font-pretendard: 'Pretendard';
   --color-Primay-Blue-50: #f5faff;
   --color-Primay-Blue-100: #e9f4ff;
@@ -24,7 +24,7 @@
   --color-Secondary-Yellow-100: #ffc149;
   --color-Secondary-Red-100: #ffeef0;
   --color-Secondary-Red-200: #ff4f64;
-  --color-BackGround-100: #cfcfcf;
+  --color-BackGround-100: #fcfcfc;
   --color-BackGround-200: #f7f7f7;
   --color-BackGround-300: #efefef;
   --color-BackGround-400: #f4f7fb;

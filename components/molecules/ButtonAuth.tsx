@@ -5,7 +5,8 @@ import icAlarm from '@/assets/images/ic-alarm.svg';
 import icMenu from '@/assets/images/ic-menu.svg';
 import icProfile from '@/assets/images/ic-profile.svg';
 import { useAuth } from '@/contexts/AuthContext';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -13,12 +14,16 @@ import ButtonSolid from '../atoms/ButtonSolid';
 function ButtonAuth() {
   const { logOut } = useAuth();
 
-  const queryClient = useQueryClient();
+  const userQueryClient = getBrowserQueryClient({
+    queries: {
+      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신,
+      retry: 0,
+    },
+  });
   const { data: user } = useQuery({
     queryKey: ['me'],
     queryFn: userApi.getUserMe,
-    initialData: () => queryClient.getQueryData(['me']),
-    staleTime: Infinity, // 5분 동안은 재요청 안함 (CSR 시 중복 방지)
+    initialData: () => userQueryClient.getQueryData(['me']),
     enabled: typeof window !== 'undefined', // CSR에서만 실행되게
   });
 
@@ -29,7 +34,7 @@ function ButtonAuth() {
 
   const handleClickLogOut = () => {
     logOut?.();
-    queryClient.removeQueries({ queryKey: ['me'] });
+    userQueryClient.removeQueries({ queryKey: ['me'] });
   };
 
   if (user) {

@@ -3,8 +3,9 @@
 import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
 import userApi from '@/api/user/user.api';
+import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { Role } from '@/types/entities/user.entity';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import {
   createContext,
@@ -18,6 +19,7 @@ export interface User {
   name: string;
   profileImage?: string;
   hasProfile: boolean;
+  hasRequest: boolean;
   role: Role;
 }
 
@@ -28,6 +30,7 @@ interface AuthContextValue {
   logOut?: () => void;
   role?: Role;
   hasProfile?: boolean;
+  hasRequest?: boolean;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -50,10 +53,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
-  const queryClient = useQueryClient();
+  const userQueryClient = getBrowserQueryClient({
+    queries: {
+      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신,
+      retry: 0,
+    },
+  });
   const { data: user } = useQuery<User>({
     queryFn: userApi.getUserMe,
     queryKey: ['me'],
+    initialData: () => userQueryClient.getQueryData(['me']),
     staleTime: Infinity,
   });
 
@@ -85,7 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);
     setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
-    queryClient.removeQueries({ queryKey: ['me'] });
+    userQueryClient.removeQueries({ queryKey: ['me'] });
     router.replace('/');
   };
 
@@ -96,6 +105,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logOut,
     role: user?.role,
     hasProfile: user?.hasProfile,
+    hasRequest: user?.hasRequest,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
