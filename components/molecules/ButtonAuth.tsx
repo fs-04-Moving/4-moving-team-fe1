@@ -24,7 +24,6 @@ function ButtonAuth() {
     queryKey: ['me'],
     queryFn: userApi.getUserMe,
     initialData: () => userQueryClient.getQueryData(['me']),
-    enabled: typeof window !== 'undefined', // CSR에서만 실행되게
   });
 
   const router = useRouter();
