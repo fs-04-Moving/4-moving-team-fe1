@@ -65,9 +65,11 @@ client.interceptors.response.use(
         }
 
         const { accessToken } = res;
+        const newAccessToken = accessToken.accessToken;
 
         // ✅ 새 토큰을 헤더에 반영
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+        console.log('axios accessToken', newAccessToken);
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return client(originalRequest); // 재요청
       } catch (refreshError) {

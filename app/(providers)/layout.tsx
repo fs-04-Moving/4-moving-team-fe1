@@ -2,33 +2,34 @@ import { getUserMeServer } from '@/api/user/user.api';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ModalProvider } from '@/contexts/ModalContext';
 import TanstackQueryProvider from '@/libs/tanstack-query';
+import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { ReactNode } from 'react';
 
 async function ProvidersLayout({ children }: { children: ReactNode }) {
   const accessToken = await getAccessTokenFromRefresh();
-  const queryClient = new QueryClient();
+  const userQueryClient = createServerQueryClient({
+    queries: {
+      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신,
+      retry: 0,
+    },
+  });
 
   if (accessToken) {
-    await queryClient.prefetchQuery({
+    await userQueryClient.prefetchQuery({
       queryKey: ['me'],
       queryFn: () => getUserMeServer(accessToken),
-      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신
     });
   }
-  const dehydratedState = dehydrate(queryClient);
+  const dehydratedState = dehydrate(userQueryClient);
   console.log(
     '🧊 SSR dehydratedState',
     JSON.stringify(dehydratedState, null, 2)
   );
   return (
     <TanstackQueryProvider>
-      <HydrationBoundary state={dehydrate(queryClient)}>
+      <HydrationBoundary state={dehydrate(userQueryClient)}>
         <AuthProvider>
           <ModalProvider>{children}</ModalProvider>
         </AuthProvider>
