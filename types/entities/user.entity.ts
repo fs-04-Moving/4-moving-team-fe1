@@ -18,6 +18,7 @@ export interface User {
   refreshToken: string;
   role: Role;
   hasProfile: boolean; // 프로필 작성 여부
+  hasRequest: boolean; // 활성 견적 존재 여부
   services: ServiceTypeEng[]; // 고객: 이용할 서비스 유형 목록, 기사: 제공할 서비스 유형 목록
   estimateRequests: EstimateRequest[]; // 고객: 요청 견적(이사) 목록
   livingArea: Area; // 고객: 사는 지역

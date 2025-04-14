@@ -18,6 +18,7 @@ export interface User {
   name: string;
   profileImage?: string;
   hasProfile: boolean;
+  hasRequest: boolean;
   role: Role;
 }
 
@@ -28,6 +29,7 @@ interface AuthContextValue {
   logOut?: () => void;
   role?: Role;
   hasProfile?: boolean;
+  hasRequest?: boolean;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -96,6 +98,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logOut,
     role: user?.role,
     hasProfile: user?.hasProfile,
+    hasRequest: user?.hasRequest,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
