@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata = {
-  title: '이사할 땐, 무빙',
+  title: {default : '이사할 땐, 무빙', template: '무빙 | %s'},
 };
 
 export default function HTMLLayout({ children }: { children: ReactNode }) {
