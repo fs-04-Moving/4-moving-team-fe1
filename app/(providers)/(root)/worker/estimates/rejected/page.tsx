@@ -1,5 +1,13 @@
+'use client';
+
+import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
+
 function RejectedEstimatesPage() {
-  return <div>RejectedEstimatesPage</div>;
+  return (
+    <ProtectedPageWrapper>
+      <div>RejectedEstimatesPage</div>
+    </ProtectedPageWrapper>
+  );
 }
 
 export default RejectedEstimatesPage;
