@@ -1,7 +1,7 @@
 import { ServiceType } from '@/types/move.type';
 import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
-import DriverInfoBoxA from './DriverInfoBoxA';
+import DriverInfoBoxA from './WorkerInfoBoxA';
 
 type Props = {
   profileImage: string;

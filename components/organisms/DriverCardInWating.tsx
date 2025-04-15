@@ -1,7 +1,7 @@
 import { EstimateRequestStatus, ServiceType } from '@/types/move.type';
 import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
-import DriverInfoBoxA from './DriverInfoBoxA';
+import DriverInfoBoxA from './WorkerInfoBoxA';
 import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
 import ButtonSolid from '../atoms/ButtonSolid';
 import ButtonOutlined from '../atoms/ButtonOutlined';

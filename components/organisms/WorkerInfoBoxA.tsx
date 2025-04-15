@@ -6,51 +6,53 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  isLiked: boolean;
+  isFavorite: boolean;
   favoritesCount: number;
   experience: number;
-  reviewsEverage: number;
+  reviewsAverage: number;
   reviewsCount: number;
-  confirmedEstimatesCount: number;
+  confirmedEstimateCount: number;
 };
 
 /**
- * DriverInfoBoxA 컴포넌트
+ * WorkerInfoBoxA 컴포넌트
  *
- * 기사님의 핵심 정보를 카드 형태로 요약하여 보여주는 UI 컴포넌트입니다.
- * 프로필 이미지, 닉네임, 경력, 완료된 이사 건수, 찜 여부와 찜 개수, 평점 및 리뷰 개수를 시각적으로 표현합니다.
- * 기사 리스트, 검색 결과, 견적 페이지 등 다양한 페이지 내 기사 카드에서 재사용할 수 있습니다.
+ * 기사님의 핵심 정보를 요약하여 보여주는 카드 UI 컴포넌트입니다.
+ * 프로필 이미지, 닉네임, 경력, 완료된 이사 건수, 찜 여부 및 찜 수, 리뷰 평점과 개수를 시각적으로 표현합니다.
+ * 기사 리스트, 기사 검색 결과, 견적 페이지 등 다양한 화면에서 재사용할 수 있도록 설계되어 있습니다.
+ *
+ * @component
  *
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
- * @param {boolean} isLiked - 사용자가 해당 기사를 찜했는지 여부
+ * @param {boolean} isFavorite - 현재 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 해당 기사를 찜한 사용자 수
  * @param {number} experience - 기사 경력 (단위: 년)
- * @param {number} reviewsEverage - 기사 평균 평점
- * @param {number} reviewsCount - 기사 리뷰 총 개수
- * @param {number} confirmedEstimatesCount - 기사 완료 이사 건수
+ * @param {number} reviewsAverage - 리뷰 평균 평점 (0~5 범위)
+ * @param {number} reviewsCount - 총 리뷰 수
+ * @param {number} confirmedEstimateCount - 완료된 이사(견적 확정) 건수
  *
  * @example
- * <DriverInfoBoxA
+ * <WorkerInfoBoxA
  *   profileImage="/images/driver1.png"
  *   nickname="김코드"
- *   isLiked={true}
+ *   isFavorite={true}
  *   favoritesCount={136}
  *   experience={7}
- *   reviewsEverage={4.8}
+ *   reviewsAverage={4.8}
  *   reviewsCount={178}
- *   confirmedEstimatesCount={334}
+ *   confirmedEstimateCount={334}
  * />
  */
-function DriverInfoBoxA({
+function WorkerInfoBoxA({
   profileImage,
   nickname,
-  isLiked,
+  isFavorite,
   favoritesCount,
   experience,
-  reviewsEverage,
+  reviewsAverage,
   reviewsCount,
-  confirmedEstimatesCount,
+  confirmedEstimateCount,
 }: Props) {
   return (
     <div
@@ -61,11 +63,14 @@ function DriverInfoBoxA({
         {/* 기사 이름 */}
         <div className="flex justify-between">
           <span className="text-[14px] lg:text-lg">{nickname} 기사님</span>
-          <LikeCount isLiked={isLiked} favoritesCount={favoritesCount} />
+          <LikeCount isFavorite={isFavorite} favoritesCount={favoritesCount} />
         </div>
         {/* 별점, 경력, 확정 건수 */}
         <div className="flex items-center gap-1.5  md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-          <RatingSummary rating={reviewsEverage} reviewCount={reviewsCount} />
+          <RatingSummary
+            reviewsAverage={reviewsAverage}
+            reviewsCount={reviewsCount}
+          />
           <span className="text-GrayScale-100">|</span>
           <span>
             <span className="text-GrayScale-300">경력</span>
@@ -73,7 +78,7 @@ function DriverInfoBoxA({
           </span>
           <span className="text-GrayScale-100">|</span>
           <span>
-            {`${confirmedEstimatesCount}건 `}
+            {`${confirmedEstimateCount}건 `}
             <span className="text-GrayScale-300">확정</span>
           </span>
         </div>
@@ -82,4 +87,4 @@ function DriverInfoBoxA({
   );
 }
 
-export default DriverInfoBoxA;
+export default WorkerInfoBoxA;

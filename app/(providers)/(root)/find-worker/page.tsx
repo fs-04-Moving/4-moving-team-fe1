@@ -1,8 +1,6 @@
-import DropdownArea from '@/components/molecules/DropdownArea';
-import DropdownService from '@/components/molecules/DropdownService';
-import DropdownSort from '@/components/molecules/DropdownSort';
-import DriverCardInSearch from '@/components/organisms/DriverCardInSearch';
 import mockImg from '@/assets/images/avatartion-2.svg';
+import FindWorkerClient from './FindWorkerClient';
+import profilesApi from '@/api/profiles/profiles.api';
 
 export const mockDriverList = [
   {
@@ -16,7 +14,7 @@ export const mockDriverList = [
     reviewsCount: 178,
     confirmedEstimatesCount: 334,
     favoritesCount: 136,
-    isLiked: true,
+    isFavorite: true,
   },
   {
     id: 2,
@@ -29,7 +27,7 @@ export const mockDriverList = [
     reviewsCount: 94,
     confirmedEstimatesCount: 210,
     favoritesCount: 85,
-    isLiked: false,
+    isFavorite: false,
   },
   {
     id: 3,
@@ -42,7 +40,7 @@ export const mockDriverList = [
     reviewsCount: 312,
     confirmedEstimatesCount: 550,
     favoritesCount: 192,
-    isLiked: true,
+    isFavorite: true,
   },
   {
     id: 4,
@@ -55,7 +53,7 @@ export const mockDriverList = [
     reviewsCount: 56,
     confirmedEstimatesCount: 78,
     favoritesCount: 43,
-    isLiked: false,
+    isFavorite: false,
   },
   {
     id: 5,
@@ -68,7 +66,7 @@ export const mockDriverList = [
     reviewsCount: 205,
     confirmedEstimatesCount: 400,
     favoritesCount: 150,
-    isLiked: true,
+    isFavorite: true,
   },
   {
     id: 6,
@@ -81,59 +79,27 @@ export const mockDriverList = [
     reviewsCount: 40,
     confirmedEstimatesCount: 60,
     favoritesCount: 22,
-    isLiked: false,
+    isFavorite: false,
   },
 ];
 
-function FindWorkerPage() {
+type Props = {
+  searchParams: {
+    orderBy?: string;
+    serviceType?: string;
+    serviceArea?: string;
+    page?: number;
+    pageSize?: number;
+  };
+};
+
+async function FindWorkerPage({ searchParams }: Props) {
+  const workers = await profilesApi.getWorkerProfiles(searchParams);
+
   return (
     <main className="mx-auto max-w-9/12 px-4">
       <h2 className="font-semibold text-2xl py-8">기사님 찾기</h2>
-      {/* 왼쪽 필터 부분 */}
-      <div className="flex gap-28">
-        <aside className="hidden w-full max-w-[328px] lg:w-[32%] lg:block">
-          <div className="flex flex-col gap-11">
-            <div className="flex justify-between px-2.5 py-4 border-b-[1px] border-Line-200">
-              <span className="text-xl">필터</span>
-              <span className="text-GrayScale-300">초기화</span>
-            </div>
-            <div className="flex flex-col gap-4">
-              <label className="text-lg font-semibold">
-                지역을 선택해 주세요
-              </label>
-              <DropdownArea defaultValue="지역" />
-            </div>
-            <div className="flex flex-col gap-4">
-              <label className="text-lg font-semibold">
-                어떤 서비스가 필요하세요?
-              </label>
-              <DropdownService />
-            </div>
-          </div>
-        </aside>
-        {/* 기사님 카드 */}
-        <section className="flex-1 min-w-0">
-          <div className="flex flex-col items-end gap-6 mb-8">
-            <DropdownSort
-              options={[
-                '리뷰 많은순',
-                '평점 높은순',
-                '경력 높은순',
-                '확정 많은순',
-              ]}
-            />
-            <input
-              placeholder="텍스트를 입력해주세요"
-              className="py-3.5 px-6 bg-BackGround-200 rounded-2xl w-full text-GrayScale-400"
-            />
-          </div>
-          <div className="flex flex-col gap-12">
-            {mockDriverList.map((driver) => (
-              <DriverCardInSearch key={driver.id} {...driver} />
-            ))}
-          </div>
-        </section>
-      </div>
+      <FindWorkerClient initialData={workers} />
     </main>
   );
 }
