@@ -35,11 +35,11 @@ export default function SlideMenu({ isOpen, onClose }: Props) {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'tween' }}
+            transition={{ type: 'tween', duration: 0.2 }}
           >
-            <div className="flex justify-end items-center h-16 pt-4">
-              <button onClick={onClose} className="mb-4">
-                <X className="text-Black-100 w-6 h-6" />
+            <div className="flex justify-end items-center h-16 pt-4 px-4">
+              <button onClick={onClose} className="mb-4 cursor-pointer">
+                <X className="text-Black-100 w-6 h-6  hover:opacity-60" />
               </button>
             </div>
             <nav>

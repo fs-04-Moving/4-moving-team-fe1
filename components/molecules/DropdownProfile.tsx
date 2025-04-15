@@ -133,7 +133,7 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
         <div className="border-t border-GrayScale-100">
           <button
             onClick={handleClickLogout}
-            className="text-GrayScale-400 text-xs lg:text-sm font-medium w-[140px] lg:w-[240px] h-[38px] lg:h-[45px] hover:bg-Primay-Blue-50 transition-colors"
+            className="text-GrayScale-400 text-xs lg:text-sm font-medium w-[140px] lg:w-[240px] h-[38px] lg:h-[45px] hover:bg-Primay-Blue-50 transition-colors cursor-pointer"
           >
             로그아웃
           </button>
