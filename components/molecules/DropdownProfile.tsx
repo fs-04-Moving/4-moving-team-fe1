@@ -90,7 +90,7 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
       <div
         ref={ref}
         className={clsx(
-          'absolute top-8 lg:top-13 left-5 lg:left-14 bg-white rounded-xl shadow-md px-1.5 lg:px-1 pt-2.5 lg:pt-4',
+          'absolute top-8 lg:top-13 right-10 lg:right-0 bg-white rounded-xl shadow-md px-1.5 lg:px-1 pt-2.5 lg:pt-4',
           'border border-GrayScale-100 overflow-hidden z-50'
         )}
       >

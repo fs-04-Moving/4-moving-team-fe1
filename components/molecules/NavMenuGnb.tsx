@@ -5,12 +5,20 @@ import NavMenuItem from '../atoms/NavMenuItem';
 
 function NavMenuGnb() {
   const router = useRouter();
-  const { role, hasProfile } = useAuth();
+  const { role, hasProfile, isLoggedIn } = useAuth();
 
   return (
     <div className="w-full pl-20 gap-10 hidden lg:flex">
       {navMenuItems
-        .filter((item) => item.condition(role ?? null, hasProfile ?? false))
+        .filter(
+          (item) =>
+            item.showIn?.includes('gnb') &&
+            item.condition(
+              role ?? null,
+              hasProfile ?? false,
+              isLoggedIn ?? false
+            )
+        )
         .map((item, index) => (
           <NavMenuItem
             key={index}

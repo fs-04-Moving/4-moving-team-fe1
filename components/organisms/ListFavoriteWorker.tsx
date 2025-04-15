@@ -29,7 +29,7 @@ function ListFavoriteWorker() {
     return <div>찜한 기사님이 없습니다</div>;
   console.log(favorites);
   return (
-    <div className="md:w-[600px] lg:w-[1400px] flex flex-wrap gap-x-6 gap-y-12">
+    <div className="md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row flex-wrap gap-x-6 gap-y-6 md:gap-y-8 lg:gap-y-12">
       {favorites.list.map((worker: DriverCardInLikedProps) => {
         console.log(worker.profileImage);
         return (
