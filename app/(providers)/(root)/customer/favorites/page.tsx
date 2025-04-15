@@ -13,7 +13,7 @@ async function FavoriteWorkersPage() {
   return (
     <HydrationBoundary state={dehydrate(favoritesQueryClient)}>
       <div className="bg-BackGround-200 min-h-full">
-        <div className="flex justify-center items-center w-full bg-GrayScale-50 h-24">
+        <div className="flex justify-center items-center w-full bg-GrayScale-50 h-24 mb-6">
           <div className="w-[1400px]">
             <Label intent="md">찜한 기사님</Label>
           </div>
