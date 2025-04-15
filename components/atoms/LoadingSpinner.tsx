@@ -20,7 +20,6 @@ const sizeMap = {
  */
 function LoadingSpinner({ size = 'md' }: Props) {
   const sizeClassName = sizeMap[size];
-  console.log(sizeClassName);
   return (
     <div className="text-center mt-30">
       <div role="status">

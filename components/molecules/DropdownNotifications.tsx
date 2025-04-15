@@ -11,6 +11,7 @@
  *   isOpen={isOpen}
  *   onClose={() => setIsOpen(false)}
  *   onMarkAsRead={(id) => console.log(`알림 ${id} 읽음 처리`)}
+ *   ref={ref} // 외부에서 감지할 때 사용
  * />
  *
  * @param {NotificationItem[]} props.notifications - 알림 목록
@@ -22,7 +23,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
+import { forwardRef, useRef } from 'react';
 
 interface NotificationItem {
   id: string;
@@ -38,37 +39,36 @@ interface DropdownNotificationProps {
   onMarkAsRead?: (id: string) => void;
 }
 
-function DropdownNotification({
-  notifications,
-  isOpen,
-  onClose,
-  onMarkAsRead,
-}: DropdownNotificationProps) {
-  const dropdownRef = useRef<HTMLDivElement>(null);
+// forwardRef로 변경
+const DropdownNotification = forwardRef<
+  HTMLDivElement,
+  DropdownNotificationProps
+>(({ notifications, isOpen, onClose, onMarkAsRead }, ref) => {
+  const innerRef = useRef<HTMLDivElement>(null);
 
   // 밖에 클릭했을때
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (target.closest('[data-button-id="notification-button"]')) {
-        return;
-      }
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     const target = event.target as HTMLElement;
+  //     if (target.closest('[data-button-id="notification-button"]')) {
+  //       return;
+  //     }
 
-      if (dropdownRef.current && !dropdownRef.current.contains(target)) {
-        onClose();
-      }
-    };
+  //     if (innerRef.current && !innerRef.current.contains(target)) {
+  //       onClose();
+  //     }
+  //   };
 
-    if (isOpen) {
-      setTimeout(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-      }, 0);
-    }
+  //   if (isOpen) {
+  //     setTimeout(() => {
+  //       document.addEventListener('mousedown', handleClickOutside);
+  //     }, 0);
+  //   }
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen, onClose]);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, [isOpen, onClose]);
 
   // 알림 클릭 처리
   const handleNotificationClick = (id: string) => {
@@ -81,23 +81,23 @@ function DropdownNotification({
 
   return (
     <div
-      ref={dropdownRef}
+      ref={ref ?? innerRef}
       className={clsx(
-        'absolute top-16 right-0 w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md',
+        'absolute top-8 lg:top-13 right-10 md:right-10 lg:right-auto w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md',
         'border border-GrayScale-100 overflow-hidden z-50 max-h-[314px] lg:max-h-[352px] overflow-y-auto'
       )}
     >
-      <div className='p-4 flex justify-between items-center'>
-        <h3 className='font-bold text-base lg:text-lg text-Black-400'>알림</h3>
+      <div className="p-4 flex justify-between items-center">
+        <h3 className="font-bold text-base lg:text-lg text-Black-400">알림</h3>
         <button
           onClick={onClose}
-          className='text-GrayScale-400 hover:text-Black-400 transition-colors'
-          aria-label='알림 닫기'
+          className="text-GrayScale-400 hover:text-Black-400 transition-colors"
+          aria-label="알림 닫기"
         >
           ✕
         </button>
       </div>
-      <div className='py-2'>
+      <div className="py-2">
         {notifications.length > 0 ? (
           notifications.map((notification) => (
             <div
@@ -108,7 +108,7 @@ function DropdownNotification({
               )}
               onClick={() => handleNotificationClick(notification.id)}
             >
-              <div className='flex justify-between items-start mb-2'>
+              <div className="flex justify-between items-start mb-2">
                 <p
                   className={clsx(
                     'text-Black-400 font-medium text-sm lg:text-base',
@@ -120,20 +120,22 @@ function DropdownNotification({
                   {notification.message}
                 </p>
                 {!notification.isRead && (
-                  <span className='w-2 h-2 rounded-full bg-Primay-Blue-300 flex-shrink-0 mt-1'></span>
+                  <span className="w-2 h-2 rounded-full bg-Primay-Blue-300 flex-shrink-0 mt-1"></span>
                 )}
               </div>
-              <p className='text-sm text-GrayScale-400'>{notification.time}</p>
+              <p className="text-sm text-GrayScale-400">{notification.time}</p>
             </div>
           ))
         ) : (
-          <div className='py-8 text-center text-GrayScale-400'>
+          <div className="py-8 text-center text-GrayScale-400">
             새로운 알림이 없습니다.
           </div>
         )}
       </div>
     </div>
   );
-}
+});
+
+DropdownNotification.displayName = 'DropdownNotification';
 
 export default DropdownNotification;
