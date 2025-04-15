@@ -14,7 +14,7 @@ type Props = {
 
 export default function SlideMenu({ isOpen, onClose }: Props) {
   const router = useRouter();
-  const { role, hasProfile, isLoggedIn } = useAuth();
+  const { user, isLoggedIn } = useAuth();
 
   return (
     <AnimatePresence>
@@ -48,8 +48,8 @@ export default function SlideMenu({ isOpen, onClose }: Props) {
                   (item) =>
                     item.showIn?.includes('slide') &&
                     item.condition(
-                      role ?? null,
-                      hasProfile ?? false,
+                      user?.role ?? null,
+                      user?.hasProfile ?? false,
                       isLoggedIn ?? false
                     )
                 )
@@ -57,7 +57,7 @@ export default function SlideMenu({ isOpen, onClose }: Props) {
                   <SlideMenuItem
                     key={index}
                     onClick={() => {
-                      item.onClick(router, role ?? null);
+                      item.onClick(router, user?.role ?? null);
                       onClose();
                     }}
                   >
