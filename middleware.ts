@@ -75,9 +75,13 @@ export async function middleware(req: NextRequest) {
   }
 
   // 5. Role 보호 - 다른 역할 영역 접근 시 리다이렉트
+  // 단, 예외적으로 기사의 상세페이지(/worker/:workerId)는 접근 가능
+  const isWorkerDetailPage = /^\/worker\/[^\/]+$/.test(pathname);
+
   if (
-    (user.role === 'customer' && pathname.startsWith('/worker')) ||
-    (user.role === 'worker' && pathname.startsWith('/customer'))
+    !isWorkerDetailPage && // 예외 라우트가 아닌 경우에만 막음
+    ((user.role === 'customer' && pathname.startsWith('/worker')) ||
+      (user.role === 'worker' && pathname.startsWith('/customer')))
   ) {
     return NextResponse.redirect(new URL(`/${user.role}`, req.url));
   }
