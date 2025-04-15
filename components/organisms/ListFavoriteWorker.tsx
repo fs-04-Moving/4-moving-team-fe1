@@ -15,6 +15,10 @@ function ListFavoriteWorker() {
     queryFn: favoriteApi.getFavoriteWorkers,
   });
 
+  const handleClickCard = (id: string) => {
+    console.log(id, '기사님 상세로 이동');
+  };
+
   if (isLoading) return <LoadingSpinner />;
   if (isError || !favorites) return <div>오류 발생!</div>;
   console.log(favorites);
@@ -23,7 +27,11 @@ function ListFavoriteWorker() {
       {favorites.list.map((worker: DriverCardInLikedProps) => {
         console.log(worker.profileImage);
         return (
-          <div key={worker.id} className="shrink-0">
+          <div
+            key={worker.id}
+            className="shrink-0 cursor-pointer hover:opacity-60 active:opacity-80"
+            onClick={() => handleClickCard(worker.id)}
+          >
             <DriverCardInLiked {...worker} />
           </div>
         );
