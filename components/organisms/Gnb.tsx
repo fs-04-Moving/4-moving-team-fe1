@@ -1,12 +1,17 @@
 import LogoIconText from '../atoms/LogoIconText';
-import ButtonAuth from '../molecules/ButtonAuth';
 import NavMenuGnb from '../molecules/NavMenuGnb';
 import SubTab from '../molecules/SubTab';
+import ButtonAuth from './ButtonAuth';
 
 interface GnbProps {
   onOpenMenu: () => void;
 }
 
+/**
+ * 상단 Gnb 메뉴(헤더)
+ * @param param0 onOpenMenu: 태블릿/모바일에서 사용하는 우측 슬라이드 메뉴 토글 함수
+ * @returns
+ */
 function Gnb({ onOpenMenu }: GnbProps) {
   return (
     <header className="flex flex-col items-center justify-center sticky z-20 top-0 backdrop-blur-3xl border-b-1 border-GrayScale-100">
