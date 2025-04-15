@@ -7,7 +7,7 @@ import TitleLandingImage from '../atoms/TitleLandingImage';
 
 function LandingPage() {
   return (
-    <div className="h-[100%] bg-[#f5f7fb]">
+    <div className="min-h-screen bg-[#f5f7fb]">
       <div className="flex flex-col justify-center items-center gap-11 lg:gap-12">
         <h1 className="text-center lg:leading-13 mt-16 lg:mt-20 text-2xl lg:text-4xl font-semibold">
           원하는 이사 서비스를 요청하고
