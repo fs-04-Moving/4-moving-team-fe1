@@ -16,7 +16,11 @@ import DropdownNotification from './DropdownNotifications';
 import DropdownProfile from './DropdownProfile';
 import UserProfile from './UserProfile';
 
-function ButtonAuth() {
+interface Props {
+  onOpenMenu: () => void;
+}
+
+function ButtonAuth({ onOpenMenu }: Props) {
   const { logOut } = useAuth();
   const [isShowProfilePopup, setIsShowProfilePopup] = useState(false);
   const [isShowNotificationsPopup, setIsShowNotificationsPopup] =
@@ -104,6 +108,7 @@ function ButtonAuth() {
           src={icMenu}
           alt="메뉴 아이콘"
           className="w-6 h-6 ml-6 cursor-pointer lg:hidden"
+          onClick={onOpenMenu}
         />
       </div>
     );

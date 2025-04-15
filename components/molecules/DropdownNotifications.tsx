@@ -83,7 +83,7 @@ const DropdownNotification = forwardRef<
     <div
       ref={ref ?? innerRef}
       className={clsx(
-        'absolute top-8 lg:top-13 right-10 md:right-10 lg:right-auto w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md',
+        'absolute top-8 lg:top-13 left-[-200px] lg:left-[-300px] right-auto lg:right-auto w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md',
         'border border-GrayScale-100 overflow-hidden z-50 max-h-[314px] lg:max-h-[352px] overflow-y-auto'
       )}
     >
