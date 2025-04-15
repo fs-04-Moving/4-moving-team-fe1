@@ -7,7 +7,10 @@ interface Props {
 
 function SlideMenuItem({ children, onClick }: Props) {
   return (
-    <div className="pl-5 py-6" onClick={onClick}>
+    <div
+      className="pl-5 py-6 cursor-pointer hover:bg-BackGround-200"
+      onClick={onClick}
+    >
       {children}
     </div>
   );

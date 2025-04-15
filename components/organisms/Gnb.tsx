@@ -9,7 +9,7 @@ interface GnbProps {
 
 function Gnb({ onOpenMenu }: GnbProps) {
   return (
-    <header className="flex justify-center sticky z-20 top-0 backdrop-blur-3xl border-b-1 border-GrayScale-100">
+    <header className="flex flex-col items-center justify-center sticky z-20 top-0 backdrop-blur-3xl border-b-1 border-GrayScale-100">
       <div
         className="flex justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px] h-16 lg:h-22"
         // className={`flex justify-between items-center h-22 ${
