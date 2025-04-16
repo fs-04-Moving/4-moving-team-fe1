@@ -1,6 +1,6 @@
 import LandingPage from '@/components/templates/LandingPage';
 
-async function HomePage() {
+function HomePage() {
   return <LandingPage />;
 }
 

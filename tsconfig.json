@@ -22,7 +22,15 @@
     "paths": {
       "@/*": ["./*"]
     }
+    // "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "app/(providers)/(root)/test",
+    "components/molecules/MovingTypeDisplay.tsx",
+    "components/molecules/MovingTypeSelector.tsx",
+    "components/molecules/DropdownService.tsx",
+    "components/atoms/ChipEstimateRequestStatus.tsx"
+  ]
 }

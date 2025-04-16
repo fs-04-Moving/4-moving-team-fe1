@@ -28,8 +28,8 @@ function DropdownService() {
   ];
 
   return (
-    <div className='w-full pb-7'>
-      <Dropdown options={options} defaultValue='전체' />
+    <div className="w-full pb-7">
+      <Dropdown options={options} defaultValue="전체" />
     </div>
   );
 }

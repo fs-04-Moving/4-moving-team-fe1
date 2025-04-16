@@ -3,7 +3,7 @@ import UserAvartar from '../atoms/UserAvartar';
 import LikeCount from '../molecules/LikeCount';
 import RatingSummary from '../molecules/RatingSummary';
 
-export type DriverCardInLikedProps = {
+export type WorkerCardInLikedProps = {
   id: string;
   profileImage: string;
   nickname: string;
@@ -55,7 +55,7 @@ function WorkerCardInLiked({
   services,
   reviewsAverage,
   reviewsCount,
-}: DriverCardInLikedProps) {
+}: WorkerCardInLikedProps) {
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
