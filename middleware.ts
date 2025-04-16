@@ -25,8 +25,7 @@ const TEST_ROUTES = [
 export async function middleware(req: NextRequest) {
   const start = performance.now(); // ⏱ 측정 시작
 
-  const result = await getUserFromRequestLite(req);
-  // const result = await getUserFromRequest(req);
+  const result = getUserFromRequestLite(req);
 
   const end = performance.now(); // ⏱ 측정 끝
   console.log(
@@ -47,14 +46,6 @@ export async function middleware(req: NextRequest) {
   }
 
   // 2. 퍼블릭 라우트: 로그인 X → 허용 / 로그인 O → 리다이렉트
-  // if (PUBLIC_ROUTES.includes(pathname)) {
-  //   // const result = await getUserFromRequest(req);
-  //   if (!result) return NextResponse.next();
-
-  //   const { user } = result;
-  //   const target = user.hasProfile ? `/${user.role}` : `/${user.role}/profile`;
-  //   return NextResponse.redirect(new URL(target, req.url));
-  // }
   if (
     PUBLIC_ROUTES.some(
       (path) => pathname === path || pathname.startsWith(`${path}/`)
