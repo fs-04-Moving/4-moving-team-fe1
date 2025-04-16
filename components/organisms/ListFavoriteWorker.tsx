@@ -20,7 +20,6 @@ function ListFavoriteWorker() {
   const router = useRouter();
 
   const handleClickCard = (workerId: string) => {
-    console.log(workerId, '기사님 상세로 이동');
     router.push(`/worker/${workerId}`);
   };
 
@@ -28,7 +27,6 @@ function ListFavoriteWorker() {
   if (isError || !favorites) return <div>오류 발생!</div>;
   if (favorites && favorites.totalCount === 0)
     return <div>찜한 기사님이 없습니다</div>;
-  console.log(favorites);
   return (
     <div className="bg-BackGround-200 min-h-full">
       <div className="flex justify-center items-center w-full bg-GrayScale-50 h-16 lg:h-24 mb-6">
@@ -39,7 +37,6 @@ function ListFavoriteWorker() {
       <div className="flex justify-center">
         <div className="md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row flex-wrap gap-x-6 gap-y-6 md:gap-y-8 lg:gap-y-12">
           {favorites.list.map((worker: DriverCardInLikedProps) => {
-            console.log(worker.profileImage);
             return (
               <div
                 key={worker.id}
