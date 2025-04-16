@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import avatar_1 from '@/assets/images/avatartion-1.svg';
 import clsx from 'clsx';
+import Image from 'next/image';
 
 type Props = {
   imgUrl: string;

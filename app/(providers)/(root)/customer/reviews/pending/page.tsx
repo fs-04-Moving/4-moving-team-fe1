@@ -1,91 +1,48 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import DriverCardInWritableReview from '@/components/organisms/DriverCardInWritableReview';
-import exampleReviewData from './exampleReviewData'; 
 import type { Metadata } from 'next';
-
-
+import Pagination from '@/components/molecules/Pagination';
+import { ClipLoader } from 'react-spinners';
+import usePendingReviews from '@/hooks/usePendingReviews';
 
 function PendingReviewsPage() {
-  const [reviewData, setReviewData] = useState(exampleReviewData); // 초기 상태를 예시 데이터로 설정
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [selectedReviewId, setSelectedReviewId] = useState(null);
+  const { data: reviews = [], isLoading, isError, error } = usePendingReviews();
+  const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 6;
 
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-
-    if (token) {
-      setLoading(true);
-      axios
-        .get('/api/reviews/writable', {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((response) => {
-          setReviewData(response.data); // API 응답 데이터로 상태 업데이트
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
-    } else {
-      // 토큰이 없으면 예시 데이터 사용 (이미 초기 상태로 설정됨)
-    }
-  }, []);
-
-  const handleWriteReview = (reviewId) => {
+  const handleWriteReview = (reviewId: string) => {
     setSelectedReviewId(reviewId);
     setIsModalOpen(true);
   };
 
-  const handleReviewSubmit = (reviewData) => {
-    // 리뷰 작성 API 호출 및 처리 하는곳곳
-
+  const handleReviewSubmit = (reviewData: any) => {
     setIsModalOpen(false);
-    // 리뷰 목록 다시 불러오기 (선택 사항)
+    // 리뷰 제출 로직
   };
 
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = reviewData.slice(indexOfFirstReview, indexOfLastReview);
+  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const Pagination = ({ reviewsPerPage, totalReviews, paginate }) => {
-    const pageNumbers = [];
-
-    for (let i = 1; i <= Math.ceil(totalReviews / reviewsPerPage); i++) {
-      pageNumbers.push(i);
-    }
-
-    return (
-      <nav className="flex justify-center mt-4">
-        <ul className="flex space-x-2">
-          {pageNumbers.map((number) => (
-            <li key={number}>
-              <button
-                onClick={() => paginate(number)}
-                className={`px-4 py-2 rounded ${
-                  currentPage === number ? 'bg-blue-500 text-white' : 'bg-gray-200'
-                }`}
-              >
-                {number}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    );
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
 
-  if (loading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생: {error.message}</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <ClipLoader color="#4da9ff" loading={isLoading} size={50} />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div>에러가 발생했습니다: {error.message}</div>;
+  }
 
   return (
     <div className="bg-GrayScale-500 flex flex-col">
@@ -109,9 +66,10 @@ function PendingReviewsPage() {
         )}
       </div>
       <Pagination
-        reviewsPerPage={reviewsPerPage}
-        totalReviews={reviewData.length}
-        paginate={paginate}
+        currentPage={currentPage}
+        totalPages={Math.ceil(reviews.length / reviewsPerPage)}
+        onPageChange={handlePageChange}
+        className="mt-5 mb-3"
       />
       {isModalOpen && (
         <ReviewModal
