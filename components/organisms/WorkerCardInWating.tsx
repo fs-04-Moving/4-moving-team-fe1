@@ -1,7 +1,7 @@
 import { EstimateRequestStatus, ServiceType } from '@/types/move.type';
 import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
-import DriverInfoBoxA from './DriverInfoBoxA';
+import WorkerInfoBoxA from './WorkerInfoBoxA';
 import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
 import ButtonSolid from '../atoms/ButtonSolid';
 import ButtonOutlined from '../atoms/ButtonOutlined';
@@ -12,8 +12,8 @@ import { ko } from 'date-fns/locale';
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: string;
-  workerConfirmedEstimatesCount: number;
+  experience: number;
+  confirmedEstimateCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
@@ -23,12 +23,14 @@ type Props = {
   movingDate: Date;
   departure: string;
   destination: string;
+  reviewsAverage: number;
+  reviewsCount: number;
   onConfirm?: () => void;
   onViewDetail?: () => void;
 };
 
 /**
- * DriverCardInWating 컴포넌트
+ * WorkerCardInWating 컴포넌트
  *
  * 견적 대기 상태의 기사 카드 UI로, 기사 정보와 견적 요청 상태를 한눈에 보여줍니다.
  * 상단에는 서비스 관련 Chip들이 표시되고, 중간에는 기사 프로필 및 기본 정보(닉네임, 경력, 확정 이사 건수, 찜 여부 등)가,
@@ -39,7 +41,7 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 (년 단위)
- * @param {number} workerConfirmedEstimatesCount - 기사 견적 확정 건수
+ * @param {number} confirmedEstimateCount - 기사 견적 확정 건수
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 총 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
@@ -49,15 +51,17 @@ type Props = {
  * @param {Date} movingDate - 이사일 (날짜 객체)
  * @param {string} departure - 출발지
  * @param {string} destination - 도착지
+ * @param {number} reviewsAverage - 리뷰 평균
+ * @param {number} reviewsCount - 리뷰 개수
  * @param {() => void} [onConfirm] - '견적 확정하기' 버튼 클릭 시 호출되는 콜백 함수
  * @param {() => void} [onViewDetail] - '상세 보기' 버튼 클릭 시 호출되는 콜백 함수
  *
  * @example
- * <DriverCardInWating
+ * <WorkerCardInWating
  *   profileImage="/images/driver1.png"
  *   nickname="김이사"
  *   experience={8}
- *   workerConfirmedEstimatesCount={342}
+ *   confirmedEstimateCount={342}
  *   isFavorite={true}
  *   favoritesCount={128}
  *   services={['smallMove', 'homeMove']}
@@ -69,13 +73,15 @@ type Props = {
  *   destination="경기도 수원시"
  *   onConfirm={() => console.log('견적 확정하기 클릭')}
  *   onViewDetail={() => console.log('상세 보기 클릭')}
+ *   reviewsAverage={4.7}
+ *   reviewsCount={108}
  * />
  */
-function DriverCardInWating({
+function WorkerCardInWating({
   profileImage,
   nickname,
   experience,
-  workerConfirmedEstimatesCount,
+  confirmedEstimateCount,
   isFavorite,
   favoritesCount,
   services,
@@ -85,6 +91,8 @@ function DriverCardInWating({
   movingDate,
   departure,
   destination,
+  reviewsAverage,
+  reviewsCount,
   onConfirm,
   onViewDetail,
 }: Props) {
@@ -110,13 +118,15 @@ function DriverCardInWating({
         )}
       </div>
       {/* 기사 소개 박스 */}
-      <DriverInfoBoxA
+      <WorkerInfoBoxA
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        countCompleteMoving={workerConfirmedEstimatesCount}
+        confirmedEstimateCount={confirmedEstimateCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
+        reviewsAverage={reviewsAverage}
+        reviewsCount={reviewsCount}
       />
       {/* 견적 정보 */}
       <div className="flex flex-col lg:flex-row gap-3.5 lg:gap-4 text-[14px] lg:text-lg">
@@ -146,4 +156,4 @@ function DriverCardInWating({
   );
 }
 
-export default DriverCardInWating;
+export default WorkerCardInWating;

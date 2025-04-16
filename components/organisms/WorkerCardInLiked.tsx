@@ -12,10 +12,12 @@ export type DriverCardInLikedProps = {
   isFavorite: boolean;
   favoritesCount: number;
   services: string[];
+  reviewsAverage: number;
+  reviewsCount: number;
 };
 
 /**
- * DriverCardInLiked 컴포넌트
+ * WorkerCardInLiked 컴포넌트
  *
  * 사용자가 찜한 기사 리스트에서 보여지는 카드 컴포넌트입니다.
  * 기사 서비스 타입(Chip), 프로필 이미지, 이름, 경력, 찜 수, 별점, 리뷰 수, 확정 건수 등의 정보를 시각적으로 표시합니다.
@@ -27,9 +29,11 @@ export type DriverCardInLikedProps = {
  * @param {boolean} isFavorite - 사용자가 이 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 서비스 유형 리스트
+ * @param {number} reviewsAverage - 리뷰 평균
+ * @param {number} reviewsCount - 리뷰 개수
  *
  * @example
- * <DriverCardInLiked
+ * <WorkerCardInLiked
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
@@ -37,9 +41,11 @@ export type DriverCardInLikedProps = {
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
+ *   reviewsAverage={4.7}
+ *   reviewsCount={108}
  * />
  */
-function DriverCardInLiked({
+function WorkerCardInLiked({
   profileImage,
   nickname,
   experience,
@@ -47,6 +53,8 @@ function DriverCardInLiked({
   isFavorite,
   favoritesCount,
   services,
+  reviewsAverage,
+  reviewsCount,
 }: DriverCardInLikedProps) {
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
@@ -69,7 +77,10 @@ function DriverCardInLiked({
           </div>
           {/* 별점, 경력, 확정 건수 */}
           <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-            <RatingSummary rating={4.9} reviewCount={178} />
+            <RatingSummary
+              reviewsAverage={reviewsAverage}
+              reviewsCount={reviewsCount}
+            />
             <span className="text-GrayScale-100">|</span>
             <span>
               <span className="text-GrayScale-300">경력</span>
@@ -87,4 +98,4 @@ function DriverCardInLiked({
   );
 }
 
-export default DriverCardInLiked;
+export default WorkerCardInLiked;

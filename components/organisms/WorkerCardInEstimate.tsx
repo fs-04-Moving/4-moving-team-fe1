@@ -1,23 +1,25 @@
 import { ServiceType } from '@/types/move.type';
 import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
-import DriverInfoBoxA from './DriverInfoBoxA';
+import WorkerInfoBoxA from './WorkerInfoBoxA';
 
 type Props = {
   profileImage: string;
   nickname: string;
   experience: number;
   summary: string;
-  workerConfirmedEstimatesCount: number;
+  confirmedEstimateCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
   isDirectEstimate: boolean;
   price: number;
+  reviewsAverage: number;
+  reviewsCount: number;
 };
 
 /**
- * DriverCardInEstimate 컴포넌트
+ * WorkerCardInEstimate 컴포넌트
  *
  * 견적 내역 리스트에서 사용되는 기사 카드 컴포넌트입니다.
  * 서비스 유형 칩, 기사 프로필 정보, 기사 소개, 지정 견적 여부, 견적 금액 등을 시각적으로 구성합니다.
@@ -26,38 +28,44 @@ type Props = {
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
  * @param {string} summary - 기사 한줄 소개
- * @param {number} workerConfirmedEstimatesCount - 해당 기사의 견적 확정 건수
+ * @param {number} confirmedEstimateCount - 해당 기사의 견적 확정 건수
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열
  * @param {boolean} isDirectEstimate - 지정 견적 여부
  * @param {number} price - 견적 금액
+ * @param {number} reviewsAverage - 리뷰 평균
+ * @param {number} reviewsCount - 리뷰 개수
  *
  * @example
- * <DriverCardInEstimate
+ * <WorkerCardInEstimate
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
  *   summary="안전하고 깔끔한 이사 도와드립니다."
- *   workerConfirmedEstimatesCount={334}
+ *   confirmedEstimateCount={334}
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
  *   isDirectEstimate={true}
  *   price="1800000"
+ *   reviewsAverage={4.7}
+ *   reviewsCount={108}
  * />
  */
-function DriverCardInEstimate({
+function WorkerCardInEstimate({
   profileImage,
   nickname,
   experience,
   summary,
-  workerConfirmedEstimatesCount,
+  confirmedEstimateCount,
   isFavorite,
   favoritesCount,
   services,
   isDirectEstimate,
   price,
+  reviewsAverage,
+  reviewsCount,
 }: Props) {
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] lg:w-[688px] lg:h-[280px] px-3.5 py-4">
@@ -70,11 +78,13 @@ function DriverCardInEstimate({
       {/* 기사 한줄 소개 */}
       <div className="text-[14px] lg:text-2xl">{summary}</div>
       {/* 기사 소개 박스 */}
-      <DriverInfoBoxA
+      <WorkerInfoBoxA
+        reviewsAverage={reviewsAverage}
+        reviewsCount={reviewsCount}
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        countCompleteMoving={workerConfirmedEstimatesCount}
+        confirmedEstimateCount={confirmedEstimateCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
       />
@@ -86,4 +96,4 @@ function DriverCardInEstimate({
   );
 }
 
-export default DriverCardInEstimate;
+export default WorkerCardInEstimate;
