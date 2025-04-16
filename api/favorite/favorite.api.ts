@@ -1,8 +1,8 @@
-import { DriverCardInLikedProps } from '@/components/organisms/DriverCardInLiked';
+import { WorkerCardInLikedProps } from '@/components/organisms/WorkerCardInLiked';
 import { client, errorHandler } from '../client';
 
 export type FavoriteWorkersResponse = {
-  list: DriverCardInLikedProps[];
+  list: WorkerCardInLikedProps[];
   totalCount: number;
 };
 

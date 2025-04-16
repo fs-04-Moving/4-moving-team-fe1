@@ -31,9 +31,6 @@
     "components/molecules/MovingTypeDisplay.tsx",
     "components/molecules/MovingTypeSelector.tsx",
     "components/molecules/DropdownService.tsx",
-    "components/organisms/DriverCardInEstimate.tsx",
-    "components/atoms/ChipEstimateRequestStatus.tsx",
-    "components/organisms/DriverCardInWating.tsx",
-    "components/organisms/DriverCardInSearch.tsx"
+    "components/atoms/ChipEstimateRequestStatus.tsx"
   ]
 }
