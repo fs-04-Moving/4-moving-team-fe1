@@ -1,3 +1,4 @@
+
 'use client';
 
 import React from 'react';
@@ -24,7 +25,7 @@ const DatePickerWrapper = () => {
             onChange={setSelectedDate}
             inline
             showPopperArrow={false}
-            minDate={new Date()} // 오늘 이전 날짜 비활성화 수정
+            minDate={new Date()} // ✅ 오늘 이전 날짜 비활성화
             renderCustomHeader={({
               date,
               decreaseMonth,
@@ -75,3 +76,4 @@ const DatePickerWrapper = () => {
 };
 
 export default DatePickerWrapper;
+
