@@ -33,7 +33,6 @@ function ProtectedPageWrapper({
   fallback = null,
 }: ProtectedPageWrapperProps) {
   const { isAuthInitialized, isLoggedIn, hasProfile, role } = useAuth();
-  console.log(isAuthInitialized, isLoggedIn, hasProfile, role);
   const hasFinishedSsr = useHasFinishedSsr();
 
   if (!hasFinishedSsr || !isAuthInitialized) {

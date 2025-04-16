@@ -27,4 +27,10 @@ export interface Worker {
 // (고객/기사님 공통) '기본정보 수정' 페이지에 사용합니다.
 export type UserInfoEditDto = Pick<User, 'name' | 'email' | 'phoneNumber'>;
 
+// 로그인 사용자 정보
+export type GetUserMe = Pick<
+  User,
+  'name' | 'hasProfile' | 'role' | 'hasRequest' | 'profileImage'
+>;
+
 /* ------------------- 백엔드 API 비교 완료 --------------------- */
