@@ -21,7 +21,7 @@ function Label({ children, intent = 'lg', required = false }: Props) {
     'text-Black-400 font-semibold text-lg lg:text-[32px]'
   );
   const mediumClassName = clsx({
-    '!text-[24px]': intent === 'md',
+    'text-base lg:!text-[24px]': intent === 'md',
   });
   const smallClassName = clsx({
     '!text-base lg:!text-[20px]': intent === 'sm',

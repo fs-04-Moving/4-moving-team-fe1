@@ -26,7 +26,7 @@ function SubTab() {
   if (tabs.length === 0) return null;
 
   return (
-    <div className="flex items-end h-20 px-6 md:px-18 lg:px-[200px]">
+    <div className="flex w-[327px] md:w-[600px] lg:w-[1400px] items-end h-20">
       <TabMenu tabs={tabs} />
     </div>
   );

@@ -22,11 +22,6 @@ async function ProvidersLayout({ children }: { children: ReactNode }) {
       queryFn: () => getUserMeServer(accessToken),
     });
   }
-  const dehydratedState = dehydrate(userQueryClient);
-  console.log(
-    '🧊 SSR dehydratedState',
-    JSON.stringify(dehydratedState, null, 2)
-  );
   return (
     <TanstackQueryProvider>
       <HydrationBoundary state={dehydrate(userQueryClient)}>
