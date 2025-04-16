@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import Pagination from '@/components/molecules/Pagination';
 import { ClipLoader } from 'react-spinners';
 import usePendingReviews from '@/hooks/usePendingReviews';
+import EmptyReview from '@/components/molecules/EmptyReview';
 
 function PendingReviewsPage() {
   const { data: reviews = [], isLoading, isError, error } = usePendingReviews();
@@ -45,10 +46,12 @@ function PendingReviewsPage() {
   }
 
   return (
-    <div className="bg-GrayScale-500 flex flex-col">
-      <div className="flex flex-wrap">
+    <div className="bg-backgrounf-100 flex flex-col items-center justify-center"> 
+      <div className="flex flex-wrap w-full justify-center"> 
         {currentReviews.length === 0 ? (
-          <div>리뷰가 없습니다.</div>
+          <div className="w-full flex justify-center items-center h-[200px] mt-[104px]">
+            <EmptyReview />
+          </div>
         ) : (
           currentReviews.map((review) => (
             <div key={review.id} className="w-1/2 p-2">
@@ -65,12 +68,14 @@ function PendingReviewsPage() {
           ))
         )}
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(reviews.length / reviewsPerPage)}
-        onPageChange={handlePageChange}
-        className="mt-5 mb-3"
-      />
+      {currentReviews.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(reviews.length / reviewsPerPage)}
+          onPageChange={handlePageChange}
+          className="mt-5 mb-3"
+        />
+      )}
       {isModalOpen && (
         <ReviewModal
           reviewId={selectedReviewId}
