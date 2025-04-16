@@ -15,7 +15,7 @@ import ProgressBar from '../molecules/ProgressBar';
 function RequestEstimate() {
   const [step, setStep] = useState(1);
   const [service, setService] = useState<ServiceType | undefined>();
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | null>(null);
   const [isEditingService, setIsEditingService] = useState(false);
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [departure, setDeparture] = useState('');
@@ -38,16 +38,25 @@ function RequestEstimate() {
   const handleClickEditDate = () => {
     setIsEditingDate(true);
   };
-  console.log(setDeparture, setDestination);
 
-  const isActiveButton =
-    service &&
-    date &&
-    !!departure &&
-    !!destination &&
-    !isEditingDate &&
-    !isEditingService;
-  console.log(step, service, isEditingService, date, isEditingDate);
+  // const isActiveButton =
+  //   service &&
+  //   date &&
+  //   !!departure &&
+  //   !!destination &&
+  //   !isEditingDate &&
+  //   !isEditingService;
+  console.log(
+    // setDeparture,
+    // setDestination,
+    step,
+    service,
+    isEditingService,
+    date,
+    isEditingDate,
+    departure,
+    destination
+  );
   return (
     <div className="bg-BackGround-200 min-h-full pb-40 ">
       <div className="flex justify-center items-center w-full bg-GrayScale-50">
@@ -66,7 +75,10 @@ function RequestEstimate() {
           {/* 이사 유형 선택 */}
           <div className="flex justify-end">
             {!service || isEditingService ? (
-              <ChatBubbleMovingChoice onSubmit={handleSelectDoneService} />
+              <ChatBubbleMovingChoice
+                selectedService={service}
+                onSubmit={handleSelectDoneService}
+              />
             ) : (
               <div className="flex flex-col items-end">
                 <ChatBubbleTextRight>
@@ -91,7 +103,10 @@ function RequestEstimate() {
               </div>
               {!date || isEditingDate ? (
                 <div className="flex justify-end">
-                  <DatePickerWrapper onSubmit={handleSelectDoneDate} />
+                  <DatePickerWrapper
+                    selectedDate={date}
+                    onSubmit={handleSelectDoneDate}
+                  />
                 </div>
               ) : (
                 <div className="flex flex-col items-end">
@@ -119,7 +134,7 @@ function RequestEstimate() {
                 </ChatBubbleTextLeft>
               </div>
               <div className="flex justify-end">
-                <ChatBubbleAddress isActiveButton={isActiveButton} />
+                <ChatBubbleAddress />
               </div>
             </div>
           ) : (

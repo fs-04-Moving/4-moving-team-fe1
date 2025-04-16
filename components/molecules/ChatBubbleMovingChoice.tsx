@@ -3,11 +3,12 @@
 import ButtonCheckBoxRequest from '@/components/molecules/ButtonCheckBoxRequest';
 import { serviceTypeDetailObject } from '@/types/entities/estimate.entity';
 import { ServiceType } from '@/types/move.type';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ButtonSolid from '../atoms/ButtonSolid';
 
 interface ChatBubbleMovingChoiceProps {
   onSubmit: (service: ServiceType) => void;
+  selectedService: ServiceType | undefined;
 }
 
 /**
@@ -26,8 +27,13 @@ interface ChatBubbleMovingChoiceProps {
  * <ChatBubbleMovingChoice onSubmit={(selectedService) => alert(`선택된 서비스: ${selectedService}`)} />
  */
 
-function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
-  const [service, setService] = useState<ServiceType>('smallMove');
+function ChatBubbleMovingChoice({
+  onSubmit,
+  selectedService,
+}: ChatBubbleMovingChoiceProps) {
+  const [service, setService] = useState<ServiceType | undefined>(
+    selectedService
+  );
 
   const handleServiceChange = (service: ServiceType) => {
     setService(service);
@@ -39,6 +45,11 @@ function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
     }
   };
 
+  // 수정하기 시 기존 선택값이 선택된 상태 표시
+  useEffect(() => {
+    setService(selectedService);
+  }, [selectedService]);
+
   return (
     <div className="drop-shadow-Chat flex flex-col gap-4 lg:gap-5 bg-GrayScale-50 items-center rounded-3xl rounded-tr-none lg:rounded-tr-none lg:rounded-[30px] w-[327px] lg:w-[624px] p-4 lg:p-10">
       <ButtonCheckBoxRequest
@@ -48,7 +59,9 @@ function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
         selectedService={service}
         onChange={handleServiceChange}
       />
-      <ButtonSolid onClick={handleSubmit}>선택완료</ButtonSolid>
+      <ButtonSolid onClick={handleSubmit} disabled={!service}>
+        선택완료
+      </ButtonSolid>
     </div>
   );
 }

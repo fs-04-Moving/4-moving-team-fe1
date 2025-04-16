@@ -6,22 +6,28 @@ import ButtonSolid from '@/components/atoms/ButtonSolid';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style.css';
 
 interface Props {
   onSubmit: (date: Date) => void;
+  selectedDate: Date | null;
 }
 
-const DatePickerWrapper = ({ onSubmit }: Props) => {
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
+const DatePickerWrapper = ({ onSubmit, selectedDate }: Props) => {
+  const [date, setDate] = React.useState<Date | null>(selectedDate);
 
   const handleSubmit = () => {
-    if (!selectedDate) return;
-    onSubmit(selectedDate);
+    if (!date) return;
+    onSubmit(date);
   };
+
+  // 수정하기 시 기존 선택값을 선택 상태로 표시
+  useEffect(() => {
+    setDate(selectedDate);
+  }, [selectedDate]);
 
   return (
     <div className="w-[640px] rounded-[32px] bg-white drop-shadow-Chat">
@@ -29,8 +35,8 @@ const DatePickerWrapper = ({ onSubmit }: Props) => {
         <div className="flex justify-center">
           <DatePicker
             locale={ko}
-            selected={selectedDate}
-            onChange={setSelectedDate}
+            selected={date}
+            onChange={setDate}
             inline
             showPopperArrow={false}
             minDate={new Date()} // ✅ 오늘 이전 날짜 비활성화
@@ -68,7 +74,7 @@ const DatePickerWrapper = ({ onSubmit }: Props) => {
 
         <div className="mt-6 flex justify-center">
           <div className="w-[540px]">
-            <ButtonSolid disabled={!selectedDate} onClick={handleSubmit}>
+            <ButtonSolid disabled={!date} onClick={handleSubmit}>
               선택완료
             </ButtonSolid>
           </div>

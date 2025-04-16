@@ -3,13 +3,14 @@
 import CheckBoxActive from '@/assets/images/ic-check-box-active-round.svg';
 import CheckBoxDefault from '@/assets/images/ic-check-box-default-round.svg';
 import ButtonCheckBoxOutlined from '@/components/atoms/ButtonCheckBoxOutlined';
+import { ServiceType } from '@/types/move.type';
 import Image from 'next/image';
 
 interface ButtonCheckBoxRequestProps {
   smallMove: string;
   homeMove: string;
   officeMove: string;
-  selectedService: 'smallMove' | 'homeMove' | 'officeMove';
+  selectedService: ServiceType | undefined;
   onChange: (service: 'smallMove' | 'homeMove' | 'officeMove') => void;
 }
 
