@@ -61,7 +61,7 @@ function EstimateDetailInfo({
   };
 
   return (
-    <div className="w-full flex flex-col gap-6">
+    <div className="lg:w-[955px] w-full flex flex-col gap-6">
       <h2 className="text-[16px] md:text-[16px] lg:text-[24px] font-[600]">
         견적 정보
       </h2>
