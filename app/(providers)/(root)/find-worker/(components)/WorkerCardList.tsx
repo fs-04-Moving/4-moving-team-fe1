@@ -14,7 +14,12 @@ function WorkerCardList({ workers, isLoading }: Props) {
   return (
     <div className="flex flex-col gap-12">
       {workers.map((worker) => (
-        <WorkerCardInSearch key={worker.workerId} {...worker} />
+        // todo : summary 백엔드 수정수 수정?
+        <WorkerCardInSearch
+          key={worker.workerId}
+          {...worker}
+          summary="저는 베스트 기사입니다"
+        />
       ))}
     </div>
   );

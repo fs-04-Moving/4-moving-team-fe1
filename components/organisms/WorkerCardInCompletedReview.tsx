@@ -5,8 +5,8 @@ import ButtonStarRating from '../molecules/ButtonStarRating';
 
 type Props = {
   serviceType: ServiceType;
-  workerProfileImage: string;
-  workerNickname: string;
+  profileImage: string;
+  nickname: string;
   movingDate: Date;
   price: number;
   content: string;
@@ -15,15 +15,15 @@ type Props = {
 };
 
 /**
- * DriverCardInCompletedReview 컴포넌트
+ * WorkerCardInCompletedReview 컴포넌트
  *
  * 사용자가 작성한 이사 리뷰를 보여주는 카드 컴포넌트입니다.
  * 기사 정보, 이사 서비스 유형, 이사일, 견적가, 작성일, 후기 내용 및 별점 등을 표시합니다.
  * 반응형 디자인으로 화면 크기에 따라 작성일의 위치가 상단 또는 하단에 다르게 표시됩니다.
  *
  * @param {ServiceType} serviceType - 이사 서비스 유형 (예: 'smallMove', 'homeMove', 'officeMove')
- * @param {string} workerProfileImage - 기사 프로필 이미지 URL
- * @param {string} workerNickname - 기사 닉네임
+ * @param {string} profileImage - 기사 프로필 이미지 URL
+ * @param {string} nickname - 기사 닉네임
  * @param {Date} movingDate - 실제 이사 완료 날짜
  * @param {number} price - 견적 금액 (단위: 원)
  * @param {string} content - 리뷰 본문 내용
@@ -31,10 +31,10 @@ type Props = {
  * @param {number} rating - 리뷰 별 표시할 점수, 1~5
  *
  * @example
- * <DriverCardInCompletedReview
+ * <WorkerCardInCompletedReview
  *   serviceType="homeMove"
- *   workerProfileImage="/img/profile.png"
- *   workerNickname="김이사"
+ *   profileImage="/img/profile.png"
+ *   nickname="김이사"
  *   movingDate={new Date('2024-06-01')}
  *   price={210000}
  *   content="친절하고 꼼꼼하게 이사해주셨어요."
@@ -43,10 +43,10 @@ type Props = {
  * />
  */
 
-function DriverCardInCompletedReview({
+function WorkerCardInCompletedReview({
   serviceType,
-  workerProfileImage,
-  workerNickname,
+  profileImage,
+  nickname,
   movingDate,
   price,
   content,
@@ -66,7 +66,7 @@ function DriverCardInCompletedReview({
   });
 
   return (
-    <div className="flex flex-col justify-between bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[218px] px-3.5 pt-4 pb-2.5 md:w-[600px] lg:w-[688px] lg:h-[362px] lg:h-[202px] lg:gap-8 lg:py-8 lg:px-6">
+    <div className="flex flex-col justify-between bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[218px] px-3.5 pt-4 pb-2.5 md:w-[600px] lg:w-[688px] lg:h-[362px] lg:gap-8 lg:py-8 lg:px-6">
       <div className="flex gap-2.5 justify-between">
         <ChipMovingType type={serviceType} />
         {/* 상단 위치 (lg 화면용) */}
@@ -76,13 +76,11 @@ function DriverCardInCompletedReview({
       </div>
       {/* 기사 소개 박스 */}
       <div className="flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-b-[1px] lg:border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-7 lg:h-[144px]">
-        <UserAvartar imgUrl={workerProfileImage} sizeInLarge={96} />
+        <UserAvartar imgUrl={profileImage} sizeInLarge={96} />
         <div className="flex-1 flex flex-col justify-between h-[52px] lg:h-[112px] lg:justify-center lg:gap-4">
           {/* 기사 이름 */}
           <div className="flex justify-between">
-            <span className="text-[14px] lg:text-2xl">
-              {workerNickname} 기사님
-            </span>
+            <span className="text-[14px] lg:text-2xl">{nickname} 기사님</span>
           </div>
           {/* 이사일, 견적가, 별점 */}
           <div className="flex items-center justify-between md:justify-normal text-[13px] lg:text-xl md:gap-2.5 lg:gap-4 ">
@@ -113,4 +111,4 @@ function DriverCardInCompletedReview({
   );
 }
 
-export default DriverCardInCompletedReview;
+export default WorkerCardInCompletedReview;

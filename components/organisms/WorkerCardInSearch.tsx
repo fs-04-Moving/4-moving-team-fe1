@@ -1,4 +1,3 @@
-import { ServiceType } from '@/types/move.type';
 import ChipMovingType from '../atoms/ChipMovingType';
 import WorkerInfoBoxA from './WorkerInfoBoxA';
 
@@ -9,7 +8,7 @@ type Props = {
   summary: string;
   isFavorite: boolean;
   favoritesCount: number;
-  services: ServiceType[];
+  services: string[];
   reviewsAverage: number;
   reviewsCount: number;
   confirmedEstimateCount: number;

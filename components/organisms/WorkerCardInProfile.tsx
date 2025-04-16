@@ -12,16 +12,18 @@ type Props = {
   profileImage: string;
   nickname: string;
   experience: string;
-  workerConfirmedEstimatesCount: number;
+  confirmedEstimateCount: number;
   services: ServiceType[];
   onConfirm?: () => void;
   onViewDetail?: () => void;
   summary: string;
   serviceAreas: Area[];
+  reviewsAverage: number;
+  reviewsCount: number;
 };
 
 /**
- * DriverCardInProfile 컴포넌트
+ * WorkerCardInProfile 컴포넌트
  *
  * 마이페이지에서 기사 본인의 프로필 정보를 보여주는 카드 컴포넌트입니다.
  * 기사 프로필 이미지, 닉네임, 한 줄 소개, 제공 서비스 및 활동 지역 정보와 리뷰, 경력, 확정 건수 요약을 제공합니다.
@@ -31,34 +33,40 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 (년 단위)
- * @param {number} workerConfirmedEstimatesCount - 확정된 이사 견적 수
+ * @param {number} confirmedEstimateCount - 확정된 이사 견적 수
  * @param {string} summary - 기사 한 줄 소개 텍스트
  * @param {AreaType} serviceAreas - 기사 활동 지역 (예: { seoul: '서울', incheon: '인천' })
  * @param {ServiceType[]} services - 기사 제공 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
  * @param {() => void} [onConfirm] - '내 프로필 수정' 버튼 클릭 시 실행될 콜백
  * @param {() => void} [onViewDetail] - '기본 정보 수정' 버튼 클릭 시 실행될 콜백
+ * @param {number} reviewsAverage - 리뷰 평균
+ * @param {number} reviewsCount - 리뷰 개수
  *
  * @example
- * <DriverCardInProfile
+ * <WorkerCardInProfile
  *   profileImage="/images/sample.jpg"
  *   nickname="김이사"
  *   experience={8}
- *   workerConfirmedEstimatesCount={120}
+ *   confirmedEstimateCount={120}
  *   summary="빠르고 꼼꼼한 기사입니다."
  *   serviceAreas={{ seoul: '서울', incheon: '인천' }}
  *   services={['smallMove', 'homeMove']}
  *   onConfirm={() => console.log('프로필 수정')}
  *   onViewDetail={() => console.log('기본 정보 수정')}
+ *   reviewsAverage={4.7}
+ *   reviewsCount={108}
  * />
  */
-function DriverCardInProfile({
+function WorkerCardInProfile({
   profileImage,
   nickname,
   experience,
-  workerConfirmedEstimatesCount,
+  confirmedEstimateCount,
   summary,
   serviceAreas,
   services,
+  reviewsAverage,
+  reviewsCount,
   onConfirm,
   onViewDetail,
 }: Props) {
@@ -125,7 +133,10 @@ function DriverCardInProfile({
           </span>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3.5 md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-              <RatingSummary rating={4.9} reviewCount={178} />
+              <RatingSummary
+                reviewsAverage={reviewsAverage}
+                reviewsCount={reviewsCount}
+              />
               <span className="text-GrayScale-100">|</span>
               <span>
                 <span className="text-GrayScale-300">경력</span>
@@ -133,7 +144,7 @@ function DriverCardInProfile({
               </span>
               <span className="text-GrayScale-100">|</span>
               <span>
-                {`${workerConfirmedEstimatesCount}건 `}
+                {`${confirmedEstimateCount}건 `}
                 <span className="text-GrayScale-300">확정</span>
               </span>
             </div>
@@ -182,4 +193,4 @@ function DriverCardInProfile({
   );
 }
 
-export default DriverCardInProfile;
+export default WorkerCardInProfile;

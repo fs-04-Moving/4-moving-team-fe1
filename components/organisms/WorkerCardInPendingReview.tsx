@@ -1,3 +1,4 @@
+import { ServiceType } from '@/types/move.type';
 import ChipMovingType from '../atoms/ChipMovingType';
 import UserAvartar from '../atoms/UserAvartar';
 import LikeCount from '../molecules/LikeCount';
@@ -6,29 +7,34 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: string;
-  workerConfirmedEstimatesCount: number;
+  experience: number;
+  countCompleteMoving: boolean;
   isFavorite: boolean;
   favoritesCount: number;
-  services: string[];
+  services: ServiceType[];
+  reviewsAverage: number;
+  reviewsCount: number;
 };
 
 /**
- * DriverCardInLiked 컴포넌트
+ * WorkerCardInPendingReview 컴포넌트
  *
- * 사용자가 찜한 기사 리스트에서 보여지는 카드 컴포넌트입니다.
- * 기사 서비스 타입(Chip), 프로필 이미지, 이름, 경력, 찜 수, 별점, 리뷰 수, 확정 건수 등의 정보를 시각적으로 표시합니다.
+ * 작성 가능한 리뷰 목록에서 사용되는 기사 카드 컴포넌트입니다.
+ * 기사 이름, 경력, 확정 이사 건수, 별점, 서비스 유형, 찜 여부 등의 정보를 시각적으로 표현합니다.
+ * 리뷰 작성 유도 인터페이스에서 사용자에게 보여주는 용도입니다.
  *
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
- * @param {number} workerConfirmedEstimatesCount - 확정 이사 건수
- * @param {boolean} isFavorite - 사용자가 이 기사를 찜했는지 여부
- * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
- * @param {ServiceType[]} services - 기사가 제공하는 서비스 유형 리스트
+ * @param {boolean} countCompleteMoving - 확정된 이사 건수
+ * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
+ * @param {number} favoritesCount - 해당 기사를 찜한 사용자 수
+ * @param {ServiceType[]} services - 기사 제공 서비스 유형 리스트
+ * @param {number} reviewsAverage - 리뷰 평균
+ * @param {number} reviewsCount - 리뷰 개수
  *
  * @example
- * <DriverCardInLiked
+ * <WorkerCardInPendingReview
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
@@ -36,16 +42,20 @@ type Props = {
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
+ *   reviewsAverage={4.7}
+ *   reviewsCount={108}
  * />
  */
-function DriverCardInLiked({
+function WorkerCardInPendingReview({
   profileImage,
   nickname,
   experience,
-  workerConfirmedEstimatesCount,
+  countCompleteMoving,
   isFavorite,
   favoritesCount,
   services,
+  reviewsAverage,
+  reviewsCount,
 }: Props) {
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
@@ -68,7 +78,10 @@ function DriverCardInLiked({
           </div>
           {/* 별점, 경력, 확정 건수 */}
           <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-            <RatingSummary rating={4.9} reviewCount={178} />
+            <RatingSummary
+              reviewsAverage={reviewsAverage}
+              reviewsCount={reviewsCount}
+            />
             <span className="text-GrayScale-100">|</span>
             <span>
               <span className="text-GrayScale-300">경력</span>
@@ -76,7 +89,7 @@ function DriverCardInLiked({
             </span>
             <span className="text-GrayScale-100">|</span>
             <span>
-              {`${workerConfirmedEstimatesCount}건 `}
+              {`${countCompleteMoving}건 `}
               <span className="text-GrayScale-300">확정</span>
             </span>
           </div>
@@ -86,4 +99,4 @@ function DriverCardInLiked({
   );
 }
 
-export default DriverCardInLiked;
+export default WorkerCardInPendingReview;
