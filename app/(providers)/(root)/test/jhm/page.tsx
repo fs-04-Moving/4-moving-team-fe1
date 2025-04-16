@@ -52,7 +52,6 @@ function Page() {
           }}
         />
         <ButtonShareFacebook onClick={() => {}} />
-        <ButtonShareFacebook onClick={() => {}} />
         <ButtonClipOutlined onClick={() => {}} />
         <Label>페이지 상단 라벨(32사이즈)</Label>
         <Label intent="md">페이지 상단 라벨(24사이즈)</Label>
