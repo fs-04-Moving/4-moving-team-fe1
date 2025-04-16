@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getUserFromRequest } from './utils/getUserFromRequest';
+import { getUserFromRequestLite } from './utils/getUserFromRequestLite';
 
 // 접근 가능한 경로 정의
 const OPEN_ROUTES = ['/find-worker'];
@@ -23,6 +23,16 @@ const TEST_ROUTES = [
  * - 클라이언트에서의 리다이렉트 최소화(깜박임이 UX를 너무너무 저해시키므로)
  */
 export async function middleware(req: NextRequest) {
+  const start = performance.now(); // ⏱ 측정 시작
+
+  const result = await getUserFromRequestLite(req);
+  // const result = await getUserFromRequest(req);
+
+  const end = performance.now(); // ⏱ 측정 끝
+  console.log(
+    `⏱ getUserFromRequestLite: duration: ${(end - start).toFixed(2)}ms`
+  );
+
   const { pathname } = req.nextUrl;
 
   //TODO 추후 삭제 -> 테스트 라우트: 로그인 여부와 관계없이 항상 허용
@@ -37,7 +47,7 @@ export async function middleware(req: NextRequest) {
 
   // 2. 퍼블릭 라우트: 로그인 X → 허용 / 로그인 O → 리다이렉트
   if (PUBLIC_ROUTES.includes(pathname)) {
-    const result = await getUserFromRequest(req);
+    // const result = await getUserFromRequest(req);
     if (!result) return NextResponse.next();
 
     const { user } = result;
@@ -46,7 +56,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // 로그인 필요 이후 로직
-  const result = await getUserFromRequest(req);
+  // const result = await getUserFromRequest(req);
   if (!result) {
     return NextResponse.redirect(new URL('/', req.url));
   }
