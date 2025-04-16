@@ -16,9 +16,9 @@ interface Props {
  * @returns
  */
 function ButtonAuth({ onOpenMenu }: Props) {
-  const { user, isLoggedIn } = useAuth();
+  const { user } = useAuth();
 
-  return user && isLoggedIn ? (
+  return user ? (
     <LoggedInMenu user={user} onOpenMenu={onOpenMenu} />
   ) : (
     <GuestMenu onOpenMenu={onOpenMenu} />
