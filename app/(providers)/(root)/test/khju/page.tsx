@@ -1,101 +1,77 @@
 'use client';
 
-import { useState } from 'react';
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
-import Pagination from '@/components/molecules/Pagination';
+import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
+import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
+import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
+import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
+import EstimateSummaryCard from '@/components/organisms/EstimateSummaryCard';
 
-function RejectedEstimatesPage() {
-  const mockCards = [
-    {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김가나',
-      movingDate: new Date('2024-07-01'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
-      isConfirmed: false,
-      requestDate: new Date('2024-06-30'),
-      price: 1000000,
-    },
-    {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김다라',
-      movingDate: new Date('2023-06-01'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
-      isConfirmed: false,
-      requestDate: new Date('2024-05-30'),
-      price: 458470,
-    },
-    {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김마바',
-      movingDate: new Date('2024-10-10'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
-      isConfirmed: false,
-      requestDate: new Date('2024-06-30'),
-      price: 300000,
-    },
-    {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김사아',
-      movingDate: new Date('2025-07-01'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
-      isConfirmed: false,
-      requestDate: new Date('2024-06-30'),
-      price: 200000,
-    },
-  ];
+const mockEstimate = {
+  requestDate: new Date('2024-08-26'),
+  serviceType: 'smallMove',
+  movingDate: new Date('2024-08-26T10:00:00'),
+  departure: '서울 중구 삼일대로 343',
+  destination: '서울 강남구 선릉로 428',
+  price: 180000,
+  customerName: '김인서',
+  status: 'confirmed' as const,
+};
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
-
-  // ✅ 미래 날짜 우선 정렬 + 같은 그룹 내에서는 가까운 날짜 순
-  const sortedCards = [...mockCards].sort((a, b) => {
-    const now = new Date();
-    const aIsFuture = a.movingDate > now;
-    const bIsFuture = b.movingDate > now;
-
-    if (aIsFuture && !bIsFuture) return -1;
-    if (!aIsFuture && bIsFuture) return 1;
-
-    return a.movingDate.getTime() - b.movingDate.getTime();
-  });
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentCards = sortedCards.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(sortedCards.length / itemsPerPage);
-
+export default function EstimateDetailPage() {
   return (
-    <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[24px] md:gap-y-[32px] lg:gap-y-[48px] w-full max-w-[1400px] justify-items-center">
-        {currentCards.map((card, index) => (
-          <div
-            key={index}
-            className="relative overflow-hidden
-              w-[328px] h-[244px]
-              md:w-[600px] md:h-[206px]
-              lg:w-[688px] lg:h-[272px]"
-          >
-            <CustomerCardInEstimate {...card} />
+    <div className="w-full min-h-screen bg-BackGround-100 py-10">
+      <div className="px-6 md:px-18 lg:px-[200px]">
+        <h1 className="text-[24px] font-semibold mb-12">견적 상세</h1>
+        <div className="flex flex-col gap-8">
+          {/* 카드 정보 + 공유하기 */}
+          <div className="flex lg:flex-row lg:gap-40 md:flex-col">
+            <EstimateSummaryCard
+              status={mockEstimate.status}
+              customerName={mockEstimate.customerName}
+              movingDate={mockEstimate.movingDate}
+              departure={mockEstimate.departure}
+              destination={mockEstimate.destination}
+              serviceType={mockEstimate.serviceType}
+            />
+            <div className="flex flex-col">
+              <h3 className="text-lg font-semibold mb-4">견적서 공유하기</h3>
+              <div className="flex gap-4">
+                <ButtonShareKakao
+                  onClick={() => console.log('카카오톡 공유')}
+                />
+                <ButtonShareFacebook
+                  onClick={() => console.log('페이스북 공유')}
+                />
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={(page) => setCurrentPage(page)}
-        className="mt-2"
-      />
+          {/* 공유와 견적가 사이 선 */}
+          <hr className="border-t border-GrayScale-100 lg:hidden" />
+
+          {/* 견적가 */}
+          <div className="flex flex-col lg:gap-[32px] md:gap-3 lg:mb-8">
+            <h3 className="lg:text-[24px] md:text-[16px] font-semibold">
+              견적가
+            </h3>
+            <p className="lg:text-[32px] md:text-[20px] font-bold">
+              {mockEstimate.price.toLocaleString()}원
+            </p>
+          </div>
+
+          {/* 견적가와 상세정보 사이 선 */}
+          <hr className="border-t border-GrayScale-100 lg:hidden" />
+
+          {/* 견적 상세 정보 */}
+          <EstimateDetailInfo
+            requestDate={mockEstimate.requestDate}
+            serviceType={mockEstimate.serviceType}
+            movingDate={mockEstimate.movingDate}
+            departure={mockEstimate.departure}
+            destination={mockEstimate.destination}
+          />
+        </div>
+      </div>
     </div>
   );
 }
-
-export default RejectedEstimatesPage;
