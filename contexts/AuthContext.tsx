@@ -1,10 +1,12 @@
 'use client';
 
+import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
-import usersApi from '@/api/users/users.api';
+import userApi from '@/api/user/user.api';
+import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { Role } from '@/types/entities/user.entity';
 import { useQuery } from '@tanstack/react-query';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -13,99 +15,97 @@ import {
   useState,
 } from 'react';
 
+export interface User {
+  name: string;
+  profileImage?: string;
+  hasProfile: boolean;
+  hasRequest: boolean;
+  role: Role;
+}
+
 interface AuthContextValue {
   isLoggedIn?: boolean;
   isAuthInitialized?: boolean;
-  logIn?: (userType: Role) => void;
+  logIn?: () => void;
   logOut?: () => void;
-  userType?: Role;
+  role?: Role;
+  hasProfile?: boolean;
+  hasRequest?: boolean;
 }
 
-const AuthContext = createContext<AuthContextValue>({});
+const AuthContext = createContext<AuthContextValue>({
+  isLoggedIn: false,
+  isAuthInitialized: false,
+  logIn: () => {},
+  logOut: () => {},
+});
 
 export const useAuth = () => useContext(AuthContext);
 
+/**
+ * - SSR로 받은 유저 정보(user)가 있다면 isLoggedIn = true로 초기화
+ * - useEffect로 user 상태에 따라 isLoggedIn, isAuthInitialized 세팅
+ * - isAuthInitialized가 false일 땐 아무 것도 하지 않도록
+ * @param param0
+ * @returns
+ */
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
-  const [userType, setUserType] = useState<Role | undefined>();
-  const pathName = usePathname();
-  const router = useRouter();
 
-  const { data: user } = useQuery({
+  const userQueryClient = getBrowserQueryClient({
+    queries: {
+      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신,
+      retry: 0,
+    },
+  });
+  const { data: user } = useQuery<User>({
+    queryFn: userApi.getUserMe,
     queryKey: ['me'],
-    queryFn: usersApi.getUserMe,
+    initialData: () => userQueryClient.getQueryData(['me']),
+    staleTime: Infinity,
   });
 
-  const logIn = (logInUserType: Role) => {
+  // const pathName = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+    setIsAuthInitialized(true);
+  }, [user]);
+
+  const logIn = () => {
     setIsLoggedIn(true);
-    setUserType(logInUserType);
+    setIsAuthInitialized(true);
   };
-  const logOut = () => {
-    // client 요청 header에서 토큰 제거
+
+  const logOut = async () => {
+    // 쿠키 방식으로 로그아웃
+    try {
+      await authApi.logOut();
+    } catch (e) {
+      console.error('서버 로그아웃 실패', e);
+    }
     client.defaults.headers['Authorization'] = '';
-
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     setIsLoggedIn(false);
-    setIsAuthInitialized(false);
-    setUserType(undefined);
+    setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
+    userQueryClient.removeQueries({ queryKey: ['me'] });
+    router.replace('/');
   };
-  // 로그인된 상태에서 로그인 또는 회원가입 페이지, 랜딩 페이지에 접근하면 각 유저의 기본 화면으로 이동
-  // 고객: 견적 요청, 기사: 받은 요청 목록
-  useEffect(() => {
-    if (
-      isLoggedIn &&
-      userType &&
-      // (pathName.startsWith('/auth/sign-up') ||
-      //   pathName.startsWith('/auth/log-in'))
-      (pathName === '/auth/sign-up' ||
-        pathName === '/auth/log-in' ||
-        pathName === '/')
-    ) {
-      if (user.hasProfile) {
-        router.replace(`/${userType}`);
-      } else {
-        router.replace(`/${userType}/profile`);
-      }
-    }
-  }, [isLoggedIn, pathName, router, userType, user]);
 
-  // 로그아웃된 상태에서 로그인/회원가입 외의 페이지에 있을 경우 랜딩 페이지로 이동
-  // useEffect(() => {
-  //   if (
-  //     !isLoggedIn &&
-  //     !(pathName === '/auth/sign-up' || pathName === '/auth/log-in')
-  //   ) {
-  //     router.replace('/');
-  //   }
-  // }, [isLoggedIn, pathName, router]);
-
-  useEffect(() => {
-    async function initAuthStatus() {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        if (!accessToken) return;
-        // userType을 세팅
-        if (user) {
-          setUserType(user.role);
-        }
-        setIsLoggedIn(true);
-      } catch (error) {
-        console.error('refreshToken이 없거나 만료', error);
-      } finally {
-        setIsAuthInitialized(true);
-      }
-    }
-    initAuthStatus();
-  }, [isLoggedIn, user]);
-
-  const value = {
+  const value: AuthContextValue = {
     isLoggedIn,
     isAuthInitialized,
     logIn,
     logOut,
-    userType,
+    role: user?.role,
+    hasProfile: user?.hasProfile,
+    hasRequest: user?.hasRequest,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

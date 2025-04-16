@@ -1,14 +1,10 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
 import { logInValidation } from '@/constants/formValidation';
-import { useAuth } from '@/contexts/AuthContext';
-import { LogInDto } from '@/types/dtos/auth.dto';
+import { useLoginMutation } from '@/hooks/useLoginMutation';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -29,21 +25,11 @@ function FormLogIn({ userType }: { userType: Role }) {
       resolver: zodResolver(logInValidation),
     });
 
-  const { logIn: authLogin } = useAuth();
-
-  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const { mutate: logIn } = useMutation({
-    mutationFn: (data: LogInDto) => usersApi.logIn(data),
-    onSuccess: (resData) => {
-      const routePath = resData.hasProfile ? '' : '/profile';
-      router.push(`/${userType}${routePath}`);
-      authLogin?.(userType);
-      setIsProcessing(false);
-    },
+  const { mutate: logIn } = useLoginMutation({
+    setIsProcessing,
     onError: (error: AxiosError) => {
-      setIsProcessing(false);
       const errorMessage = error.response?.data || '';
       if (errorMessage === '유저가 존재하지 않습니다.') {
         setError('email', { message: '존재하지 않는 이메일입니다' });
@@ -61,9 +47,9 @@ function FormLogIn({ userType }: { userType: Role }) {
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
     setIsProcessing(true);
-    // logIn({ ...inputData, role: userType });
     logIn({ ...inputData, role: userType });
   };
+  console.log(isProcessing);
 
   return (
     <div className="w-full flex justify-center">

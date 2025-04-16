@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
+import RequestEstimate from '@/components/templates/RequestEstimate';
 
 /**
  * 고객의 '견적 요청' 페이지
@@ -6,9 +7,9 @@ import Link from 'next/link';
  */
 function RequestEstimatePage() {
   return (
-    <div className="flex justify-center h-100 items-center text-4xl">
-      <Link href="/test/jhm">견적 요청</Link>
-    </div>
+    <ProtectedPageWrapper>
+      <RequestEstimate />
+    </ProtectedPageWrapper>
   );
 }
 

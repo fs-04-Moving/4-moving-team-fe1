@@ -1,46 +1,19 @@
 'use client';
 
+import { isServer, QueryClientProvider } from '@tanstack/react-query';
 import {
-  isServer,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
+  createServerQueryClient,
+  getBrowserQueryClient,
+} from './reactQueryConfig';
 
-function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 1000 * 60 * 5, // 5분(상황에 따라 조정)
-        retry: 0,
-      },
-    },
-  });
-}
-
-let browserQueryClient: QueryClient | undefined = undefined;
-
-function getQueryClient() {
-  if (isServer) {
-    // Server: always make a new query client
-    return makeQueryClient();
-  } else {
-    if (!browserQueryClient) browserQueryClient = makeQueryClient();
-    return browserQueryClient;
-  }
-}
-
+// 간단한 구조의 프로젝트에서는 provider에서만 구분하여 생성하고 내려줘도 되지만
+// 규모가 커질 경우 지금처럼 별도 함수로 분리하여 관리하는 것이 좋음
 export default function Providers({ children }: { children: React.ReactNode }) {
-  // NOTE: Avoid useState when initializing the query client if you don't
-  //       have a suspense boundary between this and the code that may
-  //       suspend because React will throw away the client on the initial
-  //       render if it suspends and there is no boundary
-  const queryClient = getQueryClient();
+  const queryClient = isServer
+    ? createServerQueryClient()
+    : getBrowserQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
-      {children}
-      {/* </HydrationBoundary> */}
-    </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image';
-import IcEmptyStar from '@/assets/images/ic-emptyStar.svg';
+import IcEmptyStar from '@/assets/images/ic-star-gray.svg';
 
 function EmptyStar({ width }: { width: number }) {
   return (

@@ -1,3 +1,5 @@
+'use client';
+
 import icWriting from '@/assets/images/ic-writing.svg';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -7,11 +9,12 @@ interface Props {
   disabled?: boolean;
   showIcon?: boolean;
   children: ReactNode;
+  isGnb?: boolean;
   onClick?: () => void;
 }
 
 /**
- * solid button 컴포넌트입니다.
+ * solid button 컴포넌트의 복제 아웃라인 컴포넌트입니다.
  * - UI상태: default, hover, disabled
  * @param
  * - children: 버튼명
@@ -24,7 +27,9 @@ function ButtonSolid({
   disabled = false,
   showIcon = false,
   children,
+  isGnb = false,
   onClick,
+  ...props
 }: Props) {
   const defaultClassName = clsx(
     'w-full flex justify-center items-center h-[54px] lg:h-16 bg-Primay-Blue-300 hover:bg-Primay-Blue-200 cursor-pointer rounded-2xl lg:text-xl font-semibold text-GrayScale-50'
@@ -34,11 +39,14 @@ function ButtonSolid({
     '!bg-GrayScale-100 !cursor-default': disabled,
   });
 
+  const gnbClassName = clsx({ '!h-11 lg:!text-lg': isGnb });
+
   return (
     <button
       disabled={disabled}
-      className={clsx(defaultClassName, disableClassName)}
+      className={clsx(defaultClassName, disableClassName, gnbClassName)}
       onClick={onClick}
+      {...props}
     >
       <div className="flex">
         <span>{children}</span>

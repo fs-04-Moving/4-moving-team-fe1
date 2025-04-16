@@ -2,6 +2,10 @@
 
 import React from 'react';
 
+interface ProgressBarStarRatingProps {
+  ratings?: number[];
+}
+
 /**
  * 별점 프로그레스 바 컴포넌트입니다.
  *
@@ -18,8 +22,8 @@ import React from 'react';
  *
  */
 
-function ProgressBarStarRating({ ratings: ratingData }) {
-  const defaultRatings = [0, 0, 0, 0, 0]; 
+function ProgressBarStarRating({ ratings: ratingData }: ProgressBarStarRatingProps) {
+  const defaultRatings = [0, 0, 0, 0, 0];
 
   const currentRatings =
     ratingData && Array.isArray(ratingData) && ratingData.length === 5

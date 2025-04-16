@@ -1,13 +1,10 @@
 'use client';
 
-import usersApi from '@/api/users/users.api';
 import { signUpValidation } from '@/constants/formValidation';
-import { SignUpDto } from '@/types/dtos/auth.dto';
+import { useLoginMutation } from '@/hooks/useLoginMutation';
+import { useSignUpMutation } from '@/hooks/useSignUpMutation';
 import { Role } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -38,27 +35,17 @@ function FormSignUp({ userType }: { userType: Role }) {
       resolver: zodResolver(signUpValidation),
     });
 
-  const router = useRouter();
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const { mutate: signUp } = useMutation({
-    mutationFn: (data: SignUpDto) => usersApi.singUp(data),
-    onSuccess: () => {
-      router.push(`/${userType}/profile`);
-      setIsProcessing(false);
-    },
-    onError: (error: AxiosError) => {
-      setIsProcessing(false);
-      const errorMessage = error.response?.data || '';
-      if (errorMessage === '이미 존재하는 이메일입니다.') {
-        setError('email', { message: '이미 사용중인 이메일입니다' });
-      } else {
-        alert('에러가 발생했습니다. 다시 시도해 주세요.');
-      }
-    },
+  const { mutate: logIn } = useLoginMutation({ setIsProcessing });
+  const { mutate: signUp } = useSignUpMutation({
+    setError,
+    setIsProcessing,
+    logIn,
   });
 
   const handleClickSignUp = (inputData: FormSignUpInput) => {
+    setIsProcessing(true);
     signUp({ ...inputData, role: userType });
   };
 
