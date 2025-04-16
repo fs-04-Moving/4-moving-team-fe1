@@ -24,6 +24,7 @@ const DatePickerWrapper = () => {
             onChange={setSelectedDate}
             inline
             showPopperArrow={false}
+            minDate={new Date()} // 오늘 이전 날짜 비활성화 수정
             renderCustomHeader={({
               date,
               decreaseMonth,
