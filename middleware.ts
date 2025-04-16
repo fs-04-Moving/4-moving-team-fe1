@@ -34,6 +34,7 @@ export async function middleware(req: NextRequest) {
   );
 
   const { pathname } = req.nextUrl;
+  console.log('🧭 pathname:', pathname);
 
   //TODO 추후 삭제 -> 테스트 라우트: 로그인 여부와 관계없이 항상 허용
   if (TEST_ROUTES.includes(pathname)) {
@@ -46,8 +47,19 @@ export async function middleware(req: NextRequest) {
   }
 
   // 2. 퍼블릭 라우트: 로그인 X → 허용 / 로그인 O → 리다이렉트
-  if (PUBLIC_ROUTES.includes(pathname)) {
-    // const result = await getUserFromRequest(req);
+  // if (PUBLIC_ROUTES.includes(pathname)) {
+  //   // const result = await getUserFromRequest(req);
+  //   if (!result) return NextResponse.next();
+
+  //   const { user } = result;
+  //   const target = user.hasProfile ? `/${user.role}` : `/${user.role}/profile`;
+  //   return NextResponse.redirect(new URL(target, req.url));
+  // }
+  if (
+    PUBLIC_ROUTES.some(
+      (path) => pathname === path || pathname.startsWith(`${path}/`)
+    )
+  ) {
     if (!result) return NextResponse.next();
 
     const { user } = result;
