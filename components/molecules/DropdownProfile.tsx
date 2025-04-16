@@ -83,6 +83,8 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
     // 메뉴들 공통 스타일, 마진은 박스 패딩에서 조절했습니다
     const menuItemClass =
       'cursor-pointer w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 hover:bg-Primay-Blue-50 transition-colors';
+    const menuItemClassName =
+      'w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 ';
 
     return (
       // 감싸는 div에 필요시 z-index 추가해야 할 수도 있음
@@ -93,7 +95,7 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
           'border border-GrayScale-100 overflow-hidden z-50'
         )}
       >
-        <div className={clsx(menuItemClass)}>
+        <div className={clsx(menuItemClassName)}>
           <p className="font-bold text-base lg:text-lg text-Black-400">
             {username} {role === 'customer' ? '고객님' : '기사님'}
           </p>
