@@ -30,6 +30,7 @@
   --color-BackGround-400: #f4f7fb;
   --color-Line-100: #f2f2f2;
   --color-Line-200: #e6e6e6;
+  --drop-shadow-Chat: 2px 2px 8px rgb(224 224 224 / 0.2);
 }
 
 html,

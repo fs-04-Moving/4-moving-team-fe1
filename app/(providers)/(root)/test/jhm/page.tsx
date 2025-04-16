@@ -2,6 +2,7 @@
 
 import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
 import ButtonLikeOutlined from '@/components/atoms/ButtonLikeOutlined';
+import ButtonOutlined from '@/components/atoms/ButtonOutlined';
 import ButtonPopFilter from '@/components/atoms/ButtonPopFilter';
 import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
 import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
@@ -34,6 +35,10 @@ function Page() {
           줄바꿈이 됩니다.break-words 를 사용하면 자동으로 줄바꿈이 됩니다.
         </ChatBubbleTextLeft>
         <ChatBubbleAddress />
+        <ButtonOutlined>테스트</ButtonOutlined>
+        <ButtonOutlined>아웃 라인 버튼</ButtonOutlined>
+        <ButtonOutlined intent="active">아웃 라인 버튼 active</ButtonOutlined>
+        <ButtonOutlined intent="done">아웃 라인 버튼 done</ButtonOutlined>
         <ButtonPopFilter
           onClick={() => {
             console.log('pop!');

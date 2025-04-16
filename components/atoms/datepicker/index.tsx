@@ -1,22 +1,30 @@
-
 'use client';
 
+import ChevronLeft from '@/assets/images/chevron-left.svg';
+import ChevronRight from '@/assets/images/chevron-right.svg';
+import ButtonSolid from '@/components/atoms/ButtonSolid';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import Image from 'next/image';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './style.css';
-import { format } from 'date-fns';
-import ChevronLeft from '@/assets/images/chevron-left.svg';
-import ChevronRight from '@/assets/images/chevron-right.svg';
-import Image from 'next/image';
-import { ko } from 'date-fns/locale';
-import ButtonSolid from '@/components/atoms/ButtonSolid';
 
-const DatePickerWrapper = () => {
+interface Props {
+  onSubmit: (date: Date) => void;
+}
+
+const DatePickerWrapper = ({ onSubmit }: Props) => {
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(null);
 
+  const handleSubmit = () => {
+    if (!selectedDate) return;
+    onSubmit(selectedDate);
+  };
+
   return (
-    <div className="w-[640px] rounded-[32px] bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.2)]">
+    <div className="w-[640px] rounded-[32px] bg-white drop-shadow-Chat">
       <div className="py-6">
         <div className="flex justify-center">
           <DatePicker
@@ -60,12 +68,7 @@ const DatePickerWrapper = () => {
 
         <div className="mt-6 flex justify-center">
           <div className="w-[540px]">
-            <ButtonSolid
-              disabled={!selectedDate}
-              onClick={() => {
-                console.log('선택된 날짜:', selectedDate);
-              }}
-            >
+            <ButtonSolid disabled={!selectedDate} onClick={handleSubmit}>
               선택완료
             </ButtonSolid>
           </div>
@@ -76,4 +79,3 @@ const DatePickerWrapper = () => {
 };
 
 export default DatePickerWrapper;
-

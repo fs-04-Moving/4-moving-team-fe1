@@ -1,12 +1,13 @@
 'use client';
 
 import ButtonCheckBoxRequest from '@/components/molecules/ButtonCheckBoxRequest';
+import { serviceTypeDetailObject } from '@/types/entities/estimate.entity';
 import { ServiceType } from '@/types/move.type';
 import { useState } from 'react';
 import ButtonSolid from '../atoms/ButtonSolid';
 
 interface ChatBubbleMovingChoiceProps {
-  onSubmit: (selectedService: ServiceType) => void;
+  onSubmit: (service: ServiceType) => void;
 }
 
 /**
@@ -26,26 +27,25 @@ interface ChatBubbleMovingChoiceProps {
  */
 
 function ChatBubbleMovingChoice({ onSubmit }: ChatBubbleMovingChoiceProps) {
-  const [selectedService, setSelectedService] =
-    useState<ServiceType>('smallMove');
+  const [service, setService] = useState<ServiceType>('smallMove');
 
   const handleServiceChange = (service: ServiceType) => {
-    setSelectedService(service);
+    setService(service);
   };
 
   const handleSubmit = () => {
-    if (onSubmit) {
-      onSubmit(selectedService);
+    if (onSubmit && service) {
+      onSubmit(service);
     }
   };
 
   return (
-    <div className="flex flex-col gap-4 lg:gap-5 bg-GrayScale-50 items-center rounded-3xl rounded-tl-none lg:rounded-tl-none lg:rounded-[30px] max-w-[312px] lg:max-w-[640px] p-4 lg:p-10">
+    <div className="drop-shadow-Chat flex flex-col gap-4 lg:gap-5 bg-GrayScale-50 items-center rounded-3xl rounded-tr-none lg:rounded-tr-none lg:rounded-[30px] w-[327px] lg:w-[624px] p-4 lg:p-10">
       <ButtonCheckBoxRequest
-        smallMove="소형이사 (원룸, 투룸, 20평대 미만)"
-        homeMove="가정이사 (쓰리룸, 20평대 이상)"
-        officeMove="사무실이사(사무실, 상업공간)"
-        selectedService={selectedService}
+        smallMove={serviceTypeDetailObject.smallMove}
+        homeMove={serviceTypeDetailObject.homeMove}
+        officeMove={serviceTypeDetailObject.officeMove}
+        selectedService={service}
         onChange={handleServiceChange}
       />
       <ButtonSolid onClick={handleSubmit}>선택완료</ButtonSolid>

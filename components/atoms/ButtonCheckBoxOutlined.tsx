@@ -15,7 +15,11 @@ interface Props {
  * - onClick?: 클릭 시 실행 함수
  * @returns
  */
-function ButtonOutlined({ intent = 'default', children, onClick }: Props) {
+function ButtonCheckBoxOutlined({
+  intent = 'default',
+  children,
+  onClick,
+}: Props) {
   const defaultClassName = clsx(
     'w-full h-13 lg:h-21 flex items-center border border-Primay-Blue-300 cursor-pointer rounded-2xl text-Black-400 text-[14px] lg:text-[18px] font-semibold hover:bg-[#f3f3f3]'
   );
@@ -38,4 +42,4 @@ function ButtonOutlined({ intent = 'default', children, onClick }: Props) {
   );
 }
 
-export default ButtonOutlined;
+export default ButtonCheckBoxOutlined;
