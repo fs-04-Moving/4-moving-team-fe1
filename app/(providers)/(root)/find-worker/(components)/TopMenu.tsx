@@ -13,7 +13,7 @@ interface FormValues {
 function TopMenu() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { control, handleSubmit, watch } = useForm({
+  const { control, handleSubmit } = useForm({
     defaultValues: {
       keyword: '',
     },
