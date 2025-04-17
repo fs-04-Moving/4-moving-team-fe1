@@ -33,7 +33,7 @@ const logOut = async () => {
 const refreshToken = async () => {
   try {
     const url = '/auth/refresh-token';
-    const response = await client.post(url); // refreshToken은 쿠키로 자동 전송됨
+    const response = await client.post(url, {}, { withCredentials: true }); // refreshToken은 쿠키로 자동 전송됨
 
     const { accessToken } = response.data;
     localStorage.setItem('accessToken', accessToken);

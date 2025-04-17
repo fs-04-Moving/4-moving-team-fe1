@@ -15,14 +15,6 @@ import {
   useState,
 } from 'react';
 
-// export interface User {
-//   name: string;
-//   profileImage?: string;
-//   hasProfile: boolean;
-//   hasRequest: boolean;
-//   role: Role;
-// }
-
 interface AuthContextValue {
   isLoggedIn?: boolean;
   isAuthInitialized?: boolean;

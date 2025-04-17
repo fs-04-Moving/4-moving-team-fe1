@@ -1,3 +1,4 @@
+import { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
 import { decodeJWT } from './jwtUtils';
 
@@ -12,9 +13,9 @@ export interface JwtPayload {
   profileImage?: string;
 }
 
-export async function getUserFromRequestLite() {
-  const cookieStore = cookies();
-  const refreshToken = (await cookieStore).get('refreshToken')?.value;
+export function getUserFromRequestLiteSync() {
+  const cookieStore = cookies() as unknown as RequestCookies;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
 
   if (!refreshToken) return null;
 
@@ -26,10 +27,4 @@ export async function getUserFromRequestLite() {
   }
 
   return payload;
-  // return {
-  //   user: {
-  //     role: payload.role,
-  //     hasProfile: payload.hasProfile,
-  //   },
-  // };
 }
