@@ -1,10 +1,5 @@
 import { cookies } from 'next/headers';
 
-export interface JwtPayload {
-  role: string;
-  hasProfile: boolean;
-}
-
 /**
  * JWT 디코딩 유틸(base64 디코딩)
  * @param token
@@ -73,6 +68,7 @@ export async function getAccessTokenFromRefreshByRefreshToken(
  */
 export async function getAccessTokenFromRefresh(): Promise<string | null> {
   const cookieStore = cookies();
+  console.log('SSR refreshToken:', (await cookieStore).getAll());
   const refreshToken = (await cookieStore).get('refreshToken')?.value;
 
   // 로그인 안 된 경우: 조용히 null 반환

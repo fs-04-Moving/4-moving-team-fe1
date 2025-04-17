@@ -25,7 +25,7 @@ const TEST_ROUTES = [
 export async function middleware(req: NextRequest) {
   const start = performance.now(); // ⏱ 측정 시작
 
-  const result = getUserFromRequestLite(req);
+  const result = await getUserFromRequestLite();
 
   const end = performance.now(); // ⏱ 측정 끝
   console.log(
@@ -53,8 +53,8 @@ export async function middleware(req: NextRequest) {
   ) {
     if (!result) return NextResponse.next();
 
-    const { user } = result;
-    const target = user.hasProfile ? `/${user.role}` : `/${user.role}/profile`;
+    const { role, hasProfile } = result;
+    const target = hasProfile ? `/${role}` : `/${role}/profile`;
     return NextResponse.redirect(new URL(target, req.url));
   }
 
@@ -64,27 +64,27 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.url));
   }
 
-  const { user } = result;
+  const { role, hasProfile } = result;
 
   // 3. 프로필 작성 페이지
   if (PROFILE_ROUTES.includes(pathname)) {
     // role이 다른 프로필 페이지에 접근 시 리다이렉트
-    const expectedProfilePath = `/${user.role}/profile`;
+    const expectedProfilePath = `/${role}/profile`;
     if (pathname !== expectedProfilePath) {
       return NextResponse.redirect(new URL(expectedProfilePath, req.url));
     }
 
     // 이미 프로필이 있다면 홈으로 이동
-    if (user.hasProfile) {
-      return NextResponse.redirect(new URL(`/${user.role}`, req.url));
+    if (hasProfile) {
+      return NextResponse.redirect(new URL(`/${role}`, req.url));
     }
 
     return NextResponse.next();
   }
 
   // 4. 일반 보호 라우트 - 프로필 미작성 → 프로필 페이지로 이동
-  if (!user.hasProfile) {
-    return NextResponse.redirect(new URL(`/${user.role}/profile`, req.url));
+  if (!hasProfile) {
+    return NextResponse.redirect(new URL(`/${role}/profile`, req.url));
   }
 
   // 5. Role 보호 - 다른 역할 영역 접근 시 리다이렉트
@@ -93,10 +93,10 @@ export async function middleware(req: NextRequest) {
 
   if (
     !isWorkerDetailPage && // 예외 라우트가 아닌 경우에만 막음
-    ((user.role === 'customer' && pathname.startsWith('/worker')) ||
-      (user.role === 'worker' && pathname.startsWith('/customer')))
+    ((role === 'customer' && pathname.startsWith('/worker')) ||
+      (role === 'worker' && pathname.startsWith('/customer')))
   ) {
-    return NextResponse.redirect(new URL(`/${user.role}`, req.url));
+    return NextResponse.redirect(new URL(`/${role}`, req.url));
   }
 
   // 6. 모든 조건을 통과하면 정상 접근
