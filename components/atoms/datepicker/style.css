@@ -142,3 +142,11 @@
     margin-bottom: 6px !important;
   }
 }
+
+.react-datepicker,
+.react-datepicker__month-container,
+.react-datepicker__header {
+  background: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
