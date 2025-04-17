@@ -47,8 +47,8 @@ function RequestEstimate() {
   //   !isEditingDate &&
   //   !isEditingService;
   console.log(
-    // setDeparture,
-    // setDestination,
+    setDeparture,
+    setDestination,
     step,
     service,
     isEditingService,
