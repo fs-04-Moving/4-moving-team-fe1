@@ -7,7 +7,7 @@ import DropdownList from '../atoms/DropdownList';
 interface Props<T> {
   defaultValue: T;
   options: T[];
-  onSelect?: () => void;
+  onSelect: (option: string) => void;
 }
 
 export type DropdownButtonStatus = 'default' | 'active' | 'done';
@@ -20,7 +20,11 @@ export type DropdownButtonStatus = 'default' | 'active' | 'done';
  * - onSelect?: dropdown list의 특정값을 선택했을 때 실행하는 함수
  * @returns
  */
-function Dropdown<T extends string>({ defaultValue, options }: Props<T>) {
+function Dropdown<T extends string>({
+  defaultValue,
+  options,
+  onSelect,
+}: Props<T>) {
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
@@ -46,6 +50,7 @@ function Dropdown<T extends string>({ defaultValue, options }: Props<T>) {
   const handleSelectOption = (option: T) => {
     setSelectedOption(option);
     setIsShowDropdown(false);
+    onSelect(option);
   };
 
   return (

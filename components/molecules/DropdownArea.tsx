@@ -88,7 +88,7 @@ function DropdownArea({ includeAll = true, defaultValue, onSelect }: Props) {
   };
 
   return (
-    <div className='w-full relative' onBlur={handleBlur}>
+    <div className="w-full relative" onBlur={handleBlur}>
       <DropdownButtonArea
         status={dropdownButtonStatus}
         selectedValue={selectedOption}

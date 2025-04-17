@@ -10,9 +10,33 @@ function FilterArea() {
 
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);
+
     if (code) {
-      newParams.set('serviceArea', code);
-      router.push(`?${newParams.toString()}`);
+      switch (code) {
+        case 'all':
+          newParams.delete('serviceArea');
+          router.push(`?${newParams.toString()}`);
+          break;
+        default:
+          newParams.set('serviceArea', code);
+          router.push(`?${newParams.toString()}`);
+      }
+    }
+  };
+
+  const handleServiceSelect = (service?: string) => {
+    const newParams = new URLSearchParams(searchParams);
+
+    if (service) {
+      switch (service) {
+        case 'all':
+          newParams.delete('serviceType');
+          router.push(`?${newParams.toString()}`);
+          break;
+        default:
+          newParams.set('serviceType', service);
+          router.push(`?${newParams.toString()}`);
+      }
     }
   };
 
@@ -39,7 +63,7 @@ function FilterArea() {
           <label className="text-lg font-semibold">
             어떤 서비스가 필요하세요?
           </label>
-          <DropdownService />
+          <DropdownService onSelect={handleServiceSelect} />
         </div>
       </div>
     </aside>
