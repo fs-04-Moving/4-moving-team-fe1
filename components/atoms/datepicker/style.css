@@ -114,3 +114,23 @@
   color: #d1d5db !important;
   cursor: default;
 }
+
+@media (max-width: 743px) {
+  .react-datepicker__day-names,
+  .react-datepicker__week {
+    gap: 0 !important;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 48px !important;
+    height: 48px !important;
+    font-size: 13px !important;
+  }
+
+  .react-datepicker__day--selected::before,
+  .react-datepicker__day:not(.react-datepicker__day--selected):hover::before {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
