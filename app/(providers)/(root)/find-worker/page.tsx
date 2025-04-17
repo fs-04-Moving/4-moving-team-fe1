@@ -83,18 +83,8 @@ export const mockDriverList = [
   },
 ];
 
-type Props = {
-  searchParams: {
-    orderBy?: string;
-    serviceType?: string;
-    serviceArea?: string;
-    page?: number;
-    pageSize?: number;
-  };
-};
-
-async function FindWorkerPage({ searchParams }: Props) {
-  const workers = await profilesApi.getWorkerProfiles(searchParams);
+async function FindWorkerPage() {
+  const workers = await profilesApi.getWorkerProfiles({ pageSize: 4 });
 
   return (
     <main className="mx-auto max-w-9/12 px-4">
