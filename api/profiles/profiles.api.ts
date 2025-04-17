@@ -63,7 +63,7 @@ const getWorkerProfiles = async (params: WorkerSearchParams) => {
   try {
     const url = '/profile/workers';
     const response = await client.get(url, { params });
-    return response.data.list;
+    return response.data;
   } catch (error) {
     errorHandler(error);
   }
