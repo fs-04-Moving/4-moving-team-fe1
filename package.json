@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:partial": "tsc --project tsconfig.build.json",
     "start": "next start",
     "lint": "next lint"
   },

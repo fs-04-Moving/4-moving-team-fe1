@@ -3,7 +3,7 @@
 import {
   ServiceTypeEng,
   ServiceTypeKor,
-  ServiceTypeObject,
+  serviceTypeObject,
 } from '@/types/entities/estimate.entity';
 import ChipBubbleTypeBox from '../atoms/ChipBubbleTypeBox';
 import DividerHor from '../atoms/DividerHor';
@@ -22,12 +22,12 @@ function GroupServiceTypeSelect({
   title1,
   title2,
 }: GroupServiceTypeSelectProps) {
-  const serviceTypeKors: ServiceTypeKor[] = Object.values(ServiceTypeObject);
+  const serviceTypeKors: ServiceTypeKor[] = Object.values(serviceTypeObject);
 
   const handleClickServiceChip = (serviceKor: ServiceTypeKor) => {
-    const serviceEng = Object.keys(ServiceTypeObject).find(
+    const serviceEng = Object.keys(serviceTypeObject).find(
       (key) =>
-        ServiceTypeObject[key as keyof typeof ServiceTypeObject] === serviceKor
+        serviceTypeObject[key as keyof typeof serviceTypeObject] === serviceKor
     ) as ServiceTypeEng;
 
     const index = services.indexOf(serviceEng);
@@ -53,9 +53,9 @@ function GroupServiceTypeSelect({
       </p>
       <div className="flex gap-[6px] lg:gap-3 mb-5 lg:mb-8">
         {serviceTypeKors.map((serviceType) => {
-          const serviceEng = Object.keys(ServiceTypeObject).find(
+          const serviceEng = Object.keys(serviceTypeObject).find(
             (key) =>
-              ServiceTypeObject[key as keyof typeof ServiceTypeObject] ===
+              serviceTypeObject[key as keyof typeof serviceTypeObject] ===
               serviceType
           ) as ServiceTypeEng;
 

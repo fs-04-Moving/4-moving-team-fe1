@@ -32,7 +32,7 @@ function ProtectedPageWrapper({
   requireRole,
   fallback = null,
 }: ProtectedPageWrapperProps) {
-  const { isAuthInitialized, isLoggedIn, hasProfile, role } = useAuth();
+  const { isAuthInitialized, isLoggedIn, user } = useAuth();
   const hasFinishedSsr = useHasFinishedSsr();
 
   if (!hasFinishedSsr || !isAuthInitialized) {
@@ -43,11 +43,11 @@ function ProtectedPageWrapper({
     return fallback; // 로그인 안 됨
   }
 
-  if (requireProfile && !hasProfile) {
+  if (requireProfile && !user?.hasProfile) {
     return fallback; // 프로필 없음
   }
 
-  if (requireRole && role !== requireRole) {
+  if (requireRole && user?.role !== requireRole) {
     return fallback; // 권한 없음
   }
 

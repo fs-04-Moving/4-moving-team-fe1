@@ -1,12 +1,12 @@
 .react-datepicker {
   border: none;
-  width: 640px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .react-datepicker__month-container {
-  width: 640px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,4 +113,32 @@
 .react-datepicker__day--outside-month {
   color: #d1d5db !important;
   cursor: default;
+}
+
+/* ✅ 작은 버전: lg 미만 (sm + md 공통) */
+@media (max-width: 1399px) {
+  .react-datepicker__day-names,
+  .react-datepicker__week {
+    gap: 0 !important;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day {
+    width: 44px !important;
+    height: 42px !important;
+    font-size: 13px !important;
+  }
+
+  .react-datepicker__day--selected::before,
+  .react-datepicker__day:not(.react-datepicker__day--selected):hover::before {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .react-datepicker__header {
+    padding: 0 !important;
+  }
+
+  .react-datepicker__day-names {
+    margin-bottom: 6px !important;
+  }
 }
