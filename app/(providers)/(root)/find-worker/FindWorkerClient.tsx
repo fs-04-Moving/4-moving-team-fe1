@@ -1,5 +1,6 @@
 'use client';
 
+import { useFindWorkerQuery } from '@/hooks/useFindWorkerQuery';
 import { Worker } from '@/types/dtos/Worker.dto';
 import { useSearchParams } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
