@@ -140,7 +140,7 @@ function RequestEstimate() {
   return (
     <div className="bg-BackGround-200 min-h-full pb-40 ">
       {/* 상단 고정 영역 (ProgressBar) */}
-      <div className="sticky top-[88px] lg:top-[88px] z-50 bg-GrayScale-50">
+      <div className="sticky top-[88px] lg:top-[88px] z-20 bg-GrayScale-50">
         <div className="flex justify-center items-center w-full">
           <div className="w-[327px] lg:w-[1400px]">
             <ProgressBar totalSteps={4} currentStep={step} />

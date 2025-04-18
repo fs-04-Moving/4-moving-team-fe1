@@ -13,6 +13,7 @@
  *   role="customer"
  *   logOut={handleLogOut}
  *   ref={dropdownRef}
+ *   position={{ top: 100, right: 20 }}
  * />
  *
  * @param {string} props.username - 사용자 이름
@@ -35,10 +36,14 @@ interface DropdownProfileProps {
   onClose: () => void;
   logOut: () => void;
   role: Role; // 기존 타입 정의 사용: 'customer' 또는 'worker'
+  position: { top: number; right: number }; // 추가된 위치 정보
 }
 
 const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
-  function DropdownProfile({ username, isOpen, onClose, logOut, role }, ref) {
+  function DropdownProfile(
+    { username, isOpen, onClose, logOut, role, position },
+    ref
+  ) {
     const router = useRouter();
 
     const handleClickFavorite = () => {
@@ -50,28 +55,6 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
       router.push('/customer/reviews/pending');
       onClose();
     };
-
-    // 외부 클릭 감지용 useEffect를 사용할 수 있습니다.
-    // const dropdownRef = useRef<HTMLDivElement>(null);
-    // useEffect(() => {
-    //   const handleClickOutside = (event: MouseEvent) => {
-    //     const target = event.target as HTMLElement;
-    //     if (target.closest('[data-button-id="profile-button"]')) {
-    //       return;
-    //     }
-    //     if (dropdownRef.current && !dropdownRef.current.contains(target)) {
-    //       onClose();
-    //     }
-    //   };
-    //   if (isOpen) {
-    //     setTimeout(() => {
-    //       document.addEventListener('mousedown', handleClickOutside);
-    //     }, 0);
-    //   }
-    //   return () => {
-    //     document.removeEventListener('mousedown', handleClickOutside);
-    //   };
-    // }, [isOpen, onClose]);
 
     // 로그아웃 처리
     const handleClickLogout = () => {
@@ -87,12 +70,12 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
       'w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 ';
 
     return (
-      // 감싸는 div에 필요시 z-index 추가해야 할 수도 있음
       <div
         ref={ref}
+        style={{ top: position.top, right: position.right }}
         className={clsx(
-          'absolute top-8 lg:top-13 right-10 lg:right-0 bg-white rounded-xl shadow-md px-1.5 lg:px-1 pt-2.5 lg:pt-4',
-          'border border-GrayScale-100 overflow-hidden z-50'
+          'fixed bg-white rounded-xl shadow-md px-1.5 lg:px-1 pt-2.5 lg:pt-4',
+          'border border-GrayScale-100 overflow-hidden z-[100]'
         )}
       >
         <div className={clsx(menuItemClassName)}>
