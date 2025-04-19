@@ -150,7 +150,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
         <Portal>
           <DropdownNotification
             isOpen={isShowNotificationsPopup}
-            notifications={[]}
+            notifications={notifications}
             onClose={() => setIsShowNotificationsPopup(false)}
             ref={popupNotificationRef}
             position={notificationPopupPos} // ✅ 위치 전달

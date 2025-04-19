@@ -36,8 +36,8 @@ const ProgressBar = ({
   }, [currentStep, totalSteps]);
 
   return (
-    <div className=" w-full h-[96px] lg:h-[128px] md:h-[128px] bg-GrayScale-50 md:pt-8 md:pb-8">
-      <h1 className="text-[18px] lg:text-[24px] md:text-[24px] text-Black-400 font-semibold mb-4 lg:mb-6">
+    <div className=" w-full flex flex-col justify-center items-start h-[96px] lg:h-[128px] bg-GrayScale-50">
+      <h1 className="text-[18px] lg:text-[24px] text-Black-400 font-semibold mb-4 lg:mb-6">
         견적요청
       </h1>
       <div className="w-full bg-gray-200 rounded-full h-2">
