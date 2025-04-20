@@ -1,3 +1,5 @@
+'use client';
+
 import {
   DEFAULT_SORT_OPTION,
   sortOption,

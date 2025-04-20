@@ -3,6 +3,7 @@ import {
   CreateWorkerProfileDto,
 } from '@/types/dtos/profile.dto';
 import { client, errorHandler } from '../client';
+import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
 
 // 고객 프로필 생성
 const createCustomerProfile = async (data: CreateCustomerProfileDto) => {
@@ -57,9 +58,21 @@ const createWorkerProfile = async (data: CreateWorkerProfileDto) => {
   }
 };
 
+//기사 프로필 가져오기
+const getWorkerProfiles = async (params: WorkerSearchParams) => {
+  try {
+    const url = '/profile/workers';
+    const response = await client.get(url, { params });
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
 const profilesApi = {
   createCustomerProfile,
   createWorkerProfile,
+  getWorkerProfiles,
 };
 
 export default profilesApi;

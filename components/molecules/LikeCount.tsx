@@ -9,13 +9,13 @@ type Props = {
 /**
  * LikeCount 컴포넌트
  *
- * 하트 아이콘과 사용자의 좋아요 여부(`isLiked`)과 기사의 좋아요 개수(`countLike`)를 함께 표시하는 UI 컴포넌트입니다.
+ * 하트 아이콘과 사용자의 좋아요 여부(`isFavorite`)과 기사의 좋아요 개수(`countLike`)를 함께 표시하는 UI 컴포넌트입니다.
  *
  * @param {boolean} isFavorite - 로그인 사용자가 해당 기사를 '좋아요'했는지 여부
  * @param {number} favoritesCount - 해당 기사를 좋아요한 유저의 개수
  *
  * @example
- * <LikeCount isLiked={true} countLike={128} />
+ * <LikeCount isFavorite={true} countLike={128} />
  */
 function LikeCount({ isFavorite, favoritesCount }: Props) {
   return (

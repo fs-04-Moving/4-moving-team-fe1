@@ -36,7 +36,7 @@ function InputAddress({ label, placeholder }: Props) {
       {address && (
         <div
           onClick={handleClickModify}
-          className="flex justify-end text-Black-400 mt-2 underline cursor-pointer"
+          className="flex justify-end text-xs lg:text-base text-Black-400 mt-2 underline cursor-pointer"
         >
           <p className="">수정하기</p>
         </div>

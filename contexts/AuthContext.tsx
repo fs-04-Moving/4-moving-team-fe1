@@ -4,7 +4,7 @@ import authApi from '@/api/auth/auth.api';
 import { client } from '@/api/client';
 import userApi from '@/api/user/user.api';
 import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
-import { Role } from '@/types/entities/user.entity';
+import { GetUserMe } from '@/types/dtos/user.dto';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import {
@@ -15,22 +15,12 @@ import {
   useState,
 } from 'react';
 
-export interface User {
-  name: string;
-  profileImage?: string;
-  hasProfile: boolean;
-  hasRequest: boolean;
-  role: Role;
-}
-
 interface AuthContextValue {
   isLoggedIn?: boolean;
   isAuthInitialized?: boolean;
   logIn?: () => void;
   logOut?: () => void;
-  role?: Role;
-  hasProfile?: boolean;
-  hasRequest?: boolean;
+  user?: GetUserMe;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -59,14 +49,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       retry: 0,
     },
   });
-  const { data: user } = useQuery<User>({
+  const { data: user } = useQuery<GetUserMe>({
     queryFn: userApi.getUserMe,
     queryKey: ['me'],
-    initialData: () => userQueryClient.getQueryData(['me']),
-    staleTime: Infinity,
   });
 
-  // const pathName = usePathname();
   const router = useRouter();
 
   useEffect(() => {
@@ -103,9 +90,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthInitialized,
     logIn,
     logOut,
-    role: user?.role,
-    hasProfile: user?.hasProfile,
-    hasRequest: user?.hasRequest,
+    user: user,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,35 +1,38 @@
-import { ServiceType } from '@/types/move.type';
 import Dropdown from './Dropdown';
 
-function DropdownService() {
-  // ServiceType 객체 배열 생성
-  const serviceTypes: ServiceType[] = [
-    { type: 'smallMove' },
-    { type: 'homeMove' },
-    { type: 'officeMove' },
-  ];
+type Props = {
+  onSelect: (service: string) => void;
+};
 
-  // 서비스 타입을 문자열로 변환하여 options 배열 생성
-  const options: string[] = [
-    '전체',
-    ...serviceTypes.map((service) => {
-      // 서비스 타입에 따라 한글 이름 반환
-      switch (service.type) {
-        case 'smallMove':
-          return '소형 이사';
-        case 'homeMove':
-          return '가정 이사';
-        case 'officeMove':
-          return '사무실 이사';
-        default:
-          return service.type;
-      }
-    }),
-  ];
+function DropdownService({ onSelect }: Props) {
+  const options: string[] = ['전체', '소형 이사', '가정 이사', '사무실 이사'];
+
+  const handleSelect = (service: string) => {
+    let newService: string;
+    switch (service) {
+      case '소형 이사':
+        newService = 'smallMove';
+        break;
+      case '가정 이사':
+        newService = 'homeMove';
+        break;
+      case '사무실 이사':
+        newService = 'officeMove';
+        break;
+      default:
+        newService = 'all';
+        break;
+    }
+    onSelect(newService);
+  };
 
   return (
-    <div className='w-full pb-7'>
-      <Dropdown options={options} defaultValue='전체' />
+    <div className="w-full pb-7">
+      <Dropdown
+        options={options}
+        defaultValue="서비스"
+        onSelect={handleSelect}
+      />
     </div>
   );
 }

@@ -11,6 +11,19 @@ export type UpdateUserInfoDto = Pick<
   | 'newPassword'
 >;
 
+export interface Worker {
+  workerId: number;
+  profileImage: string;
+  experience: number;
+  nickname: string;
+  services: string[];
+  serviceAreas: string[];
+  reviewCount: number;
+  favoriteCount: number;
+  avgStar: number;
+  confirmedEstimateCount: number;
+}
+
 // (고객/기사님 공통) '기본정보 수정' 페이지에 사용합니다.
 export type UserInfoEditDto = Pick<User, 'name' | 'email' | 'phoneNumber'>;
 

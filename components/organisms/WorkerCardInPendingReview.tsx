@@ -12,10 +12,12 @@ type Props = {
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
+  reviewsAverage: number;
+  reviewsCount: number;
 };
 
 /**
- * DriverCardInPendingReview 컴포넌트
+ * WorkerCardInPendingReview 컴포넌트
  *
  * 작성 가능한 리뷰 목록에서 사용되는 기사 카드 컴포넌트입니다.
  * 기사 이름, 경력, 확정 이사 건수, 별점, 서비스 유형, 찜 여부 등의 정보를 시각적으로 표현합니다.
@@ -28,9 +30,11 @@ type Props = {
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 해당 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사 제공 서비스 유형 리스트
+ * @param {number} reviewsAverage - 리뷰 평균
+ * @param {number} reviewsCount - 리뷰 개수
  *
  * @example
- * <DriverCardInPendingReview
+ * <WorkerCardInPendingReview
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
@@ -38,9 +42,11 @@ type Props = {
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
+ *   reviewsAverage={4.7}
+ *   reviewsCount={108}
  * />
  */
-function DriverCardInPendingReview({
+function WorkerCardInPendingReview({
   profileImage,
   nickname,
   experience,
@@ -48,6 +54,8 @@ function DriverCardInPendingReview({
   isFavorite,
   favoritesCount,
   services,
+  reviewsAverage,
+  reviewsCount,
 }: Props) {
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
@@ -70,7 +78,10 @@ function DriverCardInPendingReview({
           </div>
           {/* 별점, 경력, 확정 건수 */}
           <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-            <RatingSummary rating={4.9} reviewCount={178} />
+            <RatingSummary
+              reviewsAverage={reviewsAverage}
+              reviewsCount={reviewsCount}
+            />
             <span className="text-GrayScale-100">|</span>
             <span>
               <span className="text-GrayScale-300">경력</span>
@@ -88,4 +99,4 @@ function DriverCardInPendingReview({
   );
 }
 
-export default DriverCardInPendingReview;
+export default WorkerCardInPendingReview;
