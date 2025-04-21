@@ -1,7 +1,7 @@
-import LogoIconText from '../atoms/LogoIconText';
-import NavMenuGnb from '../molecules/NavMenuGnb';
-import SubTab from '../molecules/SubTab';
-import ButtonAuth from './ButtonAuth';
+import LogoIconText from "../atoms/LogoIconText";
+import NavMenuGnb from "../molecules/NavMenuGnb";
+import SubTab from "../molecules/SubTab";
+import ButtonAuth from "./ButtonAuth";
 
 interface GnbProps {
   onOpenMenu: () => void;

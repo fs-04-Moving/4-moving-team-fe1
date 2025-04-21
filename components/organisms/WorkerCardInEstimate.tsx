@@ -1,7 +1,7 @@
-import { ServiceType } from '@/types/move.type';
-import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
-import ChipMovingType from '../atoms/ChipMovingType';
-import WorkerInfoBoxA from './WorkerInfoBoxA';
+import { ServiceType } from "@/types/move.type";
+import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
+import ChipMovingType from "../atoms/ChipMovingType";
+import WorkerInfoBoxA from "./WorkerInfoBoxA";
 
 type Props = {
   profileImage: string;
@@ -68,12 +68,12 @@ function WorkerCardInEstimate({
   reviewsCount,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] lg:w-[688px] lg:h-[280px] px-3.5 py-4">
+    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] lg:w-[688px] lg:h-[280px] px-3.5 py-4 shadow-lg">
       <div className="flex gap-2.5">
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
-        {isDirectEstimate ? <ChipEstimateStatus type="assigned" /> : ''}
+        {isDirectEstimate ? <ChipEstimateStatus type="assigned" /> : ""}
       </div>
       {/* 기사 한줄 소개 */}
       <div className="text-[14px] lg:text-2xl">{summary}</div>
