@@ -70,7 +70,6 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
 
   ////////////////////////////알림 구현//////////////////////////// SSE
   const [notifications, setNotifications] = useState<Notification[]>([]);
-
   useEffect(() => {
     const eventSource = new EventSource(
       `${process.env.NEXT_PUBLIC_API_URL}/notification`,
@@ -81,13 +80,13 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     eventSource.onmessage = (event) => {
       const parsedData = JSON.parse(event.data);
       //맨처음 알림은 10개 배열로 받아오고 그 이후 알람은 배열이 아니여서 처리가 필요함
-      const notifications = Array.isArray(parsedData.notification)
+      const newNotifications = Array.isArray(parsedData.notification)
         ? parsedData.notification
         : [parsedData.notification];
 
       setNotifications((prevNotifications) => [
+        ...newNotifications,
         ...prevNotifications,
-        ...notifications,
       ]);
     };
 
