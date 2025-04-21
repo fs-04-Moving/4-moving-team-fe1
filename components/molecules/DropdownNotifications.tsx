@@ -20,15 +20,21 @@
  * @param {Function} props.onMarkAsRead - 알림 읽음 처리 함수 (선택적)
  */
 
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import { forwardRef, useRef } from 'react';
+import clsx from "clsx";
+import { forwardRef, useRef } from "react";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.locale("ko");
+dayjs.extend(relativeTime);
 
 interface NotificationItem {
   id: string;
   message: string;
-  time: string;
+  createdAt: string;
   isRead: boolean;
 }
 
@@ -70,6 +76,10 @@ const DropdownNotification = forwardRef<
   //   };
   // }, [isOpen, onClose]);
 
+  const timeAgo = (date: string) => {
+    return dayjs(date).fromNow();
+  };
+
   // 알림 클릭 처리
   const handleNotificationClick = (id: string) => {
     if (onMarkAsRead) {
@@ -83,8 +93,8 @@ const DropdownNotification = forwardRef<
     <div
       ref={ref ?? innerRef}
       className={clsx(
-        'absolute top-8 lg:top-13 left-[-200px] lg:left-[-300px] right-auto lg:right-auto w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md',
-        'border border-GrayScale-100 overflow-hidden z-50 max-h-[314px] lg:max-h-[352px] overflow-y-auto'
+        "absolute top-8 lg:top-13 left-[-200px] lg:left-[-300px] right-auto lg:right-auto w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md",
+        "border border-GrayScale-100 overflow-hidden z-50 max-h-[314px] lg:max-h-[352px] overflow-y-auto"
       )}
     >
       <div className="p-4 flex justify-between items-center">
@@ -103,17 +113,17 @@ const DropdownNotification = forwardRef<
             <div
               key={notification.id}
               className={clsx(
-                'p-4 border-b border-Line-200 cursor-pointer hover:bg-Primay-Blue-50 transition-colors',
-                { 'bg-Primay-Blue-50': !notification.isRead }
+                "p-4 border-b border-Line-200 cursor-pointer hover:bg-Primay-Blue-50 transition-colors",
+                { "bg-Primay-Blue-50": !notification.isRead }
               )}
               onClick={() => handleNotificationClick(notification.id)}
             >
               <div className="flex justify-between items-start mb-2">
                 <p
                   className={clsx(
-                    'text-Black-400 font-medium text-sm lg:text-base',
+                    "text-Black-400 font-medium text-sm lg:text-base",
                     {
-                      'font-bold': !notification.isRead,
+                      "font-bold": !notification.isRead,
                     }
                   )}
                 >
@@ -123,7 +133,9 @@ const DropdownNotification = forwardRef<
                   <span className="w-2 h-2 rounded-full bg-Primay-Blue-300 flex-shrink-0 mt-1"></span>
                 )}
               </div>
-              <p className="text-sm text-GrayScale-400">{notification.time}</p>
+              <p className="text-sm text-GrayScale-400">
+                {timeAgo(notification.createdAt)}
+              </p>
             </div>
           ))
         ) : (
@@ -136,6 +148,6 @@ const DropdownNotification = forwardRef<
   );
 });
 
-DropdownNotification.displayName = 'DropdownNotification';
+DropdownNotification.displayName = "DropdownNotification";
 
 export default DropdownNotification;
