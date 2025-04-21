@@ -6,7 +6,7 @@ export type FavoriteWorkersResponse = {
   totalCount: number;
 };
 
-const getFavoriteWorkers = async (): Promise<FavoriteWorkersResponse> => {
+const getFavoriteWorkers = async () => {
   try {
     const url = '/favorite';
     const response = await client.get(url);

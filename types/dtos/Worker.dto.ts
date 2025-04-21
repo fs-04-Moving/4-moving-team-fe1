@@ -10,7 +10,7 @@ export interface Worker {
   reviewsAverage: number;
   confirmedEstimateCount: number;
   isFavorite: boolean;
-  //summary
+  summary: string;
 }
 
 export interface WorkerSearchParams {

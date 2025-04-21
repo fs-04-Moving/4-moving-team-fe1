@@ -1,12 +1,20 @@
 import DropdownArea from '@/components/molecules/DropdownArea';
 import DropdownService from '@/components/molecules/DropdownService';
+import { useAuth } from '@/contexts/AuthContext';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
+import { useFavoriteWorkersQuery } from '@/hooks/useFavoriteWorkersQuery';
+import WorkerCardInSearch from '@/components/organisms/WorkerCardInSearch';
 
 function FilterArea() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const { isLoggedIn } = useAuth();
+
+  const { data, isLoading } = useFavoriteWorkersQuery();
+
+  console.log('data', data);
 
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -46,7 +54,7 @@ function FilterArea() {
 
   return (
     <aside className="hidden w-full max-w-[328px] lg:w-[32%] lg:block">
-      <div className="flex flex-col gap-11">
+      <div className="flex flex-col gap-9">
         <div className="flex justify-between px-2.5 py-4 border-b-[1px] border-Line-200">
           <span className="text-xl">필터</span>
           <span className="text-GrayScale-300" onClick={handleFilterReset}>
@@ -65,6 +73,20 @@ function FilterArea() {
           </label>
           <DropdownService onSelect={handleServiceSelect} />
         </div>
+        {isLoggedIn && (
+          <div className="flex flex-col gap-4 w-[640px] max-w-full">
+            <h3 className="text-xl font-semibold">찜한 기사님</h3>
+            {data &&
+              !isLoading &&
+              data.list.map((worker) => (
+                <WorkerCardInSearch
+                  key={worker.workerId}
+                  {...worker}
+                  isResponsive={false}
+                />
+              ))}
+          </div>
+        )}
       </div>
     </aside>
   );
