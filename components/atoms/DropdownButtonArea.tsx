@@ -27,7 +27,7 @@ function DropdownButtonArea({
   const isDone = status === 'done';
 
   const defaultClassName = clsx(
-    'w-full flex items-center justify-between px-4 h-[54px] lg:h-16 border border-GrayScale-100 cursor-pointer rounded-2xl lg:text-lg font-medium text-Black-400'
+    'w-full flex items-center justify-between px-4 h-[36px] lg:h-16 border border-GrayScale-100 cursor-pointer rounded-lg lg:rounded-2xl lg:text-lg font-medium text-Black-400'
   );
 
   const activeClassName = clsx({
@@ -44,7 +44,7 @@ function DropdownButtonArea({
       onClick={onClick}
     >
       <div className='w-full flex items-center justify-between'>
-        <span>{selectedValue}</span>
+        <span className='text-sm lg:text-lg'>{selectedValue}</span>
         <Image
           src={isActive ? icChevronDown : icChevronDownBlack}
           alt='펼치기 아이콘'
