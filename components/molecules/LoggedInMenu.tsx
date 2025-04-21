@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useCallback, useRef, useState } from 'react';
+import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-import icMenu from '@/assets/images/ic-menu.svg';
-import { useAuth } from '@/contexts/AuthContext';
-import useOutsideClick from '@/hooks/useOutsideClick';
-import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
-import { GetUserMe } from '@/types/dtos/user.dto';
+import icMenu from "@/assets/images/ic-menu.svg";
+import { useAuth } from "@/contexts/AuthContext";
+import useOutsideClick from "@/hooks/useOutsideClick";
+import { getBrowserQueryClient } from "@/libs/tanstack-query/reactQueryConfig";
+import { GetUserMe } from "@/types/dtos/user.dto";
 
-import IconAlarm from '../atoms/IconAlarm';
-import DropdownNotification from './DropdownNotifications';
-import DropdownProfile from './DropdownProfile';
-import UserProfile from './UserProfile';
+import IconAlarm from "../atoms/IconAlarm";
+import DropdownNotification from "./DropdownNotifications";
+import DropdownProfile from "./DropdownProfile";
+import UserProfile from "./UserProfile";
 
 interface Props {
   user: GetUserMe;
@@ -36,7 +36,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     setIsShowNotificationsPopup(false);
     setIsShowProfilePopup(false);
     logOut?.();
-    queryClient.removeQueries({ queryKey: ['me'] });
+    queryClient.removeQueries({ queryKey: ["me"] });
   }, [logOut, queryClient]);
 
   const handleClickAlarm = () => {
@@ -61,6 +61,46 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     isShowNotificationsPopup
   );
 
+  interface Notification {
+    id: string;
+    message: string;
+    createdAt: string;
+    isRead: boolean;
+  }
+
+  ////////////////////////////알림 구현//////////////////////////// SSE
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `${process.env.NEXT_PUBLIC_API_URL}/notification`,
+      {
+        withCredentials: true,
+      }
+    );
+    eventSource.onmessage = (event) => {
+      const parsedData = JSON.parse(event.data);
+      //맨처음 알림은 10개 배열로 받아오고 그 이후 알람은 배열이 아니여서 처리가 필요함
+      const newNotifications = Array.isArray(parsedData.notification)
+        ? parsedData.notification
+        : [parsedData.notification];
+
+      setNotifications((prevNotifications) => [
+        ...newNotifications,
+        ...prevNotifications,
+      ]);
+    };
+
+    eventSource.onerror = () => {
+      console.error("SSE 연결 실패");
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+  /////////////////////////////////////////////////////////////
+
   return (
     <div className="flex items-center relative">
       <IconAlarm onClick={handleClickAlarm} />
@@ -82,7 +122,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
       {isShowNotificationsPopup && (
         <DropdownNotification
           isOpen={isShowNotificationsPopup}
-          notifications={[]}
+          notifications={notifications} // 수정 - 엄성민
           onClose={() => setIsShowNotificationsPopup(false)}
           ref={popupNotificationRef}
         />
