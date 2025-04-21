@@ -27,13 +27,13 @@ function DropdownList<T extends string>({
         isShow
           ? 'scale-y-none transition origin-top'
           : 'scale-y-0 transition origin-top'
-      } absolute top lg:top-18 w-full drop-shadow-2xl border border-Line-200 rounded-2xl lg:text-lg`}
+      } absolute top-12 lg:top-18 lg:w-full drop-shadow-2xl border border-Line-200 rounded-lg lg:rounded-2xl lg:text-lg  bg-white`}
     >
       {menuOptions.map((option) => (
         <div
           key={option}
           onClick={handleSelectOption(option)}
-          className="h-16 flex items-center px-6 cursor-pointer"
+          className='h-9 lg:h-16 flex items-center px-2 lg:px-6 cursor-pointer text-sm lg:text-lg w-[87px] lg:w-full'
         >
           {option}
         </div>
