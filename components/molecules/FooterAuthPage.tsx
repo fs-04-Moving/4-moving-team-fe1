@@ -1,3 +1,4 @@
+import ROUTES from '@/constants/routes';
 import { Role } from '@/types/entities/user.entity';
 import Link from 'next/link';
 import AuthSocialLogIn from './AuthSocialLogIn';
@@ -18,7 +19,7 @@ function FooterAuthPage({ isSignUpPage, userType }: Props) {
     : '아직 무빙 회원이 아니신가요?';
   const text2: string = isSignUpPage ? '로그인' : '이메일로 회원가입하기';
 
-  const pageLink: string = isSignUpPage ? '/auth/log-in' : '/auth/sign-up';
+  const pageLink: string = isSignUpPage ? ROUTES.LOG_IN : ROUTES.SIGN_UP;
   const linkQuery: string =
     userType === 'customer' ? '?userType=customer' : '?userType=worker';
 

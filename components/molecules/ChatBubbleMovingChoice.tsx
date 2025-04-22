@@ -51,7 +51,7 @@ function ChatBubbleMovingChoice({
   }, [selectedService]);
 
   return (
-    <div className="drop-shadow-Chat flex flex-col gap-4 lg:gap-5 bg-GrayScale-50 items-center rounded-3xl rounded-tr-none lg:rounded-tr-none lg:rounded-[30px] w-[327px] lg:w-[624px] p-4 lg:p-10">
+    <div className="drop-shadow-Chat flex flex-col gap-4 lg:gap-5 bg-GrayScale-50 items-center rounded-3xl rounded-tr-none lg:rounded-tr-none lg:rounded-[30px] w-[327px] lg:w-[640px] p-6 lg:p-10">
       <ButtonCheckBoxRequest
         smallMove={serviceTypeDetailObject.smallMove}
         homeMove={serviceTypeDetailObject.homeMove}

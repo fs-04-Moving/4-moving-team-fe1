@@ -2,6 +2,7 @@
 'use client';
 
 import icMenu from '@/assets/images/ic-menu.svg';
+import ROUTES from '@/constants/routes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -16,7 +17,7 @@ export default function GuestMenuStatic({ onOpenMenu }: Props) {
   return (
     <div className="flex justify-end w-[116px]">
       <div className="w-[116px] hidden lg:inline">
-        <ButtonSolid onClick={() => router.push('/auth/log-in')} isGnb>
+        <ButtonSolid onClick={() => router.push(ROUTES.LOG_IN)} isGnb>
           로그인
         </ButtonSolid>
       </div>

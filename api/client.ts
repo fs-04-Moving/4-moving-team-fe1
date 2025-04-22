@@ -8,7 +8,7 @@ export const client = axios.create({
   withCredentials: true, // 쿠키를 요청에 포함시킴 (SSR에서도 사용 가능)
 });
 
-// ✅ request interceptor: 클라이언트 환경에서만 accessToken 헤더에 포함
+// request interceptor: 클라이언트 환경에서만 accessToken 헤더에 포함
 client.interceptors.request.use(
   (config) => {
     // Auth 관련 경로는 제외
@@ -36,7 +36,7 @@ client.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ✅ response interceptor: accessToken 만료 시 refreshToken 쿠키로 재요청
+// response interceptor: accessToken 만료 시 refreshToken 쿠키로 재요청
 
 // refreshToken 무한 루프로 다시 입력한 코드
 client.interceptors.response.use(
@@ -45,7 +45,7 @@ client.interceptors.response.use(
     const originalRequest = error.config;
     const statusCode = error.response?.status;
 
-    // ✅ refreshToken 요청 자체에서 에러면 빠져나가기
+    // refreshToken 요청 자체에서 에러면 빠져나가기
     if (
       originalRequest.url.includes('/auth/refresh-token') ||
       originalRequest._retry
@@ -60,21 +60,21 @@ client.interceptors.response.use(
         const res = await authApi.refreshToken();
 
         if (!res || !res.accessToken) {
-          console.warn('❌ Failed to refresh token.');
+          console.warn('Failed to refresh token.');
           return Promise.reject(error);
         }
 
         const { accessToken } = res;
         const newAccessToken = accessToken.accessToken;
 
-        // ✅ 새 토큰을 헤더에 반영
+        // 새 토큰을 헤더에 반영
         console.log('axios accessToken', newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
         return client(originalRequest); // 재요청
       } catch (refreshError) {
-        // ✅ refreshToken도 만료됐거나 문제 생긴 경우 → 로그아웃
-        console.error('🔥 Refresh token failed', refreshError);
+        // refreshToken도 만료됐거나 문제 생긴 경우 → 로그아웃
+        console.error('Refresh token failed', refreshError);
         if (typeof window !== 'undefined') {
           localStorage.removeItem('accessToken');
         }
@@ -99,12 +99,12 @@ export function errorHandler(error: unknown) {
       typeof data === 'string' &&
       data.includes('No refresh token')
     ) {
-      console.warn('🚫 No refresh token. Skipping silently.');
+      console.warn('No refresh token. Skipping silently.');
       return null;
     }
 
     if (status === 403) {
-      console.warn('🚫 Forbidden. Maybe token expired.');
+      console.warn('Forbidden. Maybe token expired.');
       return null;
     }
 

@@ -4,6 +4,7 @@ import userApi from '@/api/user/user.api';
 import icAlarm from '@/assets/images/ic-alarm.svg';
 import icMenu from '@/assets/images/ic-menu.svg';
 import icProfile from '@/assets/images/ic-profile.svg';
+import ROUTES from '@/constants/routes';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
@@ -24,7 +25,7 @@ function ButtonAuth() {
 
   const router = useRouter();
   const handleClickLogIn = () => {
-    router.push('/auth/log-in');
+    router.push(ROUTES.LOG_IN);
   };
 
   const handleClickLogOut = () => {

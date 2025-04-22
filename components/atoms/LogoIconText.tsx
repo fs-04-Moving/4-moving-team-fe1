@@ -1,3 +1,4 @@
+import icLogo from '@/assets/images/ic-logo.svg';
 import logoIconText from '@/assets/images/logo-icon-text.svg';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,11 +10,22 @@ import Link from 'next/link';
  * - ex: <LogoIconText className="w-[112px] lg:w-[140px]" />
  * @returns
  */
-function LogoIconText({ ...props }) {
+function LogoIconText({ className }: { className?: string }) {
   return (
     <div className="shrink-0">
       <Link href="/">
-        <Image src={logoIconText} alt="로고" {...props} />
+        {/* 데스크톱용 이미지 */}
+        <Image
+          src={logoIconText}
+          alt="로고"
+          className={`hidden md:inline lg:inline ${className ?? ''}`}
+        />
+        {/* 모바일용 이미지 */}
+        <Image
+          src={icLogo}
+          alt="로고"
+          className={`inline md:hidden ${className ? 'w-9 h-9' : ''}`}
+        />
       </Link>
     </div>
   );
