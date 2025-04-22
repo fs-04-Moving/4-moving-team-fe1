@@ -22,11 +22,7 @@ function WorkerCardList({ workers, isLoading }: Props) {
             key={worker.workerId}
             href={`${ROUTES.FIND_WORKER}/${worker.workerId}`}
           >
-            <WorkerCardInSearch
-              key={worker.workerId}
-              {...worker}
-              summary="저는 베스트 기사입니다"
-            />
+            <WorkerCardInSearch key={worker.workerId} {...worker} />
           </Link>
         ) : null
       )}

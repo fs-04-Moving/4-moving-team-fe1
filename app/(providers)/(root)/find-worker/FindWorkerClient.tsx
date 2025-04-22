@@ -26,9 +26,10 @@ function FindWorkerClient({ initialData }: Props) {
   const serviceArea = searchParams.get('serviceArea') || '';
   const serviceType = searchParams.get('serviceType') || '';
   const orderBy = searchParams.get('orderBy') || '';
+  const search = searchParams.get('search') || '';
 
   const queryParams = Object.fromEntries(
-    Object.entries({ serviceArea, serviceType, orderBy }).filter(
+    Object.entries({ serviceArea, serviceType, orderBy, search }).filter(
       ([, value]) => value !== ''
     )
   );

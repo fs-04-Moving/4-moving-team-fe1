@@ -55,7 +55,7 @@ function TopMenu() {
     const newParams = new URLSearchParams(searchParams);
     switch (order) {
       case '리뷰 많은순':
-        newParams.set('orderBy', 'reviewsCount');
+        newParams.set('orderBy', 'mostReview');
         break;
       case '평점 높은순':
         newParams.set('orderBy', 'highestRated');
@@ -73,7 +73,9 @@ function TopMenu() {
   };
 
   const onSubmit = (data: FormValues) => {
-    router.push(`?search=${data.keyword}`);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set('search', data.keyword);
+    router.push(`?${newParams.toString()}`);
   };
 
   return (
@@ -103,6 +105,7 @@ function TopMenu() {
         <InputSearchLeftIcon
           name="keyword"
           control={control}
+          bgColor={true}
           placeholder="텍스트를 입력해 주세요."
         />
       </form>
