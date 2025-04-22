@@ -5,11 +5,14 @@ import { getPendingEstimates } from "@/api/estimates/customerOnly/estimate.api";
 import { useEffect, useState } from "react";
 import WorkerCardInWating from "@/components/organisms/WorkerCardInWating";
 import { EstimateRequestStatus, EstimateStatus } from "@/types/move.type";
+import { useRouter } from "next/navigation";
 
 const PendingEstimateList: React.FC = () => {
   const [estimates, setEstimates] = useState<Estimate[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
 
   const page = 1;
   const pageSize = 10;
@@ -27,6 +30,7 @@ const PendingEstimateList: React.FC = () => {
 
       try {
         const data = await getPendingEstimates({ page, pageSize });
+        console.log("data : ", data);
         if (data) {
           setEstimates(data.list);
         }
@@ -60,7 +64,7 @@ const PendingEstimateList: React.FC = () => {
           nickname={estimate.workerNickname}
           experience={estimate.workerExperience}
           confirmedEstimateCount={estimate.workerConfirmedEstimatesCount}
-          isFavorite={false} // API에서 제공되지 않는 경우 false로 설정하거나 별도로 관리
+          isFavorite={estimate.isConfirmed} // API에서 제공되지 않는 경우 false로 설정하거나 별도로 관리
           favoritesCount={estimate.workerFavoritesCount}
           services={[estimate.serviceType]} // serviceType은 단일 값이므로 배열로 감싸기
           isDirectEstimate={false} // 지정 견적 여부는 별도 필드 필요. 일단 false로 설정
@@ -77,6 +81,7 @@ const PendingEstimateList: React.FC = () => {
           }}
           onViewDetail={() => {
             // 상세 보기 로직 추가 필요
+            router.push(`/customer/estimates/pending/${estimate.id}`);
             console.log(`${estimate.id} 상세 보기 클릭`);
           }}
         />

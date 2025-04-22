@@ -75,3 +75,25 @@ export const getEstimateDetailByCustomer = async (
     return;
   }
 };
+
+//견적 확정하기
+
+// types/entities/estimate.entity.ts (또는 별도 타입 파일)
+interface ConfirmEstimateResponse {
+  success: boolean;
+  message?: string;
+}
+
+export const confirmEstimateByCustomer = async (
+  estimateId: string
+): Promise<ConfirmEstimateResponse | undefined> => {
+  try {
+    const response = await client.post<ConfirmEstimateResponse>(
+      `/estimate/customer/confirm/${estimateId}`
+    );
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+    return;
+  }
+};

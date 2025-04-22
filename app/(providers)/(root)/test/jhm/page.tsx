@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
-import ButtonLikeOutlined from '@/components/atoms/ButtonLikeOutlined';
-import ButtonOutlined from '@/components/atoms/ButtonOutlined';
-import ButtonPopFilter from '@/components/atoms/ButtonPopFilter';
-import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
-import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
-import ChatBubbleTextLeft from '@/components/atoms/ChatBubbleTextLeft';
-import ChatBubbleTextRight from '@/components/atoms/ChatBubbleTextRight';
-import DividerHor from '@/components/atoms/DividerHor';
-import Label from '@/components/atoms/Label';
-import ChatBubbleAddress from '@/components/molecules/ChatBubbleAddress';
-import Dropdown from '@/components/molecules/Dropdown';
-import PageContainer from '@/components/templates/PageContainer';
-import { FilterReceivedEstimateList } from '@/types/dtos/estimate.dto';
-import { useRouter } from 'next/navigation';
+import ButtonClipOutlined from "@/components/atoms/ButtonClipOutlined";
+import ButtonLikeOutlined from "@/components/atoms/ButtonLikeOutlined";
+import ButtonOutlined from "@/components/atoms/ButtonOutlined";
+import ButtonPopFilter from "@/components/atoms/ButtonPopFilter";
+import ButtonShareFacebook from "@/components/atoms/ButtonShareFacebook";
+import ButtonShareKakao from "@/components/atoms/ButtonShareKakao";
+import ChatBubbleTextLeft from "@/components/atoms/ChatBubbleTextLeft";
+import ChatBubbleTextRight from "@/components/atoms/ChatBubbleTextRight";
+import DividerHor from "@/components/atoms/DividerHor";
+import Label from "@/components/atoms/Label";
+import ChatBubbleAddress from "@/components/molecules/ChatBubbleAddress";
+import Dropdown from "@/components/molecules/Dropdown";
+import PageContainer from "@/components/templates/PageContainer";
+import { FilterReceivedEstimateList } from "@/types/dtos/estimate.dto";
+import { useRouter } from "next/navigation";
 
 function Page() {
-  const options: FilterReceivedEstimateList[] = ['전체', '확정한 견적서'];
+  const options: FilterReceivedEstimateList[] = ["전체", "확정한 견적서"];
 
   const router = useRouter();
 
@@ -41,19 +41,19 @@ function Page() {
         <ButtonOutlined intent="done">아웃 라인 버튼 done</ButtonOutlined>
         <ButtonPopFilter
           onClick={() => {
-            console.log('pop!');
+            console.log("pop!");
           }}
         />
         <ButtonPopFilter
           isActive={true}
           onClick={() => {
-            console.log('pop!');
+            console.log("pop!");
           }}
         />
         <ButtonLikeOutlined onClick={() => {}} />
         <ButtonShareKakao
           onClick={() => {
-            router.push('/customer');
+            router.push("/customer");
           }}
         />
         <ButtonShareFacebook onClick={() => {}} />
