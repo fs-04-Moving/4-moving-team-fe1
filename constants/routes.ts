@@ -12,7 +12,7 @@ const ROUTES = {
       RECEIVED: '/customer/estimates/received', // 내 견적 관리 - 받았던 견적
     },
     FAVORITES: '/customer/favorites', // 찜한 기사님
-    INFO: '/customer/info', // 고객 기본 정보
+    INFO: '/customer/info/edit', // 고객 기본 정보 수정
     PROFILE: '/customer/profile', // 고객 프로필
     REVIEWS: {
       ROOT: '/customer/reviews',
@@ -28,7 +28,7 @@ const ROUTES = {
       REJECTED: '/worker/estimates/rejected', // 내 견적 관리 - 반려 요청
       SENDING: '/worker/estimates/sending', // 내 견적 관리 - 보낸 견적 조회
     },
-    INFO: '/worker/info', // 기사님 기본 정보
+    INFO: '/worker/info/edit', // 기사님 기본 정보 수정
     PROFILE: '/worker/profile', // 기사님 프로필
   },
 };
