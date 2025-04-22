@@ -78,9 +78,9 @@ function FilterArea() {
             <h3 className="text-xl font-semibold">찜한 기사님</h3>
             {data &&
               !isLoading &&
-              data.list.map((worker) => (
+              data.list.map((worker, index) => (
                 <WorkerCardInSearch
-                  key={worker.workerId}
+                  key={index}
                   {...worker}
                   isResponsive={false}
                 />
