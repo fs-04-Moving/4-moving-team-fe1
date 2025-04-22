@@ -14,6 +14,7 @@ const ROUTES = {
     FAVORITES: '/customer/favorites', // 찜한 기사님
     INFO: '/customer/info/edit', // 고객 기본 정보 수정
     PROFILE: '/customer/profile', // 고객 프로필
+    PROFILE_EDIT: '/customer/profile/edit', // 고객 프로필 수정
     REVIEWS: {
       ROOT: '/customer/reviews',
       PENDING: '/customer/reviews/pending', // 작성 가능한 리뷰
@@ -29,7 +30,9 @@ const ROUTES = {
       SENDING: '/worker/estimates/sending', // 내 견적 관리 - 보낸 견적 조회
     },
     INFO: '/worker/info/edit', // 기사님 기본 정보 수정
+    MY_PAGE: '/worker/my-page', // 기사님 마이페이지
     PROFILE: '/worker/profile', // 기사님 프로필
+    PROFILE_EDIT: '/worker/profile/edit', // 기사님 프로필 수정
   },
 };
 
