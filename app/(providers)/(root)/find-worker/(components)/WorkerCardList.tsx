@@ -1,4 +1,5 @@
 import WorkerCardInSearch from '@/components/organisms/WorkerCardInSearch';
+import ROUTES from '@/constants/routes';
 import { Worker } from '@/types/dtos/Worker.dto';
 import Link from 'next/link';
 
@@ -17,7 +18,10 @@ function WorkerCardList({ workers, isLoading }: Props) {
       {workers.map((worker) =>
         // todo : summary 백엔드 수정수 수정?
         worker ? (
-          <Link key={worker.workerId} href={`/find-worker/${worker.workerId}`}>
+          <Link
+            key={worker.workerId}
+            href={`${ROUTES.FIND_WORKER}/${worker.workerId}`}
+          >
             <WorkerCardInSearch
               key={worker.workerId}
               {...worker}

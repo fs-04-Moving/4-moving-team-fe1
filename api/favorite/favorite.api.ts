@@ -17,8 +17,20 @@ const getFavoriteWorkers = async (): Promise<FavoriteWorkersResponse> => {
   }
 };
 
+const getFavoriteWorkersServer = async (accessToken: string) => {
+  const response = await client.get('/favorite', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    // SSR이니까 쿠키도 같이 보내야 할 수도 있음
+    withCredentials: true,
+  });
+  return response.data;
+};
+
 const favoriteApi = {
   getFavoriteWorkers,
+  getFavoriteWorkersServer,
 };
 
 export default favoriteApi;

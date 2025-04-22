@@ -28,7 +28,7 @@ function TabMenu({ tabs }: TabMenuProps) {
   };
 
   return (
-    <div className="flex items-center gap-8 h-16">
+    <div className="flex items-center gap-6 lg:gap-8 h-16">
       {tabs.map((tab) => {
         const isActive = pathname === tab.route;
 
@@ -37,7 +37,7 @@ function TabMenu({ tabs }: TabMenuProps) {
             key={tab.route}
             onClick={() => handleClick(tab.route)}
             className={clsx(
-              'relative flex items-center h-16 text-xl font-semibold transition-colors duration-200 cursor-pointer active:opacity-70',
+              'relative flex items-center h-16 text-sm lg:text-xl font-semibold transition-colors duration-200 cursor-pointer active:opacity-70',
               isActive ? 'text-Black-400' : 'text-GrayScale-400'
             )}
           >

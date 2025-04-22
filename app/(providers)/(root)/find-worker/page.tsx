@@ -1,6 +1,6 @@
+import profilesApi from '@/api/profiles/profiles.api';
 import mockImg from '@/assets/images/avatartion-2.svg';
 import FindWorkerClient from './FindWorkerClient';
-import profilesApi from '@/api/profiles/profiles.api';
 
 export const mockDriverList = [
   {
