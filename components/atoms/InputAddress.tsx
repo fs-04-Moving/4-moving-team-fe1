@@ -20,13 +20,17 @@ function InputAddress({ label, placeholder, value, onChange }: Props) {
   const handleOpenPostcode = () => {
     new window.daum.Postcode({
       oncomplete: function (data) {
-        onChange(data.address); // 주소 선택 시 부모로 전달
+        if (data.userSelectedType === 'J') {
+          onChange(data.jibunAddress); // 주소 선택 시 부모로 전달
+        } else {
+          onChange(data.roadAddress);
+        }
       },
     }).open();
   };
 
   const handleClickModify = () => {
-    handleOpenPostcode(); // ❗ 주소 비우지 않고 팝업만 다시 띄움
+    handleOpenPostcode(); // 주소 비우지 않고 팝업만 다시 띄움
   };
 
   console.log('inputAddress value', value);
