@@ -1,16 +1,21 @@
 'use client';
 
 import estimateRequestApi from '@/api/estimate-request/estimateRequest.api';
+import icRequestDisable from '@/assets/images/ic-request-disable.svg';
+import { useAuth } from '@/contexts/AuthContext';
 import { CreateEstimateRequestDto } from '@/types/dtos/estimateRequest.dto';
 import { serviceTypeDetailObject } from '@/types/entities/estimate.entity';
 import { ServiceType } from '@/types/move.type';
 import { useMutation } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import ButtonSolid from '../atoms/ButtonSolid';
 import ChatBubbleTextLeft from '../atoms/ChatBubbleTextLeft';
 import ChatBubbleTextRight from '../atoms/ChatBubbleTextRight';
 import DatePickerWrapper from '../atoms/datepicker';
+import Label from '../atoms/Label';
 import ChatBubbleAddress from '../molecules/ChatBubbleAddress';
 import ChatBubbleMovingChoice from '../molecules/ChatBubbleMovingChoice';
 import ProgressBar from '../molecules/ProgressBar';
@@ -24,6 +29,9 @@ function RequestEstimate() {
   const [departure, setDeparture] = useState('');
   const [destination, setDestination] = useState('');
 
+  const { user } = useAuth();
+  console.log('estimate request user', user);
+
   const { mutate: createEstimateRequest } = useMutation({
     mutationFn: (data: CreateEstimateRequestDto) =>
       estimateRequestApi.createEstimateRequest(data),
@@ -36,7 +44,7 @@ function RequestEstimate() {
       serviceType: service,
       movingDate: date,
       departureArea: 'busan',
-      departureAddress: departure,
+      departure,
       destination,
     };
 
@@ -137,7 +145,7 @@ function RequestEstimate() {
     </div>
   );
 
-  return (
+  return !user?.hasRequest ? (
     <div className="bg-BackGround-200 min-h-full pb-40 ">
       {/* 상단 고정 영역 (ProgressBar) */}
       <div className="sticky top-[54px] lg:top-[88px] z-20 bg-GrayScale-50">
@@ -159,6 +167,28 @@ function RequestEstimate() {
           {renderServiceChoice()}
           {step > 1 && renderDateChoice()}
           {step > 2 && renderAddressChoice()}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="bg-BackGround-200 min-h-full pb-40 ">
+      <div className="flex justify-center items-center w-full bg-GrayScale-50 h-16 lg:h-24 mb-6">
+        <div className="w-[327px] md:w-[600px] lg:w-[1400px]">
+          <Label intent="md">견적 요청</Label>
+        </div>
+      </div>
+      <div className="flex flex-col items-center mt-[194px]">
+        <Image
+          src={icRequestDisable}
+          alt="견적 요청 불가"
+          className="w-[244px]"
+        />
+        <p className="mt-16 text-xl text-[#999999] text-center">
+          현재 진행 중인 이사 견적이 있어요! <br />
+          진행 중인 이사 완료 후 새로운 견적을 받아보세요.
+        </p>
+        <div className="w-[196px] mt-8">
+          <ButtonSolid>받은 견적 보러가기</ButtonSolid>
         </div>
       </div>
     </div>

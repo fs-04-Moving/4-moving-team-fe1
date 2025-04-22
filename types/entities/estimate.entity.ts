@@ -1,4 +1,5 @@
 import { EstimateStatus } from '../move.type';
+import { Area } from './user.entity';
 
 export interface Estimate {
   id: string;
@@ -7,17 +8,18 @@ export interface Estimate {
   status: EstimateStatus;
   isConfirmed: boolean;
   customerName: string;
-  workerProfileImage: string;
-  workerSummary: string;
-  workerNickname: string;
-  workerFavoritesCount: number;
-  workerReviewsCount: number;
-  workerRating: number;
-  workerExperience: number;
-  workerConfirmedEstimatesCount: number;
+  profileImage: string;
+  summary: string;
+  nickname: string;
+  favoritesCount: number;
+  reviewsCount: number;
+  rating: number;
+  experience: number;
+  confirmedEstimatesCount: number;
   movingDate: Date;
   departure: string;
   destination: string;
+  departureArea: Area;
   requestDate: Date;
   rejectionMessage?: string;
 }

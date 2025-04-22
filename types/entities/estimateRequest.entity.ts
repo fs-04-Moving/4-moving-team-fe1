@@ -7,7 +7,7 @@ export interface EstimateRequest {
   serviceType: ServiceType;
   movingDate: Date;
   destination: string;
-  departureAddress: string; // 한글 주소
+  departure: string; // 한글 주소
   departureArea: Area; // 영문 지역
   isAssigned: boolean;
   status: EstimateRequestStatus;
