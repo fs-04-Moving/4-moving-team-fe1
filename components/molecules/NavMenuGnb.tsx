@@ -1,6 +1,7 @@
 'use client';
 
 import { navMenuItems } from '@/constants/navMenuItems';
+import ROUTES from '@/constants/routes';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePathname, useRouter } from 'next/navigation';
 import NavMenuItem from '../atoms/NavMenuItem';
@@ -26,9 +27,9 @@ function NavMenuGnb() {
 
       if (item.label === '내 견적 관리') {
         if (user?.role === 'customer') {
-          effectiveHref = '/customer/estimates';
+          effectiveHref = ROUTES.CUSTOMER.ESTIMATES.ROOT;
         } else if (user?.role === 'worker') {
-          effectiveHref = '/worker/estimates';
+          effectiveHref = ROUTES.WORKER.ESTIMATES.ROOT;
         }
       }
 

@@ -1,11 +1,13 @@
 import icBox from '@/assets/images/ic-box.svg';
 import icCompany from '@/assets/images/ic-company.svg';
 import icHome from '@/assets/images/ic-home.svg';
+import clsx from 'clsx';
 import Image from 'next/image';
 
 interface Props {
   type: string;
   isShort?: boolean;
+  isResponsive?: boolean;
 }
 /**
  * ChipMovingType 컴포넌트
@@ -16,10 +18,11 @@ interface Props {
  *
  * @param {string} props.type - 이사 서비스 타입 문자열 (예: 'smallMove', 'homeMove', 'officeMove')
  * @param {boolean} [isShort] - true이면 짧은 텍스트(예: '소형')를, false이면 전체 텍스트(예: '소형이사')를 표시합니다.
+ * @param {boolean} isResponsive - 기본값:true, false면 반응형을 적용하지 않고, 크기를 sm으로 고정
  *
  * @returns {JSX.Element | null} 선택된 이사 타입에 맞는 스타일의 칩 컴포넌트. 타입에 해당하는 설정이 없으면 null을 반환합니다.
  */
-function ChipMovingType({ type, isShort }: Props) {
+function ChipMovingType({ type, isShort, isResponsive = true }: Props) {
   const config: Record<
     string,
     { icon: string; text: string; shortenText: string }
@@ -47,10 +50,23 @@ function ChipMovingType({ type, isShort }: Props) {
   const { icon, text, shortenText } = config[type];
   return (
     <span
-      className={`inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] lg:gap-1 lg:h-[34px] px-1 pr-1 font-semibold w-fit bg-Primay-Blue-100 text-Primay-Blue-300 `}
+      className={clsx(
+        `inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] px-1 pr-1 font-semibold w-fit bg-Primay-Blue-100 text-Primay-Blue-300`,
+        isResponsive ? 'lg:gap-1 lg:h-[34px]' : ''
+      )}
     >
-      <Image src={icon} width={20} alt={'box'} className="lg:w-[24px]" />
-      <span className="leading-none relative top-[1px] text-[13px] lg:text-[16px]">
+      <Image
+        src={icon}
+        width={20}
+        alt={'box'}
+        className={clsx(isResponsive ? 'lg:w-[24px]' : '')}
+      />
+      <span
+        className={clsx(
+          'leading-none relative top-[1px] text-[13px]',
+          isResponsive ? 'lg:text-[16px]' : ''
+        )}
+      >
         <span className="lg:hidden">{isShort ? shortenText : text}</span>
         <span className="hidden lg:inline-block">{text}</span>
       </span>

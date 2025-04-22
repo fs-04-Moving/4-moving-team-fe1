@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
+import ROUTES from './constants/routes';
 import { getUserFromRequestLite } from './utils/getUserFromRequestLite';
 
 // 접근 가능한 경로 정의
-const OPEN_ROUTES = ['/find-worker'];
-const PUBLIC_ROUTES = ['/', '/auth/log-in', '/auth/sign-up', '/find-worker'];
-const PROFILE_ROUTES = ['/customer/profile', '/worker/profile'];
+const OPEN_ROUTES = [ROUTES.FIND_WORKER];
+const PUBLIC_ROUTES = [
+  ROUTES.HOME,
+  ROUTES.LOG_IN,
+  ROUTES.SIGN_UP,
+  ROUTES.FIND_WORKER,
+];
+const PROFILE_ROUTES = [ROUTES.CUSTOMER.PROFILE, ROUTES.WORKER.PROFILE];
 // 테스트 라우트 임시 등록
 // TODO: 추후 삭제
 const TEST_ROUTES = [
@@ -93,8 +99,8 @@ export async function middleware(req: NextRequest) {
 
   if (
     !isWorkerDetailPage && // 예외 라우트가 아닌 경우에만 막음
-    ((role === 'customer' && pathname.startsWith('/worker')) ||
-      (role === 'worker' && pathname.startsWith('/customer')))
+    ((role === 'customer' && pathname.startsWith(ROUTES.WORKER.ROOT)) ||
+      (role === 'worker' && pathname.startsWith(ROUTES.CUSTOMER.ROOT)))
   ) {
     return NextResponse.redirect(new URL(`/${role}`, req.url));
   }

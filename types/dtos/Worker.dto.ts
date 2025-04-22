@@ -1,4 +1,5 @@
 export interface Worker {
+  id: number;
   workerId: number;
   profileImage: string;
   experience: number;
@@ -10,7 +11,7 @@ export interface Worker {
   reviewsAverage: number;
   confirmedEstimateCount: number;
   isFavorite: boolean;
-  //summary
+  summary: string;
 }
 
 export interface WorkerSearchParams {

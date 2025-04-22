@@ -27,9 +27,9 @@ function DropdownListDoubleRow<T extends string>({
         isShow
           ? 'scale-y-none transition origin-top'
           : 'scale-y-0 transition origin-top'
-      } absolute top lg:top-18 w-full drop-shadow-2xl border border-Line-200 rounded-2xl lg:text-lg`}
+      } absolute top-12 lg:top-18 w-[150px] lg:w-[328px] `}
     >
-      <div className='grid grid-cols-2 divide-x divide-GrayScale-100 max-h-[180px] lg:max-h-[320px] overflow-y-auto bg-white'>
+      <div className='grid grid-cols-2 divide-x divide-GrayScale-100 max-h-[180px] lg:max-h-[320px] overflow-y-auto bg-white drop-shadow-sm border border-Line-200 rounded-lg lg:rounded-2xl lg:text-lg'>
         {menuOptions?.map((option) => (
           <div
             key={option}

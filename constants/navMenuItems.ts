@@ -1,5 +1,6 @@
 import { Role } from '@/types/entities/user.entity';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import ROUTES from './routes';
 
 interface NavMenuItemData {
   label: string;
@@ -16,42 +17,42 @@ interface NavMenuItemData {
 export const navMenuItems: NavMenuItemData[] = [
   {
     label: '견적 요청',
-    href: '/customer',
+    href: ROUTES.CUSTOMER.ROOT,
     condition: (role, hasProfile) => hasProfile && role === 'customer',
-    onClick: (router) => router.push('/customer'),
+    onClick: (router) => router.push(ROUTES.CUSTOMER.ROOT),
     showIn: ['gnb', 'slide'],
   },
   {
     label: '받은 요청',
-    href: '/worker',
+    href: ROUTES.WORKER.ROOT,
     condition: (role, hasProfile) => hasProfile && role === 'worker',
-    onClick: (router) => router.push('/worker'),
+    onClick: (router) => router.push(ROUTES.WORKER.ROOT),
     showIn: ['gnb', 'slide'],
   },
   {
     label: '기사님 찾기',
-    href: '/find-worker',
+    href: ROUTES.FIND_WORKER,
     condition: (role) => role !== 'worker',
-    onClick: (router) => router.push('/find-worker'),
+    onClick: (router) => router.push(ROUTES.FIND_WORKER),
     showIn: ['gnb', 'slide'],
   },
   {
     label: '로그인',
-    href: '/auth/log-in',
+    href: ROUTES.LOG_IN,
     condition: (_, __, isLoggedIn) => !isLoggedIn,
-    onClick: (router) => router.push('/auth/log-in'),
+    onClick: (router) => router.push(ROUTES.LOG_IN),
     showIn: ['slide'],
   },
   {
     label: '내 견적 관리',
     // 각 role에 따라 예상 prefix 경로를 지정
-    href: '/customer/estimates', // 기본값
+    href: ROUTES.CUSTOMER.ESTIMATES.ROOT, // 기본값
     condition: (_, hasProfile) => hasProfile,
     onClick: (router, role) => {
       if (role === 'customer') {
-        router.push('/customer/estimates/pending');
+        router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING);
       } else if (role === 'worker') {
-        router.push('/worker/estimates/sending');
+        router.push(ROUTES.WORKER.ESTIMATES.SENDING);
       }
     },
     showIn: ['gnb', 'slide'],

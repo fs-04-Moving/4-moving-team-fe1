@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * @description
  * 알림 드롭다운 컴포넌트
@@ -12,6 +14,7 @@
  *   onClose={() => setIsOpen(false)}
  *   onMarkAsRead={(id) => console.log(`알림 ${id} 읽음 처리`)}
  *   ref={ref} // 외부에서 감지할 때 사용
+ *   position={{ top: 100, right: 20 }}
  * />
  *
  * @param {NotificationItem[]} props.notifications - 알림 목록
@@ -20,15 +23,13 @@
  * @param {Function} props.onMarkAsRead - 알림 읽음 처리 함수 (선택적)
  */
 
-'use client';
-
 import clsx from 'clsx';
 import { forwardRef, useRef } from 'react';
 
 interface NotificationItem {
   id: string;
   message: string;
-  time: string;
+  createdAt: string;
   isRead: boolean;
 }
 
@@ -37,40 +38,15 @@ interface DropdownNotificationProps {
   isOpen: boolean;
   onClose: () => void;
   onMarkAsRead?: (id: string) => void;
+  position: { top: number; right: number }; // 추가된 위치 정보
 }
 
-// forwardRef로 변경
 const DropdownNotification = forwardRef<
   HTMLDivElement,
   DropdownNotificationProps
->(({ notifications, isOpen, onClose, onMarkAsRead }, ref) => {
+>(({ notifications, isOpen, onClose, onMarkAsRead, position }, ref) => {
   const innerRef = useRef<HTMLDivElement>(null);
 
-  // 밖에 클릭했을때
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     const target = event.target as HTMLElement;
-  //     if (target.closest('[data-button-id="notification-button"]')) {
-  //       return;
-  //     }
-
-  //     if (innerRef.current && !innerRef.current.contains(target)) {
-  //       onClose();
-  //     }
-  //   };
-
-  //   if (isOpen) {
-  //     setTimeout(() => {
-  //       document.addEventListener('mousedown', handleClickOutside);
-  //     }, 0);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, [isOpen, onClose]);
-
-  // 알림 클릭 처리
   const handleNotificationClick = (id: string) => {
     if (onMarkAsRead) {
       onMarkAsRead(id);
@@ -82,9 +58,11 @@ const DropdownNotification = forwardRef<
   return (
     <div
       ref={ref ?? innerRef}
+      style={{ top: position.top, right: position.right }}
       className={clsx(
-        'absolute top-8 lg:top-13 left-[-200px] lg:left-[-300px] right-auto lg:right-auto w-[312px] lg:w-[359px] bg-white rounded-xl shadow-md',
-        'border border-GrayScale-100 overflow-hidden z-50 max-h-[314px] lg:max-h-[352px] overflow-y-auto'
+        'fixed bg-white rounded-xl shadow-md w-[312px] lg:w-[359px]',
+        'border border-GrayScale-100 overflow-hidden z-[100]',
+        'max-h-[314px] lg:max-h-[352px] overflow-y-auto'
       )}
     >
       <div className="p-4 flex justify-between items-center">
@@ -123,7 +101,9 @@ const DropdownNotification = forwardRef<
                   <span className="w-2 h-2 rounded-full bg-Primay-Blue-300 flex-shrink-0 mt-1"></span>
                 )}
               </div>
-              <p className="text-sm text-GrayScale-400">{notification.time}</p>
+              <p className="text-sm text-GrayScale-400">
+                {timeAgo(notification.createdAt)}
+              </p>
             </div>
           ))
         ) : (

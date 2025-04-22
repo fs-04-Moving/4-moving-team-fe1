@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import icMenu from '@/assets/images/ic-menu.svg';
 import { useAuth } from '@/contexts/AuthContext';
@@ -10,6 +10,7 @@ import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { GetUserMe } from '@/types/dtos/user.dto';
 
 import IconAlarm from '../atoms/IconAlarm';
+import Portal from '../atoms/Portal';
 import DropdownNotification from './DropdownNotifications';
 import DropdownProfile from './DropdownProfile';
 import UserProfile from './UserProfile';
@@ -27,6 +28,14 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
 
   const popupProfileRef = useRef<HTMLDivElement | null>(null);
   const popupNotificationRef = useRef<HTMLDivElement | null>(null);
+  const buttonProfileRef = useRef<HTMLDivElement | null>(null);
+  const alarmButtonRef = useRef<HTMLImageElement | null>(null);
+
+  const [profilePopupPos, setProfilePopupPos] = useState({ top: 0, right: 0 });
+  const [notificationPopupPos, setNotificationPopupPos] = useState({
+    top: 0,
+    right: 0,
+  });
 
   const queryClient = getBrowserQueryClient();
 
@@ -40,11 +49,25 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
   }, [logOut, queryClient]);
 
   const handleClickAlarm = () => {
+    if (alarmButtonRef.current) {
+      const rect = alarmButtonRef.current.getBoundingClientRect();
+      setNotificationPopupPos({
+        top: rect.bottom + 8, // 아이콘 아래에 띄우기
+        right: window.innerWidth - rect.right - 110, // 오른쪽 기준 위치
+      });
+    }
     setIsShowNotificationsPopup((prev) => !prev);
     setIsShowProfilePopup(false);
   };
 
   const handleClickProfile = () => {
+    if (buttonProfileRef.current) {
+      const rect = buttonProfileRef.current.getBoundingClientRect();
+      setProfilePopupPos({
+        top: rect.bottom + 8, // 버튼 아래 간격
+        right: window.innerWidth - rect.right - 60, // 오른쪽 위치 계산
+      });
+    }
     setIsShowProfilePopup((prev) => !prev);
     setIsShowNotificationsPopup(false);
   };
@@ -61,31 +84,78 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     isShowNotificationsPopup
   );
 
+  interface Notification {
+    id: string;
+    message: string;
+    createdAt: string;
+    isRead: boolean;
+  }
+
+  ////////////////////////////알림 구현//////////////////////////// SSE
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `${process.env.NEXT_PUBLIC_API_URL}/notification`,
+      {
+        withCredentials: true,
+      }
+    );
+    eventSource.onmessage = (event) => {
+      const parsedData = JSON.parse(event.data);
+      //맨처음 알림은 10개 배열로 받아오고 그 이후 알람은 배열이 아니여서 처리가 필요함
+      const newNotifications = Array.isArray(parsedData.notification)
+        ? parsedData.notification
+        : [parsedData.notification];
+
+      setNotifications((prevNotifications) => [
+        ...newNotifications,
+        ...prevNotifications,
+      ]);
+    };
+
+    eventSource.onerror = () => {
+      console.error('SSE 연결 실패');
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
+  /////////////////////////////////////////////////////////////
+
   return (
-    <div className="flex items-center relative">
-      <IconAlarm onClick={handleClickAlarm} />
+    <div className="flex items-center relative overflow-visible">
+      <IconAlarm onClick={handleClickAlarm} ref={alarmButtonRef} />
       <UserProfile
         onClick={handleClickProfile}
         name={user.name}
         profileImage={user.profileImage}
+        ref={buttonProfileRef} // ✅ 위치 추적용 ref 전달
       />
       {isShowProfilePopup && (
-        <DropdownProfile
-          username={user.name}
-          role={user.role}
-          isOpen={isShowProfilePopup}
-          onClose={() => setIsShowProfilePopup(false)}
-          logOut={handleClickLogOut}
-          ref={popupProfileRef}
-        />
+        <Portal>
+          <DropdownProfile
+            username={user.name}
+            role={user.role}
+            isOpen={isShowProfilePopup}
+            onClose={() => setIsShowProfilePopup(false)}
+            logOut={handleClickLogOut}
+            ref={popupProfileRef}
+            position={profilePopupPos} // ✅ 위치 정보 전달
+          />
+        </Portal>
       )}
       {isShowNotificationsPopup && (
-        <DropdownNotification
-          isOpen={isShowNotificationsPopup}
-          notifications={[]}
-          onClose={() => setIsShowNotificationsPopup(false)}
-          ref={popupNotificationRef}
-        />
+        <Portal>
+          <DropdownNotification
+            isOpen={isShowNotificationsPopup}
+            notifications={notifications}
+            onClose={() => setIsShowNotificationsPopup(false)}
+            ref={popupNotificationRef}
+            position={notificationPopupPos} // ✅ 위치 전달
+          />
+        </Portal>
       )}
       <Image
         src={icMenu}

@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import ChipMovingType from '../atoms/ChipMovingType';
 import WorkerInfoBoxA from './WorkerInfoBoxA';
 
@@ -12,6 +13,7 @@ type Props = {
   reviewsAverage: number;
   reviewsCount: number;
   confirmedEstimateCount: number;
+  isResponsive?: boolean;
 };
 
 /**
@@ -32,7 +34,8 @@ type Props = {
  * @param {number} reviewsCount - 전체 리뷰 수
  * @param {number} favoritesCount - 찜한 사용자 수
  * @param {number} confirmedEstimateCount - 견적 확정 건수
- * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지 여부
+ * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지
+ * @param {boolean} isResponsive - 기본값:true, false면 반응형을 적용하지 않고, 크기를 sm으로 고정
  *
  * @example
  * <WorkerCardInSearch
@@ -46,6 +49,7 @@ type Props = {
  *   favoritesCount={130}
  *   confirmedEstimateCount={87}
  *   isFavorite={true}
+ *   isResponsive={false}
  * />
  */
 
@@ -60,16 +64,28 @@ function WorkerCardInSearch({
   favoritesCount,
   confirmedEstimateCount,
   isFavorite,
+  isResponsive = true,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl min-w-[327px] h-[188px] md:w-full lg:h-[230px] px-3.5 py-4 lg:px-6 lg:py-5 shadow-xs">
+    <div
+      className={clsx(
+        'flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl min-w-[327px] h-[188px]  px-3.5 py-4 shadow-xs',
+        isResponsive ? 'lg:px-6 lg:py-5 md:w-full lg:h-[230px]' : ''
+      )}
+    >
       <div className="flex gap-2.5">
         {services.map((service, index) => (
-          <ChipMovingType key={index} type={service} />
+          <ChipMovingType
+            key={index}
+            type={service}
+            isResponsive={isResponsive}
+          />
         ))}
       </div>
       {/* 기사 한줄 소개 */}
-      <div className="text-[14px] lg:text-2xl">{summary}</div>
+      <div className={clsx('text-[14px]', isResponsive ? 'lg:text-2xl' : '')}>
+        {summary}
+      </div>
       {/* 기사 소개 박스 */}
       <WorkerInfoBoxA
         profileImage={profileImage}
@@ -80,6 +96,7 @@ function WorkerCardInSearch({
         confirmedEstimateCount={confirmedEstimateCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
+        isResponsive={isResponsive}
       />
     </div>
   );

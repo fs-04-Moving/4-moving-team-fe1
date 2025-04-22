@@ -16,21 +16,13 @@ type Props = {
 function ChipEstimateRequestStatus({ type }: Props) {
   if (type === 'inactive') return null;
 
-  const config = {
-    active: {
-      text: '견적 대기',
-    },
-    confirmed: {
-      text: '견적 확정',
-    },
-  };
-
-  const { text } = config[type];
   return (
     <span
       className={`inline-flex items-center align-middle gap-0.5 rounded-sm text-[13px] lg:text-[16px] px-1.5 py-0.5 lg:py-1 font-semibold w-fit bg-[#F2F3F8] text-[#242945] `}
     >
-      <span className="leading-none relative top-[1px]">{text}</span>
+      <span className="leading-none relative top-[1px]">
+        {type === 'confirmed' ? '견적 확정' : '견적 대기'}
+      </span>
     </span>
   );
 }

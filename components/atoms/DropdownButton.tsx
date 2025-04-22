@@ -27,8 +27,24 @@ function DropdownButton<T extends string>({
   const isActive = status === 'active';
   const isDone = status === 'done';
 
+  // selectedValue의 길이에 따라 모바일/태블릿에서만 버튼 너비 클래스 결정
+  // 더 세밀하게 너비 값 조정
+  const mobileButtonWidthClass = clsx({
+    // 매우 짧은 텍스트 (1-3글자)
+    'min-w-[6rem]': selectedValue.length <= 3,
+
+    // 짧은 텍스트 (4-5글자)
+    'min-w-[7.5rem]': selectedValue.length > 3 && selectedValue.length <= 5,
+
+    // 중간 텍스트 (6-8글자)
+    'min-w-[8rem]': selectedValue.length > 5 && selectedValue.length <= 8,
+  });
+
   const defaultClassName = clsx(
-    'w-full flex items-center px-6 h-[54px] lg:h-16 border border-Primay-Blue-300 cursor-pointer rounded-2xl lg:text-lg font-semibold text-Primay-Blue-300'
+    'flex items-center justify-between px-4 h-[36px] border border-GrayScale-100 cursor-pointer rounded-lg font-medium text-Black-400',
+    // 모바일/태블릿에서는 동적 너비, PC에서는 원래 스타일로 적용
+    mobileButtonWidthClass,
+    'lg:w-full lg:h-16 lg:rounded-2xl'
   );
 
   const activeClassName = clsx({
@@ -44,11 +60,13 @@ function DropdownButton<T extends string>({
       className={clsx(defaultClassName, activeClassName, doneClassName)}
       onClick={onClick}
     >
-      <div className="w-full flex items-center justify-between">
-        <span>{selectedValue}</span>
+      <div className='w-full flex items-center justify-between'>
+        <span className='text-sm lg:text-lg lg:whitespace-normal'>
+          {selectedValue}
+        </span>
         <Image
           src={isActive ? icChevronDown : icChevronDownBlack}
-          alt="펼치기 아이콘"
+          alt='펼치기 아이콘'
           className={`w-6 lg:w-9 ${
             status === 'active'
               ? 'rotate-180 transition'

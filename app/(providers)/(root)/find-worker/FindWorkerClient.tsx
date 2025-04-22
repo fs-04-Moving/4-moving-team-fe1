@@ -1,12 +1,12 @@
 'use client';
 
-import LeftMenu from './(components)/LeftMenu';
+import { useFindWorkerQuery } from '@/hooks/useFindWorkerQuery';
 import { Worker } from '@/types/dtos/Worker.dto';
 import { useSearchParams } from 'next/navigation';
-import { useFindWorkerQuery } from '@/hooks/useFindWorkerQuery';
-import WorkerCardList from './(components)/WorkerCardList';
-import TopMenu from './(components)/TopMenu';
 import { useInView } from 'react-intersection-observer';
+import LeftMenu from './(components)/LeftMenu';
+import TopMenu from './(components)/TopMenu';
+import WorkerCardList from './(components)/WorkerCardList';
 
 type Props = {
   initialData: { list: Worker[]; totalCount: number };
@@ -26,9 +26,10 @@ function FindWorkerClient({ initialData }: Props) {
   const serviceArea = searchParams.get('serviceArea') || '';
   const serviceType = searchParams.get('serviceType') || '';
   const orderBy = searchParams.get('orderBy') || '';
+  const search = searchParams.get('search') || '';
 
   const queryParams = Object.fromEntries(
-    Object.entries({ serviceArea, serviceType, orderBy }).filter(
+    Object.entries({ serviceArea, serviceType, orderBy, search }).filter(
       ([, value]) => value !== ''
     )
   );
@@ -43,9 +44,9 @@ function FindWorkerClient({ initialData }: Props) {
   // }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="flex gap-28">
+    <div className="flex justify-center gap-28">
       <LeftMenu />
-      <section className="flex-1 min-w-0">
+      <section className="w-[327px] md:w-[600px] lg:w-[955px]">
         <TopMenu />
         <WorkerCardList
           workers={data?.pages.flatMap((p) => p.list) ?? []}
