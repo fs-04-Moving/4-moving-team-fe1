@@ -46,7 +46,7 @@ function FindWorkerClient({ initialData }: Props) {
   return (
     <div className="flex justify-center gap-28">
       <LeftMenu />
-      <section className="flex-1 w-[327px] md:max-w-[600px] lg:max-w-[955px]">
+      <section className="w-[327px] md:w-[600px] lg:w-[955px]">
         <TopMenu />
         <WorkerCardList
           workers={data?.pages.flatMap((p) => p.list) ?? []}
