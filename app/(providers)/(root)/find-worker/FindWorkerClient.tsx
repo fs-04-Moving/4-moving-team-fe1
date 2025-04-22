@@ -44,9 +44,9 @@ function FindWorkerClient({ initialData }: Props) {
   // }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <div className="flex gap-28">
+    <div className="flex justify-center gap-28">
       <LeftMenu />
-      <section className="flex-1 min-w-0">
+      <section className="flex-1 w-[327px] md:max-w-[600px] lg:max-w-[955px]">
         <TopMenu />
         <WorkerCardList
           workers={data?.pages.flatMap((p) => p.list) ?? []}
