@@ -6,6 +6,7 @@ const ROUTES = {
   CUSTOMER: {
     ROOT: '/customer', // 견적 요청
     ESTIMATES: {
+      ROOT: '/customer/estimates',
       DETAIL: (id: string) => `/customer/estimates/${id}`, // 견적 상세
       PENDING: '/customer/estimates/pending', // 내 견적 관리 - 대기 중인 견적
       RECEIVED: '/customer/estimates/received', // 내 견적 관리 - 받았던 견적
@@ -14,6 +15,7 @@ const ROUTES = {
     INFO: '/customer/info', // 고객 기본 정보
     PROFILE: '/customer/profile', // 고객 프로필
     REVIEWS: {
+      ROOT: '/customer/reviews',
       PENDING: '/customer/reviews/pending', // 작성 가능한 리뷰
       SUBMITTED: '/customer/reviews/submitted', // 내가 작성한 리뷰
     },
@@ -22,6 +24,7 @@ const ROUTES = {
     ROOT: '/worker', // 받은 요청
     DETAIL: (id: string) => `/worker/${id}`, // 기사님 상세
     ESTIMATES: {
+      ROOT: '/worker/estimates',
       REJECTED: '/worker/estimates/rejected', // 내 견적 관리 - 반려 요청
       SENDING: '/worker/estimates/sending', // 내 견적 관리 - 보낸 견적 조회
     },

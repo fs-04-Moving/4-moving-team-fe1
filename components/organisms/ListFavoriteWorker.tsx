@@ -1,6 +1,7 @@
 'use client';
 
 import favoriteApi from '@/api/favorite/favorite.api';
+import ROUTES from '@/constants/routes';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Label from '../atoms/Label';
@@ -20,7 +21,7 @@ function ListFavoriteWorker() {
   const router = useRouter();
 
   const handleClickCard = (workerId: string) => {
-    router.push(`/worker/${workerId}`);
+    router.push(ROUTES.WORKER.DETAIL(workerId));
   };
 
   if (isLoading) return <SkeletonFavoriteList />;

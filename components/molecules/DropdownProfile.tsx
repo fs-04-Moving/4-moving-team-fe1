@@ -24,6 +24,7 @@
 
 'use client';
 
+import ROUTES from '@/constants/routes';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -47,12 +48,12 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
     const router = useRouter();
 
     const handleClickFavorite = () => {
-      router.push('/customer/favorites');
+      router.push(ROUTES.CUSTOMER.FAVORITES);
       onClose();
     };
 
     const handleClickReview = () => {
-      router.push('/customer/reviews/pending');
+      router.push(ROUTES.CUSTOMER.REVIEWS.PENDING);
       onClose();
     };
 

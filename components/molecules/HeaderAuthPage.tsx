@@ -1,5 +1,6 @@
 'use client';
 
+import ROUTES from '@/constants/routes';
 import { Role } from '@/types/entities/user.entity';
 import Link from 'next/link';
 import LogoText from '../atoms/LogoText';
@@ -20,7 +21,7 @@ function HeaderAuthPage({ isSignUpPage, userType }: Props) {
   const text2: string =
     userType === 'customer' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
 
-  const pageLink: string = isSignUpPage ? '/auth/sign-up' : '/auth/log-in';
+  const pageLink: string = isSignUpPage ? ROUTES.SIGN_UP : ROUTES.LOG_IN;
   const linkQuery: string =
     userType === 'customer' ? '?userType=worker' : '?userType=customer';
 

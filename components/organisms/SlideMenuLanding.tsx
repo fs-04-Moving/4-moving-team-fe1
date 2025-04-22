@@ -1,5 +1,6 @@
 'use client';
 
+import ROUTES from '@/constants/routes';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import Link from 'next/link';
@@ -11,8 +12,8 @@ interface Props {
 
 export default function SlideMenuLanding({ isOpen, onClose }: Props) {
   const menuItems = [
-    { label: '기사님 찾기', href: '/find-worker' },
-    { label: '로그인', href: '/auth/log-in' },
+    { label: '기사님 찾기', href: ROUTES.FIND_WORKER },
+    { label: '로그인', href: ROUTES.LOG_IN },
   ];
 
   return (

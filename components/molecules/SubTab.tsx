@@ -1,3 +1,4 @@
+import ROUTES from '@/constants/routes';
 import { usePathname } from 'next/navigation';
 import TabMenu from '../atoms/TabMenu';
 
@@ -6,20 +7,20 @@ function SubTab() {
 
   let tabs: { label: string; route: string }[] = [];
 
-  if (pathName.startsWith('/customer/estimates')) {
+  if (pathName.startsWith(ROUTES.CUSTOMER.ESTIMATES.ROOT)) {
     tabs = [
-      { label: '대기 중인 견적', route: '/customer/estimates/pending' },
-      { label: '받았던 견적', route: '/customer/estimates/received' },
+      { label: '대기 중인 견적', route: ROUTES.CUSTOMER.ESTIMATES.PENDING },
+      { label: '받았던 견적', route: ROUTES.CUSTOMER.ESTIMATES.RECEIVED },
     ];
-  } else if (pathName.startsWith('/worker/estimates')) {
+  } else if (pathName.startsWith(ROUTES.WORKER.ESTIMATES.ROOT)) {
     tabs = [
-      { label: '보낸 견적 조회', route: '/worker/estimates/sending' },
-      { label: '반려 요청', route: '/worker/estimates/rejected' },
+      { label: '보낸 견적 조회', route: ROUTES.WORKER.ESTIMATES.SENDING },
+      { label: '반려 요청', route: ROUTES.WORKER.ESTIMATES.REJECTED },
     ];
-  } else if (pathName.startsWith('/customer/reviews')) {
+  } else if (pathName.startsWith(ROUTES.CUSTOMER.REVIEWS.ROOT)) {
     tabs = [
-      { label: '작성 가능한 리뷰', route: '/customer/reviews/pending' },
-      { label: '내가 작성한 리뷰', route: '/customer/reviews/submitted' },
+      { label: '작성 가능한 리뷰', route: ROUTES.CUSTOMER.REVIEWS.PENDING },
+      { label: '내가 작성한 리뷰', route: ROUTES.CUSTOMER.REVIEWS.SUBMITTED },
     ];
   }
 
