@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import reviewsApi from '@/api/review/review.api';
+import reviewsApi from '@/api/review/writableReview.api';
 import { Review } from '@/types/dtos/review.dto';
 
 const usePendingReviews = () => {

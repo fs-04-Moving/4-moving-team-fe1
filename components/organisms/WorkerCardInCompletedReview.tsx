@@ -96,7 +96,7 @@ function WorkerCardInCompletedReview({
           </div>
           <div className="hidden lg:block">
             {/* 이 컴포넌트 다시보기 */}
-            <ButtonStarRating initialRating={rating} />
+            <ButtonStarRating initialRating={rating} disabled={true}/>
           </div>
         </div>
       </div>

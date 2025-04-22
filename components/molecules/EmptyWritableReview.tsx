@@ -1,20 +1,13 @@
 import React from 'react';
 import ImgEmptyReview from '@/assets/images/img-empty-review.svg';
 import Image from 'next/image';
-import ButtonSolid from '../atoms/ButtonSolid';
-import Link from 'next/link';
 
 function EmptyReview() {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-[253px] h-[200px] flex flex-col items-center justify-center">
         <Image src={ImgEmptyReview} alt="리뷰없음" />
-        <h1 className="mt-4 text-center">아직 등록된 리뷰가 없어요</h1>
-        <Link href="/customer/reviews/pending" passHref>
-          <ButtonSolid>
-            리뷰 작성하러 가기
-          </ButtonSolid>
-        </Link>
+        <h1 className="mt-4 text-center">작성 가능한 리뷰가 없어요</h1>
       </div>
     </div>
   );
