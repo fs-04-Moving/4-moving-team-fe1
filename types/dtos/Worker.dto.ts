@@ -1,4 +1,5 @@
 export interface Worker {
+  id: number;
   workerId: number;
   profileImage: string;
   experience: number;

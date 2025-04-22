@@ -81,7 +81,7 @@ function TopMenu() {
   return (
     <div className="flex flex-col items-end gap-6 mb-8">
       <div className="w-full flex justify-between lg:justify-end">
-        <div className="flex gap-3 w-[300px] lg:hidden">
+        <div className="flex gap-3 w-[300px] pt-4 lg:hidden">
           <span className="w-[90px] z-10">
             <DropdownArea onSelect={handleAreaSelect} />
           </span>
@@ -89,7 +89,7 @@ function TopMenu() {
             <DropdownService onSelect={handleServiceSelect} />
           </span>
         </div>
-        <span className="z-10">
+        <span className="z-10 pt-4 lg:pt-0">
           <DropdownSort
             onChange={handleOrderBySelect}
             options={[

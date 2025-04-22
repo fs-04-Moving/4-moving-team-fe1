@@ -20,7 +20,7 @@ function WorkerCardList({ workers, isLoading }: Props) {
         worker ? (
           <Link
             key={worker.workerId}
-            href={`${ROUTES.FIND_WORKER}/${worker.workerId}`}
+            href={`${ROUTES.WORKER.ROOT}/${worker.workerId}`}
           >
             <WorkerCardInSearch key={worker.workerId} {...worker} />
           </Link>

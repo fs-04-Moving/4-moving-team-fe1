@@ -27,7 +27,7 @@ function DropdownService({ onSelect }: Props) {
   };
 
   return (
-    <div className="w-full pb-7">
+    <div className="w-full">
       <Dropdown
         options={options}
         defaultValue="서비스"

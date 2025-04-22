@@ -5,6 +5,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useFavoriteWorkersQuery } from '@/hooks/useFavoriteWorkersQuery';
 import WorkerCardInSearch from '@/components/organisms/WorkerCardInSearch';
+import Link from 'next/link';
+import ROUTES from '@/constants/routes';
 
 function FilterArea() {
   const router = useRouter();
@@ -79,11 +81,13 @@ function FilterArea() {
             {data &&
               !isLoading &&
               data.list.map((worker, index) => (
-                <WorkerCardInSearch
-                  key={index}
-                  {...worker}
-                  isResponsive={false}
-                />
+                <Link key={index} href={`${ROUTES.WORKER.ROOT}/${worker.id}`}>
+                  <WorkerCardInSearch
+                    key={index}
+                    {...worker}
+                    isResponsive={false}
+                  />
+                </Link>
               ))}
           </div>
         )}
