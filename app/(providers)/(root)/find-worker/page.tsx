@@ -84,7 +84,7 @@ export const mockDriverList = [
 ];
 
 async function FindWorkerPage() {
-  const workers = await profilesApi.getWorkerProfiles({ pageSize: 4 });
+  const workers = await profilesApi.getWorkerProfiles({ pageSize: 5 });
 
   return (
     <main className="mx-auto max-w-9/12 px-4">
