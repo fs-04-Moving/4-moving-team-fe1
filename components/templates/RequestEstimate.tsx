@@ -217,7 +217,11 @@ function RequestEstimate() {
           진행 중인 이사 완료 후 새로운 견적을 받아보세요.
         </p>
         <div className="w-[196px] mt-8">
-          <ButtonSolid>받은 견적 보러가기</ButtonSolid>
+          <ButtonSolid
+            onClick={() => router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING)}
+          >
+            받은 견적 보러가기
+          </ButtonSolid>
         </div>
       </div>
     </div>
