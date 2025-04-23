@@ -22,6 +22,7 @@ function FindWorkerClient({ initialData }: Props) {
     },
   });
   const searchParams = useSearchParams();
+  console.log('initialData', initialData);
 
   const serviceArea = searchParams.get('serviceArea') || '';
   const serviceType = searchParams.get('serviceType') || '';

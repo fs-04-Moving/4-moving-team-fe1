@@ -32,11 +32,8 @@
 // ----------- token에 role과 hasProfile담아서 사용 ----------- //
 
 import { NextRequest } from 'next/server';
-import {
-  decodeJWT,
-  getAccessTokenFromRefreshByRefreshToken,
-  JwtPayload,
-} from './jwtUtils';
+import { JwtPayload } from './getUserFromRequestLite';
+import { decodeJWT, getAccessTokenFromRefreshByRefreshToken } from './jwtUtils';
 
 export async function getUserFromRequest(req: NextRequest) {
   const refreshToken = req.cookies.get('refreshToken');

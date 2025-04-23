@@ -65,7 +65,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
       const rect = buttonProfileRef.current.getBoundingClientRect();
       setProfilePopupPos({
         top: rect.bottom + 8, // 버튼 아래 간격
-        right: window.innerWidth - rect.right - 60, // 오른쪽 위치 계산
+        right: window.innerWidth - rect.right - 10, // 오른쪽 위치 계산
       });
     }
     setIsShowProfilePopup((prev) => !prev);
@@ -131,7 +131,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
         onClick={handleClickProfile}
         name={user.name}
         profileImage={user.profileImage}
-        ref={buttonProfileRef} // ✅ 위치 추적용 ref 전달
+        ref={buttonProfileRef} // 위치 추적용 ref 전달
       />
       {isShowProfilePopup && (
         <Portal>
@@ -142,7 +142,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
             onClose={() => setIsShowProfilePopup(false)}
             logOut={handleClickLogOut}
             ref={popupProfileRef}
-            position={profilePopupPos} // ✅ 위치 정보 전달
+            position={profilePopupPos} // 위치 정보 전달
           />
         </Portal>
       )}
@@ -153,7 +153,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
             notifications={notifications}
             onClose={() => setIsShowNotificationsPopup(false)}
             ref={popupNotificationRef}
-            position={notificationPopupPos} // ✅ 위치 전달
+            position={notificationPopupPos} // 위치 전달
           />
         </Portal>
       )}
