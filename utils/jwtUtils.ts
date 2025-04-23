@@ -1,3 +1,4 @@
+import { API_URL } from '@/constants/env';
 import { cookies } from 'next/headers';
 
 /**
@@ -77,16 +78,13 @@ export async function getAccessTokenFromRefresh(): Promise<string | null> {
   }
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Cookie: `refreshToken=${refreshToken}`,
-        },
-      }
-    );
+    const res = await fetch(`${API_URL}/auth/refresh-token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Cookie: `refreshToken=${refreshToken}`,
+      },
+    });
 
     if (!res.ok) {
       // 실제로 refresh-token이 유효하지 않을 때만 에러 출력

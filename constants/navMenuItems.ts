@@ -4,7 +4,7 @@ import ROUTES from './routes';
 
 interface NavMenuItemData {
   label: string;
-  href?: string; // ✅ 선택적으로 추가
+  href?: string;
   condition: (
     role: Role | null,
     hasProfile: boolean,

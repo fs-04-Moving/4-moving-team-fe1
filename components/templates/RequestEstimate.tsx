@@ -2,14 +2,17 @@
 
 import estimateRequestApi from '@/api/estimate-request/estimateRequest.api';
 import icRequestDisable from '@/assets/images/ic-request-disable.svg';
+import ROUTES from '@/constants/routes';
 import { useAuth } from '@/contexts/AuthContext';
 import { CreateEstimateRequestDto } from '@/types/dtos/estimateRequest.dto';
 import { serviceTypeDetailObject } from '@/types/entities/estimate.entity';
-import { ServiceType } from '@/types/move.type';
-import { useMutation } from '@tanstack/react-query';
+import { AreaType, ServiceType } from '@/types/move.type';
+import { getAreaKeyFromString } from '@/utils/getAreaKeyFromString';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ButtonSolid from '../atoms/ButtonSolid';
 import ChatBubbleTextLeft from '../atoms/ChatBubbleTextLeft';
@@ -28,26 +31,43 @@ function RequestEstimate() {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [departure, setDeparture] = useState('');
   const [destination, setDestination] = useState('');
+  const [departureArea, setDepartureArea] = useState<
+    keyof AreaType | undefined
+  >();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const { user } = useAuth();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   console.log('estimate request user', user);
 
   const { mutate: createEstimateRequest } = useMutation({
     mutationFn: (data: CreateEstimateRequestDto) =>
       estimateRequestApi.createEstimateRequest(data),
+    onSuccess: () => {
+      router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING);
+      // TODO: 내 견적 관리의 '대기 중인 견적' 쿼리 무효화 함수 추가
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['me'] });
+      }, 1000);
+    },
+    onError: () => {
+      setIsProcessing(false);
+    },
   });
 
   const handleSubmit = () => {
     if (!service || !date || !departure || !destination) return;
 
+    if (!departureArea) return;
     const requestData: CreateEstimateRequestDto = {
       serviceType: service,
       movingDate: date,
-      departureArea: 'busan',
+      departureArea: departureArea,
       departure,
       destination,
     };
-
+    setIsProcessing(true);
     createEstimateRequest(requestData);
   };
 
@@ -69,6 +89,13 @@ function RequestEstimate() {
 
   const handleClickEditDate = () => {
     setIsEditingDate(true);
+  };
+
+  const handleSetDeparture = (addr: string) => {
+    setDeparture(addr);
+    const tempDepartureArea = getAreaKeyFromString(addr);
+    if (!tempDepartureArea) return;
+    setDepartureArea(tempDepartureArea);
   };
 
   useEffect(() => {
@@ -137,9 +164,11 @@ function RequestEstimate() {
         <ChatBubbleAddress
           departure={departure}
           destination={destination}
-          onChangeDeparture={setDeparture}
+          onChangeDeparture={handleSetDeparture}
+          // onChangeDeparture={setDeparture}
           onChangeDestination={setDestination}
           onSubmit={handleSubmit}
+          isProcessing={isProcessing}
         />
       </div>
     </div>
@@ -177,18 +206,22 @@ function RequestEstimate() {
           <Label intent="md">견적 요청</Label>
         </div>
       </div>
-      <div className="flex flex-col items-center mt-[194px]">
+      <div className="flex flex-col items-center mt-[127px] lg:mt-[194px]">
         <Image
           src={icRequestDisable}
           alt="견적 요청 불가"
           className="w-[244px]"
         />
-        <p className="mt-16 text-xl text-[#999999] text-center">
+        <p className="mt-8 lg:mt-16 text-sm lg:text-xl text-[#999999] text-center">
           현재 진행 중인 이사 견적이 있어요! <br />
           진행 중인 이사 완료 후 새로운 견적을 받아보세요.
         </p>
         <div className="w-[196px] mt-8">
-          <ButtonSolid>받은 견적 보러가기</ButtonSolid>
+          <ButtonSolid
+            onClick={() => router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING)}
+          >
+            받은 견적 보러가기
+          </ButtonSolid>
         </div>
       </div>
     </div>

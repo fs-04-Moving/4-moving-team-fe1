@@ -1,3 +1,4 @@
+import { API_URL } from '@/constants/env';
 import { client, errorHandler } from '../client';
 
 // 내 정보 조회
@@ -22,7 +23,7 @@ const getUserMe = async () => {
  * @returns
  */
 export async function getUserMeServer(accessToken: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/me`, {
+  const res = await fetch(`${API_URL}/user/me`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${accessToken}`,

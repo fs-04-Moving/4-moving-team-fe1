@@ -1,15 +1,9 @@
 import profilesApi from '@/api/profiles/profiles.api';
-import { Worker, WorkerSearchParams } from '@/types/dtos/Worker.dto';
+import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 // 기사리스트 불러오는 hooks
-export function useFindWorkerQuery(
-  params: WorkerSearchParams,
-  initialData: {
-    list: Worker[];
-    totalCount: number;
-  }
-) {
+export function useFindWorkerQuery(params: WorkerSearchParams) {
   return useInfiniteQuery({
     queryKey: ['workers', params],
     queryFn: ({ pageParam = 1 }: { pageParam: number }) =>
@@ -25,9 +19,5 @@ export function useFindWorkerQuery(
         : undefined;
     },
     initialPageParam: 1,
-    placeholderData: () => ({
-      pages: [initialData],
-      pageParams: [1],
-    }),
   });
 }
