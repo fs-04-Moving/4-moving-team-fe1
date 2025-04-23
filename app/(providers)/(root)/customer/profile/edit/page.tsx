@@ -1,5 +1,5 @@
-function CustomerProfileEidtPage() {
-  return <div>CustomerProfileEidtPage</div>;
+function CustomerProfileEditPage() {
+  return <div>CustomerProfileEditPage</div>;
 }
 
-export default CustomerProfileEidtPage;
+export default CustomerProfileEditPage;

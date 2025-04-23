@@ -1,7 +1,8 @@
+import { NEXT_PUBLIC_API_URL } from '@/constants/env';
 import axios from 'axios';
 import authApi from './auth/auth.api';
 
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
+const baseURL = NEXT_PUBLIC_API_URL;
 
 export const client = axios.create({
   baseURL,
@@ -89,35 +90,39 @@ client.interceptors.response.use(
 export function errorHandler(error: unknown) {
   console.log('AxiosError', error);
 
-  if (axios.isAxiosError(error) && error.response) {
-    const status = error.response.status;
-    const data = error.response.data;
+  if (axios.isAxiosError(error)) {
+    if (error.response) {
+      const status = error.response.status;
+      const data = error.response.data;
 
-    // 인증 관련 에러는 부드럽게 무시
-    if (
-      status === 401 &&
-      typeof data === 'string' &&
-      data.includes('No refresh token')
-    ) {
-      console.warn('No refresh token. Skipping silently.');
-      return null;
-    }
+      // 인증 관련 에러는 무시
+      if (
+        status === 401 &&
+        typeof data === 'string' &&
+        data.includes('No refresh token')
+      ) {
+        console.warn('No refresh token. Skipping silently.');
+        return null;
+      }
 
-    if (status === 403) {
-      console.warn('Forbidden. Maybe token expired.');
-      return null;
-    }
+      if (status === 403) {
+        console.warn('Forbidden. Maybe token expired.');
+        return null;
+      }
 
-    // 기타 에러는 에러 메세지 포함해서 throw
-    throw new Error(
-      `${status}: ${typeof data === 'string' ? data : JSON.stringify(data)}`
-    );
-  } else {
-    // Axios가 아니거나 응답이 없는 경우
-    if (error instanceof Error) {
-      throw new Error(error.message);
+      // 기타 에러
+      throw new Error(
+        `${status}: ${typeof data === 'string' ? data : JSON.stringify(data)}`
+      );
     } else {
-      throw new Error('Unknown error occurred');
+      // 네트워크 에러 등으로 response가 없는 경우
+      throw new Error(`Network or CORS error: ${error.message}`);
     }
   }
+
+  if (error instanceof Error) {
+    throw new Error(error.message);
+  }
+
+  throw new Error('Unknown error occurred');
 }

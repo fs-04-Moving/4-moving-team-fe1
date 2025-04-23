@@ -112,7 +112,7 @@ const DropdownNotification = forwardRef<
                 )}
               </div>
               <p className="text-sm text-GrayScale-400">
-                {/* {timeAgo(notification.createdAt)} */}
+                {timeAgo(notification.createdAt)}
               </p>
             </div>
           ))
