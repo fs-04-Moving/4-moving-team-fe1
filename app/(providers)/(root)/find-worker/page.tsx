@@ -1,9 +1,8 @@
-import profilesApi from '@/api/profiles/profiles.api';
-import FindWorkerClient from './FindWorkerClient';
+import profilesApi from "@/api/profiles/profiles.api";
+import FindWorkerClient from "./FindWorkerClient";
 
 async function FindWorkerPage() {
   const workers = await profilesApi.getWorkerProfiles({ pageSize: 5 });
-
   return (
     <main>
       <div className="hidden lg:flex justify-center">
