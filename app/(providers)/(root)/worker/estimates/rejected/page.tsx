@@ -1,12 +1,10 @@
-'use client';
-
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { cookies } from 'next/headers';
 import axios from 'axios';
 
 import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
-import Pagination from '@/components/molecules/Pagination';
+import PaginationWrapper from '@/components/organisms/PaginationWrapper';
 import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
+import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -22,16 +20,15 @@ type Estimate = {
 };
 
 type RejectEstimatesResponse = {
-  estimates: Estimate[];
+  list: Estimate[];
   totalCount: number;
 };
 
-const getRejectEstimates = async (
+async function getRejectEstimatesSSR(
   page: number,
-  pageSize: number
-): Promise<RejectEstimatesResponse> => {
-  const accessToken = localStorage.getItem('accessToken');
-
+  pageSize: number,
+  accessToken: string
+): Promise<RejectEstimatesResponse> {
   const res = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/estimate/reject`,
     {
@@ -43,28 +40,34 @@ const getRejectEstimates = async (
     }
   );
   return res.data;
-};
+}
 
-function RejectedEstimatesPage() {
-  const [currentPage, setCurrentPage] = useState(1);
+export default async function RejectedEstimatesPage({
+  searchParams,
+}: {
+  searchParams: { page?: string | null };
+}) {
+  const page = Number(searchParams?.page ?? '1');
+  const pageSize = ITEMS_PER_PAGE;
 
-  const { data, isLoading, isError } = useQuery<RejectEstimatesResponse, Error>(
-    {
-      queryKey: ['rejectEstimates', currentPage],
-      queryFn: () => getRejectEstimates(currentPage, ITEMS_PER_PAGE),
-    }
-  );
+  let accessToken = await getAccessTokenFromRefresh();
+  if (!accessToken) return <div>🔐 로그인 필요</div>;
 
-  if (isLoading) return <div>불러오는 중...</div>;
-  if (isError || !data || !data.estimates) return <div>오류가 발생했어요.</div>;
+  let data: RejectEstimatesResponse;
+  try {
+    data = await getRejectEstimatesSSR(page, pageSize, accessToken);
+  } catch (e) {
+    console.error('데이터 로드 실패', e);
+    return <div>데이터 로드 실패</div>;
+  }
 
-  const totalPages = Math.ceil(data.totalCount / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(data.totalCount / pageSize);
 
   return (
     <ProtectedPageWrapper>
       <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[24px] md:gap-y-[32px] lg:gap-y-[48px] w-full max-w-[1400px] justify-items-center">
-          {data.estimates.map((card, index) => (
+          {data.list.map((card, index) => (
             <div
               key={index}
               className="w-[328px] h-[192px] md:w-[600px] md:h-[164px] lg:w-[688px] lg:h-[216px]"
@@ -78,15 +81,12 @@ function RejectedEstimatesPage() {
           ))}
         </div>
 
-        <Pagination
-          currentPage={currentPage}
+        <PaginationWrapper
+          currentPage={page}
           totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
           className="mt-2"
         />
       </div>
     </ProtectedPageWrapper>
   );
 }
-
-export default RejectedEstimatesPage;
