@@ -1,18 +1,13 @@
 'use client';
 
 import { useFindWorkerQuery } from '@/hooks/useFindWorkerQuery';
-import { Worker } from '@/types/dtos/Worker.dto';
 import { useSearchParams } from 'next/navigation';
 import { useInView } from 'react-intersection-observer';
 import LeftMenu from './(components)/LeftMenu';
 import TopMenu from './(components)/TopMenu';
 import WorkerCardList from './(components)/WorkerCardList';
 
-type Props = {
-  initialData: { list: Worker[]; totalCount: number };
-};
-
-function FindWorkerClient({ initialData }: Props) {
+function FindWorkerClient() {
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {
@@ -35,8 +30,8 @@ function FindWorkerClient({ initialData }: Props) {
   );
 
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFindWorkerQuery(queryParams, initialData);
-
+    useFindWorkerQuery(queryParams);
+  console.log('[CSR] 클라이언트에서 받은 데이터:', data);
   // useEffect(() => {
   //   if (inView && hasNextPage && !isFetchingNextPage) {
   //     fetchNextPage();
