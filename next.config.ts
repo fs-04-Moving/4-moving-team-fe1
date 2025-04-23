@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
     remotePatterns: [
       {
@@ -11,10 +10,26 @@ const nextConfig: NextConfig = {
         pathname: '/static/**',
         search: '',
       },
+      {
+        protocol: 'http',
+        hostname: '54.180.2.174',
+        pathname: '/static/**',
+      },
     ],
   },
   env: {
+    // 클라이언트에 노출할 변수만 등록하므로 API_URL은 등록할 필요없음
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://54.180.2.174/:path*',
+        // destination: 'http://localhost:5050/:path*',
+      },
+    ];
   },
 };
 

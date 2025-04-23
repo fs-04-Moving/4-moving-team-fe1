@@ -11,17 +11,6 @@ const PUBLIC_ROUTES = [
   ROUTES.FIND_WORKER,
 ];
 const PROFILE_ROUTES = [ROUTES.CUSTOMER.PROFILE, ROUTES.WORKER.PROFILE];
-// 테스트 라우트 임시 등록
-// TODO: 추후 삭제
-const TEST_ROUTES = [
-  '/test/jhm',
-  '/test/jjh',
-  '/test/kem',
-  '/test/khj',
-  '/test/khju',
-  '/test/kjy',
-  '/test/usm',
-];
 
 /**
  * 라우트 리다이렉트 미들웨어
@@ -40,11 +29,6 @@ export async function middleware(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
   console.log('🧭 pathname:', pathname);
-
-  //TODO 추후 삭제 -> 테스트 라우트: 로그인 여부와 관계없이 항상 허용
-  if (TEST_ROUTES.includes(pathname)) {
-    return NextResponse.next();
-  }
 
   // 1. 오픈 라우트 (로그인 여부 관계없이 접근 허용)
   if (OPEN_ROUTES.includes(pathname)) {
@@ -113,5 +97,5 @@ export async function middleware(req: NextRequest) {
  * matcher 설정 (정적 리소스 제외)
  */
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
 };

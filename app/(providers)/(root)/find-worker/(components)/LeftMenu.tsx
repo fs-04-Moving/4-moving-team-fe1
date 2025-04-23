@@ -16,8 +16,6 @@ function FilterArea() {
 
   const { data, isLoading } = useFavoriteWorkersQuery();
 
-  console.log('data', data);
-
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);
 
