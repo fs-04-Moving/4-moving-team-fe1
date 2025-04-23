@@ -29,25 +29,43 @@ export interface FormProfileInput {
   description: string;
 }
 
-function FormProfileWorker() {
+interface FormProfileWorkerProps {
+  initialProfile?: {
+    profileImage?: string;
+    nickname: string;
+    experience: string;
+    summary: string;
+    description: string;
+    services: ServiceTypeEng[];
+    serviceAreas: Area[];
+  };
+}
+
+function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
     defaultValues: {
       profileImage: null,
-      nickname: '',
-      experience: '',
-      summary: '',
-      description: '',
+      nickname: initialProfile?.nickname ?? '',
+      experience: initialProfile?.experience ?? '',
+      summary: initialProfile?.summary ?? '',
+      description: initialProfile?.description ?? '',
     },
     mode: 'onBlur',
     resolver: zodResolver(createWorkerProfileValiation),
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
-  const [serviceAreas, setServiceAreas] = useState<Area[]>(['seoul']);
+  const [services, setServices] = useState<ServiceTypeEng[]>(
+    initialProfile?.services ?? ['smallMove']
+  );
+  const [serviceAreas, setServiceAreas] = useState<Area[]>(
+    initialProfile?.serviceAreas ?? ['seoul']
+  );
 
-  const { mutate: createWorkerProfile } = useCreateProfileMutation(
-    profilesApi.createWorkerProfile
+  const { mutate: submitProfile } = useCreateProfileMutation(
+    initialProfile
+      ? profilesApi.updateWorkerProfile
+      : profilesApi.createWorkerProfile
   );
 
   const handleClickStart = (inputData: FormProfileInput) => {
@@ -57,7 +75,7 @@ function FormProfileWorker() {
       services,
       serviceAreas,
     };
-    createWorkerProfile(data);
+    submitProfile(data);
   };
 
   const isEnabledButton =
@@ -72,7 +90,10 @@ function FormProfileWorker() {
       className="lg:flex lg:gap-18"
     >
       <div className="w-full">
-        <GroupProfileImageInput control={control} />
+        <GroupProfileImageInput
+          control={control}
+          defaultImageUrl={initialProfile?.profileImage}
+        />
         <GroupNicknameInput control={control} />
         <GroupExperienceInput control={control} />
         <GroupSummaryInput control={control} />
@@ -94,7 +115,7 @@ function FormProfileWorker() {
           multipleSelect
         />
         <ButtonSolid disabled={!isEnabledButton}>
-          {isProcessing ? <Loader /> : '시작하기'}
+          {isProcessing ? <Loader /> : initialProfile ? '수정하기' : '시작하기'}
         </ButtonSolid>
       </div>
     </form>

@@ -1,5 +1,11 @@
+import ProfileWorkerEdit from '@/components/templates/ProfileWorkerEdit';
+
 function WorkerProfileEditPage() {
-  return <div>WorkerProfileEditPage</div>;
+  return (
+    <div className="flex justify-center">
+      <ProfileWorkerEdit />
+    </div>
+  );
 }
 
 export default WorkerProfileEditPage;

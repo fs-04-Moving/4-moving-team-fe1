@@ -19,15 +19,27 @@ export interface FormProfileInput {
   profileImage: File | null;
 }
 
-function FormProfileCustomer() {
+interface FormProfileCustomerProps {
+  initialProfile?: {
+    profileImage?: string;
+    services: ServiceTypeEng[];
+    livingArea: Area;
+  };
+}
+
+function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
     defaultValues: { profileImage: null },
     mode: 'onChange',
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
-  const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
-  const [livingArea, setLivingArea] = useState<Area>('seoul');
+  const [services, setServices] = useState<ServiceTypeEng[]>(
+    initialProfile?.services ?? ['smallMove']
+  );
+  const [livingArea, setLivingArea] = useState<Area>(
+    initialProfile?.livingArea ?? 'seoul'
+  );
 
   const handleRegionSelect = (region: keyof AreaType) => {
     setLivingArea(region);
@@ -36,8 +48,10 @@ function FormProfileCustomer() {
   const isEnabledButton =
     formState.isValid && services.length !== 0 && !!livingArea && !isProcessing;
 
-  const { mutate: createCustomerProfile } = useCreateProfileMutation(
-    profilesApi.createCustomerProfile
+  const { mutate: submitProfile } = useCreateProfileMutation(
+    initialProfile
+      ? profilesApi.updateCustomerProfile
+      : profilesApi.createCustomerProfile
   );
 
   const handleClickStart = (inputData: FormProfileInput) => {
@@ -47,12 +61,15 @@ function FormProfileCustomer() {
       services,
       livingArea,
     };
-    createCustomerProfile(data);
+    submitProfile(data);
   };
 
   return (
     <form onSubmit={handleSubmit(handleClickStart)}>
-      <GroupProfileImageInput control={control} />
+      <GroupProfileImageInput
+        control={control}
+        defaultImageUrl={initialProfile?.profileImage}
+      />
       <GroupServiceTypeSelect
         services={services}
         setServices={setServices}
@@ -65,7 +82,7 @@ function FormProfileCustomer() {
         onRegionSelect={handleRegionSelect}
       />
       <ButtonSolid disabled={!isEnabledButton}>
-        {isProcessing ? <Loader /> : '시작하기'}
+        {isProcessing ? <Loader /> : initialProfile ? '수정하기' : '시작하기'}
       </ButtonSolid>
     </form>
   );
