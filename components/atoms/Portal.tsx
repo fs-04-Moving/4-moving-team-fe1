@@ -1,4 +1,3 @@
-// components/common/Portal.tsx
 'use client';
 
 import { ReactNode, useEffect, useState } from 'react';

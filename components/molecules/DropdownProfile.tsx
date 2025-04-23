@@ -47,12 +47,12 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
   ) {
     const router = useRouter();
 
-    const handleClickFavorite = () => {
+    const handleClickMoveToCustomerFavorites = () => {
       router.push(ROUTES.CUSTOMER.FAVORITES);
       onClose();
     };
 
-    const handleClickReview = () => {
+    const handleClickMoveToCustomerReviews = () => {
       router.push(ROUTES.CUSTOMER.REVIEWS.PENDING);
       onClose();
     };
@@ -60,6 +60,21 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
     // 로그아웃 처리
     const handleClickLogout = () => {
       logOut();
+    };
+
+    const handleClickMoveToWorkerMypage = () => {
+      router.push(ROUTES.WORKER.MY_PAGE);
+      onClose();
+    };
+
+    const handleClickMoveToCustomerProfileEdit = () => {
+      router.push(ROUTES.CUSTOMER.PROFILE_EDIT);
+      onClose();
+    };
+
+    const handleClickMoveToWorkerProfileEdit = () => {
+      router.push(ROUTES.WORKER.PROFILE_EDIT);
+      onClose();
     };
 
     if (!isOpen) return null;
@@ -89,25 +104,40 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
           {role === 'customer' ? (
             // 고객용 메뉴
             <>
-              <Link href="/mypage/profile" className={menuItemClass}>
+              <div
+                className={menuItemClass}
+                onClick={handleClickMoveToCustomerProfileEdit}
+              >
                 프로필 수정
-              </Link>
-              <div className={menuItemClass} onClick={handleClickFavorite}>
+              </div>
+              <div
+                className={menuItemClass}
+                onClick={handleClickMoveToCustomerFavorites}
+              >
                 찜한 기사님
               </div>
-              <div className={menuItemClass} onClick={handleClickReview}>
+              <div
+                className={menuItemClass}
+                onClick={handleClickMoveToCustomerReviews}
+              >
                 이사 리뷰
               </div>
             </>
           ) : (
             // 기사님용 메뉴
             <>
-              <Link href="/worker/profile" className={menuItemClass}>
+              <div
+                className={menuItemClass}
+                onClick={handleClickMoveToWorkerProfileEdit}
+              >
                 프로필 수정
-              </Link>
-              <Link href="/worker/mypage" className={menuItemClass}>
+              </div>
+              <div
+                className={menuItemClass}
+                onClick={handleClickMoveToWorkerMypage}
+              >
                 마이페이지
-              </Link>
+              </div>
               <Link href="/worker/quotes" className={menuItemClass}>
                 받은 견적
               </Link>
