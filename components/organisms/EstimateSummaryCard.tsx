@@ -10,6 +10,7 @@ type Props = {
   departure: string;
   destination: string;
   serviceType: string;
+  status: 'confirmed' | 'assigned' | 'rejected';
 };
 
 export default function EstimateSummaryCard({
