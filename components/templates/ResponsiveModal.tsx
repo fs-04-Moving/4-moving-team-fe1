@@ -1,3 +1,5 @@
+//ResponsiveModal.tsx
+
 "use client";
 
 import React from "react";
@@ -28,7 +30,7 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
             className="fixed inset-0 z-40 bg-gray-300/30 backdrop-blur-[1px] transition-all duration-300"
           />
 
-          {/* sm이 아닐때, 일반적인 모달 */}
+          {/* mobile에서 w-[327px] 이하일 때 아래에서 위 적용, 그 외는 일반 모달 */}
           <motion.div
             key="modal"
             initial={{ opacity: 0, y: "100%" }}
@@ -37,12 +39,13 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={`
               fixed z-50 bg-white p-6
-              ${width} ${height} 
+              ${width} ${height}
               bottom-0 left-0
               sm:w-[400px] sm:top-1/2 sm:left-1/2 sm:bottom-auto
               sm:translate-x-[-50%] sm:translate-y-[-50%]
               sm:rounded-2xl sm:shadow-xl
               rounded-t-3xl
+              xs:w-[327px] xs:bottom-0 xs:left-0 xs:translate-x-0 xs:translate-y-[-100%] xs:fixed
             `}
           >
             {children}
