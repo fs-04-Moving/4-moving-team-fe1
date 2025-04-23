@@ -1,9 +1,11 @@
 import ButtonSolid from '../atoms/ButtonSolid';
 import InputAddress from '../atoms/InputAddress';
+import Loader from '../atoms/Loader';
 
 interface Props {
   departure: string;
   destination: string;
+  isProcessing: boolean;
   onChangeDeparture: (addr: string) => void;
   onChangeDestination: (addr: string) => void;
   onSubmit: () => void;
@@ -16,6 +18,7 @@ interface Props {
 function ChatBubbleAddress({
   departure,
   destination,
+  isProcessing = false,
   onChangeDeparture,
   onChangeDestination,
   onSubmit,
@@ -37,7 +40,9 @@ function ChatBubbleAddress({
         onChange={onChangeDestination}
       />
       {isActiveButton && (
-        <ButtonSolid onClick={onSubmit}>견적 확정하기</ButtonSolid>
+        <ButtonSolid onClick={onSubmit} disabled={isProcessing}>
+          {isProcessing ? <Loader /> : '견적 확정하기'}
+        </ButtonSolid>
       )}
     </div>
   );
