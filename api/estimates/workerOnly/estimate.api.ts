@@ -1,5 +1,5 @@
 import { client, errorHandler } from "@/api/client";
-import { ReceivedEstimateListResponse } from "../estimate";
+import { Estimate } from "@/types/entities/estimate.entity";
 
 // 반려된 견적들 가져오기
 export const getRejectEstimates = async ({
@@ -18,6 +18,11 @@ export const getRejectEstimates = async ({
     errorHandler(error);
   }
 };
+
+interface ReceivedEstimateListResponse {
+  list: Estimate[];
+  totalCount: number;
+}
 
 export const getReceivedEstimates = async ({
   estimateRequestId,
