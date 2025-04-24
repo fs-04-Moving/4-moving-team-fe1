@@ -1,5 +1,11 @@
+import ProfileCustomerEdit from '@/components/templates/ProfileCustomerEdit';
+
 function CustomerProfileEditPage() {
-  return <div>CustomerProfileEditPage</div>;
+  return (
+    <div className="flex justify-center">
+      <ProfileCustomerEdit />
+    </div>
+  );
 }
 
 export default CustomerProfileEditPage;

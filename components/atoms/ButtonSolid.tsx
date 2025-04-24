@@ -3,14 +3,12 @@
 import icWriting from '@/assets/images/ic-writing.svg';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-interface Props {
-  disabled?: boolean;
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   showIcon?: boolean;
   children: ReactNode;
   isGnb?: boolean;
-  onClick?: () => void;
 }
 
 /**
@@ -18,34 +16,34 @@ interface Props {
  * - UI상태: default, hover, disabled
  * @param
  * - children: 버튼명
- * - disabled?: 비활성 여부(기본값: false)
  * - showIcon?: 연필 아이콘 표시 여부(기본값: false)
- * - onClick?: 클릭 시 실행 함수
+ * - isGnb?: Gnb에 쓰이는 버튼인지(기본값: false)
  * @returns
  */
 function ButtonSolid({
-  disabled = false,
   showIcon = false,
   children,
   isGnb = false,
-  onClick,
+  className,
   ...props
 }: Props) {
+  const { disabled } = props;
+
   const defaultClassName = clsx(
     'w-full flex justify-center items-center h-[54px] lg:h-16 bg-Primay-Blue-300 hover:bg-Primay-Blue-200 cursor-pointer rounded-2xl lg:text-xl font-semibold text-GrayScale-50'
   );
 
-  const disableClassName = clsx({
-    '!bg-GrayScale-100 !cursor-default': disabled,
-  });
-
-  const gnbClassName = clsx({ '!h-11 lg:!text-lg': isGnb });
+  const disableClassName = disabled && '!bg-GrayScale-100 !cursor-default';
+  const gnbClassName = isGnb && '!h-11 lg:!text-lg';
 
   return (
     <button
-      disabled={disabled}
-      className={clsx(defaultClassName, disableClassName, gnbClassName)}
-      onClick={onClick}
+      className={clsx(
+        defaultClassName,
+        disableClassName,
+        gnbClassName,
+        className
+      )}
       {...props}
     >
       <div className="flex">
