@@ -3,7 +3,7 @@
 import { Role } from '@/types/entities/user.entity';
 import FooterAuthPage from '../molecules/FooterAuthPage';
 import HeaderAuthPage from '../molecules/HeaderAuthPage';
-import FormLogIn from '../organisms/FormLogin';
+import FormLogIn from '../organisms/FormLogIn';
 
 function TemplateLogIn({ userType }: { userType: Role }) {
   return (
