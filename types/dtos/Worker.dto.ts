@@ -21,3 +21,8 @@ export interface WorkerSearchParams {
   page?: number;
   pageSize?: number;
 }
+
+export interface WorkerPage {
+  list: Worker[];
+  totalCount: number;
+}

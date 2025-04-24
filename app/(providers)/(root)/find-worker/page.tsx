@@ -6,7 +6,7 @@ import {
   QueryClient,
   HydrationBoundary,
 } from '@tanstack/react-query';
-import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
+import { WorkerPage, WorkerSearchParams } from '@/types/dtos/Worker.dto';
 
 async function FindWorkerPage() {
   console.log('[SSR] FindWorkerPage 서버 사이드 렌더링 중');
@@ -14,14 +14,40 @@ async function FindWorkerPage() {
 
   // const workers = await profilesApi.getWorkerProfiles({ pageSize: 5 });
 
+  const queryParams = {
+    serviceArea: '',
+    serviceType: '',
+    orderBy: '',
+    page: 1,
+    pageSize: 5,
+  } as WorkerSearchParams;
+
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ['workers', { page: 1, pageSize: 5 }],
-    queryFn: ({ queryKey }) => {
-      const [, params] = queryKey as [string, WorkerSearchParams];
-      console.log('[SSR] queryFn 서버에서 params:', params);
-      return profilesApi.getWorkerProfiles(params);
+  await queryClient.prefetchInfiniteQuery<
+    WorkerPage,
+    Error,
+    WorkerPage,
+    [string, WorkerSearchParams]
+  >({
+    queryKey: ['workers', queryParams],
+    queryFn: ({
+      pageParam = 1,
+    }: {
+      pageParam: number;
+    }): Promise<WorkerPage> => {
+      console.log(
+        '[SSR] queryFn 서버에서 params:',
+        queryParams,
+        'pageParam:',
+        pageParam
+      );
+      return profilesApi.getWorkerProfiles({ ...queryParams, page: pageParam });
     },
+    getNextPageParam: (lastPage: WorkerPage, allPages: WorkerPage[]) => {
+      const loaded = allPages.flatMap((page) => page.list).length;
+      return loaded < lastPage.totalCount ? allPages.length + 1 : undefined;
+    },
+    initialPageParam: 1,
   });
 
   const dehydratedState = dehydrate(queryClient);
