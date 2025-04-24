@@ -13,6 +13,7 @@ export interface User {
   password: string;
   passwordConfirm: string;
   newPassword: string;
+  newPasswordConfirm: string;
   phoneNumber: string;
   profileImage: string;
   refreshToken: string;

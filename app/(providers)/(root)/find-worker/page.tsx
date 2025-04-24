@@ -3,14 +3,14 @@
 
 import profilesApi from '@/api/profiles/profiles.api';
 import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
-import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
+import { WorkerPage, WorkerSearchParams } from '@/types/dtos/Worker.dto';
 import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import FindWorkerClient from './FindWorkerClient';
 
 const baseParams: WorkerSearchParams = {
   page: 1,
-  pageSize: 3,
+  pageSize: 5,
   serviceArea: undefined,
   serviceType: undefined,
   orderBy: undefined,
@@ -30,7 +30,7 @@ async function FindWorkerPage() {
       );
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (lastPage: WorkerPage, allPages: WorkerPage[]) => {
       if (!lastPage || !Array.isArray(allPages)) return undefined;
       const totalLoaded = allPages.flatMap((p) => p.list ?? []).length;
       return totalLoaded < (lastPage.totalCount ?? 0)

@@ -148,6 +148,7 @@ const getWorkerProfiles = async (params: WorkerSearchParams) => {
     return response.data;
   } catch (error) {
     errorHandler(error);
+    throw error;
   }
 };
 
