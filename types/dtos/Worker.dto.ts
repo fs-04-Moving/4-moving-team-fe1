@@ -20,6 +20,7 @@ export interface WorkerSearchParams {
   orderBy?: string;
   page?: number;
   pageSize?: number;
+  search?: string;
 }
 
 export interface WorkerPage {

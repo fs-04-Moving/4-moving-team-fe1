@@ -1,7 +1,9 @@
 'use client';
 
 import { useFindWorkerQuery } from '@/hooks/useFindWorkerQuery';
+import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import LeftMenu from './(components)/LeftMenu';
 import TopMenu from './(components)/TopMenu';
@@ -18,20 +20,19 @@ function FindWorkerClient() {
   });
   const searchParams = useSearchParams();
 
-  const serviceArea = searchParams.get('serviceArea') || '';
-  const serviceType = searchParams.get('serviceType') || '';
-  const orderBy = searchParams.get('orderBy') || '';
-  const search = searchParams.get('search') || '';
+  const queryParams: WorkerSearchParams = useMemo(() => {
+    const page = 1;
+    const pageSize = 3;
 
-  const queryParams = Object.fromEntries(
-    Object.entries({ serviceArea, serviceType, orderBy, search }).filter(
-      ([, value]) => value !== ''
-    )
-  );
+    const serviceArea = searchParams.get('serviceArea') || undefined;
+    const serviceType = searchParams.get('serviceType') || undefined;
+    const orderBy = searchParams.get('orderBy') || undefined;
+    const search = searchParams.get('search') || undefined;
 
+    return { page, pageSize, serviceArea, serviceType, orderBy, search };
+  }, [searchParams]);
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useFindWorkerQuery(queryParams);
-  console.log('[CSR] 클라이언트에서 받은 데이터:', data);
   // useEffect(() => {
   //   if (inView && hasNextPage && !isFetchingNextPage) {
   //     fetchNextPage();
