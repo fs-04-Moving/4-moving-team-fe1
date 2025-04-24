@@ -147,6 +147,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
             <ButtonOutlined
               onClick={handleClickCancel}
               className="lg:w-[684px]"
+              type="button"
             >
               취소
             </ButtonOutlined>
