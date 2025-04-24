@@ -45,6 +45,7 @@ client.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const statusCode = error.response?.status;
+    console.log('error', error);
 
     // refreshToken 요청 자체에서 에러면 빠져나가기
     if (
@@ -53,7 +54,7 @@ client.interceptors.response.use(
     ) {
       return Promise.reject(error);
     }
-
+    console.log('???????????????????');
     if (statusCode === 401 || statusCode === 419) {
       originalRequest._retry = true;
 

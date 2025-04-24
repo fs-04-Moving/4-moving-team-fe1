@@ -1,18 +1,15 @@
 'use client';
 
 import { useFindWorkerQuery } from '@/hooks/useFindWorkerQuery';
-import { Worker } from '@/types/dtos/Worker.dto';
+import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
 import { useSearchParams } from 'next/navigation';
+import { useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 import LeftMenu from './(components)/LeftMenu';
 import TopMenu from './(components)/TopMenu';
 import WorkerCardList from './(components)/WorkerCardList';
 
-type Props = {
-  initialData: { list: Worker[]; totalCount: number };
-};
-
-function FindWorkerClient({ initialData }: Props) {
+function FindWorkerClient() {
   const { ref } = useInView({
     threshold: 1,
     onChange: (inView) => {
@@ -22,22 +19,20 @@ function FindWorkerClient({ initialData }: Props) {
     },
   });
   const searchParams = useSearchParams();
-  console.log('initialData', initialData);
 
-  const serviceArea = searchParams.get('serviceArea') || '';
-  const serviceType = searchParams.get('serviceType') || '';
-  const orderBy = searchParams.get('orderBy') || '';
-  const search = searchParams.get('search') || '';
+  const queryParams: WorkerSearchParams = useMemo(() => {
+    const page = 1;
+    const pageSize = 3;
 
-  const queryParams = Object.fromEntries(
-    Object.entries({ serviceArea, serviceType, orderBy, search }).filter(
-      ([, value]) => value !== ''
-    )
-  );
+    const serviceArea = searchParams.get('serviceArea') || undefined;
+    const serviceType = searchParams.get('serviceType') || undefined;
+    const orderBy = searchParams.get('orderBy') || undefined;
+    const search = searchParams.get('search') || undefined;
 
+    return { page, pageSize, serviceArea, serviceType, orderBy, search };
+  }, [searchParams]);
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useFindWorkerQuery(queryParams, initialData);
-
+    useFindWorkerQuery(queryParams);
   // useEffect(() => {
   //   if (inView && hasNextPage && !isFetchingNextPage) {
   //     fetchNextPage();

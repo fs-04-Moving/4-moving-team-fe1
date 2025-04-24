@@ -1,9 +1,10 @@
+import { API_URL } from '@/constants/env';
 import {
   CreateCustomerProfileDto,
   CreateWorkerProfileDto,
 } from '@/types/dtos/profile.dto';
-import { client, errorHandler } from '../client';
 import { WorkerSearchParams } from '@/types/dtos/Worker.dto';
+import { client, errorHandler } from '../client';
 
 // 고객 프로필 생성
 const createCustomerProfile = async (data: CreateCustomerProfileDto) => {
@@ -69,10 +70,27 @@ const getWorkerProfiles = async (params: WorkerSearchParams) => {
   }
 };
 
+const getWorkerProfilesServer = async (
+  params: WorkerSearchParams,
+  accessToken: string | null
+) => {
+  const headers: Record<string, string> = accessToken
+    ? { Authorization: `Bearer ${accessToken}` }
+    : {};
+
+  const response = await client.get(`${API_URL}/profile/workers`, {
+    headers,
+    params,
+    withCredentials: true,
+  });
+  return response.data;
+};
+
 const profilesApi = {
   createCustomerProfile,
   createWorkerProfile,
   getWorkerProfiles,
+  getWorkerProfilesServer,
 };
 
 export default profilesApi;
