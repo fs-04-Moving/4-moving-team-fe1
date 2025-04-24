@@ -25,6 +25,7 @@ export async function handleProfileSuccess({
 
   // 2. 쿼리 무효화 후 refetch
   await queryClient.invalidateQueries({ queryKey: ['me'] });
+  await queryClient.invalidateQueries({ queryKey: ['profile'] });
 
   const newUser: User = await queryClient.fetchQuery({
     queryKey: ['me'],

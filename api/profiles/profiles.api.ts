@@ -170,7 +170,7 @@ const getWorkerProfilesServer = async (
 // 고객 프로필 가져오기(프로필 수정용)
 const getCustomerProfileMe = async () => {
   try {
-    const url = '/profile/customer/me';
+    const url = '/profile/me/customer';
     const response = await client.get(url);
     return response.data;
   } catch (error) {
@@ -181,7 +181,7 @@ const getCustomerProfileMe = async () => {
 // 기사 프로필 가져오기(프로필 수정용)
 const getWorkerProfileMe = async () => {
   try {
-    const url = '/profile/worker/me';
+    const url = '/profile/me/worker';
     const response = await client.get(url);
     return response.data;
   } catch (error) {
