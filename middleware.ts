@@ -18,11 +18,11 @@ const PROFILE_ROUTES = [ROUTES.CUSTOMER.PROFILE, ROUTES.WORKER.PROFILE];
  * - 클라이언트에서의 리다이렉트 최소화(깜박임이 UX를 너무너무 저해시키므로)
  */
 export async function middleware(req: NextRequest) {
-  const start = performance.now(); // ⏱ 측정 시작
+  const start = performance.now(); // 측정 시작
 
   const result = await getUserFromRequestLite();
 
-  const end = performance.now(); // ⏱ 측정 끝
+  const end = performance.now(); // 측정 끝
   console.log(
     `⏱ getUserFromRequestLite: duration: ${(end - start).toFixed(2)}ms`
   );
