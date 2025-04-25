@@ -1,18 +1,18 @@
+import icWriting from '@/assets/images/ic-writing.svg';
+import { Area } from '@/types/entities/user.entity';
 import { AREA_DATA, ServiceType } from '@/types/move.type';
-import ButtonSolid from '../atoms/ButtonSolid';
+import Image from 'next/image';
 import ButtonOutlined from '../atoms/ButtonOutlined';
+import ButtonSolid from '../atoms/ButtonSolid';
 import ChipText from '../atoms/ChipText';
 import UserAvartar from '../atoms/UserAvartar';
 import RatingSummary from '../molecules/RatingSummary';
-import Image from 'next/image';
-import icWriting from '@/assets/images/ic-writing.svg';
-import { Area } from '@/types/entities/user.entity';
 
 type Props = {
   profileImage: string;
   nickname: string;
   experience: string;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   services: ServiceType[];
   onConfirm?: () => void;
   onViewDetail?: () => void;
@@ -33,7 +33,7 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 (년 단위)
- * @param {number} confirmedEstimateCount - 확정된 이사 견적 수
+ * @param {number} confirmedEstimatesCount - 확정된 이사 견적 수
  * @param {string} summary - 기사 한 줄 소개 텍스트
  * @param {AreaType} serviceAreas - 기사 활동 지역 (예: { seoul: '서울', incheon: '인천' })
  * @param {ServiceType[]} services - 기사 제공 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
@@ -61,7 +61,7 @@ function WorkerCardInProfile({
   profileImage,
   nickname,
   experience,
-  confirmedEstimateCount,
+  confirmedEstimatesCount,
   summary,
   serviceAreas,
   services,
@@ -144,7 +144,7 @@ function WorkerCardInProfile({
               </span>
               <span className="text-GrayScale-100">|</span>
               <span>
-                {`${confirmedEstimateCount}건 `}
+                {`${confirmedEstimatesCount}건 `}
                 <span className="text-GrayScale-300">확정</span>
               </span>
             </div>

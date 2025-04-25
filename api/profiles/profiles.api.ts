@@ -190,6 +190,18 @@ const getWorkerProfileMe = async () => {
   }
 };
 
+// 기사 프로필 가져오기(마이페이지)
+const getWorkerProfile = async (workerId: string) => {
+  console.log('axios workerId', workerId);
+  try {
+    const url = `profile/worker/${workerId}`;
+    const response = await client.get(url);
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
 const profilesApi = {
   createCustomerProfile,
   createWorkerProfile,
@@ -199,6 +211,7 @@ const profilesApi = {
   getWorkerProfileMe,
   updateCustomerProfile,
   updateWorkerProfile,
+  getWorkerProfile,
 };
 
 export default profilesApi;
