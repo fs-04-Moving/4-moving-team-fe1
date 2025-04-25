@@ -1,4 +1,5 @@
 import { NEXT_PUBLIC_API_URL } from '@/constants/env';
+import { logoutHelper } from '@/utils/auth.helper';
 import axios from 'axios';
 import authApi from './auth/auth.api';
 
@@ -49,12 +50,11 @@ client.interceptors.response.use(
 
     // refreshToken 요청 자체에서 에러면 빠져나가기
     if (
-      originalRequest.url.includes('/auth/refresh-token') ||
-      originalRequest._retry
+      originalRequest.url.includes('/auth/refresh-token') || // 이미 refresh-token 요청 중이거나
+      originalRequest._retry // _retry가 true이면 이미 재시도된 요청이므로 빠져나가기(무한 루프 방지)
     ) {
       return Promise.reject(error);
     }
-    console.log('???????????????????');
     if (statusCode === 401 || statusCode === 419) {
       originalRequest._retry = true;
 
@@ -78,7 +78,7 @@ client.interceptors.response.use(
         // refreshToken도 만료됐거나 문제 생긴 경우 → 로그아웃
         console.error('Refresh token failed', refreshError);
         if (typeof window !== 'undefined') {
-          localStorage.removeItem('accessToken');
+          logoutHelper();
         }
         return Promise.reject(refreshError);
       }

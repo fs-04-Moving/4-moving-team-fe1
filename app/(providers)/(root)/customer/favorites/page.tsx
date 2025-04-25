@@ -1,5 +1,4 @@
 import favoriteApi from '@/api/favorite/favorite.api';
-import userApi from '@/api/user/user.api';
 import ListFavoriteWorker from '@/components/organisms/ListFavoriteWorker';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
@@ -20,10 +19,11 @@ async function FavoriteWorkersPage() {
   }
 
   const { dehydratedState } = await handleSSRPrefetch([
-    {
-      queryKey: ['me'],
-      queryFn: () => userApi.getUserMeServer(accessToken),
-    },
+    // layout(ProvidersLayout)에서 user를 setQueryData로 캐싱하고 있으므로 현재 구조에선 불필요
+    // {
+    //   queryKey: ['me'],
+    //   queryFn: () => userApi.getUserMeServer(accessToken),
+    // },
     {
       queryKey: ['favorites'],
       queryFn: () => favoriteApi.getFavoriteWorkersServer(accessToken),

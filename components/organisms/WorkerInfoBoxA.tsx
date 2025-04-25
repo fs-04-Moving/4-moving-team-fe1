@@ -12,7 +12,7 @@ type Props = {
   experience: number;
   reviewsAverage: number;
   reviewsCount: number;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   isResponsive?: boolean;
 };
 
@@ -32,7 +32,7 @@ type Props = {
  * @param {number} experience - 기사 경력 (단위: 년)
  * @param {number} reviewsAverage - 리뷰 평균 평점 (0~5 범위)
  * @param {number} reviewsCount - 총 리뷰 수
- * @param {number} confirmedEstimateCount - 완료된 이사(견적 확정) 건수
+ * @param {number} confirmedEstimatesCount - 완료된 이사(견적 확정) 건수
  * @param {boolean} isResponsive - 기본값:true, false면 반응형을 적용하지 않고, 크기를 sm으로 고정
  *
  * @example
@@ -56,7 +56,7 @@ function WorkerInfoBoxA({
   experience,
   reviewsAverage,
   reviewsCount,
-  confirmedEstimateCount,
+  confirmedEstimatesCount,
   isResponsive = true,
 }: Props) {
   return (
@@ -102,7 +102,7 @@ function WorkerInfoBoxA({
           </span>
           <span className="text-GrayScale-100">|</span>
           <span>
-            {`${confirmedEstimateCount}건 `}
+            {`${confirmedEstimatesCount}건 `}
             <span className="text-GrayScale-300">확정</span>
           </span>
         </div>

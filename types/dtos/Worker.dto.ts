@@ -9,7 +9,7 @@ export interface Worker {
   reviewsCount: number;
   favoritesCount: number;
   reviewsAverage: number;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   isFavorite: boolean;
   summary: string;
 }
@@ -21,4 +21,9 @@ export interface WorkerSearchParams {
   page?: number;
   pageSize?: number;
   search?: string;
+}
+
+export interface WorkerPage {
+  list: Worker[];
+  totalCount: number;
 }

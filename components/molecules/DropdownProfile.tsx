@@ -26,7 +26,6 @@
 
 import ROUTES from '@/constants/routes';
 import clsx from 'clsx';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { forwardRef } from 'react';
 import { Role } from '../../types/entities/user.entity';
@@ -77,6 +76,16 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
       onClose();
     };
 
+    const handleClickMoveToCustomerInfoEdit = () => {
+      router.push(ROUTES.CUSTOMER.INFO);
+      onClose();
+    };
+
+    const handleClickMoveToWorkerInfoEdit = () => {
+      router.push(ROUTES.WORKER.INFO);
+      onClose();
+    };
+
     if (!isOpen) return null;
 
     // 메뉴들 공통 스타일, 마진은 박스 패딩에서 조절했습니다
@@ -106,6 +115,12 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
             <>
               <div
                 className={menuItemClass}
+                onClick={handleClickMoveToCustomerInfoEdit}
+              >
+                기본 정보 수정
+              </div>
+              <div
+                className={menuItemClass}
                 onClick={handleClickMoveToCustomerProfileEdit}
               >
                 프로필 수정
@@ -128,6 +143,12 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
             <>
               <div
                 className={menuItemClass}
+                onClick={handleClickMoveToWorkerInfoEdit}
+              >
+                기본 정보 수정
+              </div>
+              <div
+                className={menuItemClass}
                 onClick={handleClickMoveToWorkerProfileEdit}
               >
                 프로필 수정
@@ -138,9 +159,6 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
               >
                 마이페이지
               </div>
-              <Link href="/worker/quotes" className={menuItemClass}>
-                받은 견적
-              </Link>
             </>
           )}
         </div>

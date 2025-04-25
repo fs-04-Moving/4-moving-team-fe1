@@ -6,10 +6,12 @@ import InputFile from '../molecules/InputFile';
 
 interface GroupProfileImageInputProps<T extends FieldValues> {
   control: Control<T>;
+  defaultImageUrl?: string;
 }
 
 const GroupProfileImageInput = <T extends FieldValues>({
   control,
+  defaultImageUrl,
 }: GroupProfileImageInputProps<T>) => {
   return (
     <div className="mb-5 lg:mb-8">
@@ -20,6 +22,7 @@ const GroupProfileImageInput = <T extends FieldValues>({
         name={'profileImage' as Path<T>}
         control={control}
         id="profileImage"
+        defaultImageUrl={defaultImageUrl}
       />
     </div>
   );
