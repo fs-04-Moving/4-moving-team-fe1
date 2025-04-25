@@ -16,10 +16,10 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 6; 
 
-  // 작성한 리뷰 자세히 보기 모달 띄우기기
+  // 작성한 리뷰 자세히 보기 모달 띄우기
   
 
-  // 페이지네이션 
+  // SSP 페이지네이션 - 해당 페이지의 데이터만 서버에서 받아오게 구현할 예정
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
   const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
@@ -31,7 +31,6 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
 
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
   
-  // 리뷰 제출시 스피너 달기기
 
   return (
     <div className="bg-background-100 flex items-center justify-center">
@@ -60,7 +59,6 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
         )}
       </div>
 
-      {/* 페이지네이션 컴포넌트 - 리뷰가 있고 총 페이지 수가 1보다 클 때만 표시 */}
       {reviews.length > 0 && totalPages > 1 && (
         <Pagination
           currentPage={currentPage}
