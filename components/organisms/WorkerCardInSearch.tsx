@@ -12,7 +12,7 @@ type Props = {
   services: string[];
   reviewsAverage: number;
   reviewsCount: number;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   isResponsive?: boolean;
 };
 
@@ -33,7 +33,7 @@ type Props = {
  * @param {number} reviewsAverage - 평균 리뷰 평점
  * @param {number} reviewsCount - 전체 리뷰 수
  * @param {number} favoritesCount - 찜한 사용자 수
- * @param {number} confirmedEstimateCount - 견적 확정 건수
+ * @param {number} confirmedEstimatesCount - 견적 확정 건수
  * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지
  * @param {boolean} isResponsive - 기본값:true, false면 반응형을 적용하지 않고, 크기를 sm으로 고정
  *
@@ -47,7 +47,7 @@ type Props = {
  *   reviewsAverage={4.8}
  *   reviewsCount={153}
  *   favoritesCount={130}
- *   confirmedEstimateCount={87}
+ *   confirmedEstimatesCount={87}
  *   isFavorite={true}
  *   isResponsive={false}
  * />
@@ -62,7 +62,7 @@ function WorkerCardInSearch({
   reviewsAverage,
   reviewsCount,
   favoritesCount,
-  confirmedEstimateCount,
+  confirmedEstimatesCount,
   isFavorite,
   isResponsive = true,
 }: Props) {
@@ -93,7 +93,7 @@ function WorkerCardInSearch({
         experience={experience}
         reviewsAverage={reviewsAverage}
         reviewsCount={reviewsCount}
-        confirmedEstimateCount={confirmedEstimateCount}
+        confirmedEstimatesCount={confirmedEstimatesCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
         isResponsive={isResponsive}
