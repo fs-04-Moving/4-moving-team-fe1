@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { Estimate } from "@/types/entities/estimate.entity";
-import { useEffect, useState } from "react";
-import WorkerCardInWating from "@/components/organisms/WorkerCardInWating";
-import { EstimateRequestStatus, EstimateStatus } from "@/types/move.type";
-import { getPendingEstimates } from "@/api/estimate/customerOnly/estimate.api";
-import { useRouter } from "next/navigation";
+import { getPendingEstimates } from '@/api/estimate/customerOnly/estimate.api';
+import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { EstimateRequestStatus, EstimateStatus } from '@/types/move.type';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const PendingEstimateList: React.FC = () => {
   const [estimates, setEstimates] = useState<Estimate[]>([]);
@@ -16,9 +16,9 @@ const PendingEstimateList: React.FC = () => {
   const pageSize = 10;
 
   const statusMap: Record<EstimateStatus, EstimateRequestStatus> = {
-    general: "active",
-    assigned: "confirmed",
-    rejected: "inactive",
+    general: 'active',
+    assigned: 'confirmed',
+    rejected: 'inactive',
   };
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const PendingEstimateList: React.FC = () => {
         }
       } catch (err) {
         console.error(err);
-        setError("데이터를 불러오는 중 오류가 발생했습니다.");
+        setError('데이터를 불러오는 중 오류가 발생했습니다.');
       } finally {
         setLoading(false);
       }

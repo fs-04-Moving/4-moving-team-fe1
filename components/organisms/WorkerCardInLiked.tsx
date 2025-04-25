@@ -8,7 +8,7 @@ export type WorkerCardInLikedProps = {
   profileImage: string;
   nickname: string;
   experience: string;
-  workerConfirmedEstimatesCount: number;
+  confirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: string[];
@@ -25,7 +25,7 @@ export type WorkerCardInLikedProps = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
- * @param {number} workerConfirmedEstimatesCount - 확정 이사 건수
+ * @param {number} confirmedEstimatesCount - 확정 이사 건수
  * @param {boolean} isFavorite - 사용자가 이 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 서비스 유형 리스트
@@ -49,13 +49,14 @@ function WorkerCardInLiked({
   profileImage,
   nickname,
   experience,
-  workerConfirmedEstimatesCount,
+  confirmedEstimatesCount,
   isFavorite,
   favoritesCount,
   services,
   reviewsAverage,
   reviewsCount,
 }: WorkerCardInLikedProps) {
+  console.log(experience, confirmedEstimatesCount);
   return (
     <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
@@ -88,7 +89,7 @@ function WorkerCardInLiked({
             </span>
             <span className="text-GrayScale-100">|</span>
             <span>
-              {`${workerConfirmedEstimatesCount}건 `}
+              {`${confirmedEstimatesCount}건 `}
               <span className="text-GrayScale-300">확정</span>
             </span>
           </div>
