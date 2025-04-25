@@ -7,8 +7,8 @@ export type UpdateUserInfoDto = Pick<
   | 'email'
   | 'phoneNumber'
   | 'password'
-  | 'passwordConfirm'
   | 'newPassword'
+  | 'newPasswordConfirm'
 >;
 
 export interface Worker {

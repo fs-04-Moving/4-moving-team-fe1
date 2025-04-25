@@ -39,7 +39,7 @@ function GroupServiceTypeSelect({
       setServices(newServices);
     }
   };
-
+  console.log(services);
   return (
     <>
       <DividerHor />

@@ -1,5 +1,6 @@
 import { API_URL } from '@/constants/env';
 import { client, errorHandler } from '../client';
+import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
 
 // 내 정보 조회
 const getUserMe = async () => {
@@ -43,9 +44,36 @@ export async function getUserMeServer(accessToken: string) {
   return user;
 }
 
+// 내 기본 정보 조회
+const getUserInfo = async () => {
+  if (typeof window === 'undefined') {
+    throw new Error('getUserInfo는 클라이언트에서만 사용 가능합니다.');
+  }
+  try {
+    const url = '/user/info';
+    const response = await client.get(url);
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+const updateUserInfo = async (dto: UpdateUserInfoDto) => {
+  try {
+    console.log('dto', dto);
+    const url = '/user';
+    const response = await client.put(url, dto);
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
 const userApi = {
   getUserMe,
   getUserMeServer,
+  getUserInfo,
+  updateUserInfo,
 };
 
 export default userApi;
