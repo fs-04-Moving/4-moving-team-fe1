@@ -9,7 +9,7 @@ export interface Worker {
   reviewsCount: number;
   favoritesCount: number;
   reviewsAverage: number;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   isFavorite: boolean;
   summary: string;
 }

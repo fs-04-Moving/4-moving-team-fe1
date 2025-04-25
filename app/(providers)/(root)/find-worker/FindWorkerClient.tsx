@@ -39,6 +39,8 @@ function FindWorkerClient() {
   //   }
   // }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+  console.log(data);
+
   return (
     <div className="flex justify-center gap-28">
       <LeftMenu />
