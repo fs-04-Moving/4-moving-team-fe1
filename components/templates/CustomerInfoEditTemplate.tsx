@@ -8,6 +8,9 @@ import InputPassword from '@/components/molecules/InputPassword';
 import InputText from '@/components/molecules/InputText';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { editCustomerInfoValidation } from '@/constants/formValidation';
+import clsx from 'clsx';
 
 interface CustomerInfoEditTemplateProps {
   defaultValues: UpdateUserInfoDto;
@@ -51,7 +54,12 @@ function CustomerInfoEditTemplate({
   defaultValues,
   onSubmit,
 }: CustomerInfoEditTemplateProps) {
-  const { control, handleSubmit } = useForm({ defaultValues });
+  const { control, handleSubmit, formState } = useForm({
+    defaultValues,
+    resolver: zodResolver(editCustomerInfoValidation),
+  });
+
+  const fixedHeightClassName = clsx('lg:h-[140px]');
 
   return (
     <main className="flex justify-center">
@@ -61,61 +69,73 @@ function CustomerInfoEditTemplate({
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-4 lg:gap-0 lg:flex-row justify-between">
             <div className="flex flex-col gap-8 w-[327px] lg:w-[640px]">
-              <InputText
-                label="이름"
-                name="name"
-                control={control}
-                bgColor={true}
-                placeholder={'이름을 입력해 주세요'}
-              />
+              <div className={clsx(fixedHeightClassName)}>
+                <InputText
+                  label="이름"
+                  name="name"
+                  control={control}
+                  bgColor={true}
+                  placeholder={'이름을 입력해 주세요'}
+                />
+              </div>
               <hr className="border-[1px] border-Line-100" />
-              <InputEmail
-                label="이메일"
-                name="email"
-                control={control}
-                bgColor={true}
-                readOnly
-                className="bg-BackGround-200 text-gray-300 w-full rounded-2xl text-[16px] lg:text-xl p-3.5 md:h-[54px] lg:h-[64px]"
-              />
+              <div className={clsx(fixedHeightClassName)}>
+                <InputEmail
+                  label="이메일"
+                  name="email"
+                  control={control}
+                  bgColor={true}
+                  readOnly
+                  className="bg-BackGround-200 text-gray-300 w-full rounded-2xl text-[16px] lg:text-xl p-3.5 md:h-[54px] lg:h-[64px]"
+                />
+              </div>
               <hr className="border-[1px] border-Line-100" />
-              <InputText
-                label="전화번호"
-                name="phoneNumber"
-                control={control}
-                bgColor={true}
-                placeholder="전화번호를 입력해 주세요"
-              />
+              <div className={clsx(fixedHeightClassName)}>
+                <InputText
+                  label="전화번호"
+                  name="phoneNumber"
+                  control={control}
+                  bgColor={true}
+                  placeholder="전화번호를 입력해 주세요"
+                />
+              </div>
               <hr className="block border-[1px] border-Line-100 lg:hidden" />
             </div>
             <div className="flex flex-col gap-8 w-[327px] lg:w-[640px]">
-              <InputPassword
-                label="현재 비밀번호"
-                name="password"
-                control={control}
-                bgColor={true}
-                placeholder={'현재 비밀번호를 입력해주세요'}
-              />
+              <div className={clsx(fixedHeightClassName)}>
+                <InputPassword
+                  label="현재 비밀번호"
+                  name="password"
+                  control={control}
+                  bgColor={true}
+                  placeholder={'현재 비밀번호를 입력해주세요'}
+                />
+              </div>
               <hr className="border-[1px] border-Line-100" />
-              <InputPassword
-                label="새 비밀번호"
-                name="newPassword"
-                control={control}
-                bgColor={true}
-                placeholder={'새 비밀번호를 입력해주세요'}
-              />
+              <div className={clsx(fixedHeightClassName)}>
+                <InputPassword
+                  label="새 비밀번호 (선택)"
+                  name="newPassword"
+                  control={control}
+                  bgColor={true}
+                  placeholder={'변경을 원할 경우 새 비밀번호를 입력해 주세요'}
+                />
+              </div>
               <hr className="border-[1px] border-Line-100" />
-              <InputPassword
-                label="새 비밀번호 확인"
-                name="newPasswordConfirm"
-                control={control}
-                bgColor={true}
-                placeholder={'새 비밀번호를 다시 한번 입력해주세요'}
-              />
+              <div className={clsx(fixedHeightClassName)}>
+                <InputPassword
+                  label="새 비밀번호 확인"
+                  name="newPasswordConfirm"
+                  control={control}
+                  bgColor={true}
+                  placeholder={'새 비밀번호를 다시 한번 입력해주세요'}
+                />
+              </div>
             </div>
           </div>
           <div className="flex flex-col-reverse gap-2 mt-8 w-[327px] lg:w-full lg:gap-8 lg:flex-row lg:mt-15">
             <ButtonOutlined>취소</ButtonOutlined>
-            <ButtonSolid>수정하기</ButtonSolid>
+            <ButtonSolid disabled={!formState.isValid}>수정하기</ButtonSolid>
           </div>
         </form>
       </div>

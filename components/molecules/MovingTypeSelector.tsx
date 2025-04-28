@@ -15,6 +15,7 @@
  * @param {ServiceType['type'][]} props.selectedTypes - 선택된 유형들의 배열
  */
 
+import React from 'react';
 import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
 import { ServiceType } from '@/types/move.type';
 
@@ -52,7 +53,7 @@ function MovingTypeSelector({
   };
 
   return (
-    <div className='flex flex-wrap gap-2'>
+    <div className="flex flex-wrap gap-2">
       {MOVING_TYPE_KEYS.map((type) => (
         <ChipBubbleTypeBox
           key={type}

@@ -47,7 +47,7 @@ function RatingSummary({
           isResponsive ? 'lg:text-[16px]' : ''
         )}
       >
-        {reviewsAverage}
+        {reviewsAverage.toFixed(1)}
       </span>
       <span
         className={clsx(
