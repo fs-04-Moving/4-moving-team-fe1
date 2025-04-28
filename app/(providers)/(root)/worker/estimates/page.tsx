@@ -1,53 +1,53 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
-import Pagination from '@/components/molecules/Pagination';
+import { useState } from "react";
+import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
+import Pagination from "@/components/molecules/Pagination";
 
 function ManageEstimatesWorker() {
   const mockCards = [
     {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김가나',
-      movingDate: new Date('2024-07-01'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
+      serviceType: "smallMove",
+      status: "assigned",
+      customerName: "김가나",
+      movingDate: new Date("2024-07-01"),
+      departure: "서울시 중구",
+      destination: "경기도 수원시",
       isConfirmed: false,
-      requestDate: new Date('2024-06-30'),
+      requestDate: new Date("2024-06-30"),
       price: 1000000,
     },
     {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김다라',
-      movingDate: new Date('2023-06-01'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
+      serviceType: "smallMove",
+      status: "assigned",
+      customerName: "김다라",
+      movingDate: new Date("2023-06-01"),
+      departure: "서울시 중구",
+      destination: "경기도 수원시",
       isConfirmed: false,
-      requestDate: new Date('2024-05-30'),
+      requestDate: new Date("2024-05-30"),
       price: 458470,
     },
     {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김마바',
-      movingDate: new Date('2024-10-10'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
+      serviceType: "smallMove",
+      status: "assigned",
+      customerName: "김마바",
+      movingDate: new Date("2024-10-10"),
+      departure: "서울시 중구",
+      destination: "경기도 수원시",
       isConfirmed: false,
-      requestDate: new Date('2024-06-30'),
+      requestDate: new Date("2024-06-30"),
       price: 300000,
     },
     {
-      serviceType: 'smallMove',
-      status: 'assigned',
-      customerName: '김사아',
-      movingDate: new Date('2025-07-01'),
-      departure: '서울시 중구',
-      destination: '경기도 수원시',
+      serviceType: "smallMove",
+      status: "assigned",
+      customerName: "김사아",
+      movingDate: new Date("2025-07-01"),
+      departure: "서울시 중구",
+      destination: "경기도 수원시",
       isConfirmed: false,
-      requestDate: new Date('2024-06-30'),
+      requestDate: new Date("2024-06-30"),
       price: 200000,
     },
   ];

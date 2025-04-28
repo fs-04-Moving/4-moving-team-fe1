@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
 import {
   DEFAULT_SORT_OPTION,
   sortOption,
-} from '@/constants/dropdownSortConstants';
-import { useEffect, useRef, useState } from 'react';
-import DropdownButtonSort from '../atoms/DropdownButtonSort';
-import DropdownListSort from '../atoms/DropdownListSort';
+} from "@/constants/dropdownSortConstants";
+import { useEffect, useRef, useState } from "react";
+import DropdownButtonSort from "../atoms/DropdownButtonSort";
+import DropdownListSort from "../atoms/DropdownListSort";
 
 interface Props {
   options: sortOption[];
@@ -19,7 +19,7 @@ function DropdownSort({
   options,
   defaultValue = DEFAULT_SORT_OPTION,
   onChange,
-  className = '',
+  className = "",
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<sortOption>(defaultValue);
@@ -46,9 +46,9 @@ function DropdownSort({
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
