@@ -84,7 +84,7 @@ function WorkerCardInEstimate({
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        confirmedEstimateCount={confirmedEstimateCount}
+        confirmedEstimatesCount={confirmedEstimateCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
       />

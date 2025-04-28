@@ -14,7 +14,8 @@
  * @param {Function} props.onTypeSelect - 유형 선택 시 호출되는 콜백 함수
  * @param {ServiceType['type'][]} props.selectedTypes - 선택된 유형들의 배열
  */
-"use client";
+
+import React from "react";
 import ChipBubbleTypeBox from "@/components/atoms/ChipBubbleTypeBox";
 import { ServiceType } from "@/types/move.type";
 

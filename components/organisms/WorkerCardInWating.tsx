@@ -122,7 +122,7 @@ function WorkerCardInWating({
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        confirmedEstimateCount={confirmedEstimateCount}
+        confirmedEstimatesCount={confirmedEstimateCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
         reviewsAverage={reviewsAverage}

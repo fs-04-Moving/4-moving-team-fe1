@@ -5,4 +5,5 @@ export const useCustomerInfoQuery = () =>
   useQuery({
     queryKey: ['customerInfo'],
     queryFn: userApi.getUserInfo,
+    staleTime: Infinity,
   });
