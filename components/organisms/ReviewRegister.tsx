@@ -1,13 +1,13 @@
 //ReviewRegister
 
-"use client";
+'use client';
 
-import { DriverWithMeta } from "@/types/move.type";
-import ButtonSolid from "../atoms/ButtonSolid";
-import ButtonStarRating from "../molecules/ButtonStarRating";
-import WorkerInfoBoxA from "./WorkerInfoBoxA";
-import { useState } from "react";
-import reviewApi from "@/api/review/review.api";
+import { DriverWithMeta } from '@/types/move.type';
+import ButtonSolid from '../atoms/ButtonSolid';
+import ButtonStarRating from '../molecules/ButtonStarRating';
+import WorkerInfoBoxA from './WorkerInfoBoxA';
+import { useState } from 'react';
+import reviewApi from '@/api/review/review.api';
 
 interface Props {
   onClose: () => void;
@@ -39,11 +39,11 @@ interface Props {
 
 function ReviewRegister({ onClose, driver, estimateId }: Props) {
   const [rating, setRating] = useState<number>(1);
-  const [content, setContent] = useState<string>("");
+  const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async () => {
-    if (!driver || content.trim() === "") return;
+    if (!driver || content.trim() === '') return;
 
     setLoading(true);
     try {
@@ -53,11 +53,11 @@ function ReviewRegister({ onClose, driver, estimateId }: Props) {
         rating,
       });
 
-      alert("리뷰가 성공적으로 등록되었습니다.");
+      alert('리뷰가 성공적으로 등록되었습니다.');
       onClose(); // 등록 완료 후 모달 닫기
     } catch (error) {
-      console.error("리뷰 등록 실패", error);
-      alert("리뷰 등록에 실패했습니다. 다시 시도해주세요.");
+      console.error('리뷰 등록 실패', error);
+      alert('리뷰 등록에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setLoading(false);
     }
@@ -80,7 +80,7 @@ function ReviewRegister({ onClose, driver, estimateId }: Props) {
           experience={driver.experience}
           reviewsAverage={driver.countCompleteMoving}
           reviewsCount={driver.countLike}
-          confirmedEstimateCount={driver.isDirectEstimate ? 1 : 0}
+          confirmedEstimatesCount={driver.isDirectEstimate ? 1 : 0}
         />
         <div className="text-[16px] font-[600] flex flex-col gap-y-2">
           <h4>평점을 선택해 주세요.</h4>
@@ -103,9 +103,9 @@ function ReviewRegister({ onClose, driver, estimateId }: Props) {
       <div>
         <ButtonSolid
           onClick={handleSubmit}
-          disabled={content.trim() === "" || loading}
+          disabled={content.trim() === '' || loading}
         >
-          {loading ? "등록 중..." : "리뷰 등록"}
+          {loading ? '등록 중...' : '리뷰 등록'}
         </ButtonSolid>
       </div>
     </div>
