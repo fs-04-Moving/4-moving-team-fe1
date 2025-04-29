@@ -1,19 +1,18 @@
-'use client';
 
+import icWriting from '@/assets/images/ic-writing.svg';
+import { Area } from '@/types/entities/user.entity';
 import { AREA_DATA, ServiceType } from '@/types/move.type';
-import ButtonSolid from '../atoms/ButtonSolid';
+import Image from 'next/image';
 import ButtonOutlined from '../atoms/ButtonOutlined';
+import ButtonSolid from '../atoms/ButtonSolid';
 import ChipText from '../atoms/ChipText';
 import UserAvartar from '../atoms/UserAvartar';
 import RatingSummary from '../molecules/RatingSummary';
-import Image from 'next/image';
-import icWriting from '@/assets/images/ic-writing.svg';
-import { Area } from '@/types/entities/user.entity';
 
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: number;
+  experience: string;
   confirmedEstimatesCount: number;
   services: ServiceType[];
   onConfirm?: () => void;
@@ -136,7 +135,7 @@ function WorkerCardInProfile({
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3.5 md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
               <RatingSummary
-                reviewsAverage={reviewsAverage}
+                reviewsAverage={reviewsAverage | 0}
                 reviewsCount={reviewsCount}
               />
               <span className="text-GrayScale-100">|</span>

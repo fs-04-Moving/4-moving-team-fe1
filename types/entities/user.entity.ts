@@ -7,6 +7,7 @@ import { Review } from './review.entity';
 // User, Profile 속성을 모두 포함합니다.
 export interface User {
   id: string;
+  sub: string;
   name: string;
   email: string;
   encryptedPassword: string;

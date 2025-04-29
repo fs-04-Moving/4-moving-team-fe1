@@ -14,11 +14,11 @@ export interface JwtPayload {
 
 export async function getUserFromRequestLite() {
   const cookieStore = cookies();
-  const refreshToken = (await cookieStore).get('refreshToken')?.value;
+  const accessToken = (await cookieStore).get('accessToken')?.value;
 
-  if (!refreshToken) return null;
+  if (!accessToken) return null;
 
-  const payload = decodeJWT<JwtPayload>(refreshToken);
+  const payload = decodeJWT<JwtPayload>(accessToken);
 
   if (!payload || !payload.role || typeof payload.hasProfile === 'undefined') {
     console.warn('[middleware] ⚠️ Invalid JWT payload structure:', payload);

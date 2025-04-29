@@ -100,12 +100,10 @@ function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
         title2="* 중복 선택 및 수정 가능, 견적 요청 시 선택 가능"
       />
       <DividerHor />
-      {livingArea && (
-        <GroupRegionSelect
-          selectedRegion={livingArea}
-          onRegionSelect={handleRegionSelect}
-        />
-      )}
+      <GroupRegionSelect
+        selectedRegion={livingArea}
+        onRegionSelect={handleRegionSelect}
+      />
       <ButtonSolid disabled={!isEnabledButton}>
         {isProcessing ? <Loader /> : initialProfile ? '수정하기' : '시작하기'}
       </ButtonSolid>

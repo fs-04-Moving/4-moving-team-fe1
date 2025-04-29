@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { Estimate } from "@/types/entities/estimate.entity";
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import EstimateDetailInfo from "@/components/organisms/EstimateDetailInfo";
-import WorkerCardInLiked from "@/components/organisms/WorkerCardInLiked";
-import ButtonSolid from "@/components/atoms/ButtonSolid";
-import ButtonShareKakao from "@/components/atoms/ButtonShareKakao";
-import ButtonShareFacebook from "@/components/atoms/ButtonShareFacebook";
-import ButtonClipOutlined from "@/components/atoms/ButtonClipOutlined";
 import {
   confirmEstimateByCustomer,
   getEstimateDetailByCustomer,
-} from "@/api/estimate/customerOnly/estimate.api";
+} from '@/api/estimate/customerOnly/estimate.api';
+import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
+import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
+import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
+import ButtonSolid from '@/components/atoms/ButtonSolid';
+import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
+import WorkerCardInLiked from '@/components/organisms/WorkerCardInLiked';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function Page() {
   const params = useParams();
@@ -29,7 +29,7 @@ export default function Page() {
       <div className="flex gap-x-4">
         <ButtonShareKakao
           onClick={() => {
-            router.push("/customer");
+            router.push('/customer');
           }}
         />
         <ButtonShareFacebook onClick={() => {}} />
@@ -43,14 +43,14 @@ export default function Page() {
     try {
       const result = await confirmEstimateByCustomer(estimate.id);
       if (result?.success) {
-        alert("성공적으로 기사님을 확정했습니다!");
-        router.push("/customer");
+        alert('성공적으로 기사님을 확정했습니다!');
+        router.push('/customer');
       } else {
-        alert(result?.message || "확정에 실패했습니다. 다시 시도해주세요.");
+        alert(result?.message || '확정에 실패했습니다. 다시 시도해주세요.');
       }
     } catch (error) {
       console.error(error);
-      alert("기사님 확정에 실패했습니다. 다시 시도해주세요.");
+      alert('기사님 확정에 실패했습니다. 다시 시도해주세요.');
     }
   };
 
@@ -81,7 +81,7 @@ export default function Page() {
           profileImage={estimate.profileImage}
           nickname={estimate.customerName}
           experience={estimate.experience.toString()}
-          workerConfirmedEstimatesCount={estimate.confirmedEstimatesCount}
+          confirmedEstimatesCount={estimate.confirmedEstimatesCount}
           isFavorite={true}
           favoritesCount={estimate.favoritesCount}
           services={[estimate.serviceType]}

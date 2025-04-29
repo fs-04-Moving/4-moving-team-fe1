@@ -1,11 +1,10 @@
 'use client';
 
+import authApi from '@/api/auth/auth.api';
 import userApi from '@/api/user/user.api';
 import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { GetUserMe } from '@/types/dtos/user.dto';
-import { logoutHelper } from '@/utils/auth.helper';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import {
   createContext,
   ReactNode,
@@ -42,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const userQueryClient = getBrowserQueryClient({
     queries: {
@@ -53,14 +52,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // accessToken 존재 여부 확인 후 isAuthInitialized 설정
   useEffect(() => {
-    const accessToken =
-      typeof window !== 'undefined'
-        ? localStorage.getItem('accessToken')
-        : null;
+    // const accessToken =
+    //   typeof window !== 'undefined'
+    //     ? localStorage.getItem('accessToken')
+    //     : null;
 
-    if (!accessToken) {
-      setIsLoggedIn(false);
-    }
+    // if (!accessToken) {
+    //   setIsLoggedIn(false);
+    // }
 
     setIsAuthInitialized(true); // accessToken 여부와 상관없이 초기화는 완료
   }, []);
@@ -69,16 +68,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { data: user } = useQuery<GetUserMe>({
     queryFn: userApi.getUserMe,
     queryKey: ['me'],
+    staleTime: Infinity,
     enabled: isAuthInitialized,
     retry: 0,
   });
 
   useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    // if (user) {
+    //   setIsLoggedIn(true);
+    // } else {
+    //   setIsLoggedIn(false);
+    // }
+    setIsLoggedIn(!!user);
   }, [user]);
 
   const logIn = async () => {
@@ -90,9 +91,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logOut = async () => {
-    logoutHelper(() => router.replace('/'));
+    await authApi.logOut();
+    // logoutHelper(() => router.replace('/'));
     setIsLoggedIn(false);
     setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
+    await userQueryClient.invalidateQueries({ queryKey: ['me'] });
   };
 
   const value: AuthContextValue = {

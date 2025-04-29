@@ -19,7 +19,7 @@ import GroupDescriptionInput from '../organisms/GroupDescriptionInput';
 import GroupExperienceInput from '../organisms/GroupExperienceInput';
 import GroupNicknameInput from '../organisms/GroupNicknameInput';
 import GroupProfileImageInput from '../organisms/GroupProfileImageInput';
-import GroupRegionSelect from '../organisms/GroupRegionSelect';
+import GroupRegionSelectWorker from '../organisms/GroupRegionSelectWorker';
 import GroupServiceTypeSelect from '../organisms/GroupServiceTypeSelector';
 import GroupSummaryInput from '../organisms/GroupSummaryInput';
 
@@ -134,7 +134,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
             title1="제공 서비스"
             title2="* 중복 선택 및 수정 가능"
           />
-          <GroupRegionSelect
+          <GroupRegionSelectWorker
             selectedRegion={serviceAreas}
             onRegionSelect={setServiceAreas}
             multipleSelect
