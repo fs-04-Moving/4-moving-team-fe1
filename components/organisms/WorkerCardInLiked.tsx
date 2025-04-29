@@ -37,7 +37,7 @@ export type WorkerCardInLikedProps = {
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
- *   countCompleteMoving={334}
+ *   confirmedEstimatesCount={334}
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
@@ -58,14 +58,14 @@ function WorkerCardInLiked({
 }: WorkerCardInLikedProps) {
   console.log(experience, confirmedEstimatesCount);
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
+    <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
       </div>
       {/* 기사 소개 박스 */}
-      <div className="flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:h-[112px]">
+      <div className="flex justify-between items-center gap-3 shadow-xs bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:h-[112px]">
         <UserAvartar imgUrl={profileImage} sizeInLarge={80} />
         <div className="flex-1 flex flex-col justify-between h-[58px] lg:h-[68px]">
           {/* 기사 이름 */}

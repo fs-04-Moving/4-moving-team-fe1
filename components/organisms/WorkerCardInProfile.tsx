@@ -1,3 +1,4 @@
+
 import icWriting from '@/assets/images/ic-writing.svg';
 import { Area } from '@/types/entities/user.entity';
 import { AREA_DATA, ServiceType } from '@/types/move.type';
@@ -35,7 +36,7 @@ type Props = {
  * @param {number} experience - 기사 경력 (년 단위)
  * @param {number} confirmedEstimatesCount - 확정된 이사 견적 수
  * @param {string} summary - 기사 한 줄 소개 텍스트
- * @param {AreaType} serviceAreas - 기사 활동 지역 (예: { seoul: '서울', incheon: '인천' })
+ * @param {AreaType} serviceAreas - 기사 활동 지역 (예: ['seoul', 'incheon'])
  * @param {ServiceType[]} services - 기사 제공 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
  * @param {() => void} [onConfirm] - '내 프로필 수정' 버튼 클릭 시 실행될 콜백
  * @param {() => void} [onViewDetail] - '기본 정보 수정' 버튼 클릭 시 실행될 콜백
@@ -47,9 +48,9 @@ type Props = {
  *   profileImage="/images/sample.jpg"
  *   nickname="김이사"
  *   experience={8}
- *   confirmedEstimateCount={120}
+ *   confirmedEstimatesCount={120}
  *   summary="빠르고 꼼꼼한 기사입니다."
- *   serviceAreas={{ seoul: '서울', incheon: '인천' }}
+ *   serviceAreas={['seoul', 'incheon']}
  *   services={['smallMove', 'homeMove']}
  *   onConfirm={() => console.log('프로필 수정')}
  *   onViewDetail={() => console.log('기본 정보 수정')}
@@ -88,7 +89,7 @@ function WorkerCardInProfile({
   return (
     <div className="flex flex-col gap-2.5">
       {/* s,m 스크린 */}
-      <div className="flex flex-col lg:justify-between  gap-4 bg-BackGround-200 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] md:h-[186px] lg:w-full lg:h-[272px] px-3.5 py-4 lg:p-6">
+      <div className="flex flex-col lg:justify-between  gap-4 bg-BackGround-200 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] md:h-[186px] lg:w-[1400px] lg:h-[272px] px-3.5 py-4 lg:p-6">
         <div className="flex gap-4 lg:justify-between">
           <span className="lg:hidden">
             <UserAvartar imgUrl={profileImage} />

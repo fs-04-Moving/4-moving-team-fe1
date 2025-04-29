@@ -28,8 +28,8 @@ function CustomerInfoEditPage() {
     email: data.email,
     phoneNumber: data.phoneNumber,
     password: '',
-    newPassword: '',
-    newPasswordConfirm: '',
+    newPassword: undefined,
+    newPasswordConfirm: undefined,
   };
 
   const onSubmit = (formData: UpdateUserInfoDto) => {
