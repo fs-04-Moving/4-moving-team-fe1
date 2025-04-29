@@ -1,5 +1,6 @@
 import Image from "next/image";
 import clsx from "clsx";
+import Icon from "@/assets/images/NoEstimateIcon.svg";
 
 interface ToastPopUpProps {
   size?: "small" | "large";
@@ -19,7 +20,7 @@ function ToastPopUp({ size = "small" }: ToastPopUpProps) {
       )}
     >
       <Image
-        src="/assets/images/NoEstimateIcon.svg"
+        src={Icon}
         alt="확정되지 않음 아이콘"
         width={iconSize}
         height={iconSize}
