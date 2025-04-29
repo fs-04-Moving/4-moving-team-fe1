@@ -11,17 +11,19 @@ export const client = axios.create({
 });
 
 // request interceptor: 클라이언트 환경에서만 accessToken 헤더에 포함
-client.interceptors.request.use(
-  (config) => {
-    // Auth 관련 경로는 제외
-    if (
-      config.url === '/auth/refresh-token' ||
-      config.url === '/auth/sign-up' ||
-      config.url === '/auth/log-in'
-    ) {
-      return config;
-    }
+// 토큰 모두 쿠키로 전달하면서 필요없어짐
+// client.interceptors.request.use(
+//   (config) => {
+//     // Auth 관련 경로는 제외
+//     if (
+//       config.url === '/auth/refresh-token' ||
+//       config.url === '/auth/sign-up' ||
+//       config.url === '/auth/log-in'
+//     ) {
+//       return config;
+//     }
 
+<<<<<<< HEAD
     // SSR 환경에서는 Authorization 건드리지 않음
     // if (typeof window === 'undefined') {
     //   return config;
@@ -32,11 +34,23 @@ client.interceptors.request.use(
     //   config.headers = config.headers || {};
     //   config.headers['Authorization'] = `Bearer ${accessToken}`;
     // }
+=======
+//     // SSR 환경에서는 Authorization 건드리지 않음
+//     if (typeof window === 'undefined') {
+//       return config;
+//     }
 
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+//     const accessToken = localStorage.getItem('accessToken');
+//     if (accessToken && !config.headers?.Authorization) {
+//       config.headers = config.headers || {};
+//       config.headers['Authorization'] = `Bearer ${accessToken}`;
+//     }
+>>>>>>> 5173c95 (refactor: request interceptor 삭제)
+
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 
 // response interceptor: accessToken 만료 시 refreshToken 쿠키로 재요청
 
