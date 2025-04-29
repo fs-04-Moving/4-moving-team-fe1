@@ -2,8 +2,35 @@
 import LeftMenu from "@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage";
 import TopMenu from "@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage";
 import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
+import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
+import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
+import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
+
+const tempParams: ReceivedEstimateRequestSearchParams = {
+  page: 1,
+  pageSize: 5,
+  serviceType: undefined,
+  orderBy: undefined,
+  search: undefined,
+  filter: undefined,
+};
+
+export interface ReceivedEstimateRequest extends EstimateRequest {
+  customerId: string;
+  customerName: string;
+  price: number;
+  estimateId: string | null;
+  createdAt: Date;
+}
 
 function ReceivedRequests() {
+  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useReceivedRequestsQuery(tempParams);
+
+  data?.pages.forEach((page, index) => {
+    console.log(`🧾 page ${index + 1}:`, page.list);
+  });
+
   return (
     <main>
       <div className=" flex justify-center">
@@ -16,38 +43,25 @@ function ReceivedRequests() {
         <section className="w-[327px] md:w-[600px] lg:w-[955px] flex flex-col gap-[32px]">
           <TopMenu />
           <div className="flex flex-col gap-12">
-            <CustomerCardInEstimate
-              serviceType="smallMove"
-              status="assigned"
-              customerName="김인서"
-              movingDate={new Date("2025-07-01")}
-              departure="서울시 중구"
-              destination="경기도 수원시"
-              isConfirmed={false}
-              requestDate={(() => {
-                const today = new Date();
-                today.setDate(today.getDate() + 1); // 내일 날짜
-                return today;
-              })()}
-              price={210000}
-              onSendEstimate={() => console.log("견적 보내기")}
-              onReject={() => console.log("반려")}
-              onViewDetail={() => console.log("상세보기")}
-            />
-            <CustomerCardInEstimate
-              serviceType="smallMove"
-              status="assigned"
-              customerName="김인서"
-              movingDate={new Date("2024-07-01")}
-              departure="서울시 중구"
-              destination="경기도 수원시"
-              isConfirmed={false}
-              requestDate={new Date()}
-              price={210000}
-              onSendEstimate={() => console.log("견적 보내기")}
-              onReject={() => console.log("반려")}
-              onViewDetail={() => console.log("상세보기")}
-            />
+            {data?.pages.flatMap((page) => {
+              return page.list.map((request: ReceivedEstimateRequest) => (
+                <CustomerCardInEstimate
+                  key={request.id}
+                  serviceType={request.serviceType}
+                  status={request.status}
+                  customerName={request.customerName}
+                  movingDate={new Date(request.movingDate)}
+                  departure={request.departure}
+                  destination={request.destination}
+                  isConfirmed={false}
+                  requestDate={new Date(request.createdAt)}
+                  price={request.price}
+                  onSendEstimate={() => console.log("견적 보내기")}
+                  onReject={() => console.log("반려")}
+                  onViewDetail={() => console.log("상세보기")}
+                />
+              ));
+            })}
           </div>
 
           {/* <div ref={ref}></div>  나중에 무한 스크롤 */}
