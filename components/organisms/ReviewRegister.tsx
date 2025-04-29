@@ -80,7 +80,7 @@ function ReviewRegister({ onClose, driver, estimateId }: Props) {
           experience={driver.experience}
           reviewsAverage={driver.countCompleteMoving}
           reviewsCount={driver.countLike}
-          confirmedEstimateCount={driver.isDirectEstimate ? 1 : 0}
+          confirmedEstimatesCount={driver.isDirectEstimate ? 1 : 0}
         />
         <div className="text-[16px] font-[600] flex flex-col gap-y-2">
           <h4>평점을 선택해 주세요.</h4>
