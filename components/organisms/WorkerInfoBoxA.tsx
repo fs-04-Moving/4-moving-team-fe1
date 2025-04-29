@@ -44,7 +44,7 @@ type Props = {
  *   experience={7}
  *   reviewsAverage={4.8}
  *   reviewsCount={178}
- *   confirmedEstimateCount={334}
+ *   confirmedEstimatesCount={334}
  *   isResponsive={false}
  * />
  */

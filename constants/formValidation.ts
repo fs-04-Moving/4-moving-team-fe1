@@ -72,3 +72,43 @@ export const createWorkerProfileValiation = z.object({
     .min(10, { message: '10자 이상이어야 합니다' })
     .max(300, { message: '300자 이내여야 합니다' }),
 });
+
+export const editCustomerInfoValidation = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(1, { message: requiredStr })
+      .min(2, { message: '두 글자 이상이어야 합니다' }),
+    email: z
+      .string()
+      .min(1, { message: requiredStr })
+      .email({ message: '잘못된 이메일 형식입니다' }),
+    phoneNumber: z
+      .string()
+      .min(1, { message: requiredStr })
+      .regex(phoneNumberRegex, '잘못된 전화번호 형식입니다'),
+    password: z
+      .string()
+      .min(1, { message: requiredStr })
+      .min(8, { message: '최소 8자 이상이어야 합니다' })
+      .regex(passwordRegex, '영문/숫자/특수문자를 모두 포함해야 합니다'),
+    newPassword: z
+      .string()
+      .optional()
+      .refine((val) => !val || val.length >= 8, {
+        message: '최소 8자 이상이어야 합니다',
+      })
+      .refine((val) => !val || passwordRegex.test(val), {
+        message: '영문/숫자/특수문자를 모두 포함해야 합니다',
+      }),
+
+    newPasswordConfirm: z.string().optional(),
+  })
+  .refine(
+    ({ newPassword, newPasswordConfirm }) => newPassword === newPasswordConfirm,
+    {
+      path: ['newPasswordConfirm'],
+      message: '비밀번호가 일치하지 않습니다.',
+    }
+  );
