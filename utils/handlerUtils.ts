@@ -30,6 +30,7 @@ export async function handleProfileSuccess({
   const newUser: User = await queryClient.fetchQuery({
     queryKey: ['me'],
     queryFn: () => getUserMeServer(accessToken), //getUserMe를 사용해도 무방(위에서 토큰을 실었으니)
+    staleTime: Infinity,
   });
 
   // 3. 리다이렉트

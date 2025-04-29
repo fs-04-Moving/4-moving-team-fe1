@@ -15,6 +15,7 @@ const logIn = async (dto: LogInDto) => {
 
   const { accessToken } = response.data;
   localStorage.setItem('accessToken', accessToken); // accessToken만 저장
+  console.log('login api accessToken', accessToken);
 
   return response.data;
 };
@@ -37,6 +38,7 @@ const refreshToken = async () => {
 
     const { accessToken } = response.data;
     localStorage.setItem('accessToken', accessToken);
+    console.log('refreshToken api accessToken', accessToken);
 
     return response.data;
   } catch (error) {

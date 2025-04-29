@@ -25,17 +25,5 @@
     // "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": [
-    "node_modules",
-    "app/(providers)/(root)/test",
-    "app/(providers)/(root)/find-worker/page.tsx",
-    "app/(providers)/(root)/test/khju/page.tsx",
-    "components/molecules/MovingTypeDisplay.tsx",
-    "components/molecules/MovingTypeSelector.tsx",
-    "components/molecules/DropdownService.tsx",
-    "components/atoms/ChipEstimateRequestStatus.tsx",
-    "components/organisms/ReviewRegister.tsx",
-    "components/organisms/WorkerCardInEstimate.tsx",
-    "components/organisms/WorkerCardInWating.tsx"
-  ]
+  "exclude": ["node_modules"]
 }

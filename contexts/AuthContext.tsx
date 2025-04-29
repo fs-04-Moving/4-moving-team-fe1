@@ -69,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { data: user } = useQuery<GetUserMe>({
     queryFn: userApi.getUserMe,
     queryKey: ['me'],
+    staleTime: Infinity,
     enabled: isAuthInitialized,
     retry: 0,
   });

@@ -134,7 +134,7 @@ function WorkerCardInProfile({
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3.5 md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
               <RatingSummary
-                reviewsAverage={reviewsAverage}
+                reviewsAverage={reviewsAverage | 0}
                 reviewsCount={reviewsCount}
               />
               <span className="text-GrayScale-100">|</span>

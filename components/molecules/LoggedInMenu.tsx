@@ -6,9 +6,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import icMenu from '@/assets/images/ic-menu.svg';
 import { useAuth } from '@/contexts/AuthContext';
 import useOutsideClick from '@/hooks/useOutsideClick';
-import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { GetUserMe } from '@/types/dtos/user.dto';
-
+import { useQueryClient } from '@tanstack/react-query';
 import IconAlarm from '../atoms/IconAlarm';
 import Portal from '../atoms/Portal';
 import DropdownNotification from './DropdownNotifications';
@@ -37,7 +36,10 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     right: 0,
   });
 
-  const queryClient = getBrowserQueryClient();
+  // const queryClient = getBrowserQueryClient();
+  // !!!! 중요, browerQueryClient는 싱글톤으로 QueryClientProvider에서 내려주므로
+  // 여기에서 getBrowserQueryClient로 새로운 인스턴스를 생성하면 안 된다! (이런 바보같으니)
+  const queryClient = useQueryClient();
 
   // 자주 사용되진 않으나 Dropdown컴포넌트에 전달되어 사용되므로
   // useCallback을 사용해서 문제될 것은 없다고 판단하여 일단 적용해 봄(추후 자세히 분석해보자)
