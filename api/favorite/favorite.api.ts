@@ -25,15 +25,24 @@ const getFavoriteWorkers = async () => {
 // - client는 axios interceptor를 통해 로컬 스토리지의 토큰을 헤더에 탑재
 // - 그러나 서버에서는 로컬 스토리지를 읽지 못함
 // - 따라서 직접 headers에 토큰을 설정해야 함
-const getFavoriteWorkersServer = async () => {
-  const response = await client.get(`${API_URL}/favorite`, {
-    // headers: {
-    //   Authorization: `Bearer ${accessToken}`,
-    // },
-    // SSR이니까 쿠키도 같이 보내야 할 수도 있음
-    withCredentials: true,
+const getFavoriteWorkersServer = async (cookieHeader: string) => {
+  const res = await fetch(`${API_URL}/favorite`, {
+    method: 'GET',
+    headers: {
+      Cookie: cookieHeader,
+    },
+    credentials: 'include',
+    cache: 'no-store',
   });
-  return response.data;
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('SSR getFavoriteWorkersServer 실패', text);
+    throw new Error(`Failed to fetch favorites: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
 };
 
 const favoriteApi = {

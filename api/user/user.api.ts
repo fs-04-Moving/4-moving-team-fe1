@@ -23,12 +23,11 @@ const getUserMe = async () => {
  * @param
  * @returns
  */
-export async function getUserMeServer() {
+export async function getUserMeServer(cookieHeader: string) {
   const res = await fetch(`${API_URL}/user/me`, {
     method: 'GET',
     headers: {
-      // Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
+      Cookie: cookieHeader,
     },
     credentials: 'include', // <- 쿠키도 필요하면 이 옵션 유지
     cache: 'no-store', // Next.js에서 SSR fetch할 때는 이걸 붙여줘야 즉시 데이터 받음

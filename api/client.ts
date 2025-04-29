@@ -116,7 +116,8 @@ export function errorHandler(error: unknown) {
       );
     } else {
       // 네트워크 에러 등으로 response가 없는 경우
-      throw new Error(`Network or CORS error: ${error.message}`);
+      const url = error.config?.url ?? 'unknown URL';
+      throw new Error(`Network or CORS error while accessing: ${url}`);
     }
   }
 

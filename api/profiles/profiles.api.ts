@@ -152,17 +152,35 @@ const getWorkerProfiles = async (params: WorkerSearchParams) => {
   }
 };
 
-const getWorkerProfilesServer = async (params: WorkerSearchParams) => {
-  // const headers: Record<string, string> = accessToken
-  //   ? { Authorization: `Bearer ${accessToken}` }
-  //   : {};
+const getWorkerProfilesServer = async (
+  params: WorkerSearchParams,
+  cookieHeader: string
+) => {
+  const queryString = new URLSearchParams(
+    Object.entries(params).reduce((acc, [key, value]) => {
+      if (value !== undefined && value !== null) {
+        acc[key] = String(value);
+      }
+      return acc;
+    }, {} as Record<string, string>)
+  ).toString();
 
-  const response = await client.get(`${API_URL}/profile/workers`, {
-    // headers,
-    params,
-    withCredentials: true,
+  const res = await fetch(`${API_URL}/profile/workers?${queryString}`, {
+    method: 'GET',
+    headers: {
+      Cookie: cookieHeader,
+    },
+    credentials: 'include',
+    cache: 'no-store',
   });
-  return response.data;
+
+  if (!res.ok) {
+    const text = await res.text();
+    console.error('SSR getWorkerProfilesServer 실패', text);
+    throw new Error(`Failed to fetch worker profiles: ${res.status}`);
+  }
+
+  return res.json();
 };
 
 // 고객 프로필 가져오기(프로필 수정용)
