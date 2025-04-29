@@ -6,30 +6,51 @@ import { movingTypes, filterLists } from "@/libs/mockData";
 import TypeCheckBox from "./TypeCheckBox";
 
 function LeftMenu() {
-  const [selected, setSelected] = useState<Record<number, boolean>>({});
-  const [isMovingType, setIsMovingType] = useState(true); // 현재 선택된 탭 상태
-
-  const items = isMovingType ? movingTypes : filterLists;
-
+  const [movingSelected, setMovingSelected] = useState<Record<number, boolean>>(
+    {}
+  );
+  const [filterSelected, setFilterSelected] = useState<Record<number, boolean>>(
+    {}
+  );
   // 개별 체크박스 토글
-  const toggleCheckbox = (id: number) => {
-    setSelected((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleCheckboxMovingTypes = (id: number) => {
+    setMovingSelected((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const toggleCheckboxFilterLists = (id: number) => {
+    setFilterSelected((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   // 전체 선택/해제 기능
-  const toggleAll = () => {
+  const toggleAllMovingTypes = () => {
     const isAllSelected =
-      Object.keys(selected).length === items.length &&
-      Object.values(selected).every(Boolean);
+      Object.keys(movingSelected).length === movingTypes.length &&
+      Object.values(movingSelected).every(Boolean);
 
     if (isAllSelected) {
-      setSelected({});
+      setMovingSelected({});
     } else {
-      const newSelection = items.reduce((acc, item) => {
-        acc[item.id] = true;
+      const newSelection = movingTypes.reduce((acc, movingType) => {
+        acc[movingType.id] = true;
         return acc;
       }, {} as Record<number, boolean>);
-      setSelected(newSelection);
+      setMovingSelected(newSelection);
+    }
+  };
+
+  const toggleAllFilterLists = () => {
+    const isAllSelected =
+      Object.keys(filterSelected).length === filterLists.length &&
+      Object.values(filterSelected).every(Boolean);
+
+    if (isAllSelected) {
+      setFilterSelected({});
+    } else {
+      const newSelection = filterLists.reduce((acc, filterList) => {
+        acc[filterList.id] = true;
+        return acc;
+      }, {} as Record<number, boolean>);
+      setFilterSelected(newSelection);
     }
   };
 
@@ -42,18 +63,18 @@ function LeftMenu() {
 
           <AllChoiceCheckBoxInWorkerPage
             BoxClassName="flex flex-row gap-4"
-            onClickTotalCheck={toggleAll}
+            onClickTotalCheck={toggleAllMovingTypes}
             isAllSelected={
-              Object.keys(selected).length === items.length &&
-              Object.values(selected).every(Boolean)
+              Object.keys(movingSelected).length === movingTypes.length &&
+              Object.values(movingSelected).every(Boolean)
             }
           />
         </div>
         <div>
           <TypeCheckBox
             items={movingTypes}
-            selected={selected}
-            toggleCheckbox={toggleCheckbox}
+            selected={movingSelected}
+            toggleCheckbox={toggleCheckboxMovingTypes}
           />
         </div>
       </div>
@@ -64,18 +85,18 @@ function LeftMenu() {
           <button className="text-[20px] font-[500]">필터</button>
           <AllChoiceCheckBoxInWorkerPage
             BoxClassName="flex flex-row gap-4"
-            onClickTotalCheck={toggleAll}
+            onClickTotalCheck={toggleAllFilterLists}
             isAllSelected={
-              Object.keys(selected).length === items.length &&
-              Object.values(selected).every(Boolean)
+              Object.keys(filterSelected).length === filterLists.length &&
+              Object.values(filterSelected).every(Boolean)
             }
           />
         </div>
 
         <TypeCheckBox
           items={filterLists}
-          selected={selected}
-          toggleCheckbox={toggleCheckbox}
+          selected={filterSelected}
+          toggleCheckbox={toggleCheckboxFilterLists}
         />
       </div>
     </aside>
