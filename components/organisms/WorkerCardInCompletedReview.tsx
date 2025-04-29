@@ -66,7 +66,7 @@ function WorkerCardInCompletedReview({
   });
 
   return (
-    <div className="flex flex-col justify-between bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[218px] px-3.5 pt-4 pb-2.5 md:w-[600px] lg:w-[688px] lg:h-[362px] lg:gap-8 lg:py-8 lg:px-6">
+    <div className="flex flex-col justify-between bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[218px] shadow-xs px-3.5 pt-4 pb-2.5 md:w-[600px] lg:w-[688px] lg:h-[362px] lg:gap-8 lg:py-8 lg:px-6">
       <div className="flex gap-2.5 justify-between">
         <ChipMovingType type={serviceType} />
         {/* 상단 위치 (lg 화면용) */}
@@ -75,7 +75,7 @@ function WorkerCardInCompletedReview({
         </span>
       </div>
       {/* 기사 소개 박스 */}
-      <div className="flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-b-[1px] lg:border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-7 lg:h-[144px]">
+      <div className="flex justify-between items-center gap-3 shadow-xs bg-GrayScale-50 border-Line-100 border-b-[1px] lg:border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-7 lg:h-[144px]">
         <UserAvartar imgUrl={profileImage} sizeInLarge={96} />
         <div className="flex-1 flex flex-col justify-between h-[52px] lg:h-[112px] lg:justify-center lg:gap-4">
           {/* 기사 이름 */}
