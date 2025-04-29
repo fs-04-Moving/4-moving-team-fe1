@@ -69,7 +69,7 @@ function WorkerCardInSearch({
   return (
     <div
       className={clsx(
-        'flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl min-w-[327px] h-[188px]  px-3.5 py-4 shadow-xs',
+        'flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl min-w-[327px] h-[188px] px-3.5 py-4 shadow-xs',
         isResponsive ? 'lg:px-6 lg:py-5 md:w-full lg:h-[230px]' : ''
       )}
     >
