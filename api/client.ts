@@ -23,29 +23,16 @@ export const client = axios.create({
 //       return config;
 //     }
 
-<<<<<<< HEAD
-    // SSR 환경에서는 Authorization 건드리지 않음
-    // if (typeof window === 'undefined') {
-    //   return config;
-    // }
+// SSR 환경에서는 Authorization 건드리지 않음
+// if (typeof window === 'undefined') {
+//   return config;
+// }
 
-    // const accessToken = localStorage.getItem('accessToken');
-    // if (accessToken && !config.headers?.Authorization) {
-    //   config.headers = config.headers || {};
-    //   config.headers['Authorization'] = `Bearer ${accessToken}`;
-    // }
-=======
-//     // SSR 환경에서는 Authorization 건드리지 않음
-//     if (typeof window === 'undefined') {
-//       return config;
-//     }
-
-//     const accessToken = localStorage.getItem('accessToken');
-//     if (accessToken && !config.headers?.Authorization) {
-//       config.headers = config.headers || {};
-//       config.headers['Authorization'] = `Bearer ${accessToken}`;
-//     }
->>>>>>> 5173c95 (refactor: request interceptor 삭제)
+// const accessToken = localStorage.getItem('accessToken');
+// if (accessToken && !config.headers?.Authorization) {
+//   config.headers = config.headers || {};
+//   config.headers['Authorization'] = `Bearer ${accessToken}`;
+// }
 
 //     return config;
 //   },
@@ -69,6 +56,13 @@ client.interceptors.response.use(
     ) {
       return Promise.reject(error);
     }
+
+    // SSR 환경에선 절대 동작하지 않도록
+    if (typeof window === 'undefined') {
+      return Promise.reject(error);
+    }
+
+    // 인증 오류 발생 시 refrechToken으로 재발급 시도 후 원래 요청 다시 실행하기
     if (statusCode === 401 || statusCode === 419) {
       originalRequest._retry = true;
 
@@ -88,7 +82,7 @@ client.interceptors.response.use(
 
         return client(originalRequest); // 재요청
       } catch (refreshError) {
-        // refreshToken도 만료됐거나 문제 생긴 경우 → 로그아웃
+        // refreshToken도 만료됐거나 문제 생긴 경우에는 로그아웃
         console.error('Refresh token failed', refreshError);
         if (typeof window !== 'undefined') {
           logoutHelper();
