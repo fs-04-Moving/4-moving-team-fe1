@@ -1,4 +1,3 @@
-import { client } from '@/api/client';
 import { getUserMeServer } from '@/api/user/user.api';
 import { User } from '@/types/entities/user.entity';
 import { QueryClient } from '@tanstack/react-query';
@@ -19,8 +18,8 @@ export async function handleProfileSuccess({
 }) {
   if (accessToken) {
     // 1. Axios 헤더와 로컬스토리지에 저장
-    client.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
-    localStorage.setItem('accessToken', accessToken);
+    // client.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
+    // localStorage.setItem('accessToken', accessToken);
   }
 
   // 2. 쿼리 무효화 후 refetch
@@ -29,7 +28,7 @@ export async function handleProfileSuccess({
 
   const newUser: User = await queryClient.fetchQuery({
     queryKey: ['me'],
-    queryFn: () => getUserMeServer(accessToken), //getUserMe를 사용해도 무방(위에서 토큰을 실었으니)
+    queryFn: () => getUserMeServer(), //getUserMe를 사용해도 무방(위에서 토큰을 실었으니)
     staleTime: Infinity,
   });
 

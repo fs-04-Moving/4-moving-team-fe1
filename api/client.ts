@@ -23,15 +23,15 @@ client.interceptors.request.use(
     }
 
     // SSR 환경에서는 Authorization 건드리지 않음
-    if (typeof window === 'undefined') {
-      return config;
-    }
+    // if (typeof window === 'undefined') {
+    //   return config;
+    // }
 
-    const accessToken = localStorage.getItem('accessToken');
-    if (accessToken && !config.headers?.Authorization) {
-      config.headers = config.headers || {};
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
-    }
+    // const accessToken = localStorage.getItem('accessToken');
+    // if (accessToken && !config.headers?.Authorization) {
+    //   config.headers = config.headers || {};
+    //   config.headers['Authorization'] = `Bearer ${accessToken}`;
+    // }
 
     return config;
   },
@@ -66,8 +66,7 @@ client.interceptors.response.use(
           return Promise.reject(error);
         }
 
-        const { accessToken } = res;
-        const newAccessToken = accessToken.accessToken;
+        const newAccessToken = res.accessToken.accessToken;
 
         // 새 토큰을 헤더에 반영
         console.log('axios accessToken', newAccessToken);

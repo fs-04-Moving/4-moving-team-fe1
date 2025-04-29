@@ -1,7 +1,6 @@
 import favoriteApi from '@/api/favorite/favorite.api';
 import ListFavoriteWorker from '@/components/organisms/ListFavoriteWorker';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
-import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Metadata } from 'next';
 
@@ -11,12 +10,12 @@ export const metadata: Metadata = {
 };
 
 async function FavoriteWorkersPage() {
-  const accessToken = await getAccessTokenFromRefresh();
+  // const accessToken = await getAccessTokenFromRefresh();
 
-  if (!accessToken) {
-    console.warn('No access token available during SSR.');
-    return <ListFavoriteWorker />; // CSR fallback
-  }
+  // if (!accessToken) {
+  //   console.warn('No access token available during SSR.');
+  //   return <ListFavoriteWorker />; // CSR fallback
+  // }
 
   const { queryClient } = await handleSSRPrefetch([
     // layout(ProvidersLayout)에서 user를 setQueryData로 캐싱하고 있으므로 현재 구조에선 불필요
@@ -27,7 +26,7 @@ async function FavoriteWorkersPage() {
     // },
     {
       queryKey: ['favorites'],
-      queryFn: () => favoriteApi.getFavoriteWorkersServer(accessToken),
+      queryFn: () => favoriteApi.getFavoriteWorkersServer(),
     },
   ]);
 

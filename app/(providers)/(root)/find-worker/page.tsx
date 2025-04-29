@@ -4,7 +4,6 @@
 import profilesApi from '@/api/profiles/profiles.api';
 import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { WorkerPage, WorkerSearchParams } from '@/types/dtos/Worker.dto';
-import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import FindWorkerClient from './FindWorkerClient';
 
@@ -18,15 +17,15 @@ const baseParams: WorkerSearchParams = {
 };
 
 async function FindWorkerPage() {
-  const accessToken = await getAccessTokenFromRefresh();
+  // const accessToken = await getAccessTokenFromRefresh();
 
   const queryClient = createServerQueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: ['workers', baseParams],
     queryFn: ({ pageParam = 1 }) => {
       return profilesApi.getWorkerProfilesServer(
-        { ...baseParams, page: pageParam },
-        accessToken
+        { ...baseParams, page: pageParam }
+        // accessToken
       );
     },
     initialPageParam: 1,

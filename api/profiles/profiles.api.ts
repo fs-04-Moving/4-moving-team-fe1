@@ -152,16 +152,13 @@ const getWorkerProfiles = async (params: WorkerSearchParams) => {
   }
 };
 
-const getWorkerProfilesServer = async (
-  params: WorkerSearchParams,
-  accessToken: string | null
-) => {
-  const headers: Record<string, string> = accessToken
-    ? { Authorization: `Bearer ${accessToken}` }
-    : {};
+const getWorkerProfilesServer = async (params: WorkerSearchParams) => {
+  // const headers: Record<string, string> = accessToken
+  //   ? { Authorization: `Bearer ${accessToken}` }
+  //   : {};
 
   const response = await client.get(`${API_URL}/profile/workers`, {
-    headers,
+    // headers,
     params,
     withCredentials: true,
   });

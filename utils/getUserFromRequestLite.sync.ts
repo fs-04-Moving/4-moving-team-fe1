@@ -5,11 +5,11 @@ import { decodeJWT } from './jwtUtils';
 
 export function getUserFromRequestLiteSync() {
   const cookieStore = cookies() as unknown as RequestCookies;
-  const refreshToken = cookieStore.get('refreshToken')?.value;
+  const accessToken = cookieStore.get('accessToken')?.value;
 
-  if (!refreshToken) return null;
+  if (!accessToken) return null;
 
-  const payload = decodeJWT<JwtPayload>(refreshToken);
+  const payload = decodeJWT<JwtPayload>(accessToken);
 
   if (!payload || !payload.role || typeof payload.hasProfile === 'undefined') {
     console.warn('[middleware] ⚠️ Invalid JWT payload structure:', payload);
