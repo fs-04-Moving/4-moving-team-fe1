@@ -1,5 +1,5 @@
 import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 export interface PrefetchQuery<T> {
   queryKey: unknown[];
@@ -25,6 +25,5 @@ export async function handleSSRPrefetch(queries: PrefetchQuery<unknown>[]) {
 
   return {
     queryClient,
-    dehydratedState: dehydrate(queryClient),
   };
 }

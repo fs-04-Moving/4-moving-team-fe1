@@ -26,7 +26,7 @@ export type UserInfoEditDto = Pick<User, 'name' | 'email' | 'phoneNumber'>;
 // 로그인 사용자 정보
 export type GetUserMe = Pick<
   User,
-  'name' | 'hasProfile' | 'role' | 'hasRequest' | 'profileImage'
+  'name' | 'hasProfile' | 'role' | 'hasRequest' | 'profileImage' | 'sub'
 >;
 
 /* ------------------- 백엔드 API 비교 완료 --------------------- */

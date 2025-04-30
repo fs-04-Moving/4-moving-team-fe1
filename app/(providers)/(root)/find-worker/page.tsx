@@ -4,13 +4,15 @@
 import profilesApi from "@/api/profiles/profiles.api";
 import { createServerQueryClient } from "@/libs/tanstack-query/reactQueryConfig";
 import { WorkerPage, WorkerSearchParams } from "@/types/dtos/Worker.dto";
-import { getAccessTokenFromRefresh } from "@/utils/jwtUtils";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { cookies } from "next/headers";
 import FindWorkerClient from "./FindWorkerClient";
 
+// 이것이 CSR의 것과 완전히 동일해야 SSR이 성공합니다.
+// 안 그러면 클라이언트에서 다시 받아요
 const baseParams: WorkerSearchParams = {
   page: 1,
-  pageSize: 5,
+  pageSize: 3,
   serviceArea: undefined,
   serviceType: undefined,
   orderBy: undefined,
@@ -18,15 +20,19 @@ const baseParams: WorkerSearchParams = {
 };
 
 async function FindWorkerPage() {
-  const accessToken = await getAccessTokenFromRefresh();
-
+  // const accessToken = await getAccessTokenFromRefresh();
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
   const queryClient = createServerQueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["workers", baseParams],
     queryFn: ({ pageParam = 1 }) => {
       return profilesApi.getWorkerProfilesServer(
         { ...baseParams, page: pageParam },
-        accessToken
+        cookieHeader
       );
     },
     initialPageParam: 1,
@@ -40,6 +46,7 @@ async function FindWorkerPage() {
   });
 
   const dehydratedState = dehydrate(queryClient);
+  console.log(dehydratedState);
 
   return (
     <main>

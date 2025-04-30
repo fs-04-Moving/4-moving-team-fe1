@@ -41,6 +41,7 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
               fixed z-50 bg-white p-6
               ${width} ${height}
               bottom-0 left-0
+              rounded-2xl
               sm:w-[400px] sm:top-1/2 sm:left-1/2 sm:bottom-auto
               sm:translate-x-[-50%] sm:translate-y-[-50%]
               sm:rounded-2xl sm:shadow-xl

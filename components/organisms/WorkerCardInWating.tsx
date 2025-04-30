@@ -1,13 +1,14 @@
-import { EstimateStatus, ServiceType } from '@/types/move.type';
-import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
-import ChipMovingType from '../atoms/ChipMovingType';
-import WorkerInfoBoxA from './WorkerInfoBoxA';
-import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
-import ButtonSolid from '../atoms/ButtonSolid';
-import ButtonOutlined from '../atoms/ButtonOutlined';
-import ChipText from '../atoms/ChipText';
+
+import { EstimateRequestStatus, ServiceType } from '@/types/move.type';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import ButtonOutlined from '../atoms/ButtonOutlined';
+import ButtonSolid from '../atoms/ButtonSolid';
+import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
+import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
+import ChipMovingType from '../atoms/ChipMovingType';
+import ChipText from '../atoms/ChipText';
+import WorkerInfoBoxA from './WorkerInfoBoxA';
 
 type Props = {
   profileImage: string;

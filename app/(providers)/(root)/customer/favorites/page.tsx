@@ -1,9 +1,9 @@
 import favoriteApi from '@/api/favorite/favorite.api';
 import ListFavoriteWorker from '@/components/organisms/ListFavoriteWorker';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
-import { getAccessTokenFromRefresh } from '@/utils/jwtUtils';
-import { HydrationBoundary } from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: '찜한 기사님 목록',
@@ -11,27 +11,36 @@ export const metadata: Metadata = {
 };
 
 async function FavoriteWorkersPage() {
-  const accessToken = await getAccessTokenFromRefresh();
+  // const accessToken = await getAccessTokenFromRefresh();
+  // if (!accessToken) {
+  //   console.warn('No access token available during SSR.');
+  //   return <ListFavoriteWorker />; // CSR fallback
+  // }
 
-  if (!accessToken) {
-    console.warn('No access token available during SSR.');
-    return <ListFavoriteWorker />; // CSR fallback
-  }
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join('; ');
 
-  const { dehydratedState } = await handleSSRPrefetch([
+  const { queryClient } = await handleSSRPrefetch([
     // layout(ProvidersLayout)에서 user를 setQueryData로 캐싱하고 있으므로 현재 구조에선 불필요
+    // 쿼리 함수가 1개라면 굳이 핸들러를 따로 뺄 필요가 없었으나 학습을 위해 핸들러 유지
     // {
     //   queryKey: ['me'],
     //   queryFn: () => userApi.getUserMeServer(accessToken),
     // },
     {
       queryKey: ['favorites'],
-      queryFn: () => favoriteApi.getFavoriteWorkersServer(accessToken),
+      queryFn: () => favoriteApi.getFavoriteWorkersServer(cookieHeader),
     },
   ]);
 
+  const dehydrateState = dehydrate(queryClient);
+  console.log('dehydrateState', dehydrateState);
+
   return (
-    <HydrationBoundary state={dehydratedState}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
       <ListFavoriteWorker />
     </HydrationBoundary>
   );

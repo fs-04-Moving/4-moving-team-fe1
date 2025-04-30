@@ -28,16 +28,10 @@ const getReceivedEstimateRequests = async (
 };
 
 const getReceivedEstimateRequestsSever = async (
-  accessToken: string,
   params: ReceivedEstimateRequestSearchParams
 ) => {
   try {
-    const headers: Record<string, string> = accessToken
-      ? { Authorization: `Bearer ${accessToken}` }
-      : {};
-
     const response = await client.get(`${API_URL}/estimate-request/received`, {
-      headers,
       params,
       withCredentials: true,
     });
