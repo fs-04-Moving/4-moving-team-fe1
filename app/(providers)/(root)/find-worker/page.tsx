@@ -1,7 +1,6 @@
 // SSR 구조
 // 이 구조를 사용하면 CSR의 queryFn 로그가 찍히지 않습니다.
 
-import profilesApi from "@/api/profiles/profiles.api";
 import { createServerQueryClient } from "@/libs/tanstack-query/reactQueryConfig";
 import { WorkerPage, WorkerSearchParams } from "@/types/dtos/Worker.dto";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
