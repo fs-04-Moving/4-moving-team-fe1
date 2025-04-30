@@ -19,7 +19,7 @@ function ButtonAuth() {
     queryKey: ['me'],
     queryFn: userApi.getUserMe,
     initialData: () => queryClient.getQueryData(['me']),
-    staleTime: Infinity, // 5분 동안은 재요청 안함 (CSR 시 중복 방지)
+    staleTime: Infinity,
     enabled: typeof window !== 'undefined', // CSR에서만 실행되게
   });
 

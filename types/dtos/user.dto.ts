@@ -3,13 +3,9 @@ import { User } from '../entities/user.entity';
 // 사용자 기본 정보 수정 시 사용합니다.
 export type UpdateUserInfoDto = Pick<
   User,
-  | 'name'
-  | 'email'
-  | 'phoneNumber'
-  | 'password'
-  | 'newPassword'
-  | 'newPasswordConfirm'
->;
+  'name' | 'email' | 'phoneNumber' | 'password'
+> &
+  Partial<Pick<User, 'newPassword' | 'newPasswordConfirm'>>;
 
 export interface Worker {
   workerId: number;
@@ -30,7 +26,7 @@ export type UserInfoEditDto = Pick<User, 'name' | 'email' | 'phoneNumber'>;
 // 로그인 사용자 정보
 export type GetUserMe = Pick<
   User,
-  'name' | 'hasProfile' | 'role' | 'hasRequest' | 'profileImage'
+  'name' | 'hasProfile' | 'role' | 'hasRequest' | 'profileImage' | 'sub'
 >;
 
 /* ------------------- 백엔드 API 비교 완료 --------------------- */

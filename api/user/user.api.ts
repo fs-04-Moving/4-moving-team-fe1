@@ -1,6 +1,6 @@
 import { API_URL } from '@/constants/env';
-import { client, errorHandler } from '../client';
 import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
+import { client, errorHandler } from '../client';
 
 // 내 정보 조회
 const getUserMe = async () => {
@@ -20,15 +20,14 @@ const getUserMe = async () => {
 /**
  * 기존 getUserMe가 있는데 별도로 server용을 만든 이유는?
  * - 서버 환경에서는 axios의 쿠키/인터셉터가 작동하지 않으므로 fetch로 직접 호출
- * @param accessToken
+ * @param
  * @returns
  */
-export async function getUserMeServer(accessToken: string) {
+export async function getUserMeServer(cookieHeader: string) {
   const res = await fetch(`${API_URL}/user/me`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
+      Cookie: cookieHeader,
     },
     credentials: 'include', // <- 쿠키도 필요하면 이 옵션 유지
     cache: 'no-store', // Next.js에서 SSR fetch할 때는 이걸 붙여줘야 즉시 데이터 받음

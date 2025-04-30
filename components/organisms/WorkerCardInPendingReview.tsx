@@ -8,7 +8,7 @@ type Props = {
   profileImage: string;
   nickname: string;
   experience: number;
-  countCompleteMoving: boolean;
+  confirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
@@ -26,7 +26,7 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
- * @param {boolean} countCompleteMoving - 확정된 이사 건수
+ * @param {number} confirmedEstimatesCount - 확정된 이사 건수
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 해당 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사 제공 서비스 유형 리스트
@@ -38,7 +38,7 @@ type Props = {
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
- *   countCompleteMoving={334}
+ *   confirmedEstimatesCount={334}
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
@@ -50,7 +50,7 @@ function WorkerCardInPendingReview({
   profileImage,
   nickname,
   experience,
-  countCompleteMoving,
+  confirmedEstimatesCount,
   isFavorite,
   favoritesCount,
   services,
@@ -58,14 +58,14 @@ function WorkerCardInPendingReview({
   reviewsCount,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
+    <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
       </div>
       {/* 기사 소개 박스 */}
-      <div className="flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:h-[112px]">
+      <div className="flex justify-between items-center gap-3 shadow-xs bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:h-[112px]">
         <UserAvartar imgUrl={profileImage} sizeInLarge={80} />
         <div className="flex-1 flex flex-col justify-between h-[58px] lg:h-[68px]">
           {/* 기사 이름 */}
@@ -89,7 +89,7 @@ function WorkerCardInPendingReview({
             </span>
             <span className="text-GrayScale-100">|</span>
             <span>
-              {`${countCompleteMoving}건 `}
+              {`${confirmedEstimatesCount}건 `}
               <span className="text-GrayScale-300">확정</span>
             </span>
           </div>

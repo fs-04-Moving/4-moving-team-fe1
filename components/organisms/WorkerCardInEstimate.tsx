@@ -8,7 +8,7 @@ type Props = {
   nickname: string;
   experience: number;
   summary: string;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
@@ -28,7 +28,7 @@ type Props = {
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 연수
  * @param {string} summary - 기사 한줄 소개
- * @param {number} confirmedEstimateCount - 해당 기사의 견적 확정 건수
+ * @param {number} confirmedEstimatesCount - 해당 기사의 견적 확정 건수
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열
@@ -43,12 +43,12 @@ type Props = {
  *   nickname="김코드"
  *   experience={7}
  *   summary="안전하고 깔끔한 이사 도와드립니다."
- *   confirmedEstimateCount={334}
+ *   confirmedEstimatesCount={334}
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
  *   isDirectEstimate={true}
- *   price="1800000"
+ *   price={1800000}
  *   reviewsAverage={4.7}
  *   reviewsCount={108}
  * />
@@ -58,7 +58,7 @@ function WorkerCardInEstimate({
   nickname,
   experience,
   summary,
-  confirmedEstimateCount,
+  confirmedEstimatesCount,
   isFavorite,
   favoritesCount,
   services,
@@ -68,7 +68,7 @@ function WorkerCardInEstimate({
   reviewsCount,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] lg:w-[688px] lg:h-[280px] px-3.5 py-4">
+    <div className="flex flex-col justify-between shadow-xs gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] lg:w-[688px] lg:h-[280px] px-3.5 py-4">
       <div className="flex gap-2.5">
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
@@ -84,7 +84,7 @@ function WorkerCardInEstimate({
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        confirmedEstimateCount={confirmedEstimateCount}
+        confirmedEstimatesCount={confirmedEstimatesCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
       />

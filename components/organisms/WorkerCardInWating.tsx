@@ -1,25 +1,26 @@
+
 import { EstimateRequestStatus, ServiceType } from '@/types/move.type';
-import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
-import ChipMovingType from '../atoms/ChipMovingType';
-import WorkerInfoBoxA from './WorkerInfoBoxA';
-import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
-import ButtonSolid from '../atoms/ButtonSolid';
-import ButtonOutlined from '../atoms/ButtonOutlined';
-import ChipText from '../atoms/ChipText';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import ButtonOutlined from '../atoms/ButtonOutlined';
+import ButtonSolid from '../atoms/ButtonSolid';
+import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
+import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
+import ChipMovingType from '../atoms/ChipMovingType';
+import ChipText from '../atoms/ChipText';
+import WorkerInfoBoxA from './WorkerInfoBoxA';
 
 type Props = {
   profileImage: string;
   nickname: string;
   experience: number;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
   isDirectEstimate: boolean;
   price: number;
-  estimateRequestStatus: EstimateRequestStatus;
+  status: EstimateStatus;
   movingDate: Date;
   departure: string;
   destination: string;
@@ -41,13 +42,13 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 (년 단위)
- * @param {number} confirmedEstimateCount - 기사 견적 확정 건수
+ * @param {number} confirmedEstimatesCount - 기사 견적 확정 건수
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 총 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
  * @param {boolean} isDirectEstimate - 지정 견적 여부
  * @param {number} price - 견적 금액 (단위: 원)
- * @param {EstimateRequestStatus} estimateRequestStatus - 견적 요청 상태
+ * @param {EstimateStatus} status - 견적 요청 상태
  * @param {Date} movingDate - 이사일 (날짜 객체)
  * @param {string} departure - 출발지
  * @param {string} destination - 도착지
@@ -61,13 +62,13 @@ type Props = {
  *   profileImage="/images/driver1.png"
  *   nickname="김이사"
  *   experience={8}
- *   confirmedEstimateCount={342}
+ *   confirmedEstimatesCount={342}
  *   isFavorite={true}
  *   favoritesCount={128}
  *   services={['smallMove', 'homeMove']}
  *   isDirectEstimate={true}
  *   price={210000}
- *   estimateRequestStatus="pending" // 실제 Enum 값으로 대체 필요
+ *   status="general" // 실제 Enum 값으로 대체 필요
  *   movingDate={new Date('2024-07-01')}
  *   departure="서울시 중구"
  *   destination="경기도 수원시"
@@ -81,13 +82,13 @@ function WorkerCardInWating({
   profileImage,
   nickname,
   experience,
-  confirmedEstimateCount,
+  confirmedEstimatesCount,
   isFavorite,
   favoritesCount,
   services,
   isDirectEstimate,
   price,
-  estimateRequestStatus,
+  status,
   movingDate,
   departure,
   destination,
@@ -105,9 +106,9 @@ function WorkerCardInWating({
   const formattedDate = formatDateFnsKorean(movingDate);
 
   return (
-    <div className="flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
+    <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
       <div className="flex gap-2.5">
-        <ChipEstimateRequestStatus type={estimateRequestStatus} />
+        <ChipEstimateRequestStatus type={status} />
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} isShort={true} />
         ))}
@@ -122,7 +123,7 @@ function WorkerCardInWating({
         profileImage={profileImage}
         nickname={nickname}
         experience={experience}
-        confirmedEstimateCount={confirmedEstimateCount}
+        confirmedEstimatesCount={confirmedEstimatesCount}
         isFavorite={isFavorite}
         favoritesCount={favoritesCount}
         reviewsAverage={reviewsAverage}

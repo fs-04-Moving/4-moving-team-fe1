@@ -1,18 +1,19 @@
+
+import icWriting from '@/assets/images/ic-writing.svg';
+import { Area } from '@/types/entities/user.entity';
 import { AREA_DATA, ServiceType } from '@/types/move.type';
-import ButtonSolid from '../atoms/ButtonSolid';
+import Image from 'next/image';
 import ButtonOutlined from '../atoms/ButtonOutlined';
+import ButtonSolid from '../atoms/ButtonSolid';
 import ChipText from '../atoms/ChipText';
 import UserAvartar from '../atoms/UserAvartar';
 import RatingSummary from '../molecules/RatingSummary';
-import Image from 'next/image';
-import icWriting from '@/assets/images/ic-writing.svg';
-import { Area } from '@/types/entities/user.entity';
 
 type Props = {
   profileImage: string;
   nickname: string;
   experience: string;
-  confirmedEstimateCount: number;
+  confirmedEstimatesCount: number;
   services: ServiceType[];
   onConfirm?: () => void;
   onViewDetail?: () => void;
@@ -33,9 +34,9 @@ type Props = {
  * @param {string} profileImage - 기사 프로필 이미지 URL
  * @param {string} nickname - 기사 닉네임
  * @param {number} experience - 기사 경력 (년 단위)
- * @param {number} confirmedEstimateCount - 확정된 이사 견적 수
+ * @param {number} confirmedEstimatesCount - 확정된 이사 견적 수
  * @param {string} summary - 기사 한 줄 소개 텍스트
- * @param {AreaType} serviceAreas - 기사 활동 지역 (예: { seoul: '서울', incheon: '인천' })
+ * @param {AreaType} serviceAreas - 기사 활동 지역 (예: ['seoul', 'incheon'])
  * @param {ServiceType[]} services - 기사 제공 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
  * @param {() => void} [onConfirm] - '내 프로필 수정' 버튼 클릭 시 실행될 콜백
  * @param {() => void} [onViewDetail] - '기본 정보 수정' 버튼 클릭 시 실행될 콜백
@@ -47,9 +48,9 @@ type Props = {
  *   profileImage="/images/sample.jpg"
  *   nickname="김이사"
  *   experience={8}
- *   confirmedEstimateCount={120}
+ *   confirmedEstimatesCount={120}
  *   summary="빠르고 꼼꼼한 기사입니다."
- *   serviceAreas={{ seoul: '서울', incheon: '인천' }}
+ *   serviceAreas={['seoul', 'incheon']}
  *   services={['smallMove', 'homeMove']}
  *   onConfirm={() => console.log('프로필 수정')}
  *   onViewDetail={() => console.log('기본 정보 수정')}
@@ -61,7 +62,7 @@ function WorkerCardInProfile({
   profileImage,
   nickname,
   experience,
-  confirmedEstimateCount,
+  confirmedEstimatesCount,
   summary,
   serviceAreas,
   services,
@@ -88,7 +89,7 @@ function WorkerCardInProfile({
   return (
     <div className="flex flex-col gap-2.5">
       {/* s,m 스크린 */}
-      <div className="flex flex-col lg:justify-between  gap-4 bg-BackGround-200 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] md:h-[186px] lg:w-full lg:h-[272px] px-3.5 py-4 lg:p-6">
+      <div className="flex flex-col lg:justify-between  gap-4 bg-BackGround-200 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[222px] md:w-[600px] md:h-[186px] lg:w-[1400px] lg:h-[272px] px-3.5 py-4 lg:p-6">
         <div className="flex gap-4 lg:justify-between">
           <span className="lg:hidden">
             <UserAvartar imgUrl={profileImage} />
@@ -134,7 +135,7 @@ function WorkerCardInProfile({
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3.5 md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
               <RatingSummary
-                reviewsAverage={reviewsAverage}
+                reviewsAverage={reviewsAverage | 0}
                 reviewsCount={reviewsCount}
               />
               <span className="text-GrayScale-100">|</span>
@@ -144,7 +145,7 @@ function WorkerCardInProfile({
               </span>
               <span className="text-GrayScale-100">|</span>
               <span>
-                {`${confirmedEstimateCount}건 `}
+                {`${confirmedEstimatesCount}건 `}
                 <span className="text-GrayScale-300">확정</span>
               </span>
             </div>

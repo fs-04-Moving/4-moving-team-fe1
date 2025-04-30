@@ -1,5 +1,7 @@
+import WorkerMyPage from '@/components/organisms/WorkerMyPage';
+
 function MyPage() {
-  return <div>MyPage</div>;
+  return <WorkerMyPage />;
 }
 
 export default MyPage;
