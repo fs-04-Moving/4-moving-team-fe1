@@ -8,7 +8,7 @@ interface FormValues {
   keyword: string;
 }
 
-function TopMenu() {
+function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { control, handleSubmit } = useForm({
@@ -55,7 +55,7 @@ function TopMenu() {
         />
       </form>
       <div className="w-full flex justify-between items-center ">
-        <span className="text-[16px] font-medium">전체 8건</span>
+        <span className="text-[16px] font-medium">{`전체 ${totalCount}건`}</span>
         <span className="z-10">
           <DropdownSort
             onChange={handleOrderBySelect}
@@ -72,4 +72,4 @@ function TopMenu() {
   );
 }
 
-export default TopMenu;
+export default TopMemuInWorkerPage;

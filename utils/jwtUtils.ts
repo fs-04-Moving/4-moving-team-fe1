@@ -1,5 +1,5 @@
-import { API_URL } from '@/constants/env';
-import { cookies } from 'next/headers';
+import { API_URL } from "@/constants/env";
+import { cookies } from "next/headers";
 
 /**
  * JWT 디코딩 유틸(base64 디코딩)
@@ -8,13 +8,13 @@ import { cookies } from 'next/headers';
  */
 export function decodeJWT<T = unknown>(token: string): T | null {
   try {
-    const payload = token.split('.')[1];
-    const decoded = Buffer.from(payload, 'base64url').toString('utf8');
+    const payload = token.split(".")[1];
+    const decoded = Buffer.from(payload, "base64url").toString("utf8");
     const parsed = JSON.parse(decoded);
 
     return parsed as T;
   } catch (error) {
-    console.error('Failed to decode JWT:', error);
+    console.error("Failed to decode JWT:", error);
     return null;
   }
 }
@@ -31,14 +31,14 @@ export async function getAccessTokenFromRefreshByRefreshToken(
 ): Promise<string | null> {
   try {
     const tokenValue =
-      typeof refreshToken === 'string' ? refreshToken : refreshToken.value;
+      typeof refreshToken === "string" ? refreshToken : refreshToken.value;
 
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Cookie: `refreshToken=${tokenValue}`,
         },
       }
@@ -46,8 +46,8 @@ export async function getAccessTokenFromRefreshByRefreshToken(
 
     if (!res.ok) {
       const message = await res.text();
-      if (res.status === 401 && message.includes('No refresh token')) {
-        console.debug('No refresh token - skipping silently.');
+      if (res.status === 401 && message.includes("No refresh token")) {
+        console.debug("No refresh token - skipping silently.");
         return null;
       }
       throw new Error(`${res.status}: ${message}`);
@@ -56,7 +56,7 @@ export async function getAccessTokenFromRefreshByRefreshToken(
     const data = await res.json();
     return data.accessToken.accessToken;
   } catch (error) {
-    console.error('Failed to get access token from refresh token', error);
+    console.error("Failed to get access token from refresh token", error);
     return null;
   }
 }
@@ -69,19 +69,18 @@ export async function getAccessTokenFromRefreshByRefreshToken(
  */
 export async function getAccessTokenFromRefresh(): Promise<string | null> {
   const cookieStore = cookies();
-  console.log('SSR refreshToken:', (await cookieStore).getAll());
-  const refreshToken = (await cookieStore).get('refreshToken')?.value;
+  console.log("SSR refreshToken:", (await cookieStore).getAll());
+  const refreshToken = (await cookieStore).get("refreshToken")?.value;
 
   // 로그인 안 된 경우: 조용히 null 반환
   if (!refreshToken) {
     return null;
   }
-
   try {
     const res = await fetch(`${API_URL}/auth/refresh-token`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Cookie: `refreshToken=${refreshToken}`,
       },
     });
@@ -89,18 +88,18 @@ export async function getAccessTokenFromRefresh(): Promise<string | null> {
     if (!res.ok) {
       // 실제로 refresh-token이 유효하지 않을 때만 에러 출력
       const message = await res.text();
-      if (res.status === 401 && message.includes('No refresh token')) {
-        console.debug('No refresh token in SSR - skipping silently.');
+      if (res.status === 401 && message.includes("No refresh token")) {
+        console.debug("No refresh token in SSR - skipping silently.");
         return null;
       }
       throw new Error(`${res.status}: ${message}`);
     }
 
     const data = await res.json();
-    return data.accessToken.accessToken;
+    return data.accessToken;
   } catch (error) {
     // 네트워크 문제 등 예외적인 경우
-    console.error('Refresh token request failed', error);
+    console.error("Refresh token request failed", error);
     return null;
   }
 }
@@ -110,6 +109,6 @@ export async function getAccessTokenFromRefresh(): Promise<string | null> {
  * @returns
  */
 export const getAccessTokenFromStorage = () => {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem('accessToken');
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("accessToken");
 };

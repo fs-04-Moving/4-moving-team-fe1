@@ -1,14 +1,15 @@
 "use client";
-import LeftMenu from "@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage";
-import TopMenu from "@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage";
+import LeftMenuInWorkerPage from "@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage";
+import TopMemuInWorkerPage from "@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage";
 import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
 import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
 import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
 import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
+import { useEffect } from "react";
 
 const tempParams: ReceivedEstimateRequestSearchParams = {
   page: 1,
-  pageSize: 5,
+  pageSize: 3,
   serviceType: undefined,
   orderBy: undefined,
   search: undefined,
@@ -27,9 +28,7 @@ function ReceivedRequests() {
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useReceivedRequestsQuery(tempParams);
 
-  data?.pages.forEach((page, index) => {
-    console.log(`🧾 page ${index + 1}:`, page.list);
-  });
+  const totalCount = data?.pages?.[0]?.totalCount;
 
   return (
     <main>
@@ -39,9 +38,9 @@ function ReceivedRequests() {
         </h2>
       </div>
       <div className="flex justify-center gap-28">
-        <LeftMenu />
+        <LeftMenuInWorkerPage />
         <section className="w-[327px] md:w-[600px] lg:w-[955px] flex flex-col gap-[32px]">
-          <TopMenu />
+          <TopMemuInWorkerPage totalCount={totalCount} />
           <div className="flex flex-col gap-12">
             {data?.pages.flatMap((page) => {
               return page.list.map((request: ReceivedEstimateRequest) => (

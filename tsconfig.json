@@ -28,7 +28,6 @@
   "exclude": [
     "node_modules",
     "app/(providers)/(root)/test",
-    "app/(providers)/(root)/find-worker/page.tsx",
     "app/(providers)/(root)/test/khju/page.tsx",
     "components/molecules/MovingTypeDisplay.tsx",
     "components/molecules/MovingTypeSelector.tsx",

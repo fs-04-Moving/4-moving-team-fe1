@@ -12,7 +12,7 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
  */
 const baseParams: ReceivedEstimateRequestSearchParams = {
   page: 1,
-  pageSize: 5,
+  pageSize: 3,
   serviceType: undefined,
   orderBy: undefined,
   search: undefined,

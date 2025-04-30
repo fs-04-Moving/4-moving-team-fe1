@@ -21,7 +21,6 @@ const getReceivedEstimateRequests = async (
   try {
     const url = "/estimate-request/received";
     const response = await client.get(url, { params });
-    console.log("data는??:", response.data);
     return response.data;
   } catch (e) {
     throw e;
@@ -42,7 +41,6 @@ const getReceivedEstimateRequestsSever = async (
       params,
       withCredentials: true,
     });
-    console.log("getRecivedEstimate:", response.data);
     return response.data;
   } catch (e) {
     throw e;
