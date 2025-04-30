@@ -1,5 +1,4 @@
-
-import { EstimateRequestStatus, ServiceType } from '@/types/move.type';
+import { EstimateStatus, ServiceType } from '@/types/move.type';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import ButtonOutlined from '../atoms/ButtonOutlined';
@@ -105,6 +104,9 @@ function WorkerCardInWating({
 
   const formattedDate = formatDateFnsKorean(movingDate);
 
+  const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
+  const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
+
   return (
     <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
       <div className="flex gap-2.5">
@@ -138,10 +140,10 @@ function WorkerCardInWating({
         <span className="hidden lg:inline-block text-GrayScale-200">|</span>
         <div className="flex lg:items-center gap-2 lg:gap-3">
           <ChipText>출발</ChipText>
-          <span>{departure}</span>
+          <span>{formattedDeparture}</span>
           <span className="text-GrayScale-200">|</span>
           <ChipText>도착</ChipText>
-          <span>{destination}</span>
+          <span>{formattedDestination}</span>
         </div>
       </div>
       <div className="flex justify-end items-end gap-2 lg:gap-4">

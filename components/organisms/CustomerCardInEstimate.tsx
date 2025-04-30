@@ -89,7 +89,8 @@ function CustomerCardInEstimate({
     locale: ko,
   });
 
-  console.log(new Date());
+  const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
+  const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
 
   return (
     <div className="relative">
@@ -122,10 +123,10 @@ function CustomerCardInEstimate({
             <span className="hidden md:inline-block text-GrayScale-200">|</span>
             <div className="flex md:items-center gap-2 lg:gap-3">
               <ChipText>출발</ChipText>
-              <span>{departure}</span>
+              <span>{formattedDeparture}</span>
               <span className="text-GrayScale-200">|</span>
               <ChipText>도착</ChipText>
-              <span>{destination}</span>
+              <span>{formattedDestination}</span>
             </div>
           </div>
         </div>
