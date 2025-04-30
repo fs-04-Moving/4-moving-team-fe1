@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AuthSocialLogIn from './AuthSocialLogIn';
 
 interface Props {
-  userType: Role | null;
+  role: Role | null;
   isSignUpPage: boolean;
 }
 
@@ -13,7 +13,7 @@ interface Props {
  * @param param0
  * @returns
  */
-function FooterAuthPage({ isSignUpPage, userType }: Props) {
+function FooterAuthPage({ isSignUpPage, role }: Props) {
   const text1: string = isSignUpPage
     ? '이미 무빙 회원이신가요?'
     : '아직 무빙 회원이 아니신가요?';
@@ -21,7 +21,7 @@ function FooterAuthPage({ isSignUpPage, userType }: Props) {
 
   const pageLink: string = isSignUpPage ? ROUTES.LOG_IN : ROUTES.SIGN_UP;
   const linkQuery: string =
-    userType === 'customer' ? '?userType=customer' : '?userType=worker';
+    role === 'customer' ? '?role=customer' : '?role=worker';
 
   return (
     <div>
