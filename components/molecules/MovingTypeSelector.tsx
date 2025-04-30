@@ -15,23 +15,23 @@
  * @param {ServiceType['type'][]} props.selectedTypes - 선택된 유형들의 배열
  */
 
-import React from 'react';
-import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
-import { ServiceType } from '@/types/move.type';
+import React from "react";
+import ChipBubbleTypeBox from "@/components/atoms/ChipBubbleTypeBox";
+import { ServiceType } from "@/types/move.type";
 
 // 이사 유형 상수
-const MOVING_TYPES: Record<ServiceType['type'], string> = {
-  smallMove: '소형 이사',
-  homeMove: '가정 이사',
-  officeMove: '사무실 이사',
+const MOVING_TYPES: Record<ServiceType, string> = {
+  smallMove: "소형 이사",
+  homeMove: "가정 이사",
+  officeMove: "사무실 이사",
 };
 
 // 이사 유형 키 배열
-const MOVING_TYPE_KEYS = Object.keys(MOVING_TYPES) as ServiceType['type'][];
+const MOVING_TYPE_KEYS = Object.keys(MOVING_TYPES) as ServiceType[];
 
 interface MovingTypeSelectorProps {
-  onTypeSelect: (types: ServiceType['type'][]) => void;
-  selectedTypes: ServiceType['type'][];
+  onTypeSelect: (types: ServiceType[]) => void;
+  selectedTypes: ServiceType[];
 }
 
 function MovingTypeSelector({
@@ -39,7 +39,7 @@ function MovingTypeSelector({
   selectedTypes,
 }: MovingTypeSelectorProps) {
   // 선택 처리
-  const handleTypeSelect = (type: ServiceType['type']) => {
+  const handleTypeSelect = (type: ServiceType) => {
     const isSelected = selectedTypes.includes(type);
     const newSelection = isSelected
       ? selectedTypes.filter((t) => t !== type)
@@ -48,7 +48,7 @@ function MovingTypeSelector({
   };
 
   // 선택 상태 확인
-  const isTypeSelected = (type: ServiceType['type']) => {
+  const isTypeSelected = (type: ServiceType) => {
     return selectedTypes.includes(type);
   };
 
