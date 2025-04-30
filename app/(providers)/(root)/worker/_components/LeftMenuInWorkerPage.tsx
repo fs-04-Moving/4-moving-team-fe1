@@ -23,38 +23,48 @@ function LeftMenuInWorkerPage() {
   const [filterSelected, setFilterSelected] = useState<Record<number, boolean>>(
     {}
   );
+  const [selectedServiceTypes, setSelectedServiceTypes] = useState<string[]>(
+    []
+  );
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const searchParams = useSearchParams();
   const router = useRouter();
-
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams.toString());
-    newParams.delete("serviceTypes");
-    newParams.delete("filter");
+
+    if (selectedServiceTypes.length > 0) {
+      newParams.set("serviceType", selectedServiceTypes.join(","));
+    } else {
+      newParams.delete("serviceType");
+    }
+
+    if (selectedFilters.length > 0) {
+      newParams.set("filter", selectedFilters.join(","));
+    } else {
+      newParams.delete("filter");
+    }
+
     router.replace(`?${newParams.toString()}`);
+  }, [selectedServiceTypes, selectedFilters]);
+
+  useEffect(() => {
     setMovingSelected({});
     setFilterSelected({});
+    setSelectedServiceTypes([]);
+    setSelectedFilters([]);
   }, []);
 
   const toggleCheckboxMovingTypes = (id: number) => {
     setMovingSelected((prev) => {
       const updated = { ...prev, [id]: !prev[id] };
-
-      const selectedTypes = Object.keys(updated)
+      const selected = Object.keys(updated)
         .filter((key) => updated[Number(key)])
         .map(
           (key) => movingTypes.find((type) => type.id === Number(key))?.value
-        );
-
-      const newParams = new URLSearchParams(searchParams);
-      if (selectedTypes.length > 0) {
-        newParams.set("serviceTypes", selectedTypes.join(","));
-      } else {
-        newParams.delete("serviceTypes");
-      }
-
-      router.push(`?${newParams.toString()}`);
-
+        )
+        .filter(Boolean) as string[];
+      setSelectedServiceTypes(selected);
       return updated;
     });
   };
@@ -62,54 +72,32 @@ function LeftMenuInWorkerPage() {
   const toggleCheckboxFilterLists = (id: number) => {
     setFilterSelected((prev) => {
       const updated = { ...prev, [id]: !prev[id] };
-
-      const selectedTypes = Object.keys(updated)
+      const selected = Object.keys(updated)
         .filter((key) => updated[Number(key)])
         .map(
           (key) => filterLists.find((type) => type.id === Number(key))?.value
-        );
-
-      const newParams = new URLSearchParams(searchParams);
-      if (selectedTypes.length > 0) {
-        newParams.set("filter", selectedTypes.join(","));
-      } else {
-        newParams.delete("filter");
-      }
-
-      router.push(`?${newParams.toString()}`);
-
+        )
+        .filter(Boolean) as string[];
+      setSelectedFilters(selected);
       return updated;
     });
   };
 
-  // 전체 선택/해제 기능
   const toggleAllMovingTypes = () => {
     const isAllSelected =
       Object.keys(movingSelected).length === movingTypes.length &&
       Object.values(movingSelected).every(Boolean);
 
     if (isAllSelected) {
-      setMovingSelected(() => {
-        const newParams = new URLSearchParams(searchParams);
-        newParams.delete("serviceTypes");
-        router.push(`?${newParams.toString()}`);
-        return {};
-      });
+      setMovingSelected({});
+      setSelectedServiceTypes([]);
     } else {
-      const newSelection = movingTypes.reduce((acc, movingType) => {
-        acc[movingType.id] = true;
+      const newSelection = movingTypes.reduce((acc, type) => {
+        acc[type.id] = true;
         return acc;
       }, {} as Record<number, boolean>);
-      setMovingSelected(() => {
-        const selectedTypes = Object.keys(newSelection).map(
-          (key) => movingTypes.find((type) => type.id === Number(key))?.value
-        );
-
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set("serviceTypes", selectedTypes.join(","));
-        router.push(`?${newParams.toString()}`);
-        return newSelection;
-      });
+      setMovingSelected(newSelection);
+      setSelectedServiceTypes(movingTypes.map((type) => type.value));
     }
   };
 
@@ -119,27 +107,15 @@ function LeftMenuInWorkerPage() {
       Object.values(filterSelected).every(Boolean);
 
     if (isAllSelected) {
-      setFilterSelected(() => {
-        const newParams = new URLSearchParams(searchParams);
-        newParams.delete("filter");
-        router.push(`?${newParams.toString()}`);
-        return {};
-      });
+      setFilterSelected({});
+      setSelectedFilters([]);
     } else {
-      const newSelection = filterLists.reduce((acc, filterList) => {
-        acc[filterList.id] = true;
+      const newSelection = filterLists.reduce((acc, type) => {
+        acc[type.id] = true;
         return acc;
       }, {} as Record<number, boolean>);
-      setFilterSelected(() => {
-        const selectedTypes = Object.keys(newSelection).map(
-          (key) => filterLists.find((type) => type.id === Number(key))?.value
-        );
-
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set("filter", selectedTypes.join(","));
-        router.push(`?${newParams.toString()}`);
-        return newSelection;
-      });
+      setFilterSelected(newSelection);
+      setSelectedFilters(filterLists.map((type) => type.value));
     }
   };
 

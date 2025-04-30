@@ -7,6 +7,7 @@ import { WorkerPage, WorkerSearchParams } from "@/types/dtos/Worker.dto";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { cookies } from "next/headers";
 import FindWorkerClient from "./FindWorkerClient";
+import profileServerApi from "@/api/profiles/profile.server.api";
 
 // 이것이 CSR의 것과 완전히 동일해야 SSR이 성공합니다.
 // 안 그러면 클라이언트에서 다시 받아요
@@ -30,10 +31,10 @@ async function FindWorkerPage() {
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["workers", baseParams],
     queryFn: ({ pageParam = 1 }) => {
-      return profilesApi.getWorkerProfilesServer(
-        { ...baseParams, page: pageParam },
-        cookieHeader
-      );
+      return profileServerApi.getWorkerProfilesServer({
+        ...baseParams,
+        page: pageParam,
+      });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage: WorkerPage, allPages: WorkerPage[]) => {

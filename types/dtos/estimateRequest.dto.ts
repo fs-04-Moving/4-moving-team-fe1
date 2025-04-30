@@ -15,5 +15,5 @@ export interface ReceivedEstimateRequestSearchParams {
   page?: number;
   pageSize?: number;
   search?: string;
-  filter?: string[];
+  filter?: string;
 }

@@ -5,7 +5,9 @@ import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
 import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
 import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
 import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ServiceType } from "@/types/move.type";
 
 const tempParams: ReceivedEstimateRequestSearchParams = {
   page: 1,
@@ -25,8 +27,26 @@ export interface ReceivedEstimateRequest extends EstimateRequest {
 }
 
 function ReceivedRequests() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryParams: ReceivedEstimateRequestSearchParams = useMemo(() => {
+    const page = 1;
+    const pageSize = 3;
+    const serviceType =
+      (searchParams.get("serviceType") as ServiceType) || undefined;
+    const filter = searchParams.get("filter") || undefined;
+    const orderBy = searchParams.get("orderBy") || undefined;
+    const search = searchParams.get("search") || undefined;
+
+    return { page, pageSize, filter, orderBy, serviceType, search };
+  }, [searchParams]);
+
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useReceivedRequestsQuery(tempParams);
+    useReceivedRequestsQuery(queryParams);
+
+  useEffect(() => {
+    router.replace(window.location.pathname);
+  }, []);
 
   const totalCount = data?.pages?.[0]?.totalCount;
 

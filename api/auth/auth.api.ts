@@ -13,10 +13,6 @@ const logIn = async (dto: LogInDto) => {
   const url = "/auth/log-in";
   const response = await client.post(url, dto);
 
-  // const { accessToken } = response.data;
-  // localStorage.setItem('accessToken', accessToken); // accessToken만 저장
-  // console.log('login api accessToken', accessToken);
-
   return response.data;
 };
 
@@ -36,7 +32,6 @@ const refreshToken = async () => {
     const url = "/auth/refresh-token";
     const response = await client.post(url, {}, { withCredentials: true }); // refreshToken은 쿠키로 자동 전송됨
     const { accessToken } = response.data;
-    // localStorage.setItem('accessToken', accessToken);
     console.log("refreshToken api accessToken", accessToken);
 
     return response.data;

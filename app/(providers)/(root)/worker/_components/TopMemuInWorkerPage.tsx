@@ -55,7 +55,9 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
         />
       </form>
       <div className="w-full flex justify-between items-center ">
-        <span className="text-[16px] font-medium">{`전체 ${totalCount}건`}</span>
+        <span className="text-[16px] font-medium">{`전체 ${
+          totalCount || 0
+        }건`}</span>
         <span className="z-10">
           <DropdownSort
             onChange={handleOrderBySelect}
