@@ -13,34 +13,8 @@ export const client = axios.create({
 // request interceptor: 클라이언트 환경에서만 accessToken 헤더에 포함
 // 토큰 모두 쿠키로 전달하면서 필요없어짐
 // client.interceptors.request.use(
-//   (config) => {
-//     // Auth 관련 경로는 제외
-//     if (
-//       config.url === '/auth/refresh-token' ||
-//       config.url === '/auth/sign-up' ||
-//       config.url === '/auth/log-in'
-//     ) {
-//       return config;
-//     }
-
-// SSR 환경에서는 Authorization 건드리지 않음
-// if (typeof window === 'undefined') {
-//   return config;
-// }
-
-// const accessToken = localStorage.getItem('accessToken');
-// if (accessToken && !config.headers?.Authorization) {
-//   config.headers = config.headers || {};
-//   config.headers['Authorization'] = `Bearer ${accessToken}`;
-// }
-
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
 
 // response interceptor: accessToken 만료 시 refreshToken 쿠키로 재요청
-
 // refreshToken 무한 루프로 다시 입력한 코드
 client.interceptors.response.use(
   (response) => response,
