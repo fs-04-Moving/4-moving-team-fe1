@@ -3,6 +3,7 @@ import ChipMovingType from '@/components/atoms/ChipMovingType';
 import ChipText from '@/components/atoms/ChipText';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import { EstimateStatus } from '@/types/move.type';
 
 type Props = {
   customerName: string;
@@ -10,7 +11,7 @@ type Props = {
   departure: string;
   destination: string;
   serviceType: string;
-  status: 'confirmed' | 'assigned' | 'rejected';
+  status: EstimateStatus;
 };
 
 export default function EstimateSummaryCard({
@@ -19,6 +20,7 @@ export default function EstimateSummaryCard({
   departure,
   destination,
   serviceType,
+  status,
 }: Props) {
   const formattedMovingDate = format(movingDate, 'yyyy. MM. dd(eee)', {
     locale: ko,
@@ -28,7 +30,7 @@ export default function EstimateSummaryCard({
     <div className="bg-white rounded-[16px] shadow-sm p-6 flex flex-col mb-10 lg:w-[955px] gap-4">
       <div className="flex items-center gap-4">
         <ChipMovingType type={serviceType} />
-        <ChipEstimateStatus type="assigned" />
+        <ChipEstimateStatus type={status} />
       </div>
 
       <div className="flex flex-col text-sm text-gray-700 gap-4 px-[18px] py-4">
