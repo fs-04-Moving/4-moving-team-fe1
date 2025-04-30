@@ -28,11 +28,15 @@ const getReceivedEstimateRequests = async (
 };
 
 const getReceivedEstimateRequestsSever = async (
-  params: ReceivedEstimateRequestSearchParams
+  params: ReceivedEstimateRequestSearchParams,
+  cookieHeader: string
 ) => {
   try {
     const response = await client.get(`${API_URL}/estimate-request/received`, {
       params,
+      headers: {
+        Cookie: cookieHeader,
+      },
       withCredentials: true,
     });
     return response.data;

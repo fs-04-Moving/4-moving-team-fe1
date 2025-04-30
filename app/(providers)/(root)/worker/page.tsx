@@ -3,8 +3,8 @@ import ProtectedPageWrapper from "@/components/atoms/ProtectedPageWrapper";
 import ReceivedRequests from "@/components/templates/ReceivedRequests";
 import { createServerQueryClient } from "@/libs/tanstack-query/reactQueryConfig";
 import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
-import { getAccessTokenFromRefresh } from "@/utils/jwtUtils";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { cookies } from "next/headers";
 
 /**
  * 기사님의 '받은 요청' 목록 페이지
@@ -20,20 +20,20 @@ const baseParams: ReceivedEstimateRequestSearchParams = {
 };
 
 async function ReceivedRequestsPage() {
-  const accessToken = await getAccessTokenFromRefresh();
-
-  if (!accessToken) {
-    return;
-  }
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join("; ");
 
   const queryClient = createServerQueryClient();
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["ReceivedEstimateRequests", baseParams],
     queryFn: ({ pageParam = 1 }) => {
-      return estimateRequestApi.getReceivedEstimateRequestsSever(accessToken, {
+      return estimateRequestApi.getReceivedEstimateRequestsSever({
         ...baseParams,
         page: pageParam,
-      });
+      },cookieHeader);
     },
     initialPageParam: 1,
   });
