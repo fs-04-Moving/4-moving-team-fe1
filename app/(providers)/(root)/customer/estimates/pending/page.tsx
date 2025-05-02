@@ -68,6 +68,9 @@ export default function PendingEstimatesPage() {
               console.error(error);
             }
           }}
+          onViewDetail={() => {
+            router.push(`/customer/estimates/pending/${estimate.id}`);
+          }}
         />
       ))}
     </div>
