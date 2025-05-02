@@ -1,74 +1,95 @@
-'use client'; 
+'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import WorkerCardInCompletedReview from '@/components/organisms/WorkerCardInCompletedReview';
-import Pagination from '@/components/molecules/Pagination'; 
-import Emptyreview from '@/components/molecules/EmptyReview';
-import { Review } from '@/types/dtos/review.dto'; 
+import Pagination from '@/components/molecules/Pagination';
+import EmptyReview from '@/components/molecules/EmptyReview';
+import { Review } from '@/types/dtos/review.dto';
+import { useQuery } from '@tanstack/react-query';
+import reviewsApi from '@/api/review/writtenReview.api';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 interface SubmittedReviewsClientProps {
-  initialReviews: Review[]; 
+  initialReviews?: Review[];
 }
 
 function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps) {
-  
-  const [reviews] = useState<Review[]>(initialReviews); 
-  const [currentPage, setCurrentPage] = useState(1);
-  const reviewsPerPage = 6; 
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get('page') || '1', 10);
 
-  // 작성한 리뷰 자세히 보기 모달 띄우기
-  
+  const {
+    data: reviewsData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['myWrittenReviews', page],
+    queryFn: () => reviewsApi.getMyWrittenReviews({ page }),
+    initialData: { list: initialReviews || [], totalCount: initialReviews?.length || 0 },
+    keepPreviousData: true,
+  });
 
-  // SSP 페이지네이션 - 해당 페이지의 데이터만 서버에서 받아오게 구현할 예정
-  const indexOfLastReview = currentPage * reviewsPerPage;
-  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
- 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
+  const reviews = reviewsData?.list || initialReviews || [];
+  const totalCount = reviewsData?.totalCount || initialReviews?.length || 0;
+  const totalPages = Math.ceil(totalCount / 6);
+
+  useEffect(() => {
+    if (reviewsData) {
+      console.log('작성한 리뷰 데이터:', reviewsData);
+    }
+  }, [reviewsData]);
+
+  const handlePageChange = (newPage: number) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('page', String(newPage));
+    router.push(`?${newSearchParams.toString()}`);
   };
 
-  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
-  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    console.error('작성한 리뷰 데이터를 불러오는 중 오류 발생:', error);
+    return <div>작성한 리뷰 목록을 불러오는 데 실패했습니다.</div>;
+  }
 
   return (
     <div className="bg-background-100 flex items-center justify-center">
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px]">
-      <div className="flex flex-wrap w-full justify-center">
-        {/* 작성한 리뷰가 없을때 EmptyReview 표시 */}
-        {reviews.length === 0 ? (
-           <div className="w-full flex justify-center items-center h-[200px] mt-[104px]">
-             <Emptyreview />
-           </div>
-        ) : (
-          currentReviews.map((review) => (
-            <div key={review.id} className="w-1/2 p-2">
-              <WorkerCardInCompletedReview
-                serviceType={review.serviceType}
-                profileImage={review.profileImage}
-                nickname={review.nickname}
-                movingDate={new Date(review.movingDate)}
-                price={review.price}
-                content={review.content}
-                createdAt={new Date(review.createdAt)}
-                rating={review.rating}
-              />
+        <div className="flex flex-wrap w-full justify-center">
+          {reviews.length === 0 ? (
+            <div className="w-full flex justify-center items-center h-[200px] mt-[104px]">
+              <EmptyReview />
             </div>
-          ))
+          ) : (
+            reviews.map((review) => (
+              <div key={review.id} className="w-1/2 p-2">
+                <WorkerCardInCompletedReview
+                  serviceType={review.serviceType}
+                  profileImage={review.profileImage}
+                  nickname={review.nickname}
+                  movingDate={new Date(review.movingDate)}
+                  price={review.price}
+                  content={review.content}
+                  createdAt={new Date(review.createdAt)}
+                  rating={review.rating}
+                />
+              </div>
+            ))
+          )}
+        </div>
+
+        {totalCount > 0 && totalPages > 1 && (
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            className="mt-5 mb-3"
+          />
         )}
       </div>
-
-      {reviews.length > 0 && totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-          className="mt-5 mb-3"
-        />
-      )}
-
-        </div> 
     </div>
   );
 }

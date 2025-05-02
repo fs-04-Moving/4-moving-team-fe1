@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
-import writableReview from '@/api/review/writableReview.api';
+import writableReviewApi from '@/api/review/writableReview.api';
 import { Review } from '@/types/dtos/review.dto';
 import PendingReviewsClient from './PendingReviewsClient';
+import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { cookies } from 'next/headers';
 
 // 메타데이터 OG 넣기
 export const metadata: Metadata = {
@@ -24,20 +27,28 @@ export const metadata: Metadata = {
   },
 };
 
-async function getPendingReviews(): Promise<Review[]> {
-  try {
-    const reviews = await writableReview.getReviewableEstimates();
-    return reviews;
-  } catch (error) {
-    console.error('리뷰불러오기 실패:', error);
-    return []; 
-  }
-}
-
 async function PendingReviewsPage() {
-  const reviews = await getPendingReviews(); 
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join('; ');
 
-  return <PendingReviewsClient initialReviews={reviews} />;
+  const { queryClient } = await handleSSRPrefetch([
+    {
+      queryKey: ['pendingReviews'],
+      queryFn: () => writableReviewApi.getReviewableEstimatesServer(cookieHeader),
+    },
+  ]);
+
+  const dehydrateState = dehydrate(queryClient);
+  console.log('dehydrateState', dehydrateState);
+
+  return (
+    <HydrationBoundary state={dehydrateState}>
+      <PendingReviewsClient />
+    </HydrationBoundary>
+  );
 }
 
 export default PendingReviewsPage;

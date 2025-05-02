@@ -1,99 +1,50 @@
-// 'use client';
-
-// import { useState } from 'react';
-// import ReviewCard from '@/components/organisms/ReviewCard';
 // import type { Metadata } from 'next';
-// import Pagination from '@/components/molecules/Pagination';
-// import { ClipLoader } from 'react-spinners';
-// import usePendingReviews from '@/hooks/usePendingReviews';
-// import EmptyReview from '@/components/molecules/EmptyReview';
+// import reviewsApi from '@/api/review/writtenReview.api'; 
+// import { Review } from '@/types/dtos/review.dto'; 
+// import SubmittedReviewsClient from './SubmittedReviewsClient'; 
 
-// function SubmittedReviewsPage() {
-//   const { data: reviews = [], isLoading, isError, error } = usePendingReviews();
-//   const [selectedReviewId, setSelectedReviewId] = useState<string | null>(null);
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const reviewsPerPage = 6;
+// // 메타데이터 OG 넣기기
+// export const metadata: Metadata = {
+//   title: '작성한 리뷰',
+//   description: '내가 작성한 리뷰들 입니다.',
+// };
 
-//   const handleWriteReview = (reviewId: string) => {
-//     setSelectedReviewId(reviewId);
-//     setIsModalOpen(true);
-//   };
+// async function getMyReviews(): Promise<Review[]> {
+//   try {
+//     const reviews = await reviewsApi.getMyWrittenReviews();
+//     return reviews;
+//   } catch (error) {
+//     console.error('Failed to fetch written reviews:', error);
+//     throw new Error('리뷰 목록을 불러오는데 실패했습니다.');
+//   }
+// }
 
-//   const handleReviewSubmit = (reviewData: any) => {
-//     setIsModalOpen(false);
-//     // 리뷰 제출 로직
-//   };
+// async function SubmittedReviewsPage() {
+//   let reviews: Review[] = [];
+//   let fetchError: Error | null = null;
 
-//   const indexOfLastReview = currentPage * reviewsPerPage;
-//   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-//   const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
-
-//   const handlePageChange = (page: number) => {
-//     setCurrentPage(page);
-//   };
-
-//   if (isLoading) {
-//     return (
-//       <div className="flex justify-center items-center h-screen">
-//         <ClipLoader color="#4da9ff" loading={isLoading} size={50} />
-//       </div>
-//     );
+//   try {
+//     reviews = await getMyReviews();
+//   } catch (error: any) {
+//     fetchError = error;
 //   }
 
-//   if (isError) {
-//     return <div>에러가 발생했습니다: {error.message}</div>;
+//   if (fetchError) {
+//     return <div>🚨에러 발생 {fetchError.message}</div>;
 //   }
 
-//   return (
-//     <div className="bg-backgrounf-100 flex flex-col items-center justify-center"> 
-//       <div className="flex flex-wrap w-full justify-center"> 
-//         {currentReviews.length === 0 ? (
-//           <div className="w-full flex justify-center items-center h-[200px] mt-[104px]">
-//             <EmptyReview />
-//           </div>
-//         ) : (
-//           currentReviews.map((review) => (
-//             <div key={review.id} className="w-1/2 p-2">
-//               <WorkerCardInWritableReview
-//                 serviceType={review.serviceType}
-//                 workerProfileImage={review.workerProfileImage}
-//                 workerNickname={review.workerNickname}
-//                 movingDate={new Date(review.movingDate)}
-//                 price={review.price}
-//                 isReviewWritten={review.isReviewWritten}
-//                 onClickWriteReview={() => handleWriteReview(review.id)}
-//               />
-//             </div>
-//           ))
-//         )}
-//       </div>
-//       {currentReviews.length > 0 && (
-//         <Pagination
-//           currentPage={currentPage}
-//           totalPages={Math.ceil(reviews.length / reviewsPerPage)}
-//           onPageChange={handlePageChange}
-//           className="mt-5 mb-3"
-//         />
-//       )}
-//       {isModalOpen && (
-//         <ReviewModal
-//           reviewId={selectedReviewId}
-//           onSubmit={handleReviewSubmit}
-//           onClose={() => setIsModalOpen(false)}
-//         />
-//       )}
-//     </div>
-//   );
+//   return <SubmittedReviewsClient initialReviews={reviews} />;
 // }
 
 // export default SubmittedReviewsPage;
 
-
 import type { Metadata } from 'next';
-import reviewsApi from '@/api/review/writtenReview.api'; 
-import { Review } from '@/types/dtos/review.dto'; 
-import SubmittedReviewsClient from './SubmittedReviewsClient'; 
+import reviewsApi from '@/api/review/writtenReview.api';
+import { Review } from '@/types/dtos/review.dto';
+import SubmittedReviewsClient from './SubmittedReviewsClient';
+import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { cookies } from 'next/headers';
 
 // 메타데이터 OG 넣기기
 export const metadata: Metadata = {
@@ -101,31 +52,28 @@ export const metadata: Metadata = {
   description: '내가 작성한 리뷰들 입니다.',
 };
 
-async function getMyReviews(): Promise<Review[]> {
-  try {
-    const reviews = await reviewsApi.getMyWrittenReviews();
-    return reviews;
-  } catch (error) {
-    console.error('Failed to fetch written reviews:', error);
-    throw new Error('리뷰 목록을 불러오는데 실패했습니다.');
-  }
-}
-
 async function SubmittedReviewsPage() {
-  let reviews: Review[] = [];
-  let fetchError: Error | null = null;
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore
+    .getAll()
+    .map((c) => `${c.name}=${c.value}`)
+    .join('; ');
 
-  try {
-    reviews = await getMyReviews();
-  } catch (error: any) {
-    fetchError = error;
-  }
+  const { queryClient } = await handleSSRPrefetch([
+    {
+      queryKey: ['myWrittenReviews', 1], // 초기 페이지를 1로 설정
+      queryFn: () => reviewsApi.getMyWrittenReviewsServer(cookieHeader, { page: 1 }),
+    },
+  ]);
 
-  if (fetchError) {
-    return <div>🚨에러 발생 {fetchError.message}</div>;
-  }
+  const dehydrateState = dehydrate(queryClient);
+  console.log('dehydrateState for written reviews', dehydrateState);
 
-  return <SubmittedReviewsClient initialReviews={reviews} />;
+  return (
+    <HydrationBoundary state={dehydrateState}>
+      <SubmittedReviewsClient />
+    </HydrationBoundary>
+  );
 }
 
 export default SubmittedReviewsPage;
