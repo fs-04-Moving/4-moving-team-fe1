@@ -25,17 +25,17 @@ type Props = {
  *
  * @component
  *
- * @param {string} profileImage - 기사 프로필 이미지 URL.
- * @param {string} nickname - 기사 닉네임.
- * @param {number} experience - 기사 경력 (단위: 년).
- * @param {string} summary - 기사 소개 문구.
- * @param {ServiceType[]} services - 제공하는 이사 서비스 유형 리스트.
- * @param {number} reviewsAverage - 평균 리뷰 평점.
- * @param {number} reviewsCount - 전체 리뷰 수.
- * @param {number} favoritesCount - 찜한 사용자 수.
- * @param {number} confirmedEstimatesCount - 견적 확정 건수.
- * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지.
- * @param {boolean} isResponsive - 기본값:true, false면 반응형을 적용하지 않고, 크기를 sm으로 고정.
+ * @param {string} profileImage - 기사 프로필 이미지 URL
+ * @param {string} nickname - 기사 닉네임
+ * @param {number} experience - 기사 경력 (단위: 년)
+ * @param {string} summary - 기사 소개 문구
+ * @param {ServiceType[]} services - 제공하는 이사 서비스 유형 리스트
+ * @param {number} reviewsAverage - 평균 리뷰 평점
+ * @param {number} reviewsCount - 전체 리뷰 수
+ * @param {number} favoritesCount - 찜한 사용자 수
+ * @param {number} confirmedEstimatesCount - 견적 확정 건수
+ * @param {boolean} isFavorite - 현재 사용자가 이 기사를 찜했는지
+ * @param {boolean} isResponsive - 기본값:true, false면 반응형을 적용하지 않고, 크기를 sm으로 고정
  *
  * @example
  * <WorkerCardInSearch

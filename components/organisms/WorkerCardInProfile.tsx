@@ -1,3 +1,4 @@
+
 import icWriting from '@/assets/images/ic-writing.svg';
 import { Area } from '@/types/entities/user.entity';
 import { AREA_DATA, ServiceType } from '@/types/move.type';
@@ -11,7 +12,7 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: number;
+  experience: string;
   confirmedEstimatesCount: number;
   services: ServiceType[];
   onConfirm?: () => void;
