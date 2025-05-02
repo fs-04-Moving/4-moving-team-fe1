@@ -11,25 +11,25 @@
  * @param {ServiceType['type'][]} props.types - 표시할 이사 유형 배열
  */
 
-import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
-import { ServiceType } from '@/types/move.type';
+import ChipBubbleTypeBox from "@/components/atoms/ChipBubbleTypeBox";
+import { ServiceType } from "@/types/move.type";
 
 // 이사 유형 상수
-const MOVING_TYPES: Record<ServiceType['type'], string> = {
-  smallMove: '소형 이사',
-  homeMove: '가정 이사',
-  officeMove: '사무실 이사',
+const MOVING_TYPES: Record<ServiceType, string> = {
+  smallMove: "소형 이사",
+  homeMove: "가정 이사",
+  officeMove: "사무실 이사",
 };
 
 interface MovingTypeDisplayProps {
-  types: ServiceType['type'][];
+  types: ServiceType[];
 }
 
 function MovingTypeDisplay({ types }: MovingTypeDisplayProps) {
   return (
-    <div className='flex flex-wrap gap-2'>
+    <div className="flex flex-wrap gap-2">
       {types.map((type) => (
-        <div key={type} className='inline-block'>
+        <div key={type} className="inline-block">
           <ChipBubbleTypeBox text={MOVING_TYPES[type]} canClick={false} />
         </div>
       ))}

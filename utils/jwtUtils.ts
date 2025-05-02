@@ -5,13 +5,13 @@
  */
 export function decodeJWT<T = unknown>(token: string): T | null {
   try {
-    const payload = token.split('.')[1];
-    const decoded = Buffer.from(payload, 'base64url').toString('utf8');
+    const payload = token.split(".")[1];
+    const decoded = Buffer.from(payload, "base64url").toString("utf8");
     const parsed = JSON.parse(decoded);
 
     return parsed as T;
   } catch (error) {
-    console.error('Failed to decode JWT:', error);
+    console.error("Failed to decode JWT:", error);
     return null;
   }
 }

@@ -1,15 +1,26 @@
-import { WorkerCardInLikedProps } from '@/components/organisms/WorkerCardInLiked';
-import { API_URL } from '@/constants/env';
-import { client, errorHandler } from '../client';
+import { WorkerCardInLikedProps } from "@/components/organisms/WorkerCardInLiked";
+import { client, errorHandler } from "../client";
 
 export type FavoriteWorkersResponse = {
   list: WorkerCardInLikedProps[];
   totalCount: number;
 };
 
+/**
+ * 작업자에게 좋아요를 누르는 API
+ * @param workerId - 작업자 ID
+ */
+export async function createFavorite(workerId: string): Promise<void> {
+  try {
+    await client.post(`/favorite/${workerId}`);
+  } catch (error) {
+    errorHandler(error);
+  }
+}
+
 const getFavoriteWorkers = async () => {
   try {
-    const url = '/favorite';
+    const url = "/favorite";
     const response = await client.get(url);
     return response.data;
   } catch (error) {
@@ -18,36 +29,41 @@ const getFavoriteWorkers = async () => {
   }
 };
 
-// 서버용 함수를 별도로 만들어야 하는 이유
-// 1. URL의 차이
-// - 서버에서 실행될 경우 next.config.ts의 rewrite가 작동하지 않으므로 절대 경로가 필요
-// 2. 토큰의 전달
-// - client는 axios interceptor를 통해 로컬 스토리지의 토큰을 헤더에 탑재
-// - 그러나 서버에서는 로컬 스토리지를 읽지 못함
-// - 따라서 직접 headers에 토큰을 설정해야 함
-const getFavoriteWorkersServer = async (cookieHeader: string) => {
-  const res = await fetch(`${API_URL}/favorite`, {
-    method: 'GET',
-    headers: {
-      Cookie: cookieHeader,
-    },
-    credentials: 'include',
-    cache: 'no-store',
-  });
+/**
+ * 특정 작업자의 좋아요 수를 조회합니다.
+ * @param workerId 작업자 ID
+ * @returns 좋아요 수 (number)
+ */
+async function getFavoriteCountByWorkerId(workerId: string): Promise<number> {
+  try {
+    const response = await client.get(`/favorite/${workerId}`);
+    const data = response.data;
 
-  if (!res.ok) {
-    const text = await res.text();
-    console.error('SSR getFavoriteWorkersServer 실패', text);
-    throw new Error(`Failed to fetch favorites: ${res.status}`);
+    // 서버에서 단순 숫자를 반환한다고 가정
+    return typeof data === "number" ? data : Number(data.count ?? 0);
+  } catch (error) {
+    errorHandler(error);
+    return 0;
   }
+}
 
-  const data = await res.json();
-  return data;
-};
+/**
+ * 작업자에게 좋아요를 취소하는 API
+ * @param workerId - 작업자 ID
+ */
+export async function deleteFavorite(workerId: string): Promise<void> {
+  try {
+    await client.delete(`/favorite/${workerId}`);
+  } catch (error) {
+    errorHandler(error);
+  }
+}
 
 const favoriteApi = {
+  createFavorite,
+  deleteFavorite, // ✅ 추가
   getFavoriteWorkers,
-  getFavoriteWorkersServer,
+  getFavoriteCountByWorkerId,
 };
 
 export default favoriteApi;

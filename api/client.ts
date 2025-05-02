@@ -11,35 +11,10 @@ export const client = axios.create({
 });
 
 // request interceptor: 클라이언트 환경에서만 accessToken 헤더에 포함
-client.interceptors.request.use(
-  (config) => {
-    // Auth 관련 경로는 제외
-    if (
-      config.url === '/auth/refresh-token' ||
-      config.url === '/auth/sign-up' ||
-      config.url === '/auth/log-in'
-    ) {
-      return config;
-    }
-
-    // SSR 환경에서는 Authorization 건드리지 않음
-    // if (typeof window === 'undefined') {
-    //   return config;
-    // }
-
-    // const accessToken = localStorage.getItem('accessToken');
-    // if (accessToken && !config.headers?.Authorization) {
-    //   config.headers = config.headers || {};
-    //   config.headers['Authorization'] = `Bearer ${accessToken}`;
-    // }
-
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+// 토큰 모두 쿠키로 전달하면서 필요없어짐
+// client.interceptors.request.use(
 
 // response interceptor: accessToken 만료 시 refreshToken 쿠키로 재요청
-
 // refreshToken 무한 루프로 다시 입력한 코드
 client.interceptors.response.use(
   (response) => response,
@@ -55,6 +30,13 @@ client.interceptors.response.use(
     ) {
       return Promise.reject(error);
     }
+
+    // SSR 환경에선 절대 동작하지 않도록
+    if (typeof window === 'undefined') {
+      return Promise.reject(error);
+    }
+
+    // 인증 오류 발생 시 refrechToken으로 재발급 시도 후 원래 요청 다시 실행하기
     if (statusCode === 401 || statusCode === 419) {
       originalRequest._retry = true;
 
@@ -74,7 +56,7 @@ client.interceptors.response.use(
 
         return client(originalRequest); // 재요청
       } catch (refreshError) {
-        // refreshToken도 만료됐거나 문제 생긴 경우 → 로그아웃
+        // refreshToken도 만료됐거나 문제 생긴 경우에는 로그아웃
         console.error('Refresh token failed', refreshError);
         if (typeof window !== 'undefined') {
           logoutHelper();
