@@ -1,4 +1,5 @@
 import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
+import { Role } from '@/types/entities/user.entity';
 import { client, errorHandler } from '../client';
 
 // 회원가입
@@ -40,13 +41,12 @@ const refreshToken = async () => {
   }
 };
 
-// const MOCK_REDIRECT_URL = 'http://localhost:3000/auth/callback?code=fakeCode';
-
 // 소셜 로그인
-const handleOAuthLogin = (provider: 'google' | 'kakao' | 'naver') => {
-  console.log(provider); // never used 에러 방지용
-  // window.location.href = MOCK_REDIRECT_URL;
-  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}`;
+const handleOAuthLogin = (
+  role: Role | null,
+  provider: 'google' | 'kakao' | 'naver'
+) => {
+  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}?role=${role}`;
 };
 
 const authApi = {

@@ -31,7 +31,7 @@ function FooterAuthPage({ isSignUpPage, role }: Props) {
           <Link href={`${pageLink}${linkQuery}`}>{text2}</Link>
         </p>
       </div>
-      <AuthSocialLogIn />
+      <AuthSocialLogIn role={role} />
     </div>
   );
 }
