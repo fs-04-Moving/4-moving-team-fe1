@@ -21,7 +21,7 @@ export type FormSignUpInput = {
   passwordConfirm: string;
 };
 
-function FormSignUp({ userType }: { userType: Role }) {
+function FormSignUp({ role }: { role: Role }) {
   const { control, handleSubmit, formState, setError } =
     useForm<FormSignUpInput>({
       defaultValues: {
@@ -46,7 +46,7 @@ function FormSignUp({ userType }: { userType: Role }) {
 
   const handleClickSignUp = (inputData: FormSignUpInput) => {
     setIsProcessing(true);
-    signUp({ ...inputData, role: userType });
+    signUp({ ...inputData, role });
   };
 
   return (

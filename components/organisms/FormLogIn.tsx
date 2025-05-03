@@ -17,7 +17,7 @@ export type FormLogInInput = {
   password: string;
 };
 
-function FormLogIn({ userType }: { userType: Role }) {
+function FormLogIn({ role }: { role: Role }) {
   const { control, handleSubmit, formState, setError } =
     useForm<FormLogInInput>({
       defaultValues: { email: '', password: '' },
@@ -47,7 +47,7 @@ function FormLogIn({ userType }: { userType: Role }) {
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
     setIsProcessing(true);
-    logIn({ ...inputData, role: userType });
+    logIn({ ...inputData, role });
   };
 
   return (
