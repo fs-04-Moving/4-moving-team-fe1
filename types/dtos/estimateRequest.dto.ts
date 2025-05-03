@@ -19,12 +19,13 @@ export interface ReceivedEstimateRequestSearchParams {
 }
 
 export interface InactiveEstimateRequest {
+  createdAt: string | number | Date;
   id: string;
   requestDate: string;
   serviceType: ServiceType;
   movingDate: string;
   destination: string;
-  departureAddress: string;
+  departure: string;
 }
 
 export interface InactiveEstimateRequestResponse {
