@@ -1,5 +1,6 @@
 import { LogInDto, SignUpDto } from '@/types/dtos/auth.dto';
 import { Role } from '@/types/entities/user.entity';
+import { generateOAuthState } from '@/utils/oauth/oauthUserHelpers';
 import { client, errorHandler } from '../client';
 
 // 회원가입
@@ -46,7 +47,14 @@ const handleOAuthLogin = (
   role: Role | null,
   provider: 'google' | 'kakao' | 'naver'
 ) => {
-  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/${provider}?role=${role}`;
+  if (!role) return;
+
+  const state = generateOAuthState(role);
+  const redirectUrl = `${
+    process.env.NEXT_PUBLIC_API_URL
+  }/auth/${provider}?state=${encodeURIComponent(state)}`;
+
+  window.location.href = redirectUrl;
 };
 
 const authApi = {

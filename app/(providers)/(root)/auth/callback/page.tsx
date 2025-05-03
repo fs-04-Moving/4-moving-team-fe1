@@ -4,7 +4,7 @@ import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import Error from '@/components/molecules/Error';
 import ROUTES from '@/constants/routes';
 import { useAuth } from '@/contexts/AuthContext';
-import { getErrorMessageFromQuery } from '@/utils/getErrorMessageFromQuery';
+import { getErrorMessageFromQuery } from '@/utils/oauth/getErrorMessageFromQuery';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
