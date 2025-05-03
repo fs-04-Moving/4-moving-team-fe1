@@ -44,7 +44,7 @@ export default function PendingEstimatesPage() {
           // 얜 뭐임
           services={[]}
           isDirectEstimate={false}
-          price={0}
+          price={estimate.price || 0}
           status={"general"}
           movingDate={estimate.movingDate}
           departure={estimate.departure}

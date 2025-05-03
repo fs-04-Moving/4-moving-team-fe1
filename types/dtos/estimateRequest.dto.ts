@@ -17,3 +17,17 @@ export interface ReceivedEstimateRequestSearchParams {
   search?: string;
   filter?: string;
 }
+
+export interface InactiveEstimateRequest {
+  id: string;
+  requestDate: string;
+  serviceType: ServiceType;
+  movingDate: string;
+  destination: string;
+  departureAddress: string;
+}
+
+export interface InactiveEstimateRequestResponse {
+  list: InactiveEstimateRequest[];
+  totalCount: number;
+}
