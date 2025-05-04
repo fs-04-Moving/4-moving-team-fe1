@@ -29,11 +29,9 @@ export function useLoginMutation({
     mutationFn: (data: LogInDto) => authApi.logIn(data),
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['me'] });
-
+      await authLogin?.();
       const user: User | undefined = queryClient.getQueryData(['me']);
       if (user) {
-        authLogin?.();
         const routePath = user.hasProfile ? '' : '/profile';
         router.push(`/${user.role}${routePath}`);
       }
