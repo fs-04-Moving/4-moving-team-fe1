@@ -1,7 +1,7 @@
 // src/utils/getErrorMessageFromQuery.ts
 
 import { Role } from '@/types/entities/user.entity';
-import { attachJosa } from './attachJosa';
+import { attachJosa } from '../attachJosa';
 import { getProviderText, getRoleText, Provider } from './oauthUserHelpers';
 
 /**
