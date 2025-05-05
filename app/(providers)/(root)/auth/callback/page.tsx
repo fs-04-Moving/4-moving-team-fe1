@@ -4,7 +4,7 @@ import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import Error from '@/components/molecules/Error';
 import ROUTES from '@/constants/routes';
 import { useAuth } from '@/contexts/AuthContext';
-import { getErrorMessageFromQuery } from '@/utils/oauth/getErrorMessageFromQuery';
+import { getErrorMessageFromCode } from '@/utils/oauth/getErrorMessageFromCode';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -20,7 +20,10 @@ export default function OAuthCallbackPage() {
       // 에러 발생 시 url 쿼리 스트링으로 errorCode, provider, role을 전달받고
       // 그것을 이용하여 에러 메시지를 생성
       if (errorCode) {
-        const message = getErrorMessageFromQuery(searchParams);
+        const message = getErrorMessageFromCode(
+          searchParams.get('errorCode'),
+          Object.fromEntries(searchParams)
+        );
         setErrorMessage(message);
         return;
       }
