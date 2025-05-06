@@ -47,7 +47,7 @@ export default function Page() {
       const updatedCount = await favoriteApi.getFavoriteCountByWorkerId(
         workerId
       );
-      setLikeCount(updatedCount ?? likeCount);
+      setLikeCount(updatedCount);
       setLiked(!liked);
     } catch (error) {
       console.error("좋아요 토글 실패", error);
@@ -103,7 +103,7 @@ export default function Page() {
   if (!estimate) return <div>견적 정보를 불러오지 못했습니다.</div>;
 
   return (
-    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row gap-10">
+    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-20gap-10">
       {/* 왼쪽 영역 */}
       <div className="flex-1 flex flex-col gap-y-10">
         <WorkerCardInDetail
@@ -141,27 +141,29 @@ export default function Page() {
         <div className="block lg:hidden">
           <ButtonLikeOutlined onClick={handleLikeClick} />
         </div>
-        <ButtonSolid
-          onClick={async () => {
-            if (!estimate.price || estimate.price <= 0) {
-              alert("아직 가격이 등록되지 않아 확정할 수 없습니다.");
-              return;
-            }
+        <div className="w-full flex flex-col gap-y-10">
+          <ButtonSolid
+            onClick={async () => {
+              if (!estimate.price || estimate.price <= 0) {
+                alert("아직 가격이 등록되지 않아 확정할 수 없습니다.");
+                return;
+              }
 
-            try {
-              await confirmEstimate(estimate.id);
-              alert("견적이 확정되었습니다.");
-            } catch (error) {
-              alert("견적 확정에 실패했습니다.");
-              console.error(error);
-            }
-          }}
-        >
-          견적 확정하기
-        </ButtonSolid>
+              try {
+                await confirmEstimate(estimate.id);
+                alert("견적이 확정되었습니다.");
+              } catch (error) {
+                alert("견적 확정에 실패했습니다.");
+                console.error(error);
+              }
+            }}
+          >
+            견적 확정하기
+          </ButtonSolid>
 
-        {/* Desktop 공유 버튼 */}
-        <div className="hidden lg:block">{ShareButtons}</div>
+          {/* Desktop 공유 버튼 */}
+          <div className="hidden lg:block">{ShareButtons}</div>
+        </div>
       </div>
     </div>
   );
