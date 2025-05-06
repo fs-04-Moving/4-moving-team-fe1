@@ -31,7 +31,7 @@ function FormSignUp({ role }: { role: Role }) {
         password: '',
         passwordConfirm: '',
       },
-      mode: 'onBlur',
+      mode: 'onTouched',
       resolver: zodResolver(signUpValidation),
     });
 

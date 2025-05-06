@@ -1,7 +1,7 @@
 /**
  * 전화번호 저장용 유틸
  */
-// 표시용 포맷터 - 하이픈 포함
+// 표시용 포매터 - 하이픈 포함
 export const formatPhoneNumber = (value: string) => {
   const digits = value.replace(/\D/g, '');
   if (digits.length < 4) return digits;

@@ -53,7 +53,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
         summary: initialProfile?.summary ?? '',
         description: initialProfile?.description ?? '',
       },
-      mode: 'onBlur',
+      mode: 'onTouched',
       resolver: zodResolver(createWorkerProfileValiation),
     });
 
@@ -142,16 +142,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
         </div>
       </div>
       <div>
-        <div className="flex flex-col-reverse lg:flex-row lg:justify-end gap-2 lg:gap-8">
-          {initialProfile && (
-            <ButtonOutlined
-              onClick={handleClickCancel}
-              className="lg:w-[684px]"
-              type="button"
-            >
-              취소
-            </ButtonOutlined>
-          )}
+        <div className="flex lg:flex-row-reverse flex-col lg:justify-end gap-2 lg:gap-8">
           <ButtonSolid disabled={!isEnabledButton} className="lg:w-[684px]">
             {isProcessing ? (
               <Loader />
@@ -161,6 +152,15 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
               '시작하기'
             )}
           </ButtonSolid>
+          {initialProfile && (
+            <ButtonOutlined
+              onClick={handleClickCancel}
+              className="lg:w-[684px]"
+              type="button"
+            >
+              취소
+            </ButtonOutlined>
+          )}
         </div>
       </div>
     </form>

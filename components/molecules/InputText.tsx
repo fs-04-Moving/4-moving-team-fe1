@@ -43,7 +43,7 @@ function InputText<
   };
 
   // 전화번호일 경우에는 하이픈 포함 형태로 보여주기
-  const displayValue = isPhone ? formatPhoneNumber(value) : value;
+  const displayValue = isPhone ? formatPhoneNumber(value ?? '') : value;
 
   return (
     <Input
