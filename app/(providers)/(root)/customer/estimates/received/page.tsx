@@ -33,14 +33,14 @@ function ReceivedPage() {
     mx-auto
     mt-12
     w-[327px] md:w-[600px] lg:w-[1400px]
-    grid grid-cols-1 lg:grid-cols-2 gap-4
+    flex flex-col gap-4 rounded-10 border-0.5 shadow-lg
     "
     >
       {requests.map((req) => (
         <div
           key={req.id}
           className="
-        flex flex-col
+        w-full flex flex-col
         px-4 py-6 lg:px-10 lg:py-12 md:px-8 md:py-4
         gap-y-8 lg:gap-y-12
         "

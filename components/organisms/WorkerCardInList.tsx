@@ -68,7 +68,7 @@ function WorkerCardInList({
   reviewsCount,
 }: Props) {
   return (
-    <div className="flex flex-col justify-between shadow-xs gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl lg:w-[955px] w-full px-3.5 py-4">
+    <div className="flex flex-col justify-between shadow-xs gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-full px-3.5 py-4">
       <div className="flex gap-2.5">
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
