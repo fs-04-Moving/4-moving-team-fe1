@@ -67,7 +67,11 @@ function EstimateCardList({ estimateRequestId }: Props) {
         {/* 정렬 목록' */}
         <FilterDropdown options={filterOptions} onSelect={handleFilter} />
       </div>
-      <ul className="mt-2 space-y-2">
+      <ul
+        className="flex flex-col mt-2 space-y-2
+        gap-y-6 lg:gap-y-14
+       "
+      >
         {filteredEstimates.map((estimate) => (
           <div className="w-full" key={estimate.id}>
             <WorkerCardInList

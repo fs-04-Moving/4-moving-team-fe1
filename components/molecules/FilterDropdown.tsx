@@ -9,6 +9,24 @@ interface FilterDropdownProps {
   onSelect: (selected: string) => void;
 }
 
+/**
+ * FilterDropdown 컴포넌트
+ *
+ * 특정 조건에 따라 리스트를 필터링할 수 있도록 하는 드롭다운 컴포넌트입니다.
+ * 버튼을 클릭하면 옵션 목록이 표시되며, 선택한 옵션은 상위 컴포넌트에 전달됩니다.
+ *
+ * 사용 예: 견적서 상태(전체, 확정 견적 등)를 필터링할 때 활용됩니다.
+ *
+ * @param {string[]} options - 드롭다운에 표시할 옵션 목록 (예: ['전체', '확정 견적서'])
+ * @param {(selected: string) => void} onSelect - 사용자가 옵션을 선택했을 때 실행할 콜백 함수
+ *
+ * @example
+ * <FilterDropdown
+ *   options={['전체', '확정 견적서']}
+ *   onSelect={(selected) => console.log('선택된 옵션:', selected)}
+ * />
+ */
+
 const FilterDropdown = ({ options, onSelect }: FilterDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selected, setSelected] = useState(options[0]);
