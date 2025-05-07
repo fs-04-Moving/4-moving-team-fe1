@@ -1,22 +1,13 @@
-"use client";
-import LeftMenuInWorkerPage from "@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage";
-import TopMemuInWorkerPage from "@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage";
-import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
-import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
-import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
-import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
-import { useEffect, useMemo } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { ServiceType } from "@/types/move.type";
-
-const tempParams: ReceivedEstimateRequestSearchParams = {
-  page: 1,
-  pageSize: 3,
-  serviceType: undefined,
-  orderBy: undefined,
-  search: undefined,
-  filter: undefined,
-};
+'use client';
+import LeftMenuInWorkerPage from '@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage';
+import TopMemuInWorkerPage from '@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage';
+import { useReceivedRequestsQuery } from '@/hooks/useReceivedRequestsQuery';
+import { ReceivedEstimateRequestSearchParams } from '@/types/dtos/estimateRequest.dto';
+import { EstimateRequest } from '@/types/entities/estimateRequest.entity';
+import { ServiceType } from '@/types/move.type';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo } from 'react';
+import CustomerCardInEstimate from '../organisms/CustomerCardInEstimate';
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -33,20 +24,19 @@ function ReceivedRequests() {
     const page = 1;
     const pageSize = 3;
     const serviceType =
-      (searchParams.get("serviceType") as ServiceType) || undefined;
-    const filter = searchParams.get("filter") || undefined;
-    const orderBy = searchParams.get("orderBy") || undefined;
-    const search = searchParams.get("search") || undefined;
+      (searchParams.get('serviceType') as ServiceType) || undefined;
+    const filter = searchParams.get('filter') || undefined;
+    const orderBy = searchParams.get('orderBy') || undefined;
+    const search = searchParams.get('search') || undefined;
 
     return { page, pageSize, filter, orderBy, serviceType, search };
   }, [searchParams]);
 
-  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useReceivedRequestsQuery(queryParams);
+  const { data } = useReceivedRequestsQuery(queryParams);
 
   useEffect(() => {
     router.replace(window.location.pathname);
-  }, []);
+  }, [router]);
 
   const totalCount = data?.pages?.[0]?.totalCount;
 
@@ -75,9 +65,9 @@ function ReceivedRequests() {
                   isConfirmed={false}
                   requestDate={new Date(request.createdAt)}
                   price={request.price}
-                  onSendEstimate={() => console.log("견적 보내기")}
-                  onReject={() => console.log("반려")}
-                  onViewDetail={() => console.log("상세보기")}
+                  onSendEstimate={() => console.log('견적 보내기')}
+                  onReject={() => console.log('반려')}
+                  onViewDetail={() => console.log('상세보기')}
                 />
               ));
             })}
