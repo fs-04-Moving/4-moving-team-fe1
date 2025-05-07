@@ -16,7 +16,7 @@ import Image from 'next/image';
  */
 
 function RatingSummary({
-  reviewsAverage,
+  // reviewsAverage,
   reviewsCount,
   isResponsive = true,
 }: {
@@ -47,7 +47,7 @@ function RatingSummary({
           isResponsive ? 'lg:text-[16px]' : ''
         )}
       >
-        {reviewsAverage.toFixed(1)}
+        {/* {reviewsAverage.toFixed(1)} */}
       </span>
       <span
         className={clsx(
