@@ -97,7 +97,6 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
       serviceAreas,
     };
     submitProfile(data);
-    // console.log(submitProfile);
   };
 
   const handleClickCancel = () => {
@@ -115,7 +114,6 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
   return (
     <form onSubmit={handleSubmit(handleClickSubmit)}>
       <div className="lg:flex lg:gap-18">
-        ㄴㅁㅇㄹㅁㄴㅇㄹ
         <div className="w-full">
           <GroupProfileImageInput
             control={control}

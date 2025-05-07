@@ -95,7 +95,7 @@ function CustomerCardInEstimate({
   return (
     <div className="relative">
       {/* 카드 전체 내용 */}
-      <div className="flex flex-col justify-between gap-3.5 lg:gap-4 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] px-3.5 py-4">
+      <div className="flex flex-col justify-between gap-3.5 lg:gap-4 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-full px-3.5 py-4">
         <div className="bg-Black-100 w-full h-full z-10"></div>
         {/* chip 정보 */}
         <div className="flex justify-between items-center">
