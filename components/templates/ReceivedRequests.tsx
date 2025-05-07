@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
 import ResponsiveModal from "./ResponsiveModal";
 import EstimateSend from "./EstimateSend";
+import EstimateRejectSend from "./EstimateRejectSend";
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -39,12 +40,22 @@ function ReceivedRequests() {
 
   const [requestEstimate, setRequestEstimate] =
     useState<ReceivedEstimateRequest | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = (request: ReceivedEstimateRequest) => {
+
+  // 모달 관련 //
+  const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+
+  const openEstimateModal = (request: ReceivedEstimateRequest) => {
     setRequestEstimate(request);
-    setIsModalOpen(true);
+    setIsEstimateModalOpen(true);
   };
-  const closeModal = () => setIsModalOpen(false);
+  const closeEstimateModal = () => setIsEstimateModalOpen(false);
+
+  const openRejectModal = (request: ReceivedEstimateRequest) => {
+    setRequestEstimate(request);
+    setIsRejectModalOpen(true);
+  };
+  const closeRejectModal = () => setIsRejectModalOpen(false);
 
   useEffect(() => {
     router.replace(window.location.pathname);
@@ -77,8 +88,8 @@ function ReceivedRequests() {
                   isConfirmed={false}
                   requestDate={new Date(request.createdAt)}
                   price={request.price}
-                  onSendEstimate={() => openModal(request)}
-                  onReject={() => console.log("반려")}
+                  onSendEstimate={() => openEstimateModal(request)}
+                  onReject={() => openRejectModal(request)}
                   onViewDetail={() => console.log("상세보기")}
                 />
               ));
@@ -89,11 +100,22 @@ function ReceivedRequests() {
         </section>
       </div>
       <ResponsiveModal
-        width="w-full sm:w-[608px]"
-        isOpen={isModalOpen}
-        onClose={closeModal}
+        width="w-full"
+        isOpen={isEstimateModalOpen}
+        onClose={closeEstimateModal}
       >
-        <EstimateSend onClose={closeModal} request={requestEstimate} />
+        <EstimateSend onClose={closeEstimateModal} request={requestEstimate} />
+      </ResponsiveModal>
+
+      <ResponsiveModal
+        width="md:w-[375px] lg:w-[608px]"
+        isOpen={isRejectModalOpen}
+        onClose={closeRejectModal}
+      >
+        <EstimateRejectSend
+          onClose={closeRejectModal}
+          request={requestEstimate}
+        />
       </ResponsiveModal>
     </main>
   );

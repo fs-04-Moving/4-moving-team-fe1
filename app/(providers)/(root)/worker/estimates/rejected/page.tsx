@@ -9,50 +9,6 @@ import { Estimate } from "@/types/entities/estimate.entity";
 import { getRejectedEstimates } from "@/api/estimate/workerOnly/estimate.api";
 
 function RejectedEstimatesPage() {
-  const mockCards = [
-    {
-      //임시데이터입니당
-      serviceType: "smallMove",
-      status: "rejected",
-      customerName: "김가나",
-      movingDate: new Date("2024-07-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-    },
-    {
-      serviceType: "smallMove",
-      status: "rejected",
-      customerName: "김다라",
-      movingDate: new Date("2024-07-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-    },
-    {
-      serviceType: "smallMove",
-      status: "rejected",
-      customerName: "김마바",
-      movingDate: new Date("2024-07-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-    },
-    {
-      serviceType: "smallMove",
-      status: "rejected",
-      customerName: "김사아",
-      movingDate: new Date("2024-07-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-    },
-  ];
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2; // -> Pagination 숫자 안정해서 추후 요녀석 수정
   const [fetchedCards, setFetchedCards] = useState<Estimate[]>([]);

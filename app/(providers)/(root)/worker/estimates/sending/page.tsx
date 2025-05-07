@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-
-import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
-import { Estimate } from '@/types/entities/estimate.entity';
-import { useEffect, useState } from 'react';
-
+import { getSentEstimates } from "@/api/estimate/workerOnly/estimate.api";
+import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
+import { Estimate } from "@/types/entities/estimate.entity";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function SendingEstimatesPage() {
   const router = useRouter();
@@ -29,7 +28,7 @@ function SendingEstimatesPage() {
         setEstimates(list);
         setTotalCount(totalCount);
       } catch (error) {
-        console.error('Failed to fetch estimates:', error);
+        console.error("Failed to fetch estimates:", error);
       } finally {
         setLoading(false);
       }

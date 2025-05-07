@@ -6,7 +6,6 @@ import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
 import ChipText from "../atoms/ChipText";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import Input from "../atoms/Input";
 import TextArea from "../atoms/TextArea";
 import ButtonSolid from "../atoms/ButtonSolid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -17,18 +16,14 @@ interface Props {
   request: ReceivedEstimateRequest | null;
 }
 
-function EstimateSend(props: Props) {
+function EstimateRejectSend(props: Props) {
   const { onClose, request } = props;
 
-  const [price, setPrice] = useState(0);
-  const [comment, setComment] = useState("");
-
   const queryClient = useQueryClient();
-
-  const { mutate: priceEstimate } = useMutation({
+  const { mutate: rejectEstimate } = useMutation({
     mutationFn: () =>
-      workerEstimateApi.priceEstimate(
-        { comment, price },
+      workerEstimateApi.rejectEstimate(
+        { rejectionMessage: comment },
         request?.estimateId as string
       ),
     onSuccess: () => {
@@ -36,12 +31,7 @@ function EstimateSend(props: Props) {
     },
   });
 
-  const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value)) {
-      setPrice(Number(value));
-    }
-  };
+  const [comment, setComment] = useState("");
 
   const onChangeComment = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setComment(e.target.value);
@@ -53,7 +43,7 @@ function EstimateSend(props: Props) {
     return `${formatted}(${day})`;
   };
 
-  if (!request) return null;
+  if (request === null) return;
 
   const formattedMovingDate = formatDateFnsKorean(request.movingDate);
 
@@ -66,14 +56,10 @@ function EstimateSend(props: Props) {
       lg:w-full
       w-[375px]
     "
-      onSubmit={() => {
-        priceEstimate();
-      }}
+      onSubmit={() => rejectEstimate()}
     >
       <div className="w-full flex justify-between items-center">
-        <h1 className="text-[18px] lg:text-[24px] font-semibold">
-          견적 보내기
-        </h1>
+        <h1 className="text-[18px] lg:text-[24px] font-semibold">요청반려</h1>
         <button className="text-[18px] sm:text-[24px]" onClick={onClose}>
           ×
         </button>
@@ -119,22 +105,10 @@ function EstimateSend(props: Props) {
             </div>
           </div>
         </div>
-        {/* 견적가를 ~*/}
-        <div className="flex flex-col gap-4">
-          <h2 className="text-[16px] lg:text-[20px] font-semibold">
-            견적가를 입력해 주세요
-          </h2>
-          <Input
-            bgColor={true}
-            placeholder="견적가 입력"
-            value={price}
-            onChange={onChangePrice}
-          />
-        </div>
         {/* 코멘트를 입력 ~*/}
         <div>
           <h2 className="text-[16px] lg:text-[20px] font-semibold">
-            코멘트를 입력해 주세요
+            반려 사유를 입력해 주세요
           </h2>
           <TextArea
             bgColor={true}
@@ -146,11 +120,9 @@ function EstimateSend(props: Props) {
         </div>
       </div>
 
-      <ButtonSolid disabled={price === 0 || comment === ""}>
-        견적보내기
-      </ButtonSolid>
+      <ButtonSolid disabled={comment === ""}>반려하기</ButtonSolid>
     </form>
   );
 }
 
-export default EstimateSend;
+export default EstimateRejectSend;
