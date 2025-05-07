@@ -2,6 +2,7 @@ import { EstimateStatus } from "../move.type";
 import { Area } from "./user.entity";
 
 export interface Estimate {
+  workerId: string;
   workerRating: number;
   id: string;
   price: number;

@@ -1,24 +1,15 @@
 "use client";
 import LeftMenuInWorkerPage from "@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage";
 import TopMemuInWorkerPage from "@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage";
-import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
 import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
 import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
 import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
-import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { ServiceType } from "@/types/move.type";
-import EstimateSend from "./EstimateSend";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
 import ResponsiveModal from "./ResponsiveModal";
-
-const tempParams: ReceivedEstimateRequestSearchParams = {
-  page: 1,
-  pageSize: 3,
-  serviceType: undefined,
-  orderBy: undefined,
-  search: undefined,
-  filter: undefined,
-};
+import EstimateSend from "./EstimateSend";
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -44,8 +35,7 @@ function ReceivedRequests() {
     return { page, pageSize, filter, orderBy, serviceType, search };
   }, [searchParams]);
 
-  const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
-    useReceivedRequestsQuery(queryParams);
+  const { data } = useReceivedRequestsQuery(queryParams);
 
   const [requestEstimateId, setRequestEstimateId] =
     useState<ReceivedEstimateRequest | null>(null);
@@ -58,7 +48,7 @@ function ReceivedRequests() {
 
   useEffect(() => {
     router.replace(window.location.pathname);
-  }, []);
+  }, [router]);
 
   const totalCount = data?.pages?.[0]?.totalCount;
 
@@ -87,7 +77,7 @@ function ReceivedRequests() {
                   isConfirmed={false}
                   requestDate={new Date(request.createdAt)}
                   price={request.price}
-                  onSendEstimate={() => openModal(request)}
+                  onSendEstimate={() => console.log("견적 보내기")}
                   onReject={() => console.log("반려")}
                   onViewDetail={() => console.log("상세보기")}
                 />

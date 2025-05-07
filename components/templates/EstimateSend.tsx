@@ -1,17 +1,14 @@
 "use client";
 import { ChangeEvent, useState } from "react";
-import CustomerCardInEstimateModal from "../organisms/CustomerCardInEstimateModal";
-import { useQuery } from "@tanstack/react-query";
 import { ReceivedEstimateRequest } from "./ReceivedRequests";
 import ChipMovingType from "../atoms/ChipMovingType";
 import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
 import ChipText from "../atoms/ChipText";
-import { format, formatDistanceToNow, isBefore } from "date-fns";
+import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import Input from "../atoms/Input";
 import TextArea from "../atoms/TextArea";
 import ButtonSolid from "../atoms/ButtonSolid";
-import ButtonOutlined from "../atoms/ButtonOutlined";
 
 interface Props {
   onClose: () => void;
