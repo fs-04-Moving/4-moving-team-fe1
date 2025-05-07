@@ -37,11 +37,11 @@ function ReceivedRequests() {
 
   const { data } = useReceivedRequestsQuery(queryParams);
 
-  const [requestEstimateId, setRequestEstimateId] =
+  const [requestEstimate, setRequestEstimate] =
     useState<ReceivedEstimateRequest | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = (request: ReceivedEstimateRequest) => {
-    setRequestEstimateId(request);
+    setRequestEstimate(request);
     setIsModalOpen(true);
   };
   const closeModal = () => setIsModalOpen(false);
@@ -77,7 +77,7 @@ function ReceivedRequests() {
                   isConfirmed={false}
                   requestDate={new Date(request.createdAt)}
                   price={request.price}
-                  onSendEstimate={() => console.log("견적 보내기")}
+                  onSendEstimate={() => openModal(request)}
                   onReject={() => console.log("반려")}
                   onViewDetail={() => console.log("상세보기")}
                 />
@@ -93,7 +93,7 @@ function ReceivedRequests() {
         isOpen={isModalOpen}
         onClose={closeModal}
       >
-        <EstimateSend onClose={closeModal} request={requestEstimateId} />
+        <EstimateSend onClose={closeModal} request={requestEstimate} />
       </ResponsiveModal>
     </main>
   );
