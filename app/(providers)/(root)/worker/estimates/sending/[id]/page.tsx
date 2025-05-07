@@ -18,7 +18,7 @@ export default function EstimatesDetailPage() {
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const safeDate = (date: any) => {
+  const safeDate = (date: Date) => {
     const d = new Date(date);
     return isNaN(d.getTime()) ? new Date() : d;
   };
