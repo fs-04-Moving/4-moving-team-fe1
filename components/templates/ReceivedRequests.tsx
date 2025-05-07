@@ -5,9 +5,11 @@ import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
 import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
 import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
 import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ServiceType } from "@/types/move.type";
+import EstimateSend from "./EstimateSend";
+import ResponsiveModal from "./ResponsiveModal";
 
 const tempParams: ReceivedEstimateRequestSearchParams = {
   page: 1,
@@ -29,6 +31,7 @@ export interface ReceivedEstimateRequest extends EstimateRequest {
 function ReceivedRequests() {
   const router = useRouter();
   const searchParams = useSearchParams();
+
   const queryParams: ReceivedEstimateRequestSearchParams = useMemo(() => {
     const page = 1;
     const pageSize = 3;
@@ -43,6 +46,15 @@ function ReceivedRequests() {
 
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useReceivedRequestsQuery(queryParams);
+
+  const [requestEstimateId, setRequestEstimateId] =
+    useState<ReceivedEstimateRequest | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = (request: ReceivedEstimateRequest) => {
+    setRequestEstimateId(request);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
     router.replace(window.location.pathname);
@@ -75,7 +87,7 @@ function ReceivedRequests() {
                   isConfirmed={false}
                   requestDate={new Date(request.createdAt)}
                   price={request.price}
-                  onSendEstimate={() => console.log("견적 보내기")}
+                  onSendEstimate={() => openModal(request)}
                   onReject={() => console.log("반려")}
                   onViewDetail={() => console.log("상세보기")}
                 />
@@ -86,6 +98,13 @@ function ReceivedRequests() {
           {/* <div ref={ref}></div>  나중에 무한 스크롤 */}
         </section>
       </div>
+      <ResponsiveModal
+        width="w-full sm:w-[608px]"
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <EstimateSend onClose={closeModal} request={requestEstimateId} />
+      </ResponsiveModal>
     </main>
   );
 }
