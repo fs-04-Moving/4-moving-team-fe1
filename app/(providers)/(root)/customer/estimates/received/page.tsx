@@ -33,7 +33,6 @@ function ReceivedPage() {
     mx-auto
     mt-12
     w-[327px] md:w-[600px] lg:w-[1400px]
-    flex flex-col gap-4 rounded-10 border-0.5 shadow-lg
     "
     >
       {requests.map((req) => (

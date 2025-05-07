@@ -3,9 +3,12 @@
 import { getSentEstimates } from "@/api/estimate/workerOnly/estimate.api";
 import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
 import { Estimate } from "@/types/entities/estimate.entity";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 function SendingEstimatesPage() {
+  const router = useRouter();
+
   const [estimates, setEstimates] = useState<Estimate[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -67,7 +70,7 @@ function SendingEstimatesPage() {
             requestDate={safeDate(estimate.requestDate)}
             price={estimate.price}
             onViewDetail={() => {
-              console.log(`Viewing estimate ID: ${estimate.id}`);
+              router.push(`/worker/estimates/sending/${estimate.id}`);
             }}
           />
         ))}
