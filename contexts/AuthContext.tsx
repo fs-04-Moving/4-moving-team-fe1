@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsAuthInitialized(true);
 
     // 로그인 후 accessToken이 생기므로 쿼리 재실행
-    await queryClient.invalidateQueries({ queryKey: ['me'] });
+    await queryClient.refetchQueries({ queryKey: ['me'] });
   };
 
   const logOut = async () => {
@@ -79,7 +79,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.replace(ROUTES.HOME);
     setIsLoggedIn(false);
     setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
-    await queryClient.invalidateQueries({ queryKey: ['me'] });
+    queryClient.removeQueries({ queryKey: ['me'] });
   };
 
   const value: AuthContextValue = {

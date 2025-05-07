@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 
 import { getEstimateDetailByWorker } from "@/api/estimate/workerOnly/estimate.api";
 import ButtonClipOutlined from "@/components/atoms/ButtonClipOutlined";
@@ -14,6 +15,7 @@ export default function EstimatesDetailPage() {
   const params = useParams();
   const estimateId = params.id as string;
   const router = useRouter();
+
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);

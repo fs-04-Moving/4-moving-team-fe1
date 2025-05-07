@@ -21,7 +21,7 @@ function FormLogIn({ role }: { role: Role }) {
   const { control, handleSubmit, formState, setError } =
     useForm<FormLogInInput>({
       defaultValues: { email: '', password: '' },
-      mode: 'onBlur',
+      mode: 'onTouched',
       resolver: zodResolver(logInValidation),
     });
 
@@ -73,7 +73,17 @@ function FormLogIn({ role }: { role: Role }) {
               placeholder="비밀번호를 입력해 주세요"
             />
           </div>
-          <ButtonSolid disabled={!formState.isValid || isProcessing}>
+          <ButtonSolid
+            // type="submit"
+            // tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault(); // 필요시
+                handleSubmit(handleClickLogIn)();
+              }
+            }}
+            disabled={!formState.isValid || isProcessing}
+          >
             {isProcessing ? <Loader /> : '로그인'}
           </ButtonSolid>
         </form>
