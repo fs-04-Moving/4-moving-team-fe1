@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { getEstimateDetailByWorker } from "@/api/estimate/workerOnly/estimate.api";
-import { Estimate } from "@/types/entities/estimate.entity";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const router = useRouter();
+  // const router = useRouter();
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);

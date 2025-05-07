@@ -32,7 +32,7 @@ interface FormProfileCustomerProps {
 function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
     defaultValues: { profileImage: null },
-    mode: 'onChange',
+    mode: 'onTouched',
   });
 
   const router = useRouter();

@@ -15,7 +15,7 @@ export const logInValidation = z.object({
   password: z
     .string()
     .min(1, { message: requiredStr })
-    .min(8, { message: '최소 8자 이상이어야 합니다' })
+    .min(8, { message: '8자 이상이어야 합니다' })
     .regex(passwordRegex, '영문/숫자/특수문자를 모두 포함해야 합니다'),
 });
 
@@ -25,7 +25,7 @@ export const signUpValidation = z
       .string()
       .trim()
       .min(1, { message: requiredStr })
-      .min(2, { message: '두 글자 이상이어야 합니다' }),
+      .min(2, { message: '2자 이상이어야 합니다' }),
     email: z
       .string()
       .min(1, { message: requiredStr })
@@ -37,7 +37,7 @@ export const signUpValidation = z
     password: z
       .string()
       .min(1, { message: requiredStr })
-      .min(8, { message: '최소 8자 이상이어야 합니다' })
+      .min(8, { message: '8자 이상이어야 합니다' })
       .regex(passwordRegex, '영문/숫자/특수문자를 모두 포함해야 합니다'),
     passwordConfirm: z.string(),
   })
@@ -57,7 +57,7 @@ export const createWorkerProfileValiation = z.object({
     .string()
     .trim()
     .min(1, { message: requiredStr })
-    .min(2, { message: '10자 이상이어야 합니다' }),
+    .min(2, { message: '2자 이상이어야 합니다' }),
   experience: z.string().regex(isNumberRegex, '숫자만 입력해야 합니다'),
   summary: z
     .string()
@@ -79,7 +79,7 @@ export const editCustomerInfoValidation = z
       .string()
       .trim()
       .min(1, { message: requiredStr })
-      .min(2, { message: '두 글자 이상이어야 합니다' }),
+      .min(2, { message: '2자 이상이어야 합니다' }),
     email: z
       .string()
       .min(1, { message: requiredStr })
@@ -91,13 +91,13 @@ export const editCustomerInfoValidation = z
     password: z
       .string()
       .min(1, { message: requiredStr })
-      .min(8, { message: '최소 8자 이상이어야 합니다' })
+      .min(8, { message: '8자 이상이어야 합니다' })
       .regex(passwordRegex, '영문/숫자/특수문자를 모두 포함해야 합니다'),
     newPassword: z
       .string()
       .optional()
       .refine((val) => !val || val.length >= 8, {
-        message: '최소 8자 이상이어야 합니다',
+        message: '8자 이상이어야 합니다',
       })
       .refine((val) => !val || passwordRegex.test(val), {
         message: '영문/숫자/특수문자를 모두 포함해야 합니다',

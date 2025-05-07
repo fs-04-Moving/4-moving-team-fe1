@@ -24,7 +24,7 @@ function GroupNicknameInput({ control }: Props) {
         <InputText
           name="nickname"
           control={control}
-          placeholder="고객들에게 보여질 이름을 입력해 주세요"
+          placeholder="고객들이 볼 이름을 입력해 주세요(2자 이상)"
           bgColor={true}
         />
       </div>

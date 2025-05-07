@@ -57,12 +57,21 @@ const handleOAuthLogin = (
   window.location.href = redirectUrl;
 };
 
+// 액세스 토큰 쿠키에 저장
+const setAccessToken = (accessToken: string) =>
+  fetch('/auth/set-access-token', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({ accessToken }),
+  });
+
 const authApi = {
   singUp,
   logIn,
   logOut,
   refreshToken,
   handleOAuthLogin,
+  setAccessToken,
 };
 
 export default authApi;

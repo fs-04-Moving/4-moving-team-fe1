@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import estimateRequestApi from "@/api/estimate-request/estimateRequest.api";
-import EstimateDetailInfo from "@/components/organisms/EstimateDetailInfo";
-import { InactiveEstimateRequest } from "@/types/dtos/estimateRequest.dto";
-import { useEffect, useState } from "react";
-import EstimateCardList from "./(components)/EstimateCardList";
+import estimateRequestApi from '@/api/estimate-request/estimateRequest.api';
+import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
+import { InactiveEstimateRequest } from '@/types/dtos/estimateRequest.dto';
+import { useEffect, useState } from 'react';
+import EstimateCardList from './(components)/EstimateCardList';
 
 function ReceivedPage() {
   const [requests, setRequests] = useState<InactiveEstimateRequest[]>([]);
-  const [totalCount, setTotalCount] = useState(0);
+  // const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     const fetchInactiveRequests = async () => {
@@ -18,9 +18,9 @@ function ReceivedPage() {
           pageSize: 10,
         });
         setRequests(response.list);
-        setTotalCount(response.totalCount);
+        // setTotalCount(response.totalCount);
       } catch (error) {
-        console.error("견적 요청 목록 조회 실패", error);
+        console.error('견적 요청 목록 조회 실패', error);
       }
     };
 

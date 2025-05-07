@@ -1,0 +1,12 @@
+services:
+  frontend:
+    container_name: moving-frontend
+    build:
+      context: .
+    ports:
+      - '3000:3000'
+    env_file:
+      - .env
+    volumes:
+      - .:/app # 로컬 전체 코드를 컨테이너에 동기화(hot reload)
+      - /app/node_modules # node_modules는 제외 (충돌 방지)
