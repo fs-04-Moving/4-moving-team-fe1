@@ -2,7 +2,6 @@
 
 import profilesApi from '@/api/profiles/profiles.api';
 import { createWorkerProfileValiation } from '@/constants/formValidation';
-import { CreateWorkerProfileDto } from '@/types/dtos/profile.dto';
 import { ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useCreateProfileMutation } from '@/hooks/useCreateProfileMutation';
+import { CreateWorkerProfileDto } from '@/types/dtos/profile.dto';
 import { useRouter } from 'next/navigation';
 import ButtonOutlined from '../atoms/ButtonOutlined';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -64,7 +64,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
 
   const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
   const [serviceAreas, setServiceAreas] = useState<Area[]>(['seoul']);
-
+  console.log('initialProfile', initialProfile);
   useEffect(() => {
     if (initialProfile) {
       reset({
@@ -77,8 +77,8 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
       // isValid 검사를 수행하여 버튼을 활성화하기 위해
       trigger();
 
-      setServices((prev) => [...prev, ...initialProfile.services]);
-      setServiceAreas((prev) => [...prev, ...initialProfile.serviceAreas]);
+      setServices(initialProfile.services);
+      setServiceAreas(initialProfile.serviceAreas);
     }
     setIsInitializing(false);
   }, [initialProfile, reset, trigger]);
@@ -97,6 +97,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
       serviceAreas,
     };
     submitProfile(data);
+    // console.log(submitProfile);
   };
 
   const handleClickCancel = () => {
@@ -114,6 +115,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
   return (
     <form onSubmit={handleSubmit(handleClickSubmit)}>
       <div className="lg:flex lg:gap-18">
+        ㄴㅁㅇㄹㅁㄴㅇㄹ
         <div className="w-full">
           <GroupProfileImageInput
             control={control}
