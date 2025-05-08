@@ -17,11 +17,11 @@ export type FormLogInInput = {
   password: string;
 };
 
-function FormLogIn({ role }: { role: Role }) {
+function FormLogIn({ userType }: { userType: Role }) {
   const { control, handleSubmit, formState, setError } =
     useForm<FormLogInInput>({
       defaultValues: { email: '', password: '' },
-      mode: 'onTouched',
+      mode: 'onBlur',
       resolver: zodResolver(logInValidation),
     });
 
@@ -47,7 +47,7 @@ function FormLogIn({ role }: { role: Role }) {
 
   const handleClickLogIn = (inputData: FormLogInInput) => {
     setIsProcessing(true);
-    logIn({ ...inputData, role });
+    logIn({ ...inputData, role: userType });
   };
 
   return (
@@ -73,17 +73,7 @@ function FormLogIn({ role }: { role: Role }) {
               placeholder="비밀번호를 입력해 주세요"
             />
           </div>
-          <ButtonSolid
-            // type="submit"
-            // tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault(); // 필요시
-                handleSubmit(handleClickLogIn)();
-              }
-            }}
-            disabled={!formState.isValid || isProcessing}
-          >
+          <ButtonSolid disabled={!formState.isValid || isProcessing}>
             {isProcessing ? <Loader /> : '로그인'}
           </ButtonSolid>
         </form>

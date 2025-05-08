@@ -1,14 +1,14 @@
-'use cliet';
+"use cliet";
 
-import estimateRequestApi from '@/api/estimate-request/estimateRequest.api';
-import { ReceivedEstimateRequestSearchParams } from '@/types/dtos/estimateRequest.dto';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import estimateRequestApi from "@/api/estimate-request/estimateRequest.api";
+import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export function useReceivedRequestsQuery(
   params: ReceivedEstimateRequestSearchParams
 ) {
   return useInfiniteQuery({
-    queryKey: ['ReceivedEstimateRequests', params],
+    queryKey: ["ReceivedEstimateRequests", params],
     queryFn: ({ pageParam = 1 }) => {
       return estimateRequestApi.getReceivedEstimateRequests({
         ...params,

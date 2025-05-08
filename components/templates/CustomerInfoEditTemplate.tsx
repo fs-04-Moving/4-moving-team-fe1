@@ -56,7 +56,6 @@ function CustomerInfoEditTemplate({
 }: CustomerInfoEditTemplateProps) {
   const { control, handleSubmit, formState } = useForm({
     defaultValues,
-    mode: 'onChange',
     resolver: zodResolver(editCustomerInfoValidation),
   });
 

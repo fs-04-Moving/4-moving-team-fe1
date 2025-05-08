@@ -1,13 +1,13 @@
-import { EstimateStatus, ServiceType } from "@/types/move.type";
-import { format } from "date-fns";
-import { ko } from "date-fns/locale";
-import ButtonOutlined from "../atoms/ButtonOutlined";
-import ButtonSolid from "../atoms/ButtonSolid";
-import ChipEstimateRequestStatus from "../atoms/ChipEstimateRequestStatus";
-import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
-import ChipMovingType from "../atoms/ChipMovingType";
-import ChipText from "../atoms/ChipText";
-import WorkerInfoBoxA from "./WorkerInfoBoxA";
+import { EstimateStatus, ServiceType } from '@/types/move.type';
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import ButtonOutlined from '../atoms/ButtonOutlined';
+import ButtonSolid from '../atoms/ButtonSolid';
+import ChipEstimateRequestStatus from '../atoms/ChipEstimateRequestStatus';
+import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
+import ChipMovingType from '../atoms/ChipMovingType';
+import ChipText from '../atoms/ChipText';
+import WorkerInfoBoxA from './WorkerInfoBoxA';
 
 type Props = {
   profileImage: string;
@@ -97,15 +97,15 @@ function WorkerCardInWating({
   onViewDetail,
 }: Props) {
   const formatDateFnsKorean = (date: Date): string => {
-    const formatted = format(date, "yyyy. MM. dd", { locale: ko });
-    const day = format(date, "eee", { locale: ko }); // '월', '화' 등
+    const formatted = format(date, 'yyyy. MM. dd', { locale: ko });
+    const day = format(date, 'eee', { locale: ko }); // '월', '화' 등
     return `${formatted}(${day})`;
   };
 
   const formattedDate = formatDateFnsKorean(movingDate);
 
-  const formattedDeparture = departure.split(" ").slice(0, 2).join(" ");
-  const formattedDestination = destination.split(" ").slice(0, 2).join(" ");
+  const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
+  const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
 
   return (
     <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
@@ -117,7 +117,7 @@ function WorkerCardInWating({
         {isDirectEstimate ? (
           <ChipEstimateStatus type="assigned" isShort={true} />
         ) : (
-          ""
+          ''
         )}
       </div>
       {/* 기사 소개 박스 */}

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import LogoText from '../atoms/LogoText';
 
 interface Props {
-  role: Role | null;
+  userType: Role | null;
   isSignUpPage: boolean;
 }
 
@@ -15,15 +15,15 @@ interface Props {
  * @param param0
  * @returns
  */
-function HeaderAuthPage({ isSignUpPage, role }: Props) {
+function HeaderAuthPage({ isSignUpPage, userType }: Props) {
   const text1: string =
-    role === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
+    userType === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
   const text2: string =
-    role === 'customer' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
+    userType === 'customer' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
 
   const pageLink: string = isSignUpPage ? ROUTES.SIGN_UP : ROUTES.LOG_IN;
   const linkQuery: string =
-    role === 'customer' ? '?role=worker' : '?role=customer';
+    userType === 'customer' ? '?userType=worker' : '?userType=customer';
 
   return (
     <div className="flex flex-col items-center mb-10 lg:mb-18">
