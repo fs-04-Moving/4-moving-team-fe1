@@ -1,3 +1,4 @@
+import { extractDigits, formatPhoneNumber } from '@/utils/formatPhoneNumber';
 import React from 'react';
 import {
   FieldPath,
@@ -26,11 +27,29 @@ function InputText<
     fieldState: { error },
   } = useController(props);
 
+  // 전화번호일 경우
+  const isPhone = props.name === 'phoneNumber';
+
+  // 전화번호일 경우 숫자만 저장
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+
+    if (isPhone) {
+      const digits = extractDigits(raw);
+      onChange(digits); // 저장은 숫자만
+    } else {
+      onChange(raw);
+    }
+  };
+
+  // 전화번호일 경우에는 하이픈 포함 형태로 보여주기
+  const displayValue = isPhone ? formatPhoneNumber(value ?? '') : value;
+
   return (
     <Input
-      value={value}
+      value={displayValue}
       errorMessage={error?.message}
-      onChange={onChange}
+      onChange={handleChange}
       onBlur={onBlur}
       {...props}
     />

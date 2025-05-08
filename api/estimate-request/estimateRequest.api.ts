@@ -1,5 +1,6 @@
 import {
   CreateEstimateRequestDto,
+  InactiveEstimateRequestResponse,
   ReceivedEstimateRequestSearchParams,
 } from "@/types/dtos/estimateRequest.dto";
 import { client, errorHandler } from "../client";
@@ -45,10 +46,27 @@ const getReceivedEstimateRequestsSever = async (
   }
 };
 
+const getInactiveEstimateRequests = async (params: {
+  page: number;
+  pageSize: number;
+}): Promise<InactiveEstimateRequestResponse> => {
+  try {
+    const url = "/estimate-request/";
+    const response = await client.get<InactiveEstimateRequestResponse>(url, {
+      params,
+    });
+    return response.data;
+  } catch (error) {
+    errorHandler(error);
+    throw error;
+  }
+};
+
 const estimateRequestApi = {
   createEstimateRequest,
   getReceivedEstimateRequests,
   getReceivedEstimateRequestsSever,
+  getInactiveEstimateRequests, // ✅ 추가
 };
 
 export default estimateRequestApi;

@@ -1,10 +1,10 @@
-import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
-import ChipMovingType from '../atoms/ChipMovingType';
-import ButtonSolid from '../atoms/ButtonSolid';
-import ButtonOutlined from '../atoms/ButtonOutlined';
-import ChipText from '../atoms/ChipText';
-import { format, formatDistanceToNow, isBefore } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
+import ChipMovingType from "../atoms/ChipMovingType";
+import ButtonSolid from "../atoms/ButtonSolid";
+import ButtonOutlined from "../atoms/ButtonOutlined";
+import ChipText from "../atoms/ChipText";
+import { format, formatDistanceToNow, isBefore } from "date-fns";
+import { ko } from "date-fns/locale";
 
 type Props = {
   serviceType: string;
@@ -73,12 +73,12 @@ function CustomerCardInEstimate({
 }: Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
-  const isRejected = status === 'rejected';
+  const isRejected = status === "rejected";
   const hasPrice = !!price;
 
   const formatDateFnsKorean = (date: Date): string => {
-    const formatted = format(date, 'yyyy. MM. dd', { locale: ko });
-    const day = format(date, 'eee', { locale: ko }); // '월', '화' 등
+    const formatted = format(date, "yyyy. MM. dd", { locale: ko });
+    const day = format(date, "eee", { locale: ko }); // '월', '화' 등
     return `${formatted}(${day})`;
   };
 
@@ -89,22 +89,22 @@ function CustomerCardInEstimate({
     locale: ko,
   });
 
-  const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
-  const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
+  const formattedDeparture = departure.split(" ").slice(0, 2).join(" ");
+  const formattedDestination = destination.split(" ").slice(0, 2).join(" ");
 
   return (
     <div className="relative">
       {/* 카드 전체 내용 */}
-      <div className="flex flex-col justify-between gap-3.5 lg:gap-4 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] px-3.5 py-4">
+      <div className="flex flex-col justify-between gap-3.5 lg:gap-4 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-full px-3.5 py-4">
         <div className="bg-Black-100 w-full h-full z-10"></div>
         {/* chip 정보 */}
         <div className="flex justify-between items-center">
           <span className="flex gap-2.5">
             <ChipMovingType type={serviceType} />
-            {status === 'assigned' ? (
+            {status === "assigned" ? (
               <ChipEstimateStatus type="assigned" isShort={true} />
             ) : (
-              ''
+              ""
             )}
           </span>
           <span className="text-[12px] lg:text-sm text-GrayScale-500">
@@ -148,7 +148,7 @@ function CustomerCardInEstimate({
             <ButtonOutlined onClick={onReject}>반려</ButtonOutlined>
           </div>
         ) : (
-          ''
+          ""
         )}
       </div>
       {/* 조건 만족시 오버레이 */}

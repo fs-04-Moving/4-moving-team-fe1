@@ -1,10 +1,9 @@
-import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
-import ChipMovingType from "../atoms/ChipMovingType";
-import ButtonSolid from "../atoms/ButtonSolid";
-import ButtonOutlined from "../atoms/ButtonOutlined";
-import ChipText from "../atoms/ChipText";
-import { format, formatDistanceToNow, isBefore } from "date-fns";
-import { ko } from "date-fns/locale";
+import { format, isBefore } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import ButtonOutlined from '../atoms/ButtonOutlined';
+import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
+import ChipMovingType from '../atoms/ChipMovingType';
+import ChipText from '../atoms/ChipText';
 
 type Props = {
   serviceType: string;
@@ -66,16 +65,16 @@ function CustomerCardInEstimateModal({
   departure,
   destination,
   price,
-  requestDate,
-}: Props) {
+}: // requestDate,
+Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
-  const isRejected = status === "rejected";
+  const isRejected = status === 'rejected';
   const hasPrice = !!price;
 
   const formatDateFnsKorean = (date: Date): string => {
-    const formatted = format(date, "yyyy. MM. dd", { locale: ko });
-    const day = format(date, "eee", { locale: ko }); // '월', '화' 등
+    const formatted = format(date, 'yyyy. MM. dd', { locale: ko });
+    const day = format(date, 'eee', { locale: ko }); // '월', '화' 등
     return `${formatted}(${day})`;
   };
 
@@ -92,10 +91,10 @@ function CustomerCardInEstimateModal({
         <div className="flex justify-between items-center">
           <span className="flex gap-2.5">
             <ChipMovingType type={serviceType} />
-            {status === "assigned" ? (
+            {status === 'assigned' ? (
               <ChipEstimateStatus type="assigned" isShort={true} />
             ) : (
-              ""
+              ''
             )}
           </span>
         </div>
@@ -135,7 +134,11 @@ function CustomerCardInEstimateModal({
             <div className="flex flex-col items-center gap-4">
               <p>이사 완료된 견적이에요</p>
               <div className="max-w-[108px] lg:max-w-[123px]">
-                <ButtonOutlined intent="active" onClick={onViewDetail}>
+                <ButtonOutlined
+                  intent="active"
+                  // onClick={onViewDetail}
+                  onClick={() => {}}
+                >
                   <span className="text-[14px] lg:text-[16px] px-3">
                     견적 상세보기
                   </span>

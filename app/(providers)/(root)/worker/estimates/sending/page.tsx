@@ -1,16 +1,20 @@
-"use client";
+'use client';
 
-import { getSentEstimates } from "@/api/estimate/workerOnly/estimate.api";
-import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
-import { Estimate } from "@/types/entities/estimate.entity";
-import { useEffect, useState } from "react";
+
+import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { useEffect, useState } from 'react';
+
 
 function SendingEstimatesPage() {
+  const router = useRouter();
+
   const [estimates, setEstimates] = useState<Estimate[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const safeDate = (date: any) => {
+  const safeDate = (date: Date) => {
     const d = new Date(date);
     return isNaN(d.getTime()) ? new Date() : d;
   };
@@ -25,7 +29,7 @@ function SendingEstimatesPage() {
         setEstimates(list);
         setTotalCount(totalCount);
       } catch (error) {
-        console.error("Failed to fetch estimates:", error);
+        console.error('Failed to fetch estimates:', error);
       } finally {
         setLoading(false);
       }
@@ -67,7 +71,7 @@ function SendingEstimatesPage() {
             requestDate={safeDate(estimate.requestDate)}
             price={estimate.price}
             onViewDetail={() => {
-              console.log(`Viewing estimate ID: ${estimate.id}`);
+              router.push(`/worker/estimates/sending/${estimate.id}`);
             }}
           />
         ))}

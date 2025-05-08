@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import AllChoiceCheckBoxInWorkerPage from "./AllChoiceCheckBoxInWorkerPage";
-import TypeCheckBox from "./IndividualTypeCheckBoxInWorkerPage";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import AllChoiceCheckBoxInWorkerPage from './AllChoiceCheckBoxInWorkerPage';
+import TypeCheckBox from './IndividualTypeCheckBoxInWorkerPage';
 
 const movingTypes = [
-  { id: 1, name: "소형이사", value: "smallMove", count: 4 },
-  { id: 2, name: "가정이사", value: "homeMove", count: 2 },
-  { id: 3, name: "사무실이사", value: "officeMove", count: 10 },
+  { id: 1, name: '소형이사', value: 'smallMove', count: 4 },
+  { id: 2, name: '가정이사', value: 'homeMove', count: 2 },
+  { id: 3, name: '사무실이사', value: 'officeMove', count: 10 },
 ];
 
 const filterLists = [
-  { id: 1, name: "서비스 가능 지역", value: "area", count: 6 },
-  { id: 2, name: "지정 견적 요청", value: "assigned", count: 10 },
+  { id: 1, name: '서비스 가능 지역', value: 'area', count: 6 },
+  { id: 2, name: '지정 견적 요청', value: 'assigned', count: 10 },
 ];
 
 function LeftMenuInWorkerPage() {
@@ -34,19 +34,19 @@ function LeftMenuInWorkerPage() {
     const newParams = new URLSearchParams(searchParams.toString());
 
     if (selectedServiceTypes.length > 0) {
-      newParams.set("serviceType", selectedServiceTypes.join(","));
+      newParams.set('serviceType', selectedServiceTypes.join(','));
     } else {
-      newParams.delete("serviceType");
+      newParams.delete('serviceType');
     }
 
     if (selectedFilters.length > 0) {
-      newParams.set("filter", selectedFilters.join(","));
+      newParams.set('filter', selectedFilters.join(','));
     } else {
-      newParams.delete("filter");
+      newParams.delete('filter');
     }
 
     router.replace(`?${newParams.toString()}`);
-  }, [selectedServiceTypes, selectedFilters]);
+  }, [selectedServiceTypes, selectedFilters, searchParams, router]);
 
   useEffect(() => {
     setMovingSelected({});

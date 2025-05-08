@@ -33,7 +33,6 @@ function CustomerInfoEditPage() {
   };
 
   const onSubmit = (formData: UpdateUserInfoDto) => {
-    console.log('formdData in onSubmit', formData);
     mutation.mutate(formData);
   };
 
