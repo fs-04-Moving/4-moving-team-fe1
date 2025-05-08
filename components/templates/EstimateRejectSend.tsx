@@ -60,7 +60,11 @@ function EstimateRejectSend(props: Props) {
     >
       <div className="w-full flex justify-between items-center">
         <h1 className="text-[18px] lg:text-[24px] font-semibold">요청반려</h1>
-        <button className="text-[18px] sm:text-[24px]" onClick={onClose}>
+        <button
+          className="text-[18px] sm:text-[24px]"
+          type="button"
+          onClick={onClose}
+        >
           ×
         </button>
       </div>

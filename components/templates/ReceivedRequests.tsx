@@ -100,7 +100,7 @@ function ReceivedRequests() {
         </section>
       </div>
       <ResponsiveModal
-        width="w-full"
+        width="lg:w-[608px] md:w-[375px] "
         isOpen={isEstimateModalOpen}
         onClose={closeEstimateModal}
       >

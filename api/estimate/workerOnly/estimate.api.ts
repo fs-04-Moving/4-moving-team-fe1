@@ -94,9 +94,23 @@ async function priceEstimate(
   }
 }
 
+async function createGeneralEstimate(
+  dto: CreateGeneralEstimateDto,
+  customerId: string
+) {
+  try {
+    await client.post(`/estimate/general/${customerId}`, dto);
+    return;
+  } catch (error) {
+    errorHandler(error);
+    throw error;
+  }
+}
+
 const workerEstimateApi = {
   rejectEstimate,
   priceEstimate,
+  createGeneralEstimate,
 };
 
 export default workerEstimateApi;

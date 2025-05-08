@@ -26,13 +26,24 @@ function EstimateSend(props: Props) {
   const queryClient = useQueryClient();
 
   const { mutate: priceEstimate } = useMutation({
-    mutationFn: () =>
-      workerEstimateApi.priceEstimate(
-        { comment, price },
-        request?.estimateId as string
-      ),
+    mutationFn: () => {
+      if (request?.estimateId) {
+        return workerEstimateApi.priceEstimate(
+          { comment, price },
+          request?.estimateId as string
+        );
+      } else {
+        return workerEstimateApi.createGeneralEstimate(
+          { comment, price },
+          request?.customerId as string
+        );
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["receivedEstimateRequests"] });
+    },
+    onError: () => {
+      alert("에러");
     },
   });
 
@@ -63,8 +74,7 @@ function EstimateSend(props: Props) {
       flex flex-col 
       gap-[26px] sm:gap-10
       rounded-4xl
-      lg:w-full
-      w-[375px]
+      w-full
     "
       onSubmit={() => {
         priceEstimate();
@@ -74,7 +84,11 @@ function EstimateSend(props: Props) {
         <h1 className="text-[18px] lg:text-[24px] font-semibold">
           견적 보내기
         </h1>
-        <button className="text-[18px] sm:text-[24px]" onClick={onClose}>
+        <button
+          type="button"
+          className="text-[18px] sm:text-[24px]"
+          onClick={onClose}
+        >
           ×
         </button>
       </div>
