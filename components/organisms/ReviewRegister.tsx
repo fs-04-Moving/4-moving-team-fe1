@@ -4,16 +4,27 @@ import { useEffect, useState } from "react";
 import reviewApi from "@/api/review/review.api";
 import ButtonSolid from "../atoms/ButtonSolid";
 import ButtonStarRating from "../molecules/ButtonStarRating";
-import WorkerInfoBoxA from "./WorkerInfoBoxA";
 import { Worker } from "@/types/dtos/Worker.dto";
+import WorkerSummaryCardInModal from "./WorkerSummaryCardInModal";
+import { ServiceType } from "@/types/move.type";
 
 interface Props {
   onClose: () => void;
   driverId: string; // workerId로 사용됨
   estimateId: string;
+  serviceType: ServiceType;
+  movingDate: Date;
+  price: number;
 }
 
-function ReviewRegister({ onClose, driverId, estimateId }: Props) {
+function ReviewRegister({
+  onClose,
+  driverId,
+  estimateId,
+  serviceType,
+  movingDate,
+  price,
+}: Props) {
   const [driver, setDriver] = useState<Worker | null>(null);
   const [rating, setRating] = useState<number>(1);
   const [content, setContent] = useState<string>("");
@@ -62,17 +73,17 @@ function ReviewRegister({ onClose, driverId, estimateId }: Props) {
         <h2 className="text-[18px] font-[700]">리뷰 쓰기</h2>
         <button onClick={onClose}>X</button>
       </div>
-      <div className="flex flex-col gap-y-8 mb-5">
-        <WorkerInfoBoxA
-          profileImage={driver.profileImage}
-          nickname={driver.nickname}
-          isFavorite={driver.isFavorite}
-          favoritesCount={driver.favoritesCount}
-          experience={driver.experience}
-          reviewsAverage={driver.reviewsAverage ?? 0}
-          reviewsCount={driver.reviewsCount}
-          confirmedEstimatesCount={driver.confirmedEstimatesCount}
-        />
+      <div className="w-full flex flex-col gap-y-8 mb-5">
+        <div className="w-full">
+          <WorkerSummaryCardInModal
+            serviceType={serviceType ?? ""}
+            profileImage={driver.profileImage}
+            nickname={driver.nickname}
+            movingDate={new Date(movingDate)}
+            price={price ?? 0}
+            createdAt={new Date("2022-02-22")}
+          />
+        </div>
         <div className="text-[16px] font-[600] flex flex-col gap-y-2">
           <h4>평점을 선택해 주세요.</h4>
           <ButtonStarRating
@@ -104,3 +115,4 @@ function ReviewRegister({ onClose, driverId, estimateId }: Props) {
 }
 
 export default ReviewRegister;
+

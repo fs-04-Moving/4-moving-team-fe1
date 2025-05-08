@@ -6,6 +6,7 @@ import { API_URL } from '@/constants/env';
 
 interface GetReviewableEstimatesParams {
   page?: number;
+  pageSize?: number;
 }
 
 interface GetReviewableEstimatesResponse {

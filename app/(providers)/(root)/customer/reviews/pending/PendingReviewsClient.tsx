@@ -40,9 +40,11 @@ function PendingReviewsClient() {
       console.log('불러온 리뷰 데이터:', reviewsData);
     }
   }, [reviewsData]);
-
+  const [workerData,setWorkerData]= useState()
   const handleWriteReview = (reviewId: string) => {
+
     console.log('handleWriteReview 호출됨', reviewId);
+
     const selected = reviews.find((review) => review.id === reviewId); 
     if (selected) {
       setSelectedReview(selected);

@@ -53,6 +53,9 @@ function Page() {
         onClose={closeModal}
       >
         <ReviewRegister
+          price={mockEstimate.price}
+          movingDate={mockEstimate.movingDate}
+          serviceType={mockEstimate.serviceType}
           onClose={closeModal}
           driverId={mockEstimate.workerId}
           estimateId={mockEstimate.id}
