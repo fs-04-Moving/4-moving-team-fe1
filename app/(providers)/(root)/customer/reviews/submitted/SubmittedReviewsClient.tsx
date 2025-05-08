@@ -8,6 +8,7 @@ import { Review } from '@/types/dtos/review.dto';
 import { useQuery } from '@tanstack/react-query';
 import reviewsApi from '@/api/review/writtenReview.api';
 import { useSearchParams, useRouter } from 'next/navigation';
+import LoadingSpinner from '@/components/atoms/LoadingSpinner'; // LoadingSpinner 컴포넌트 import
 
 interface SubmittedReviewsClientProps {
   initialReviews?: Review[];
@@ -47,7 +48,11 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="bg-background-100 flex items-center justify-center h-screen">
+        <LoadingSpinner size="md" /> {/* LoadingSpinner 컴포넌트 사용 */}
+      </div>
+    );
   }
 
   if (isError) {
@@ -60,7 +65,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px]">
         <div className="flex flex-wrap w-full justify-center">
           {reviews.length === 0 ? (
-            <div className="w-full flex justify-center items-center h-[200px] mt-[104px]">
+            <div className="w-full flex justify-center items-center mt-[50px] h-[370px] w-[327px] lg:h-[955px] lg:w-[656px]">
               <EmptyReview />
             </div>
           ) : (

@@ -1,23 +1,20 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import WorkerCardInWritableReview from '@/components/organisms/WorkerCardInWritableReview';
 import Pagination from '@/components/molecules/Pagination';
 import EmptyWritableReview from '@/components/molecules/EmptyWritableReview';
 import { Review } from '@/types/dtos/review.dto';
 import ReviewRegister from '@/components/organisms/ReviewRegister';
 import { DriverWithMeta } from '@/types/move.type';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query';
 import writableReviewApi from '@/api/review/writableReview.api';
 import { useSearchParams, useRouter } from 'next/navigation';
-import avartation from '@/assets/images/avatartion-1.svg'; // 더미 이미지
-
-interface PendingReviewsClientProps {
-  // initialReviews prop은 이제 사용하지 않습니다.
-}
+import avartation from '@/assets/images/avatartion-1.svg';
+import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 
 function PendingReviewsClient() {
-  const queryClient = useQueryClient();
+  const queryClient: QueryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get('page') || '1', 10);
@@ -31,18 +28,13 @@ function PendingReviewsClient() {
     error,
   } = useQuery({
     queryKey: ['pendingReviews', page],
-    queryFn: () => writableReviewApi.getReviewableEstimates({ page }),
-    keepPreviousData: true,
+    queryFn: () => writableReviewApi.getReviewableEstimates({ page, pageSize: 6 }),
+    // keepPreviousData: true,
   });
 
-  const reviews = reviewsData?.list || [];
+  const reviews = useMemo(() => reviewsData?.list || [], [reviewsData?.list]);
   const totalCount = reviewsData?.totalCount || 0;
-  const [localReviews, setLocalReviews] = useState<Review[]>(reviews); // 로컬 상태로 리뷰 목록 관리
-
-  useEffect(() => {
-    setLocalReviews(reviews); // reviewsData가 업데이트되면 로컬 상태 업데이트
-  }, [reviews]);
-
+  
   useEffect(() => {
     if (reviewsData) {
       console.log('불러온 리뷰 데이터:', reviewsData);
@@ -50,12 +42,16 @@ function PendingReviewsClient() {
   }, [reviewsData]);
 
   const handleWriteReview = (reviewId: string) => {
-    const selected = localReviews.find((review) => review.id === reviewId);
+    console.log('handleWriteReview 호출됨', reviewId);
+    const selected = reviews.find((review) => review.id === reviewId); 
     if (selected) {
       setSelectedReview(selected);
+      console.log('선택된 리뷰 정보:', selected);
+      console.log('선택된 기사 정보:', selected.driver);
       setIsModalOpen(true);
+      console.log('모달 열림 확인:', isModalOpen);
     } else {
-      console.log('해당 ID의 리뷰를 찾을 수 없습니다.');
+      console.log('해당 ID의 리뷰를 찾을 수 없슴다다.');
     }
   };
 
@@ -64,15 +60,10 @@ function PendingReviewsClient() {
     setSelectedReview(null);
 
     if (isReviewSubmitted && selectedReview?.id) {
-      // ✅ 작성 완료된 리뷰만 로컬 상태에서 제거
-      setLocalReviews((prevReviews) =>
-        prevReviews.filter((review) => review.id !== selectedReview.id)
-      );
-      // ✅ TanStack Query 캐시 무효화 (선택 사항 - 서버 데이터 재Fetch)
       queryClient.invalidateQueries(['pendingReviews']);
       console.log(`리뷰 ID ${selectedReview.id}가 작성 완료되어 목록에서 제거됨`);
     }
-  }, [queryClient, setLocalReviews, selectedReview?.id]);
+  }, [queryClient, selectedReview?.id, reviews]);
 
   const handlePageChange = (newPage: number) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -81,7 +72,11 @@ function PendingReviewsClient() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="bg-background-100 flex items-center justify-center h-screen">
+        <LoadingSpinner size="md" />
+      </div>
+    );
   }
 
   if (isError) {
@@ -93,24 +88,26 @@ function PendingReviewsClient() {
     <div className="bg-background-100 flex items-center justify-center">
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px]">
         <div className="flex flex-wrap w-full justify-center">
-          {localReviews.length === 0 ? ( // 로컬 상태 `localReviews` 사용
-            <div className="w-full flex justify-center items-center h-[200px] mt-[104px]">
+          {reviews.length === 0 ? ( 
+            <div className="w-full flex justify-center items-center mt-[50px] h-[370px] w-[327px] lg:h-[955px] lg:w-[656px]">
               <EmptyWritableReview text={'작성 가능한 리뷰가 없습니다.'} />
             </div>
           ) : (
-            localReviews.map((review) => ( // 로컬 상태 `localReviews` 사용
-              <div key={review.id} className="w-1/2 p-2">
-                <WorkerCardInWritableReview
-                  serviceType={review.serviceType}
-                  profileImage={review.profileImage || avartation} // API 응답에 profileImage가 없을 경우 더미 이미지 사용
-                  nickname={review.nickname}
-                  movingDate={new Date(review.movingDate)}
-                  price={review.price}
-                  isReviewWritten={review.isReviewWritten}
-                  onClickWriteReview={() => handleWriteReview(review.id)}
-                />
-              </div>
-            ))
+            reviews.map((review) => { 
+              return (
+                <div key={review.id} className="w-1/2 p-2">
+                  <WorkerCardInWritableReview
+                    serviceType={review.serviceType as 'smallMove' | 'homeMove' | 'officeMove'}
+                    profileImage={review.profileImage || avartation}
+                    nickname={review.nickname}
+                    movingDate={new Date(review.movingDate)}
+                    price={review.price}
+                    isReviewWritten={review.isReviewWritten}
+                    onClickWriteReview={() => handleWriteReview(review.id)}
+                  />
+                </div>
+              );
+            })
           )}
         </div>
 
@@ -123,12 +120,12 @@ function PendingReviewsClient() {
           />
         )}
 
-        {isModalOpen && selectedReview && selectedReview.driver && selectedReview.estimateId && (
+        {isModalOpen && selectedReview && selectedReview.nickname && selectedReview.id && (
           <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50">
             <ReviewRegister
               onClose={() => handleCloseModal(true)}
-              driver={selectedReview.driver as DriverWithMeta}
-              estimateId={selectedReview.estimateId}
+              driver={selectedReview.nickname as any} // 여기 DriverWithMeta 이거 써야하는데... 의심스러움..
+              estimateId={selectedReview.id}
             />
           </div>
         )}

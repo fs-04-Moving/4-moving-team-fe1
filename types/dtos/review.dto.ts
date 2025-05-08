@@ -15,3 +15,9 @@ export interface Review {
   driver?: DriverWithMeta;
   estimateId?: string; 
 }
+
+export interface CreateReviewParams {
+  estimateId: string;
+  content: string;
+  rating: number;
+}

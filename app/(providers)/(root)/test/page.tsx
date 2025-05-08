@@ -1,45 +1,65 @@
-'use client';
 
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
-import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
-import React from 'react';
+"use client";
 
-function page() {
+import ReviewRegister from "@/components/organisms/ReviewRegister";
+import WorkerCardInWritableReview from "@/components/organisms/WorkerCardInWritableReview";
+import ResponsiveModal from "@/components/templates/ResponsiveModal";
+import { Estimate } from "@/types/entities/estimate.entity";
+import { useState } from "react";
+
+export const mockEstimate: Estimate = {
+  id: "691ec5a5-a662-4bd2-8f7d-1e3088c23da8",
+  price: 40000,
+  serviceType: "smallMove",
+  status: "general",
+  isConfirmed: false,
+  customerName: "홍길동",
+  profileImage: "",
+  summary: "안녕하세요",
+  nickname: "엄성",
+  favoritesCount: 1,
+  reviewsCount: 0,
+  rating: 3,
+  experience: 1,
+  confirmedEstimatesCount: 0,
+  movingDate: new Date("2025-04-15T10:00:00.000Z"),
+  departure: "강우너도",
+  destination: "Busan",
+  requestDate: new Date("2025-04-01T12:00:00.000Z"),
+  workerId: "d99a8eeb-4c7a-4451-ac10-905f0bd473b4",
+  workerRating: 0,
+  departureArea: "seoul",
+};
+
+function Page() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <div>
-      <WorkerCardInWating
-        profileImage="/images/driver1.png"
-        nickname="김이사"
-        experience={8}
-        confirmedEstimatesCount={342}
-        isFavorite={true}
-        favoritesCount={128}
-        services={['smallMove', 'homeMove']}
-        isDirectEstimate={true}
-        price={210000}
-        status="general" // 실제 Enum 값으로 대체 필요
-        movingDate={new Date('2024-07-01')}
-        departure="서울시 중구 나하대로12 203"
-        destination="경기도 수원시 오도대로34 204, 206호"
-        onConfirm={() => console.log('견적 확정하기 클릭')}
-        onViewDetail={() => console.log('상세 보기 클릭')}
-        reviewsAverage={4.7}
-        reviewsCount={108}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-10">
+      <WorkerCardInWritableReview
+        serviceType={mockEstimate.serviceType}
+        profileImage={mockEstimate.profileImage}
+        nickname={mockEstimate.nickname}
+        movingDate={mockEstimate.movingDate}
+        price={mockEstimate.price}
+        isReviewWritten={false}
+        onClickWriteReview={openModal}
       />
-
-      <CustomerCardInEstimate
-        serviceType="smallMove"
-        status="assigned"
-        customerName="김인서"
-        movingDate={new Date('2024-07-01')}
-        departure="서울시 중구 나하대로12 203"
-        destination="경기도 수원시 오도대로34 204, 206호"
-        isConfirmed={false}
-        requestDate={new Date('2024-06-30')}
-        price={210000}
-      />
+      <ResponsiveModal
+        width="w-[375px] sm:w-[508px]"
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      >
+        <ReviewRegister
+          onClose={closeModal}
+          driverId={mockEstimate.workerId}
+          estimateId={mockEstimate.id}
+        />
+      </ResponsiveModal>
     </div>
   );
 }
 
-export default page;
+export default Page;
