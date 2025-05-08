@@ -14,9 +14,8 @@ export function useCreateProfileMutation<TInput extends object>(
 
   const mutation = useMutation({
     mutationFn,
-    onSuccess: async (res) => {
+    onSuccess: async () => {
       await handleProfileSuccess({
-        accessToken: res.accessToken,
         router,
         queryClient,
       });

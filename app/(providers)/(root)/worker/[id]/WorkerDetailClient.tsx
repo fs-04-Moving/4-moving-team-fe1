@@ -117,8 +117,9 @@ function WorkerDetailClient({ workerId }: WorkerDetailClientProps) {
           <section>
             <div className='flex flex-col w-[375px] md:w-[648px] lg:w-full'>
               <WorkerActionButtons
-                workerId={workerData.id}
+                workerId={workerId}
                 workerName={workerData.nickname}
+                isFavorite={workerData.isFavorite}
               />
             </div>
           </section>

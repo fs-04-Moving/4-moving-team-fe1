@@ -1,12 +1,11 @@
 // SSR 구조
 // 이 구조를 사용하면 CSR의 queryFn 로그가 찍히지 않습니다.
 
-import { createServerQueryClient } from "@/libs/tanstack-query/reactQueryConfig";
-import { WorkerPage, WorkerSearchParams } from "@/types/dtos/Worker.dto";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { cookies } from "next/headers";
-import FindWorkerClient from "./FindWorkerClient";
-import profileServerApi from "@/api/profiles/profile.server.api";
+import profileServerApi from '@/api/profiles/profile.server.api';
+import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
+import { WorkerPage, WorkerSearchParams } from '@/types/dtos/Worker.dto';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import FindWorkerClient from './FindWorkerClient';
 
 // 이것이 CSR의 것과 완전히 동일해야 SSR이 성공합니다.
 // 안 그러면 클라이언트에서 다시 받아요
@@ -20,15 +19,9 @@ const baseParams: WorkerSearchParams = {
 };
 
 async function FindWorkerPage() {
-  // const accessToken = await getAccessTokenFromRefresh();
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
   const queryClient = createServerQueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["workers", baseParams],
+    queryKey: ['workers', baseParams],
     queryFn: ({ pageParam = 1 }) => {
       return profileServerApi.getWorkerProfilesServer({
         ...baseParams,

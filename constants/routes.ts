@@ -3,6 +3,7 @@ const ROUTES = {
   LOG_IN: '/auth/log-in', // 로그인
   SIGN_UP: '/auth/sign-up', // 회원가입
   FIND_WORKER: '/find-worker', // 기사님 찾기
+  OAUTH_CALLBACK: '/auth/callback', // 소셜 로그인 콜백 페이지
   CUSTOMER: {
     ROOT: '/customer', // 견적 요청
     ESTIMATES: {

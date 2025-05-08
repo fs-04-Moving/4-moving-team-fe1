@@ -32,7 +32,7 @@ interface FormProfileCustomerProps {
 function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
     defaultValues: { profileImage: null },
-    mode: 'onChange',
+    mode: 'onTouched',
   });
 
   const router = useRouter();
@@ -45,7 +45,7 @@ function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   // 초깃값 설정 및 초기화 flag설정
   useEffect(() => {
     if (initialProfile) {
-      setServices((prev) => [...prev, ...initialProfile.services]);
+      setServices(initialProfile.services);
       setLivingArea(initialProfile.livingArea);
     }
     setIsInitializing(false); // 초기화 완료

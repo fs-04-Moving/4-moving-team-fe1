@@ -5,11 +5,13 @@ import RequestEstimateButton from './RequestEstimateButton';
 interface WorkerActionButtonsProps {
   workerId: string;
   workerName: string;
+  isFavorite: boolean;
 }
 
 function WorkerActionButtons({
   workerId,
   workerName,
+  isFavorite,
 }: WorkerActionButtonsProps) {
   return (
     <div className='flex flex-1 lg:flex-col gap-8'>
@@ -17,7 +19,7 @@ function WorkerActionButtons({
         {workerName} 기사님에게 지정 견적을 요청해 보세요!
       </p>
       <div className='min-w-[54px] lg:w-full'>
-        <FavoriteButton workerId={workerId} />
+        <FavoriteButton workerId={workerId} isFavorite={isFavorite} />
       </div>
       <RequestEstimateButton workerId={workerId} />
     </div>

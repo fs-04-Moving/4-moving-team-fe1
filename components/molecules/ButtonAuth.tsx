@@ -30,7 +30,6 @@ function ButtonAuth() {
 
   const handleClickLogOut = () => {
     logOut?.();
-    queryClient.removeQueries({ queryKey: ['me'] });
   };
 
   console.log(user);
