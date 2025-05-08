@@ -177,7 +177,7 @@ const getWorkerProfileMe = async () => {
 const getWorkerProfile = async (workerId: string) => {
   console.log('axios workerId', workerId);
   try {
-    const url = `profile/worker/${workerId}`;
+    const url = `/profile/worker/${workerId}`;
     const response = await client.get(url);
     return response.data;
   } catch (error) {

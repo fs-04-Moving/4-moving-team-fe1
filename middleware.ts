@@ -4,6 +4,7 @@ import { getUserFromRequestLite } from './utils/getUserFromRequestLite';
 
 // 접근 가능한 경로 정의
 const OPEN_ROUTES = [ROUTES.FIND_WORKER];
+const OPEN_ROUTE_PATTERNS = [/^\/worker\/[^\/]+$/]; // worker/:id 패턴 추가
 const PUBLIC_ROUTES = [
   ROUTES.HOME,
   ROUTES.LOG_IN,
@@ -31,7 +32,10 @@ export async function middleware(req: NextRequest) {
   console.log('🧭 pathname:', pathname);
 
   // 1. 오픈 라우트 (로그인 여부 관계없이 접근 허용)
-  if (OPEN_ROUTES.includes(pathname)) {
+  if (
+    OPEN_ROUTES.includes(pathname) ||
+    OPEN_ROUTE_PATTERNS.some((pattern) => pattern.test(pathname))
+  ) {
     return NextResponse.next();
   }
 
