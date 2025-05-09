@@ -1,7 +1,7 @@
 import authApi from '@/api/auth/auth.api';
 import icSocialGoogle from '@/assets/images/ic-social-google.svg';
 import icSocialKakao from '@/assets/images/ic-social-kakao.svg';
-import icSocialNaver from '@/assets/images/ic-social-naver.svg';
+// import icSocialNaver from '@/assets/images/ic-social-naver.svg';
 import { Role } from '@/types/entities/user.entity';
 import Image from 'next/image';
 
@@ -26,12 +26,12 @@ function AuthSocialLogIn({ role }: { role: Role | null }) {
         >
           <Image src={icSocialKakao} alt="카카오" />
         </button>
-        <button
+        {/* <button
           onClick={() => authApi.handleOAuthLogin(role, 'naver')}
           className="cursor-pointer hover:opacity-70"
         >
           <Image src={icSocialNaver} alt="네이버" />
-        </button>
+        </button> */}
       </div>
     </div>
   );
