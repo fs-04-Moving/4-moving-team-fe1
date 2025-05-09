@@ -1,5 +1,40 @@
-function SendingEstimatesPage() {
-  return <div>SendingEstimatesPage</div>;
-}
+import { getAccessTokenFromRefreshTest } from '@/utils/getAccessTokenTest';
+import { getSentEstimatesServer } from '@/api/estimate/workerOnly/getSentEstimatesServer';
+import SentEstimateList from '@/components/organisms/SentEstimateList';
+import PaginationWrapper from '@/components/organisms/PaginationWrapper';
 
-export default SendingEstimatesPage;
+const ITEMS_PER_PAGE = 4;
+
+export default async function SentEstimatesPage({
+  searchParams,
+}: {
+  searchParams: { page?: string | null };
+}) {
+  const page = Number(searchParams?.page ?? '1');
+  const pageSize = ITEMS_PER_PAGE;
+
+  const accessToken = await getAccessTokenFromRefreshTest();
+  if (!accessToken) {
+    return <div>로그인이 필요합니다</div>;
+  }
+
+  let data;
+  try {
+    data = await getSentEstimatesServer(page, pageSize, accessToken);
+  } catch (e) {
+    return <div>데이터 로드 실패</div>;
+  }
+
+  const totalPages = Math.ceil(data.totalCount / pageSize);
+
+  return (
+    <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center">
+      <SentEstimateList data={data.list} />
+      <PaginationWrapper
+        currentPage={page}
+        totalPages={totalPages}
+        className="mt-2"
+      />
+    </div>
+  );
+}
