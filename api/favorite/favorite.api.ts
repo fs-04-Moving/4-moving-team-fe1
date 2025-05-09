@@ -18,10 +18,17 @@ export async function createFavorite(workerId: string): Promise<void> {
   }
 }
 
-const getFavoriteWorkers = async () => {
+// 찜한 기사님 목록을 조회하는 API
+// 페이지네이션을 위해 page와 pageSize를 파라미터로 받습니다.
+
+export interface GetFavoriteWorkersParams {
+  page: number;
+  pageSize: number;
+}
+const getFavoriteWorkers = async (params: GetFavoriteWorkersParams) => {
   try {
     const url = '/favorite';
-    const response = await client.get(url);
+    const response = await client.get(url, { params });
     return response.data;
   } catch (error) {
     errorHandler(error);
