@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Label from '../atoms/Label';
 import SkeletonFavoriteList from '../atoms/SkeletonFavoriteList';
+import EmptyListMessage from '../molecules/EmptyListMessage';
 import WorkerCardInLiked, { WorkerCardInLikedProps } from './WorkerCardInLiked';
 
 function ListFavoriteWorker() {
@@ -38,7 +39,7 @@ function ListFavoriteWorker() {
         </div>
       </div>
       {favorites.totalCount === 0 ? (
-        <div>찜한 기사님이 없습니다.</div>
+        <EmptyListMessage message="찜한 기사님이 없습니다." />
       ) : (
         <div className="flex justify-center">
           <div className="md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row flex-wrap gap-x-6 gap-y-6 md:gap-y-8 lg:gap-y-12">
