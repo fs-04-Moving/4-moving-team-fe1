@@ -1,21 +1,19 @@
 'use client';
 
-
-import { getEstimateDetailByWorker } from "@/api/estimate/workerOnly/estimate.api";
-import ButtonClipOutlined from "@/components/atoms/ButtonClipOutlined";
-import ButtonShareFacebook from "@/components/atoms/ButtonShareFacebook";
-import ButtonShareKakao from "@/components/atoms/ButtonShareKakao";
-import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
-import EstimateDetailInfo from "@/components/organisms/EstimateDetailInfo";
-import { Estimate } from "@/types/entities/estimate.entity";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
+import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
+import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
+import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
   const estimateId = params.id as string;
   const router = useRouter();
-
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);
@@ -29,7 +27,7 @@ export default function EstimatesDetailPage() {
     <div className="w-full flex flex-col gap-y-4">
       <p className="text-[20px] font-[600]">견적 공유하기</p>
       <div className="flex gap-x-4">
-        <ButtonShareKakao onClick={() => router.push("/customer")} />
+        <ButtonShareKakao onClick={() => router.push('/customer')} />
         <ButtonShareFacebook onClick={() => {}} />
         <ButtonClipOutlined onClick={() => {}} />
       </div>
@@ -49,7 +47,7 @@ export default function EstimatesDetailPage() {
           setEstimate(null);
         }
       } catch (error) {
-        console.error("Failed to fetch estimate:", error);
+        console.error('Failed to fetch estimate:', error);
       } finally {
         setLoading(false);
       }
@@ -87,11 +85,12 @@ export default function EstimatesDetailPage() {
         {/* 왼쪽 영역 */}
         <div className="w-full flex-1 flex flex-col gap-y-10 mt-4">
           <CustomerCardInEstimate
+            id={estimate.id}
             key={estimate.id}
             serviceType={estimate.serviceType}
             status={estimate.status}
             customerName={estimate.customerName}
-            movingDate={new Date("2027-01-11")}
+            movingDate={new Date('2027-01-11')}
             departure={estimate.departure}
             destination={estimate.destination}
             isConfirmed={estimate.isConfirmed}

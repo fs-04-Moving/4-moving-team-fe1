@@ -1,12 +1,13 @@
-import ChipEstimateStatus from "../atoms/ChipEstimateStatus";
-import ChipMovingType from "../atoms/ChipMovingType";
-import ButtonSolid from "../atoms/ButtonSolid";
-import ButtonOutlined from "../atoms/ButtonOutlined";
-import ChipText from "../atoms/ChipText";
-import { format, formatDistanceToNow, isBefore } from "date-fns";
-import { ko } from "date-fns/locale";
+import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
+import ChipMovingType from '../atoms/ChipMovingType';
+import ButtonSolid from '../atoms/ButtonSolid';
+import ButtonOutlined from '../atoms/ButtonOutlined';
+import ChipText from '../atoms/ChipText';
+import { format, formatDistanceToNow, isBefore } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 type Props = {
+  id: string;
   serviceType: string;
   status: string; // 지정 견적 요청 여부
   customerName: string;
@@ -73,12 +74,12 @@ function CustomerCardInEstimate({
 }: Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
-  const isRejected = status === "rejected";
+  const isRejected = status === 'rejected';
   const hasPrice = !!price;
 
   const formatDateFnsKorean = (date: Date): string => {
-    const formatted = format(date, "yyyy. MM. dd", { locale: ko });
-    const day = format(date, "eee", { locale: ko }); // '월', '화' 등
+    const formatted = format(date, 'yyyy. MM. dd', { locale: ko });
+    const day = format(date, 'eee', { locale: ko }); // '월', '화' 등
     return `${formatted}(${day})`;
   };
 
@@ -89,8 +90,8 @@ function CustomerCardInEstimate({
     locale: ko,
   });
 
-  const formattedDeparture = departure.split(" ").slice(0, 2).join(" ");
-  const formattedDestination = destination.split(" ").slice(0, 2).join(" ");
+  const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
+  const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
 
   return (
     <div className="relative">
@@ -101,10 +102,10 @@ function CustomerCardInEstimate({
         <div className="flex justify-between items-center">
           <span className="flex gap-2.5">
             <ChipMovingType type={serviceType} />
-            {status === "assigned" ? (
+            {status === 'assigned' ? (
               <ChipEstimateStatus type="assigned" isShort={true} />
             ) : (
-              ""
+              ''
             )}
           </span>
           <span className="text-[12px] lg:text-sm text-GrayScale-500">
@@ -148,7 +149,7 @@ function CustomerCardInEstimate({
             <ButtonOutlined onClick={onReject}>반려</ButtonOutlined>
           </div>
         ) : (
-          ""
+          ''
         )}
       </div>
       {/* 조건 만족시 오버레이 */}
