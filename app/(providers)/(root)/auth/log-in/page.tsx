@@ -7,19 +7,19 @@ import { useSearchParams } from 'next/navigation';
 
 function LogInPage() {
   const params = useSearchParams();
-  const paramString = params.get('userType');
-  let userType: Role;
+  const paramString = params.get('role');
+  let role: Role;
   if (!paramString) {
-    userType = 'customer';
+    role = 'customer';
   } else if (paramString === 'customer') {
-    userType = paramString;
+    role = paramString;
   } else {
-    userType = 'worker';
+    role = 'worker';
   }
 
   return (
     <PageContainer>
-      <TemplateLogIn userType={userType} />
+      <TemplateLogIn role={role} />
     </PageContainer>
   );
 }
