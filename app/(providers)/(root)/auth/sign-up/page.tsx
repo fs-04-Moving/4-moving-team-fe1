@@ -7,19 +7,19 @@ import { useSearchParams } from 'next/navigation';
 
 function SignUpPage() {
   const params = useSearchParams();
-  const paramString = params.get('role');
-  let role: Role;
+  const paramString = params.get('userType');
+  let userType: Role;
   if (!paramString) {
-    role = 'customer';
+    userType = 'customer';
   } else if (paramString === 'customer') {
-    role = paramString;
+    userType = paramString;
   } else {
-    role = 'worker';
+    userType = 'worker';
   }
 
   return (
     <PageContainer>
-      <TemplateSignUp role={role} />
+      <TemplateSignUp userType={userType} />
     </PageContainer>
   );
 }

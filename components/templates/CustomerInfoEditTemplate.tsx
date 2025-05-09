@@ -56,8 +56,8 @@ function CustomerInfoEditTemplate({
 }: CustomerInfoEditTemplateProps) {
   const { control, handleSubmit, formState } = useForm({
     defaultValues,
-    mode: 'onChange',
     resolver: zodResolver(editCustomerInfoValidation),
+    mode: 'onChange',
   });
 
   const fixedHeightClassName = clsx('lg:h-[140px]');

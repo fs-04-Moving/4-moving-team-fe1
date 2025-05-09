@@ -6,18 +6,6 @@ export type FavoriteWorkersResponse = {
   totalCount: number;
 };
 
-/**
- * 작업자에게 좋아요를 누르는 API
- * @param workerId - 작업자 ID
- */
-export async function createFavorite(workerId: string): Promise<void> {
-  try {
-    await client.post(`/favorite/${workerId}`);
-  } catch (error) {
-    errorHandler(error);
-  }
-}
-
 const getFavoriteWorkers = async () => {
   try {
     const url = '/favorite';

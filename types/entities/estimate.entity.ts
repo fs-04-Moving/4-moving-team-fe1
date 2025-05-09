@@ -2,7 +2,6 @@ import { EstimateStatus } from "../move.type";
 import { Area } from "./user.entity";
 
 export interface Estimate {
-  workerId: string;
   workerRating: number;
   id: string;
   price: number;
@@ -44,16 +43,3 @@ export const serviceTypeDetailObject = {
   homeMove: "가정이사 (쓰리룸, 20평대 이상)",
   officeMove: "사무실이사(사무실, 상업공간)",
 };
-
-export interface RawEstimate {
-  id: string;
-  customerId: string;
-  serviceType: string;
-  movingDate: string;
-  departureAddress: string;
-  destination: string;
-  createdAt: string;
-  updatedAt: string;
-  status: string;
-  customerName: string;
-}

@@ -33,7 +33,7 @@ type Props = {
  * @example
  * <WorkerCardInCompletedReview
  *   serviceType="homeMove"
- *   profileImage="/img/profile.png"
+ *   profileImage="/images/profile.png"
  *   nickname="김이사"
  *   movingDate={new Date('2024-06-01')}
  *   price={210000}

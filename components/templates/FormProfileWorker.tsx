@@ -2,6 +2,7 @@
 
 import profilesApi from '@/api/profiles/profiles.api';
 import { createWorkerProfileValiation } from '@/constants/formValidation';
+import { CreateWorkerProfileDto } from '@/types/dtos/profile.dto';
 import { ServiceTypeEng } from '@/types/entities/estimate.entity';
 import { Area } from '@/types/entities/user.entity';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,7 +10,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useCreateProfileMutation } from '@/hooks/useCreateProfileMutation';
-import { CreateWorkerProfileDto } from '@/types/dtos/profile.dto';
 import { useRouter } from 'next/navigation';
 import ButtonOutlined from '../atoms/ButtonOutlined';
 import ButtonSolid from '../atoms/ButtonSolid';
@@ -53,7 +53,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
         summary: initialProfile?.summary ?? '',
         description: initialProfile?.description ?? '',
       },
-      mode: 'onTouched',
+      mode: 'onBlur',
       resolver: zodResolver(createWorkerProfileValiation),
     });
 
@@ -64,7 +64,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
 
   const [services, setServices] = useState<ServiceTypeEng[]>(['smallMove']);
   const [serviceAreas, setServiceAreas] = useState<Area[]>(['seoul']);
-  console.log('initialProfile', initialProfile);
+
   useEffect(() => {
     if (initialProfile) {
       reset({
@@ -77,8 +77,8 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
       // isValid 검사를 수행하여 버튼을 활성화하기 위해
       trigger();
 
-      setServices(initialProfile.services);
-      setServiceAreas(initialProfile.serviceAreas);
+      setServices((prev) => [...prev, ...initialProfile.services]);
+      setServiceAreas((prev) => [...prev, ...initialProfile.serviceAreas]);
     }
     setIsInitializing(false);
   }, [initialProfile, reset, trigger]);
@@ -142,16 +142,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
         </div>
       </div>
       <div>
-        <div className="flex lg:flex-row-reverse flex-col lg:justify-end gap-2 lg:gap-8">
-          <ButtonSolid disabled={!isEnabledButton} className="lg:w-[684px]">
-            {isProcessing ? (
-              <Loader />
-            ) : initialProfile ? (
-              '수정하기'
-            ) : (
-              '시작하기'
-            )}
-          </ButtonSolid>
+        <div className="flex flex-col-reverse lg:flex-row lg:justify-end gap-2 lg:gap-8">
           {initialProfile && (
             <ButtonOutlined
               onClick={handleClickCancel}
@@ -161,6 +152,15 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
               취소
             </ButtonOutlined>
           )}
+          <ButtonSolid disabled={!isEnabledButton} className="lg:w-[684px]">
+            {isProcessing ? (
+              <Loader />
+            ) : initialProfile ? (
+              '수정하기'
+            ) : (
+              '시작하기'
+            )}
+          </ButtonSolid>
         </div>
       </div>
     </form>

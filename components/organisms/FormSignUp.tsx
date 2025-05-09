@@ -21,7 +21,7 @@ export type FormSignUpInput = {
   passwordConfirm: string;
 };
 
-function FormSignUp({ role }: { role: Role }) {
+function FormSignUp({ userType }: { userType: Role }) {
   const { control, handleSubmit, formState, setError } =
     useForm<FormSignUpInput>({
       defaultValues: {
@@ -31,7 +31,7 @@ function FormSignUp({ role }: { role: Role }) {
         password: '',
         passwordConfirm: '',
       },
-      mode: 'onTouched',
+      mode: 'onBlur',
       resolver: zodResolver(signUpValidation),
     });
 
@@ -46,7 +46,7 @@ function FormSignUp({ role }: { role: Role }) {
 
   const handleClickSignUp = (inputData: FormSignUpInput) => {
     setIsProcessing(true);
-    signUp({ ...inputData, role });
+    signUp({ ...inputData, role: userType });
   };
 
   return (
@@ -62,7 +62,7 @@ function FormSignUp({ role }: { role: Role }) {
               control={control}
               id="name"
               label="이름"
-              placeholder="실명을 입력해 주세요(2자 이상)"
+              placeholder="실명을 입력해 주세요"
             />
             <InputEmail
               name="email"
@@ -76,14 +76,14 @@ function FormSignUp({ role }: { role: Role }) {
               control={control}
               id="phoneNumber"
               label="휴대 전화번호"
-              placeholder="01X-XXXX-XXXX"
+              placeholder="휴대 전화번호 형식에 맞게 입력해 주세요"
             />
             <InputPassword
               name="password"
               control={control}
               id="password"
               label="비밀번호"
-              placeholder="8자 이상, 영문/숫자/특수문자 포함"
+              placeholder="최소 8자 이상, 영문/숫자/특수문자 포함"
             />
             <InputPassword
               name="passwordConfirm"

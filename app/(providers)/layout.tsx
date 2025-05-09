@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 
 async function ProvidersLayout({ children }: { children: ReactNode }) {
   const user = await getUserFromRequestLite();
-  const queryClient = createServerQueryClient({
+  const userQueryClient = createServerQueryClient({
     queries: {
       staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신,
       retry: 0,
@@ -17,11 +17,11 @@ async function ProvidersLayout({ children }: { children: ReactNode }) {
 
   console.log('SSR user', user);
   if (user) {
-    queryClient.setQueryData(['me'], user); // SSR 캐시 세팅
+    userQueryClient.setQueryData(['me'], user); // SSR 캐시 세팅
   }
   return (
     <TanstackQueryProvider>
-      <HydrationBoundary state={dehydrate(queryClient)}>
+      <HydrationBoundary state={dehydrate(userQueryClient)}>
         <AuthProvider>
           <ModalProvider>{children}</ModalProvider>
         </AuthProvider>

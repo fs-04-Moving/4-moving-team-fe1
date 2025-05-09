@@ -31,11 +31,6 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   console.log('🧭 pathname:', pathname);
 
-  // 소셜 로그인 콜백 경로는 무조건 통과
-  if (pathname === ROUTES.OAUTH_CALLBACK) {
-    return NextResponse.next();
-  }
-
   // 1. 오픈 라우트 (로그인 여부 관계없이 접근 허용)
   if (
     OPEN_ROUTES.includes(pathname) ||

@@ -5,13 +5,13 @@ import FooterAuthPage from '../molecules/FooterAuthPage';
 import HeaderAuthPage from '../molecules/HeaderAuthPage';
 import FormLogIn from '../organisms/FormLogIn';
 
-function TemplateLogIn({ role }: { role: Role }) {
+function TemplateLogIn({ userType }: { userType: Role }) {
   return (
     <div className="w-full flex flex-col justify-center items-center mt-[42px] mb-20">
       <div className="w-full flex flex-col justify-center">
-        <HeaderAuthPage isSignUpPage={false} role={role} />
-        <FormLogIn role={role} />
-        <FooterAuthPage isSignUpPage={false} role={role} />
+        <HeaderAuthPage isSignUpPage={false} userType={userType} />
+        <FormLogIn userType={userType} />
+        <FooterAuthPage isSignUpPage={false} userType={userType} />
       </div>
     </div>
   );

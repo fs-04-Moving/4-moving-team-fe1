@@ -23,8 +23,8 @@ async function FavoriteWorkersPage() {
     },
   ]);
 
-  const dehydratedState = dehydrate(queryClient);
-  console.log('dehydratedState', dehydratedState);
+  const dehydrateState = dehydrate(queryClient);
+  console.log('dehydrateState', dehydrateState);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
