@@ -33,13 +33,7 @@ function FindWorkerClient() {
   }, [searchParams]);
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useFindWorkerQuery(queryParams);
-  // useEffect(() => {
-  //   if (inView && hasNextPage && !isFetchingNextPage) {
-  //     fetchNextPage();
-  //   }
-  // }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  console.log(data);
 
   return (
     <div className="flex justify-center gap-28">

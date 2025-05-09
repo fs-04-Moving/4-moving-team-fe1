@@ -15,10 +15,10 @@ function WorkerCardList({ workers, isLoading }: Props) {
 
   return (
     <div className="flex flex-col gap-12">
-      {workers.map((worker) =>
+      {workers.map((worker, index) =>
         // todo : summary 백엔드 수정수 수정?
         worker ? (
-          <Link key={worker.workerId} href={`${ROUTES.WORKER.ROOT}/${worker.workerId}`}>
+          <Link key={index} href={`${ROUTES.WORKER.ROOT}/${worker.workerId}`}>
             <WorkerCardInSearch key={worker.workerId} {...worker} />
           </Link>
         ) : null,
