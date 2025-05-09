@@ -23,13 +23,29 @@ const createReview = async ({
 };
 
 // 특정 기사의 리뷰 목록 조회 API
-const getWorkerReviews = async (workerId: string) => {
+const getWorkerReviews = async (workerId: string, page = 1, pageSize = 3) => {
   try {
-    const url = `/review/${workerId}`;
+    const url = `/review/${workerId}?page=${page}&pageSize=${pageSize}`;
     const response = await client.get(url);
+    if (!response.data.list) {
+      return {
+        list: response.data.reviews || [],
+        starCountList: response.data.starCountList || [0, 0, 0, 0, 0],
+        totalCount: response.data.totalCount || 0,
+        rating: response.data.rating || 0,
+      };
+    }
+
     return response.data;
   } catch (error) {
     errorHandler(error);
+    // 에러 발생 시 기본 데이터 반환
+    return {
+      list: [],
+      starCountList: [0, 0, 0, 0, 0],
+      totalCount: 0,
+      rating: 0,
+    };
   }
 };
 

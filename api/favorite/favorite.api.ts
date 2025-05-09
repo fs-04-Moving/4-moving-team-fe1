@@ -40,7 +40,11 @@ async function getFavoriteCountByWorkerId(workerId: string): Promise<number> {
     const data = response.data;
 
     // 서버에서 단순 숫자를 반환한다고 가정
+<<<<<<< HEAD
+    return typeof data === 'number' ? data : Number(data.count ?? 0);
+=======
     return typeof data === "number" ? data : Number(data.count ?? 0);
+>>>>>>> parent of c4e73f9 ([정진호] chore: 스토리북 셋업)
   } catch (error) {
     errorHandler(error);
     return 0;
