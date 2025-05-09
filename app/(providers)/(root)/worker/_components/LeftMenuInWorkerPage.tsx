@@ -17,15 +17,9 @@ const filterLists = [
 ];
 
 function LeftMenuInWorkerPage() {
-  const [movingSelected, setMovingSelected] = useState<Record<number, boolean>>(
-    {}
-  );
-  const [filterSelected, setFilterSelected] = useState<Record<number, boolean>>(
-    {}
-  );
-  const [selectedServiceTypes, setSelectedServiceTypes] = useState<string[]>(
-    []
-  );
+  const [movingSelected, setMovingSelected] = useState<Record<number, boolean>>({});
+  const [filterSelected, setFilterSelected] = useState<Record<number, boolean>>({});
+  const [selectedServiceTypes, setSelectedServiceTypes] = useState<string[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const searchParams = useSearchParams();
@@ -60,9 +54,7 @@ function LeftMenuInWorkerPage() {
       const updated = { ...prev, [id]: !prev[id] };
       const selected = Object.keys(updated)
         .filter((key) => updated[Number(key)])
-        .map(
-          (key) => movingTypes.find((type) => type.id === Number(key))?.value
-        )
+        .map((key) => movingTypes.find((type) => type.id === Number(key))?.value)
         .filter(Boolean) as string[];
       setSelectedServiceTypes(selected);
       return updated;
@@ -74,9 +66,7 @@ function LeftMenuInWorkerPage() {
       const updated = { ...prev, [id]: !prev[id] };
       const selected = Object.keys(updated)
         .filter((key) => updated[Number(key)])
-        .map(
-          (key) => filterLists.find((type) => type.id === Number(key))?.value
-        )
+        .map((key) => filterLists.find((type) => type.id === Number(key))?.value)
         .filter(Boolean) as string[];
       setSelectedFilters(selected);
       return updated;
@@ -92,10 +82,13 @@ function LeftMenuInWorkerPage() {
       setMovingSelected({});
       setSelectedServiceTypes([]);
     } else {
-      const newSelection = movingTypes.reduce((acc, type) => {
-        acc[type.id] = true;
-        return acc;
-      }, {} as Record<number, boolean>);
+      const newSelection = movingTypes.reduce(
+        (acc, type) => {
+          acc[type.id] = true;
+          return acc;
+        },
+        {} as Record<number, boolean>,
+      );
       setMovingSelected(newSelection);
       setSelectedServiceTypes(movingTypes.map((type) => type.value));
     }
@@ -110,10 +103,13 @@ function LeftMenuInWorkerPage() {
       setFilterSelected({});
       setSelectedFilters([]);
     } else {
-      const newSelection = filterLists.reduce((acc, type) => {
-        acc[type.id] = true;
-        return acc;
-      }, {} as Record<number, boolean>);
+      const newSelection = filterLists.reduce(
+        (acc, type) => {
+          acc[type.id] = true;
+          return acc;
+        },
+        {} as Record<number, boolean>,
+      );
       setFilterSelected(newSelection);
       setSelectedFilters(filterLists.map((type) => type.value));
     }

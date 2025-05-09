@@ -18,13 +18,10 @@ function WorkerCardList({ workers, isLoading }: Props) {
       {workers.map((worker) =>
         // todo : summary 백엔드 수정수 수정?
         worker ? (
-          <Link
-            key={worker.workerId}
-            href={`${ROUTES.WORKER.ROOT}/${worker.workerId}`}
-          >
+          <Link key={worker.workerId} href={`${ROUTES.WORKER.ROOT}/${worker.workerId}`}>
             <WorkerCardInSearch key={worker.workerId} {...worker} />
           </Link>
-        ) : null
+        ) : null,
       )}
     </div>
   );

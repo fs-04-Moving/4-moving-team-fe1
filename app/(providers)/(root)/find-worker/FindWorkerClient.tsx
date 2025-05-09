@@ -46,10 +46,7 @@ function FindWorkerClient() {
       <LeftMenu />
       <section className="w-[327px] md:w-[600px] lg:w-[955px]">
         <TopMenu />
-        <WorkerCardList
-          workers={data?.pages.flatMap((p) => p.list) ?? []}
-          isLoading={isLoading}
-        />
+        <WorkerCardList workers={data?.pages.flatMap((p) => p.list) ?? []} isLoading={isLoading} />
         <div ref={ref}></div>
       </section>
     </div>

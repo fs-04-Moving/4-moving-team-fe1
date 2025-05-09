@@ -2,13 +2,13 @@ import {
   CreateEstimateRequestDto,
   InactiveEstimateRequestResponse,
   ReceivedEstimateRequestSearchParams,
-} from "@/types/dtos/estimateRequest.dto";
-import { client, errorHandler } from "../client";
-import { API_URL } from "@/constants/env";
+} from '@/types/dtos/estimateRequest.dto';
+import { client, errorHandler } from '../client';
+import { API_URL } from '@/constants/env';
 
 const createEstimateRequest = async (data: CreateEstimateRequestDto) => {
   try {
-    const url = "/estimate-request";
+    const url = '/estimate-request';
     const response = await client.post(url, data);
     return response.data;
   } catch (error) {
@@ -16,11 +16,9 @@ const createEstimateRequest = async (data: CreateEstimateRequestDto) => {
   }
 };
 
-const getReceivedEstimateRequests = async (
-  params: ReceivedEstimateRequestSearchParams
-) => {
+const getReceivedEstimateRequests = async (params: ReceivedEstimateRequestSearchParams) => {
   try {
-    const url = "/estimate-request/received";
+    const url = '/estimate-request/received';
     const response = await client.get(url, { params });
     return response.data;
   } catch (e) {
@@ -30,7 +28,7 @@ const getReceivedEstimateRequests = async (
 
 const getReceivedEstimateRequestsSever = async (
   params: ReceivedEstimateRequestSearchParams,
-  cookieHeader: string
+  cookieHeader: string,
 ) => {
   try {
     const response = await client.get(`${API_URL}/estimate-request/received`, {
@@ -51,7 +49,7 @@ const getInactiveEstimateRequests = async (params: {
   pageSize: number;
 }): Promise<InactiveEstimateRequestResponse> => {
   try {
-    const url = "/estimate-request/";
+    const url = '/estimate-request/';
     const response = await client.get<InactiveEstimateRequestResponse>(url, {
       params,
     });

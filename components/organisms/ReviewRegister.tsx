@@ -86,11 +86,7 @@ function ReviewRegister({
         </div>
         <div className="text-[16px] font-[600] flex flex-col gap-y-2">
           <h4>평점을 선택해 주세요.</h4>
-          <ButtonStarRating
-            disabled={false}
-            initialRating={rating}
-            setRating={setRating}
-          />
+          <ButtonStarRating disabled={false} initialRating={rating} setRating={setRating} />
         </div>
         <div className="text-[16px] font-[600] flex flex-col gap-y-2">
           <h4>상세 후기를 작성해 주세요.</h4>

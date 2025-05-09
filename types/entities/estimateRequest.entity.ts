@@ -1,5 +1,5 @@
-import { EstimateRequestStatus, ServiceType } from "../move.type";
-import { Area } from "./user.entity";
+import { EstimateRequestStatus, ServiceType } from '../move.type';
+import { Area } from './user.entity';
 
 export interface EstimateRequest {
   id: string;

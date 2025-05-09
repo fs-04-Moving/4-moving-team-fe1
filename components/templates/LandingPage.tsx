@@ -15,10 +15,7 @@ function LandingPage() {
         </h1>
         <div className="flex items-center justify-center lg:w-[1220px] lg:h-[598px] lg:gap-6 gap-9 flex-col lg:flex-row">
           <div className="relative bg-Primay-Blue-100 lg:pb-[34px] rounded-4xl w-[327px] h-[240px] lg:w-[432px] lg:h-[598px]">
-            <TitleLandingImage
-              title="소형이사"
-              subTitle="원룸, 투룸, 20평대 미만"
-            />
+            <TitleLandingImage title="소형이사" subTitle="원룸, 투룸, 20평대 미만" />
             <Image
               src={landing01}
               alt="랜딩이미지"
@@ -27,10 +24,7 @@ function LandingPage() {
           </div>
           <div className="flex flex-col gap-9 lg:gap-6 h-598px">
             <div className="relative bg-GrayScale-50 rounded-4xl w-[327px] lg:w-[764px] h-[240px] lg:h-[287px]">
-              <TitleLandingImage
-                title="가정이사"
-                subTitle="쓰리룸, 20평대 미만"
-              />
+              <TitleLandingImage title="가정이사" subTitle="쓰리룸, 20평대 미만" />
               <Image
                 src={landing02}
                 alt="랜딩이미지"
@@ -38,10 +32,7 @@ function LandingPage() {
               />
             </div>
             <div className="relative bg-GrayScale-50 rounded-4xl w-[327px] lg:w-[764px] h-[240px] lg:h-[287px]">
-              <TitleLandingImage
-                title="가정이사"
-                subTitle="쓰리룸, 20평대 미만"
-              />
+              <TitleLandingImage title="가정이사" subTitle="쓰리룸, 20평대 미만" />
               <Image
                 src={landing03}
                 alt="랜딩이미지"

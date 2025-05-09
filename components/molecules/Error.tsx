@@ -16,9 +16,7 @@ export default function Error({ message, onRetry }: ErrorProps) {
   return (
     <div className="grow flex items-center justify-center px-4 py-12">
       <div className="text-center">
-        <h1 className="text-2xl lg:text-3xl font-bold mb-4">
-          에러가 발생했습니다 😢
-        </h1>
+        <h1 className="text-2xl lg:text-3xl font-bold mb-4">에러가 발생했습니다 😢</h1>
         <p
           className="text-sm lg:text-lg text-GrayScale-500 mb-6"
           style={{ whiteSpace: 'pre-line' }} // 줄바꿈 스타일 추가

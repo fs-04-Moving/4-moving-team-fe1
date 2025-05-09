@@ -1,7 +1,7 @@
 // api/estimate/workerOnly/estimate.api.ts
 
-import { client, errorHandler } from "@/api/client";
-import { Estimate, RawEstimate } from "@/types/entities/estimate.entity";
+import { client, errorHandler } from '@/api/client';
+import { Estimate, RawEstimate } from '@/types/entities/estimate.entity';
 
 export interface GetSentEstimatesParams {
   page?: number;
@@ -14,13 +14,10 @@ export interface GetSentEstimatesResponse {
 }
 
 export async function getSentEstimates(
-  params: GetSentEstimatesParams = {}
+  params: GetSentEstimatesParams = {},
 ): Promise<GetSentEstimatesResponse> {
   try {
-    const response = await client.get<GetSentEstimatesResponse>(
-      "/estimate/sent",
-      { params }
-    );
+    const response = await client.get<GetSentEstimatesResponse>('/estimate/sent', { params });
     return response.data;
   } catch (error) {
     errorHandler(error);
@@ -29,13 +26,9 @@ export async function getSentEstimates(
 }
 
 // ✅ 추가된 상세 조회 함수
-export async function getEstimateDetailByWorker(
-  estimateId: string
-): Promise<Estimate> {
+export async function getEstimateDetailByWorker(estimateId: string): Promise<Estimate> {
   try {
-    const response = await client.get<Estimate>(
-      `/estimate/worker/detail/${estimateId}`
-    );
+    const response = await client.get<Estimate>(`/estimate/worker/detail/${estimateId}`);
     return response.data;
   } catch (error) {
     errorHandler(error);
@@ -50,13 +43,10 @@ interface GetRejectedEstimatesResponseRaw {
 
 //반려된 견적들 조회 API
 export async function getRejectedEstimates(
-  params: GetSentEstimatesParams = {}
+  params: GetSentEstimatesParams = {},
 ): Promise<GetSentEstimatesResponse> {
   try {
-    const response = await client.get<GetSentEstimatesResponse>(
-      "/estimate/reject",
-      { params }
-    );
+    const response = await client.get<GetSentEstimatesResponse>('/estimate/reject', { params });
     return response.data;
   } catch (error) {
     errorHandler(error);

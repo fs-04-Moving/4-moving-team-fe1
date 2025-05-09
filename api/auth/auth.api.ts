@@ -43,10 +43,7 @@ const refreshToken = async () => {
 };
 
 // 소셜 로그인
-const handleOAuthLogin = (
-  role: Role | null,
-  provider: 'google' | 'kakao' | 'naver'
-) => {
+const handleOAuthLogin = (role: Role | null, provider: 'google' | 'kakao' | 'naver') => {
   if (!role) return;
 
   const state = generateOAuthState(role);

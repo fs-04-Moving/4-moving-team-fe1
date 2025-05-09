@@ -38,13 +38,11 @@ function TabMenu({ tabs }: TabMenuProps) {
             onClick={() => handleClick(tab.route)}
             className={clsx(
               'relative flex items-center h-16 text-sm lg:text-xl font-semibold transition-colors duration-200 cursor-pointer active:opacity-70',
-              isActive ? 'text-Black-400' : 'text-GrayScale-400'
+              isActive ? 'text-Black-400' : 'text-GrayScale-400',
             )}
           >
             <p>{tab.label}</p>
-            {isActive && (
-              <div className="absolute bottom-0 bg-Black-400 w-full h-0.5" />
-            )}
+            {isActive && <div className="absolute bottom-0 bg-Black-400 w-full h-0.5" />}
           </button>
         );
       })}

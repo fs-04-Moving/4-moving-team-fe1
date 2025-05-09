@@ -39,141 +39,118 @@ interface DropdownProfileProps {
   position: { top: number; right: number }; // 추가된 위치 정보
 }
 
-const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(
-  function DropdownProfile(
-    { username, isOpen, onClose, logOut, role, position },
-    ref
-  ) {
-    const router = useRouter();
+const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(function DropdownProfile(
+  { username, isOpen, onClose, logOut, role, position },
+  ref,
+) {
+  const router = useRouter();
 
-    const handleClickMoveToCustomerFavorites = () => {
-      router.push(ROUTES.CUSTOMER.FAVORITES);
-      onClose();
-    };
+  const handleClickMoveToCustomerFavorites = () => {
+    router.push(ROUTES.CUSTOMER.FAVORITES);
+    onClose();
+  };
 
-    const handleClickMoveToCustomerReviews = () => {
-      router.push(ROUTES.CUSTOMER.REVIEWS.PENDING);
-      onClose();
-    };
+  const handleClickMoveToCustomerReviews = () => {
+    router.push(ROUTES.CUSTOMER.REVIEWS.PENDING);
+    onClose();
+  };
 
-    // 로그아웃 처리
-    const handleClickLogout = () => {
-      logOut();
-    };
+  // 로그아웃 처리
+  const handleClickLogout = () => {
+    logOut();
+  };
 
-    const handleClickMoveToWorkerMypage = () => {
-      router.push(ROUTES.WORKER.MY_PAGE);
-      onClose();
-    };
+  const handleClickMoveToWorkerMypage = () => {
+    router.push(ROUTES.WORKER.MY_PAGE);
+    onClose();
+  };
 
-    const handleClickMoveToCustomerProfileEdit = () => {
-      router.push(ROUTES.CUSTOMER.PROFILE_EDIT);
-      onClose();
-    };
+  const handleClickMoveToCustomerProfileEdit = () => {
+    router.push(ROUTES.CUSTOMER.PROFILE_EDIT);
+    onClose();
+  };
 
-    const handleClickMoveToWorkerProfileEdit = () => {
-      router.push(ROUTES.WORKER.PROFILE_EDIT);
-      onClose();
-    };
+  const handleClickMoveToWorkerProfileEdit = () => {
+    router.push(ROUTES.WORKER.PROFILE_EDIT);
+    onClose();
+  };
 
-    const handleClickMoveToCustomerInfoEdit = () => {
-      router.push(ROUTES.CUSTOMER.INFO);
-      onClose();
-    };
+  const handleClickMoveToCustomerInfoEdit = () => {
+    router.push(ROUTES.CUSTOMER.INFO);
+    onClose();
+  };
 
-    const handleClickMoveToWorkerInfoEdit = () => {
-      router.push(ROUTES.WORKER.INFO);
-      onClose();
-    };
+  const handleClickMoveToWorkerInfoEdit = () => {
+    router.push(ROUTES.WORKER.INFO);
+    onClose();
+  };
 
-    if (!isOpen) return null;
+  if (!isOpen) return null;
 
-    // 메뉴들 공통 스타일, 마진은 박스 패딩에서 조절했습니다
-    const menuItemClass =
-      'cursor-pointer w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 hover:bg-Primay-Blue-50 transition-colors';
-    const menuItemClassName =
-      'w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 ';
+  // 메뉴들 공통 스타일, 마진은 박스 패딩에서 조절했습니다
+  const menuItemClass =
+    'cursor-pointer w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 hover:bg-Primay-Blue-50 transition-colors';
+  const menuItemClassName =
+    'w-[140px] lg:w-[240px] h-[42px] lg:h-[54px] flex items-center px-3 lg:px-6 text-Black-400 ';
 
-    return (
-      <div
-        ref={ref}
-        style={{ top: position.top, right: position.right }}
-        className={clsx(
-          'fixed bg-white rounded-xl shadow-md px-1.5 lg:px-1 pt-2.5 lg:pt-4',
-          'border border-GrayScale-100 overflow-hidden z-[100]'
-        )}
-      >
-        <div className={clsx(menuItemClassName)}>
-          <p className="font-bold text-base lg:text-lg text-Black-400">
-            {username} {role === 'customer' ? '고객님' : '기사님'}
-          </p>
-        </div>
-
-        <div className="py-2">
-          {role === 'customer' ? (
-            // 고객용 메뉴
-            <>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToCustomerInfoEdit}
-              >
-                기본 정보 수정
-              </div>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToCustomerProfileEdit}
-              >
-                프로필 수정
-              </div>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToCustomerFavorites}
-              >
-                찜한 기사님
-              </div>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToCustomerReviews}
-              >
-                이사 리뷰
-              </div>
-            </>
-          ) : (
-            // 기사님용 메뉴
-            <>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToWorkerInfoEdit}
-              >
-                기본 정보 수정
-              </div>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToWorkerProfileEdit}
-              >
-                프로필 수정
-              </div>
-              <div
-                className={menuItemClass}
-                onClick={handleClickMoveToWorkerMypage}
-              >
-                마이페이지
-              </div>
-            </>
-          )}
-        </div>
-
-        <div className="border-t border-GrayScale-100">
-          <button
-            onClick={handleClickLogout}
-            className="text-GrayScale-400 text-xs lg:text-sm font-medium w-[140px] lg:w-[240px] h-[38px] lg:h-[45px] hover:bg-Primay-Blue-50 transition-colors cursor-pointer"
-          >
-            로그아웃
-          </button>
-        </div>
+  return (
+    <div
+      ref={ref}
+      style={{ top: position.top, right: position.right }}
+      className={clsx(
+        'fixed bg-white rounded-xl shadow-md px-1.5 lg:px-1 pt-2.5 lg:pt-4',
+        'border border-GrayScale-100 overflow-hidden z-[100]',
+      )}
+    >
+      <div className={clsx(menuItemClassName)}>
+        <p className="font-bold text-base lg:text-lg text-Black-400">
+          {username} {role === 'customer' ? '고객님' : '기사님'}
+        </p>
       </div>
-    );
-  }
-);
+
+      <div className="py-2">
+        {role === 'customer' ? (
+          // 고객용 메뉴
+          <>
+            <div className={menuItemClass} onClick={handleClickMoveToCustomerInfoEdit}>
+              기본 정보 수정
+            </div>
+            <div className={menuItemClass} onClick={handleClickMoveToCustomerProfileEdit}>
+              프로필 수정
+            </div>
+            <div className={menuItemClass} onClick={handleClickMoveToCustomerFavorites}>
+              찜한 기사님
+            </div>
+            <div className={menuItemClass} onClick={handleClickMoveToCustomerReviews}>
+              이사 리뷰
+            </div>
+          </>
+        ) : (
+          // 기사님용 메뉴
+          <>
+            <div className={menuItemClass} onClick={handleClickMoveToWorkerInfoEdit}>
+              기본 정보 수정
+            </div>
+            <div className={menuItemClass} onClick={handleClickMoveToWorkerProfileEdit}>
+              프로필 수정
+            </div>
+            <div className={menuItemClass} onClick={handleClickMoveToWorkerMypage}>
+              마이페이지
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="border-t border-GrayScale-100">
+        <button
+          onClick={handleClickLogout}
+          className="text-GrayScale-400 text-xs lg:text-sm font-medium w-[140px] lg:w-[240px] h-[38px] lg:h-[45px] hover:bg-Primay-Blue-50 transition-colors cursor-pointer"
+        >
+          로그아웃
+        </button>
+      </div>
+    </div>
+  );
+});
 
 export default DropdownProfile;

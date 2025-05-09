@@ -71,18 +71,16 @@ function RegionSelector({
   };
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className="flex flex-col gap-2">
       {AREA_ROWS.map((row, rowIndex) => (
-        <div key={`row-${rowIndex}`} className='flex flex-wrap gap-2'>
+        <div key={`row-${rowIndex}`} className="flex flex-wrap gap-2">
           {row.map((region) => (
             <ChipBubbleTypeBox
               key={region}
               text={AREA_CONSTANTS[region]} // 한글 지역명 표시
               isSelected={isRegionSelected(region)}
               onClick={() =>
-                multipleSelect
-                  ? handleMultipleSelect(region)
-                  : handleSingleSelect(region)
+                multipleSelect ? handleMultipleSelect(region) : handleSingleSelect(region)
               }
               canClick={true}
             />

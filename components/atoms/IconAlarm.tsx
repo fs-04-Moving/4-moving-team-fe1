@@ -14,10 +14,7 @@ interface Props {
  * 클릭 시 드롭다운 토글
  * 포지션 계산을 위한 ref 전달 가능
  */
-const IconAlarm = forwardRef<HTMLImageElement, Props>(function IconAlarm(
-  { onClick },
-  ref
-) {
+const IconAlarm = forwardRef<HTMLImageElement, Props>(function IconAlarm({ onClick }, ref) {
   return (
     <Image
       src={icAlarm}

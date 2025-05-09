@@ -30,12 +30,11 @@ function Input({
 }: Props) {
   // 아래 코드에는 clsx를 굳이 쓰지 않아도 되지만, 쓰지 않을 경우 tailwind 문법으로 인식을 하지 못하여 자동 완성이 안 됨
   const defaultClassName = clsx(
-    'w-full text-Black-400 lg:text-xl h-[54px] lg:h-16 px-[14px] py-4 rounded-2xl outline-Primay-Blue-300 border border-solid border-Line-200 placeholder-GrayScale-400'
+    'w-full text-Black-400 lg:text-xl h-[54px] lg:h-16 px-[14px] py-4 rounded-2xl outline-Primay-Blue-300 border border-solid border-Line-200 placeholder-GrayScale-400',
   );
 
   const errorClassName = clsx({
-    'outline-Secondary-Red-200 mb-2 border-solid border-2 border-Secondary-Red-200':
-      !!errorMessage,
+    'outline-Secondary-Red-200 mb-2 border-solid border-2 border-Secondary-Red-200': !!errorMessage,
   });
 
   const searchClassName = clsx({
@@ -52,12 +51,7 @@ function Input({
       {label && <LabelInput id={props.id} text={label} />}
       <div className="rel">
         <input
-          className={clsx(
-            defaultClassName,
-            errorClassName,
-            searchClassName,
-            bgClassName
-          )}
+          className={clsx(defaultClassName, errorClassName, searchClassName, bgClassName)}
           {...props}
         />
       </div>

@@ -67,9 +67,7 @@ function WorkerMyPage() {
             <div className="my-6 lg:my-12">
               <DividerHor />
             </div>
-            <p className="text-base lg:text-2xl font-bold mb-8">
-              리뷰({profile.reviewsCount})
-            </p>
+            <p className="text-base lg:text-2xl font-bold mb-8">리뷰({profile.reviewsCount})</p>
             <ChartStarRatingReview ratingData={reviews.starCountList} />
           </div>
         </div>

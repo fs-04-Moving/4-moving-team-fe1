@@ -25,16 +25,11 @@ interface ChartStarRatingReviewProps {
 
 function ChartStarRatingReview({ ratingData }: ChartStarRatingReviewProps) {
   const [averageRating, setAverageRating] = useState(0);
-  const calculateAverageRating = (
-    data: { rating: number; count: number }[]
-  ) => {
+  const calculateAverageRating = (data: { rating: number; count: number }[]) => {
     if (data && data.length > 0) {
       const totalRatings = data.reduce((acc, item) => acc + item.count, 0);
       if (totalRatings > 0) {
-        const weightedSum = data.reduce(
-          (acc, item) => acc + item.rating * item.count,
-          0
-        );
+        const weightedSum = data.reduce((acc, item) => acc + item.rating * item.count, 0);
         return parseFloat((weightedSum / totalRatings).toFixed(1));
       }
     }
@@ -57,11 +52,7 @@ function ChartStarRatingReview({ ratingData }: ChartStarRatingReviewProps) {
       <div className="lg:w-[837px] lg:h-[216px] flex flex-col lg:flex-row md:flex-row items-center justify-between">
         <div className="lg:w-[244px] lg:h-[139px] sm:p-b-[40px] md: p-[44.5px] flex flex-col items-center justify-center lg: gap-4">
           <ChartAverageReview ratingData={averageRating} />
-          <ButtonStarRating
-            initialRating={averageRating}
-            disabled={true}
-            starSize={20}
-          />
+          <ButtonStarRating initialRating={averageRating} disabled={true} starSize={20} />
         </div>
         <ProgressBarStarRating ratings={ratingData} />
       </div>

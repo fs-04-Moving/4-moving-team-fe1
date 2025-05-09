@@ -1,9 +1,9 @@
 //ResponsiveModal.tsx
 
-"use client";
+'use client';
 
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ResponsiveModalProps {
   isOpen: boolean;
@@ -17,8 +17,8 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
   isOpen,
   onClose,
   children,
-  width = "w-full", // 기본값은 w-full
-  height = "h-auto", // 기본값은 h-auto
+  width = 'w-full', // 기본값은 w-full
+  height = 'h-auto', // 기본값은 h-auto
 }) => {
   return (
     <AnimatePresence>
@@ -33,10 +33,10 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
           {/* mobile에서 w-[327px] 이하일 때 아래에서 위 적용, 그 외는 일반 모달 */}
           <motion.div
             key="modal"
-            initial={{ opacity: 0, y: "100%" }}
+            initial={{ opacity: 0, y: '100%' }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: "100%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            exit={{ opacity: 0, y: '100%' }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             className={`
               fixed z-50 bg-white p-6
               ${width} ${height}

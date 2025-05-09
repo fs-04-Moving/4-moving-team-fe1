@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
  * @param mutationFn - 실제 프로필 생성 API 함수 (e.g., profilesApi.createCustomerProfile)
  */
 export function useCreateProfileMutation<TInput extends object>(
-  mutationFn: (data: TInput) => Promise<{ accessToken: string }>
+  mutationFn: (data: TInput) => Promise<{ accessToken: string }>,
 ) {
   const router = useRouter();
   const queryClient = useQueryClient();

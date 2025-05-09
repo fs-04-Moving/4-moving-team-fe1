@@ -16,9 +16,7 @@ export function useFindWorkerQuery(params: WorkerSearchParams) {
     },
     getNextPageParam: (lastPage, allPages) => {
       const totalLoaded = allPages.flatMap((p) => p.list).length;
-      return totalLoaded < lastPage.totalCount
-        ? allPages.length + 1
-        : undefined;
+      return totalLoaded < lastPage.totalCount ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
   });

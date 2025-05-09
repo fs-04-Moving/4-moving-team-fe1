@@ -6,9 +6,7 @@ interface Props extends React.ComponentProps<'textarea'> {
   bgColor?: boolean;
   errorMessage?: string;
   value: string | number | readonly string[];
-  onChange:
-    | ChangeEventHandler<HTMLTextAreaElement>
-    | ((...event: unknown[]) => void);
+  onChange: ChangeEventHandler<HTMLTextAreaElement> | ((...event: unknown[]) => void);
   onBlur: FocusEventHandler<HTMLTextAreaElement>;
 }
 
@@ -22,11 +20,10 @@ function TextArea({
   ...props
 }: Props) {
   const defaultClassName = clsx(
-    'resize-none w-[327px] lg:w-full lg:text-xl h-40 px-[14px] py-4 rounded-2xl outline-Primary-blue-300 border border-solid border-Line-200 placeholder-GrayScale-400'
+    'resize-none w-[327px] lg:w-full lg:text-xl h-40 px-[14px] py-4 rounded-2xl outline-Primary-blue-300 border border-solid border-Line-200 placeholder-GrayScale-400',
   );
   const errorClassName = clsx({
-    'outline-Secondary-Red-200 mb-2 border-solid border-2 border-Secondary-Red-200':
-      !!errorMessage,
+    'outline-Secondary-Red-200 mb-2 border-solid border-2 border-Secondary-Red-200': !!errorMessage,
   });
 
   const bgClassName = clsx({

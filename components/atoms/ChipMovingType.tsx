@@ -23,10 +23,7 @@ interface Props {
  * @returns {JSX.Element | null} 선택된 이사 타입에 맞는 스타일의 칩 컴포넌트. 타입에 해당하는 설정이 없으면 null을 반환합니다.
  */
 function ChipMovingType({ type, isShort, isResponsive = true }: Props) {
-  const config: Record<
-    string,
-    { icon: string; text: string; shortenText: string }
-  > = {
+  const config: Record<string, { icon: string; text: string; shortenText: string }> = {
     smallMove: {
       icon: icBox,
       text: '소형이사',
@@ -52,7 +49,7 @@ function ChipMovingType({ type, isShort, isResponsive = true }: Props) {
     <span
       className={clsx(
         `inline-flex items-center align-middle gap-0.5 rounded-sm h-[26px] px-1 pr-1 font-semibold w-fit bg-Primay-Blue-100 text-Primay-Blue-300`,
-        isResponsive ? 'lg:gap-1 lg:h-[34px]' : ''
+        isResponsive ? 'lg:gap-1 lg:h-[34px]' : '',
       )}
     >
       <Image
@@ -64,7 +61,7 @@ function ChipMovingType({ type, isShort, isResponsive = true }: Props) {
       <span
         className={clsx(
           'leading-none relative top-[1px] text-[13px]',
-          isResponsive ? 'lg:text-[16px]' : ''
+          isResponsive ? 'lg:text-[16px]' : '',
         )}
       >
         <span className="lg:hidden">{isShort ? shortenText : text}</span>

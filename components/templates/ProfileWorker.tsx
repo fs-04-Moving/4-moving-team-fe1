@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import DividerHor from "../atoms/DividerHor";
-import Label from "../atoms/Label";
-import FormProfileWorker from "./FormProfileWorker";
+import DividerHor from '../atoms/DividerHor';
+import Label from '../atoms/Label';
+import FormProfileWorker from './FormProfileWorker';
 
 function ProfileWorker() {
   return (

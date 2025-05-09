@@ -54,13 +54,8 @@ export function useSignUpMutation({
       if (data?.errorCode) {
         const message = getErrorMessageFromCode(data.errorCode, data);
 
-        if (
-          data.errorCode === 'PROVIDER_MISMATCH' ||
-          data.errorCode === 'ROLE_MISMATCH'
-        ) {
-          const query = new URLSearchParams(
-            data as Record<string, string>
-          ).toString();
+        if (data.errorCode === 'PROVIDER_MISMATCH' || data.errorCode === 'ROLE_MISMATCH') {
+          const query = new URLSearchParams(data as Record<string, string>).toString();
           router.replace(`/auth/callback?${query}`);
           return;
         }

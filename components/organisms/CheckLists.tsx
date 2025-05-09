@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import AllChoiceCheckBox from "../molecules/AllChoiceCheckBox";
-import { movingTypes, filterLists } from "@/libs/mockData";
-import IndividualTypeCheckBox from "../molecules/IndividualTypeCheckBox";
+import { useState } from 'react';
+import AllChoiceCheckBox from '../molecules/AllChoiceCheckBox';
+import { movingTypes, filterLists } from '@/libs/mockData';
+import IndividualTypeCheckBox from '../molecules/IndividualTypeCheckBox';
 
 interface Props {
   isModalType: boolean;
@@ -28,16 +28,18 @@ export default function CheckLists({ isModalType = true }: Props) {
   // 전체 선택/해제 기능
   const toggleAll = () => {
     const isAllSelected =
-      Object.keys(selected).length === items.length &&
-      Object.values(selected).every(Boolean);
+      Object.keys(selected).length === items.length && Object.values(selected).every(Boolean);
 
     if (isAllSelected) {
       setSelected({});
     } else {
-      const newSelection = items.reduce((acc, item) => {
-        acc[item.id] = true;
-        return acc;
-      }, {} as Record<number, boolean>);
+      const newSelection = items.reduce(
+        (acc, item) => {
+          acc[item.id] = true;
+          return acc;
+        },
+        {} as Record<number, boolean>,
+      );
       setSelected(newSelection);
     }
   };
@@ -48,7 +50,7 @@ export default function CheckLists({ isModalType = true }: Props) {
         <div className="flex flex-row gap-x-4">
           <button
             className={`text-[18px] border-0 bg-white cursor-pointer ${
-              isMovingType ? "text-[#1F1F1F] font-bold" : "text-[#ABABAB]"
+              isMovingType ? 'text-[#1F1F1F] font-bold' : 'text-[#ABABAB]'
             }`}
             onClick={() => setIsMovingType(true)}
           >
@@ -56,7 +58,7 @@ export default function CheckLists({ isModalType = true }: Props) {
           </button>
           <button
             className={`text-[18px] border-0 bg-white cursor-pointer ${
-              !isMovingType ? "text-[#1F1F1F] font-bold" : "text-[#ABABAB]"
+              !isMovingType ? 'text-[#1F1F1F] font-bold' : 'text-[#ABABAB]'
             }`}
             onClick={() => setIsMovingType(false)}
           >
@@ -89,11 +91,7 @@ export default function CheckLists({ isModalType = true }: Props) {
           />
         )}
         {/* 개별 체크박스 (컴포넌트화) */}
-        <IndividualTypeCheckBox
-          items={items}
-          selected={selected}
-          toggleCheckbox={toggleCheckbox}
-        />
+        <IndividualTypeCheckBox items={items} selected={selected} toggleCheckbox={toggleCheckbox} />
       </div>
     </div>
   );

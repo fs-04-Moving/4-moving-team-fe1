@@ -4,9 +4,7 @@ import estimateRequestApi from '@/api/estimate-request/estimateRequest.api';
 import { ReceivedEstimateRequestSearchParams } from '@/types/dtos/estimateRequest.dto';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-export function useReceivedRequestsQuery(
-  params: ReceivedEstimateRequestSearchParams
-) {
+export function useReceivedRequestsQuery(params: ReceivedEstimateRequestSearchParams) {
   return useInfiniteQuery({
     queryKey: ['ReceivedEstimateRequests', params],
     queryFn: ({ pageParam = 1 }) => {
@@ -17,9 +15,7 @@ export function useReceivedRequestsQuery(
     },
     getNextPageParam: (lastPage, allPages) => {
       const totalLoaded = allPages.flatMap((p) => p.list).length;
-      return totalLoaded < lastPage.totalCount
-        ? allPages.length + 1
-        : undefined;
+      return totalLoaded < lastPage.totalCount ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
   });

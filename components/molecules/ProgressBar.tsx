@@ -16,21 +16,11 @@ import { useEffect, useState } from 'react';
  * <ProgressBar totalSteps={4} currentStep={2} />
  */
 
-const ProgressBar = ({
-  totalSteps,
-  currentStep,
-}: {
-  totalSteps: number;
-  currentStep: number;
-}) => {
+const ProgressBar = ({ totalSteps, currentStep }: { totalSteps: number; currentStep: number }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (
-      typeof totalSteps === 'number' &&
-      typeof currentStep === 'number' &&
-      totalSteps > 0
-    ) {
+    if (typeof totalSteps === 'number' && typeof currentStep === 'number' && totalSteps > 0) {
       setProgress((currentStep / totalSteps) * 100);
     }
   }, [currentStep, totalSteps]);

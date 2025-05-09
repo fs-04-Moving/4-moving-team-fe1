@@ -16,14 +16,11 @@ interface Props {
  * @returns
  */
 function HeaderAuthPage({ isSignUpPage, role }: Props) {
-  const text1: string =
-    role === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
-  const text2: string =
-    role === 'customer' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
+  const text1: string = role === 'customer' ? '기사님이신가요?' : '일반 유저라면?';
+  const text2: string = role === 'customer' ? '기사님 전용 페이지' : '일반 유저 전용 페이지';
 
   const pageLink: string = isSignUpPage ? ROUTES.SIGN_UP : ROUTES.LOG_IN;
-  const linkQuery: string =
-    role === 'customer' ? '?role=worker' : '?role=customer';
+  const linkQuery: string = role === 'customer' ? '?role=worker' : '?role=customer';
 
   return (
     <div className="flex flex-col items-center mb-10 lg:mb-18">
@@ -33,9 +30,7 @@ function HeaderAuthPage({ isSignUpPage, role }: Props) {
       <div className="flex justify-center">
         <p className="mr-2 text-xs lg:text-xl text-Black-200">{text1}</p>
         <Link href={`${pageLink}${linkQuery}`}>
-          <p className="text-xs lg:text-xl text-Primay-Blue-300 font-semibold underline">
-            {text2}
-          </p>
+          <p className="text-xs lg:text-xl text-Primay-Blue-300 font-semibold underline">{text2}</p>
         </Link>
       </div>
     </div>

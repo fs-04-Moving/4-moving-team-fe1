@@ -26,8 +26,7 @@ function GroupServiceTypeSelect({
 
   const handleClickServiceChip = (serviceKor: ServiceTypeKor) => {
     const serviceEng = Object.keys(serviceTypeObject).find(
-      (key) =>
-        serviceTypeObject[key as keyof typeof serviceTypeObject] === serviceKor
+      (key) => serviceTypeObject[key as keyof typeof serviceTypeObject] === serviceKor,
     ) as ServiceTypeEng;
 
     const index = services.indexOf(serviceEng);
@@ -48,15 +47,11 @@ function GroupServiceTypeSelect({
           {title1}
         </Label>
       </div>
-      <p className="text-GrayScale-400 text-xs lg:text-base mb-6 lg:mb-8">
-        {title2}
-      </p>
+      <p className="text-GrayScale-400 text-xs lg:text-base mb-6 lg:mb-8">{title2}</p>
       <div className="flex gap-[6px] lg:gap-3 mb-5 lg:mb-8">
         {serviceTypeKors.map((serviceType) => {
           const serviceEng = Object.keys(serviceTypeObject).find(
-            (key) =>
-              serviceTypeObject[key as keyof typeof serviceTypeObject] ===
-              serviceType
+            (key) => serviceTypeObject[key as keyof typeof serviceTypeObject] === serviceType,
           ) as ServiceTypeEng;
 
           const isSelected = services.includes(serviceEng);

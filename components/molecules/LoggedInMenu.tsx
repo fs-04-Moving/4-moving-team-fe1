@@ -21,8 +21,7 @@ interface Props {
 export default function LoggedInMenu({ user, onOpenMenu }: Props) {
   const { logOut } = useAuth();
   const [isShowProfilePopup, setIsShowProfilePopup] = useState(false);
-  const [isShowNotificationsPopup, setIsShowNotificationsPopup] =
-    useState(false);
+  const [isShowNotificationsPopup, setIsShowNotificationsPopup] = useState(false);
 
   const popupProfileRef = useRef<HTMLDivElement | null>(null);
   const popupNotificationRef = useRef<HTMLDivElement | null>(null);
@@ -68,15 +67,11 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
   };
 
   // 외부 영역 클릭 감지 훅 적용
-  useOutsideClick(
-    popupProfileRef,
-    () => setIsShowProfilePopup(false),
-    isShowProfilePopup
-  );
+  useOutsideClick(popupProfileRef, () => setIsShowProfilePopup(false), isShowProfilePopup);
   useOutsideClick(
     popupNotificationRef,
     () => setIsShowNotificationsPopup(false),
-    isShowNotificationsPopup
+    isShowNotificationsPopup,
   );
 
   interface Notification {
@@ -89,12 +84,9 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
   ////////////////////////////알림 구현//////////////////////////// SSE
   const [notifications, setNotifications] = useState<Notification[]>([]);
   useEffect(() => {
-    const eventSource = new EventSource(
-      `${process.env.NEXT_PUBLIC_API_URL}/notification`,
-      {
-        withCredentials: true,
-      }
-    );
+    const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}/notification`, {
+      withCredentials: true,
+    });
     eventSource.onmessage = (event) => {
       const parsedData = JSON.parse(event.data);
       //맨처음 알림은 10개 배열로 받아오고 그 이후 알람은 배열이 아니여서 처리가 필요함
@@ -102,10 +94,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
         ? parsedData.notification
         : [parsedData.notification];
 
-      setNotifications((prevNotifications) => [
-        ...newNotifications,
-        ...prevNotifications,
-      ]);
+      setNotifications((prevNotifications) => [...newNotifications, ...prevNotifications]);
     };
 
     eventSource.onerror = () => {
