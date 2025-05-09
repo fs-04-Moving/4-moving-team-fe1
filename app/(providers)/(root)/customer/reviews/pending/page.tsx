@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import writableReviewApi from '@/api/review/writableReview.api';
-import { Review } from '@/types/dtos/review.dto';
 import PendingReviewsClient from './PendingReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';

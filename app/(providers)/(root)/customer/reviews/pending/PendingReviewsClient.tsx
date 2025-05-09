@@ -38,7 +38,7 @@ function PendingReviewsClient() {
   } = useQuery({
     queryKey: ["pendingReviews", page],
     queryFn: () =>
-      writableReviewApi.getReviewableEstimates({ page, pageSize: 6 }),
+      writableReviewApi.getReviewableEstimates({ page, pageSize: 1 }),
     // keepPreviousData: true,
   });
 
@@ -114,7 +114,7 @@ function PendingReviewsClient() {
   return (
     <div className="bg-background-100 flex items-center justify-center">
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px]">
-        <div className="flex flex-wrap w-full justify-center">
+        <div className="flex flex-wrap w-full justify-nomal">
           {reviews.length === 0 ? (
             <div className="w-full flex justify-center items-center mt-[50px] h-[370px] w-[327px] lg:h-[955px] lg:w-[656px]">
               <EmptyWritableReview text={"작성 가능한 리뷰가 없습니다."} />
@@ -122,7 +122,7 @@ function PendingReviewsClient() {
           ) : (
             reviews.map((review) => {
               return (
-                <div key={review.id} className="w-1/2 p-2">
+                <div key={review.id} className=" p-2 w-full lg:w-1/2">
                   <WorkerCardInWritableReview
                     serviceType={
                       review.serviceType as
@@ -148,7 +148,7 @@ function PendingReviewsClient() {
         {totalCount > 0 && (
           <Pagination
             currentPage={page}
-            totalPages={Math.ceil(totalCount / 6)}
+            totalPages={Math.ceil(totalCount / 1)}
             onPageChange={handlePageChange}
             className="mt-5 mb-3"
           />
@@ -160,7 +160,7 @@ function PendingReviewsClient() {
           selectedReview.id &&
           workerData && (
             <GeneralModal
-              onClose={() => handleCloseModal(true)}
+              onClose={handleCloseModal}
               isOpen={isModalOpen}
             >
               {/* <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50"> */}
