@@ -1,4 +1,3 @@
-
 import icWriting from '@/assets/images/ic-writing.svg';
 import { Area } from '@/types/entities/user.entity';
 import { AREA_DATA, ServiceType } from '@/types/move.type';
@@ -82,9 +81,7 @@ function WorkerCardInProfile({
     }
   });
 
-  const formattedServiceAreas: string[] = serviceAreas.map(
-    (aera) => AREA_DATA[aera]
-  );
+  const formattedServiceAreas: string[] = serviceAreas.map((aera) => AREA_DATA[aera]);
 
   return (
     <div className="flex flex-col gap-2.5">
@@ -96,32 +93,18 @@ function WorkerCardInProfile({
           </span>
           <div className="flex flex-col gap-1 lg:gap-2 text-[14px]">
             <div className="lg:text-2xl">{nickname}</div>
-            <div className="text-GrayScale-400 font-normal lg:text-xl">
-              {summary}
-            </div>
+            <div className="text-GrayScale-400 font-normal lg:text-xl">{summary}</div>
           </div>
           {/* 버튼 in lg */}
           <span className="hidden lg:inline-flex gap-2 w-[576px]">
             {/* todo: 글자 세로 가운데 정렬하기 */}
             <ButtonOutlined onClick={onViewDetail} intent="done">
               기본 정보 수정
-              <Image
-                className="inline"
-                src={icWriting}
-                width={24}
-                height={24}
-                alt="pencil icon"
-              />
+              <Image className="inline" src={icWriting} width={24} height={24} alt="pencil icon" />
             </ButtonOutlined>
             <ButtonSolid onClick={onConfirm}>
               내 프로필 수정
-              <Image
-                className="inline"
-                src={icWriting}
-                width={24}
-                height={24}
-                alt="pencil icon"
-              />
+              <Image className="inline" src={icWriting} width={24} height={24} alt="pencil icon" />
             </ButtonSolid>
           </span>
         </div>
@@ -134,10 +117,7 @@ function WorkerCardInProfile({
           </span>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3.5 md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-              <RatingSummary
-                reviewsAverage={reviewsAverage | 0}
-                reviewsCount={reviewsCount}
-              />
+              <RatingSummary reviewsAverage={reviewsAverage | 0} reviewsCount={reviewsCount} />
               <span className="text-GrayScale-100">|</span>
               <span>
                 <span className="text-GrayScale-300">경력</span>
@@ -154,9 +134,7 @@ function WorkerCardInProfile({
                 <ChipText>제공 서비스</ChipText>
                 <span>{Object.values(formattedServcies).join(', ')}</span>
               </span>
-              <span className="hidden md:inline-block text-GrayScale-200">
-                |
-              </span>
+              <span className="hidden md:inline-block text-GrayScale-200">|</span>
               <span className="flex items-center gap-2 lg:gap-3">
                 <ChipText>지역</ChipText>
                 <span>{Object.values(formattedServiceAreas).join(', ')}</span>
@@ -170,23 +148,11 @@ function WorkerCardInProfile({
         {/* todo: 글자 세로 가운데 정렬하기 */}
         <ButtonSolid onClick={onConfirm}>
           내 프로필 수정
-          <Image
-            className="inline"
-            src={icWriting}
-            width={24}
-            height={24}
-            alt="pencil icon"
-          />
+          <Image className="inline" src={icWriting} width={24} height={24} alt="pencil icon" />
         </ButtonSolid>
         <ButtonOutlined onClick={onViewDetail} intent="done">
           기본 정보 수정
-          <Image
-            className="inline"
-            src={icWriting}
-            width={24}
-            height={24}
-            alt="pencil icon"
-          />
+          <Image className="inline" src={icWriting} width={24} height={24} alt="pencil icon" />
         </ButtonOutlined>
       </div>
       {/* lg 스크린 */}

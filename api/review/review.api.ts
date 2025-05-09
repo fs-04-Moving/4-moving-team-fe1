@@ -23,11 +23,7 @@ interface CreateReviewParams {
 // };
 
 // 리뷰 생성 API
-const createReview = async ({
-  estimateId,
-  content,
-  rating,
-}: CreateReviewParams) => {
+const createReview = async ({ estimateId, content, rating }: CreateReviewParams) => {
   try {
     const response = await client.post(`/review/${estimateId}`, {
       content,

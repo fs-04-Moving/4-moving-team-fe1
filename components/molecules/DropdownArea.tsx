@@ -50,15 +50,12 @@ function DropdownArea({ includeAll = true, defaultValue, onSelect }: Props) {
   const areaOptions = includeAll ? [ALL_OPTION, ...areaValues] : areaValues;
 
   // 기본값 설정
-  const initialValue =
-    defaultValue || (includeAll ? ALL_OPTION : areaValues[0]);
+  const initialValue = defaultValue || (includeAll ? ALL_OPTION : areaValues[0]);
 
   const [selectedOption, setSelectedOption] = useState(initialValue);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
-  const dropdownButtonStatus: DropdownButtonStatus = isShowDropdown
-    ? 'active'
-    : 'done';
+  const dropdownButtonStatus: DropdownButtonStatus = isShowDropdown ? 'active' : 'done';
 
   // 지역명으로 지역 코드 찾기
   const getAreaCodeByName = (areaName: string): string => {

@@ -14,10 +14,7 @@ interface ErrorData {
  * 백엔드에서는 에러 상황에 따라 errorCode와 함께 관련 데이터를 응답하며,
  * 이 함수를 통해 상황에 맞는 한국어 메시지를 구성할 수 있다.
  */
-export function getErrorMessageFromCode(
-  errorCode: string | null,
-  data: ErrorData = {}
-): string {
+export function getErrorMessageFromCode(errorCode: string | null, data: ErrorData = {}): string {
   switch (errorCode) {
     // provider 불일치
     case 'PROVIDER_MISMATCH': {

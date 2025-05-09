@@ -21,7 +21,7 @@ export type SentEstimatesResponse = {
 export const getSentEstimatesServer = async (
   page: number,
   pageSize: number,
-  accessToken: string
+  accessToken: string,
 ): Promise<SentEstimatesResponse> => {
   const res = await axios.get(`${process.env.API_URL}/estimate/sent`, {
     params: { page, pageSize },

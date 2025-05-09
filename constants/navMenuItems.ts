@@ -5,11 +5,7 @@ import ROUTES from './routes';
 interface NavMenuItemData {
   label: string;
   href?: string;
-  condition: (
-    role: Role | null,
-    hasProfile: boolean,
-    isLoggedIn: boolean
-  ) => boolean;
+  condition: (role: Role | null, hasProfile: boolean, isLoggedIn: boolean) => boolean;
   onClick: (router: AppRouterInstance, role: Role | null) => void;
   showIn?: ('gnb' | 'slide')[];
 }

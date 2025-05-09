@@ -21,7 +21,7 @@ type RejectEstimatesResponse = {
 export async function getRejectedEstimatesSSR(
   page: number,
   pageSize: number,
-  accessToken: string
+  accessToken: string,
 ): Promise<RejectEstimatesResponse> {
   const res = await axios.get(`${API_URL}/estimate/reject`, {
     params: { page, pageSize },

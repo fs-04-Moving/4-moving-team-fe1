@@ -20,17 +20,11 @@ export type DropdownButtonStatus = 'default' | 'active' | 'done';
  * - onSelect?: dropdown list의 특정값을 선택했을 때 실행하는 함수
  * @returns
  */
-function Dropdown<T extends string>({
-  defaultValue,
-  options,
-  onSelect,
-}: Props<T>) {
+function Dropdown<T extends string>({ defaultValue, options, onSelect }: Props<T>) {
   const [selectedOption, setSelectedOption] = useState(defaultValue);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
-  const dropdownButtonStatus: DropdownButtonStatus = isShowDropdown
-    ? 'active'
-    : 'done';
+  const dropdownButtonStatus: DropdownButtonStatus = isShowDropdown ? 'active' : 'done';
 
   /**
    * 포커스 아웃시 onBlur가 호출되었을 때 blur이벤트로 드롭다운 메뉴가 클릭되지 않는 문제 발생
@@ -63,11 +57,7 @@ function Dropdown<T extends string>({
       {/* {isShowDropdown && (
         <DropdownMenu menuOptions={options} onSelect={handleSelectOption} />
       )} */}
-      <DropdownList
-        isShow={isShowDropdown}
-        listOptions={options}
-        onSelect={handleSelectOption}
-      />
+      <DropdownList isShow={isShowDropdown} listOptions={options} onSelect={handleSelectOption} />
     </div>
   );
 }

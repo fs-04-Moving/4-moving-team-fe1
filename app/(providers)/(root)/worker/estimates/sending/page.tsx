@@ -40,11 +40,7 @@ function SendingEstimatesPage() {
   if (loading) return <p>Loading...</p>;
 
   if (totalCount === 0) {
-    return (
-      <div className="text-center mt-12 text-gray-500">
-        보낸 견적이 없습니다.
-      </div>
-    );
+    return <div className="text-center mt-12 text-gray-500">보낸 견적이 없습니다.</div>;
   }
 
   return (

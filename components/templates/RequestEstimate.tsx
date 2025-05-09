@@ -31,9 +31,7 @@ function RequestEstimate() {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [departure, setDeparture] = useState('');
   const [destination, setDestination] = useState('');
-  const [departureArea, setDepartureArea] = useState<
-    keyof AreaType | undefined
-  >();
+  const [departureArea, setDepartureArea] = useState<keyof AreaType | undefined>();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { user } = useAuth();
@@ -42,8 +40,7 @@ function RequestEstimate() {
   console.log('estimate request user', user);
 
   const { mutate: createEstimateRequest } = useMutation({
-    mutationFn: (data: CreateEstimateRequestDto) =>
-      estimateRequestApi.createEstimateRequest(data),
+    mutationFn: (data: CreateEstimateRequestDto) => estimateRequestApi.createEstimateRequest(data),
     onSuccess: () => {
       router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING);
       // TODO: 내 견적 관리의 '대기 중인 견적' 쿼리 무효화 함수 추가
@@ -107,15 +104,10 @@ function RequestEstimate() {
   const renderServiceChoice = () => (
     <div className="flex justify-end">
       {!service || isEditingService ? (
-        <ChatBubbleMovingChoice
-          selectedService={service}
-          onSubmit={handleSelectDoneService}
-        />
+        <ChatBubbleMovingChoice selectedService={service} onSubmit={handleSelectDoneService} />
       ) : (
         <div className="flex flex-col items-end">
-          <ChatBubbleTextRight>
-            {serviceTypeDetailObject[service]}
-          </ChatBubbleTextRight>
+          <ChatBubbleTextRight>{serviceTypeDetailObject[service]}</ChatBubbleTextRight>
           <button
             onClick={handleClickEditService}
             className="underline text-xs lg:text-base text-GrayScale-500 mt-1.5 cursor-pointer hover:opacity-70"
@@ -134,10 +126,7 @@ function RequestEstimate() {
       </div>
       {!date || isEditingDate ? (
         <div className="flex justify-end">
-          <DatePickerWrapper
-            selectedDate={date}
-            onSubmit={handleSelectDoneDate}
-          />
+          <DatePickerWrapper selectedDate={date} onSubmit={handleSelectDoneDate} />
         </div>
       ) : (
         <div className="flex flex-col items-end">
@@ -190,9 +179,7 @@ function RequestEstimate() {
           <ChatBubbleTextLeft>
             {'몇 가지 정보만 알려주시면 최대 5개의 견적을 받을 수 있어요 :)'}
           </ChatBubbleTextLeft>
-          <ChatBubbleTextLeft>
-            {'이사 종류를 선택해 주세요.'}
-          </ChatBubbleTextLeft>
+          <ChatBubbleTextLeft>{'이사 종류를 선택해 주세요.'}</ChatBubbleTextLeft>
           {renderServiceChoice()}
           {step > 1 && renderDateChoice()}
           {step > 2 && renderAddressChoice()}
@@ -207,19 +194,13 @@ function RequestEstimate() {
         </div>
       </div>
       <div className="flex flex-col items-center mt-[127px] lg:mt-[194px]">
-        <Image
-          src={icRequestDisable}
-          alt="견적 요청 불가"
-          className="w-[244px]"
-        />
+        <Image src={icRequestDisable} alt="견적 요청 불가" className="w-[244px]" />
         <p className="mt-8 lg:mt-16 text-sm lg:text-xl text-[#999999] text-center">
           현재 진행 중인 이사 견적이 있어요! <br />
           진행 중인 이사 완료 후 새로운 견적을 받아보세요.
         </p>
         <div className="w-[196px] mt-8">
-          <ButtonSolid
-            onClick={() => router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING)}
-          >
+          <ButtonSolid onClick={() => router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING)}>
             받은 견적 보러가기
           </ButtonSolid>
         </div>

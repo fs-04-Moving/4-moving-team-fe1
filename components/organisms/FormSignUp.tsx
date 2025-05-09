@@ -22,18 +22,17 @@ export type FormSignUpInput = {
 };
 
 function FormSignUp({ role }: { role: Role }) {
-  const { control, handleSubmit, formState, setError } =
-    useForm<FormSignUpInput>({
-      defaultValues: {
-        email: '',
-        name: '',
-        phoneNumber: '',
-        password: '',
-        passwordConfirm: '',
-      },
-      mode: 'onTouched',
-      resolver: zodResolver(signUpValidation),
-    });
+  const { control, handleSubmit, formState, setError } = useForm<FormSignUpInput>({
+    defaultValues: {
+      email: '',
+      name: '',
+      phoneNumber: '',
+      password: '',
+      passwordConfirm: '',
+    },
+    mode: 'onTouched',
+    resolver: zodResolver(signUpValidation),
+  });
 
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -52,10 +51,7 @@ function FormSignUp({ role }: { role: Role }) {
   return (
     <div className="w-full flex justify-center">
       <div className="w-[327px] lg:w-[640px]">
-        <form
-          className="flex flex-col"
-          onSubmit={handleSubmit(handleClickSignUp)}
-        >
+        <form className="flex flex-col" onSubmit={handleSubmit(handleClickSignUp)}>
           <div className="flex flex-col gap-4 lg:gap-8 mb-8 lg:mb-14">
             <InputText
               name="name"

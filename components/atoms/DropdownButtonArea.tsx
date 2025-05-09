@@ -18,16 +18,12 @@ interface Props {
  * @param status 버튼의 상태 (default, active, done)
  * @param onClick 버튼 클릭 시 실행할 함수
  */
-function DropdownButtonArea({
-  selectedValue,
-  status = 'default',
-  onClick,
-}: Props) {
+function DropdownButtonArea({ selectedValue, status = 'default', onClick }: Props) {
   const isActive = status === 'active';
   const isDone = status === 'done';
 
   const defaultClassName = clsx(
-    'w-full flex items-center justify-between px-4 h-[36px] lg:h-16 border border-GrayScale-100 cursor-pointer rounded-lg lg:rounded-2xl lg:text-lg font-medium text-Black-400'
+    'w-full flex items-center justify-between px-4 h-[36px] lg:h-16 border border-GrayScale-100 cursor-pointer rounded-lg lg:rounded-2xl lg:text-lg font-medium text-Black-400',
   );
 
   const activeClassName = clsx({
@@ -39,18 +35,13 @@ function DropdownButtonArea({
   });
 
   return (
-    <button
-      className={clsx(defaultClassName, activeClassName, doneClassName)}
-      onClick={onClick}
-    >
-      <div className='w-full flex items-center justify-between'>
-        <span className='text-sm lg:text-lg'>{selectedValue}</span>
+    <button className={clsx(defaultClassName, activeClassName, doneClassName)} onClick={onClick}>
+      <div className="w-full flex items-center justify-between">
+        <span className="text-sm lg:text-lg">{selectedValue}</span>
         <Image
           src={isActive ? icChevronDown : icChevronDownBlack}
-          alt='펼치기 아이콘'
-          className={`w-6 lg:w-8 ${
-            isActive ? 'rotate-180 transition' : 'rotate-0 transition'
-          }`}
+          alt="펼치기 아이콘"
+          className={`w-6 lg:w-8 ${isActive ? 'rotate-180 transition' : 'rotate-0 transition'}`}
         />
       </div>
     </button>

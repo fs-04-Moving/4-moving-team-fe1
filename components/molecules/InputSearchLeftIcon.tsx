@@ -1,12 +1,7 @@
 import icSearch from '@/assets/images/ic-search.svg';
 import Image from 'next/image';
 import React from 'react';
-import {
-  FieldPath,
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
@@ -21,7 +16,7 @@ interface Props extends React.ComponentProps<'input'> {
  */
 function InputSearchLeftIcon<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur },

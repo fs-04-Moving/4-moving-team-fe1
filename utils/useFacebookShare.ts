@@ -6,7 +6,7 @@
 export function useFacebookShare() {
   const shareToFacebook = (url: string) => {
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      url
+      url,
     )}`;
     window.open(facebookShareUrl, '_blank', 'width=600,height=400');
   };

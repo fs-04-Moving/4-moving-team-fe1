@@ -50,8 +50,8 @@ export default function SlideMenu({ isOpen, onClose }: Props) {
                     item.condition(
                       user?.role ?? null,
                       user?.hasProfile ?? false,
-                      isLoggedIn ?? false
-                    )
+                      isLoggedIn ?? false,
+                    ),
                 )
                 .map((item, index) => (
                   <SlideMenuItem

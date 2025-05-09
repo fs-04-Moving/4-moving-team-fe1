@@ -31,18 +31,13 @@ interface ReviewCardListProps {
   initialPage?: number;
   itemsPerPage?: number;
 }
-function ReviewCardList({
-  workerId,
-  initialPage = 1,
-  itemsPerPage = 3,
-}: ReviewCardListProps) {
+function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewCardListProps) {
   const [currentPage, setCurrentPage] = useState(initialPage);
 
   // useQuery를 사용하여 리뷰 데이터 가져오기
   const { data, isLoading, error } = useQuery<ReviewsResponse>({
     queryKey: ['workerReviews', workerId, currentPage, itemsPerPage],
-    queryFn: () =>
-      reviewApi.getWorkerReviews(workerId, currentPage, itemsPerPage),
+    queryFn: () => reviewApi.getWorkerReviews(workerId, currentPage, itemsPerPage),
     enabled: !!workerId, // workerId가 있을 때만 쿼리 실행
   });
 
@@ -58,25 +53,25 @@ function ReviewCardList({
   if (error) {
     console.error('리뷰 데이터 가져오기 실패:', error);
     return (
-      <div className='py-8 text-center text-red-500'>
+      <div className="py-8 text-center text-red-500">
         <p>리뷰 데이터를 불러오는 중 오류가 발생했습니다.</p>
       </div>
     );
   }
 
   return (
-    <div className='space-y-6 relative'>
+    <div className="space-y-6 relative">
       {isLoading && (
-        <div className='absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center z-10'>
-          <div className='loader'>로딩 중...</div>
+        <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center z-10">
+          <div className="loader">로딩 중...</div>
         </div>
       )}
 
-      <h2 className='text-xl font-bold mb-4'>리뷰 ({totalCount})</h2>
+      <h2 className="text-xl font-bold mb-4">리뷰 ({totalCount})</h2>
 
       {/* 별점 차트 */}
       {totalCount > 0 && (
-        <div className='mb-8'>
+        <div className="mb-8">
           <ChartStarRatingReview ratingData={starCountList} />
         </div>
       )}
@@ -84,7 +79,7 @@ function ReviewCardList({
       {reviewData && reviewData.length > 0 ? (
         <div>
           {/* 리뷰 카드 목록 */}
-          <div className='space-y-4'>
+          <div className="space-y-4">
             {reviewData.map((review) => (
               <ReviewCard
                 key={review.id}
@@ -99,18 +94,18 @@ function ReviewCardList({
 
           {/* 페이지네이션 */}
           {totalPages > 1 && (
-            <div className='mt-8 flex justify-center'>
+            <div className="mt-8 flex justify-center">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
-                className='mt-5 mb-3'
+                className="mt-5 mb-3"
               />
             </div>
           )}
         </div>
       ) : (
-        <div className='py-8 text-center text-gray-500'>
+        <div className="py-8 text-center text-gray-500">
           <p>아직 작성된 리뷰가 없습니다.</p>
         </div>
       )}

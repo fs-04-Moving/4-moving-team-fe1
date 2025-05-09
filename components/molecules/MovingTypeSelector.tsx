@@ -15,15 +15,15 @@
  * @param {ServiceType['type'][]} props.selectedTypes - 선택된 유형들의 배열
  */
 
-import React from "react";
-import ChipBubbleTypeBox from "@/components/atoms/ChipBubbleTypeBox";
-import { ServiceType } from "@/types/move.type";
+import React from 'react';
+import ChipBubbleTypeBox from '@/components/atoms/ChipBubbleTypeBox';
+import { ServiceType } from '@/types/move.type';
 
 // 이사 유형 상수
 const MOVING_TYPES: Record<ServiceType, string> = {
-  smallMove: "소형 이사",
-  homeMove: "가정 이사",
-  officeMove: "사무실 이사",
+  smallMove: '소형 이사',
+  homeMove: '가정 이사',
+  officeMove: '사무실 이사',
 };
 
 // 이사 유형 키 배열
@@ -34,10 +34,7 @@ interface MovingTypeSelectorProps {
   selectedTypes: ServiceType[];
 }
 
-function MovingTypeSelector({
-  onTypeSelect,
-  selectedTypes,
-}: MovingTypeSelectorProps) {
+function MovingTypeSelector({ onTypeSelect, selectedTypes }: MovingTypeSelectorProps) {
   // 선택 처리
   const handleTypeSelect = (type: ServiceType) => {
     const isSelected = selectedTypes.includes(type);

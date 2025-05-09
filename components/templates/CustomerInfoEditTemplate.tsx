@@ -50,10 +50,7 @@ interface CustomerInfoEditTemplateProps {
  * @param {SubmitHandler<UpdateUserInfoDto>} onSubmit - 폼 제출 시 호출될 핸들러
  */
 
-function CustomerInfoEditTemplate({
-  defaultValues,
-  onSubmit,
-}: CustomerInfoEditTemplateProps) {
+function CustomerInfoEditTemplate({ defaultValues, onSubmit }: CustomerInfoEditTemplateProps) {
   const { control, handleSubmit, formState } = useForm({
     defaultValues,
     mode: 'onChange',

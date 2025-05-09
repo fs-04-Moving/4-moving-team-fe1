@@ -33,9 +33,7 @@ const GroupRegionSelectWorker = (props: GroupRegionSelectProps) => {
         <RegionSelector
           selectedRegion={selectedRegion}
           onRegionSelect={
-            onRegionSelect as (
-              region: keyof AreaType | Array<keyof AreaType>
-            ) => void
+            onRegionSelect as (region: keyof AreaType | Array<keyof AreaType>) => void
           }
           multipleSelect={multipleSelect}
         />

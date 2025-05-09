@@ -32,9 +32,7 @@ async function FindWorkerPage() {
     getNextPageParam: (lastPage: WorkerPage, allPages: WorkerPage[]) => {
       if (!lastPage || !Array.isArray(allPages)) return undefined;
       const totalLoaded = allPages.flatMap((p) => p.list ?? []).length;
-      return totalLoaded < (lastPage.totalCount ?? 0)
-        ? allPages.length + 1
-        : undefined;
+      return totalLoaded < (lastPage.totalCount ?? 0) ? allPages.length + 1 : undefined;
     },
   });
 

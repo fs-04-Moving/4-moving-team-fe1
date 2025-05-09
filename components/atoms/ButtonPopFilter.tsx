@@ -22,9 +22,7 @@ function ButtonPopFilter({ isActive = false, onClick }: Props) {
     <div
       onClick={onClick}
       className={`flex justify-center items-center w-8 h-8 border rounded-lg cursor-pointer ${
-        isActive
-          ? 'bg-Primay-Blue-50 border-Primay-Blue-200'
-          : 'bg-GrayScale-50 border-Line-200'
+        isActive ? 'bg-Primay-Blue-50 border-Primay-Blue-200' : 'bg-GrayScale-50 border-Line-200'
       }`}
     >
       <Image src={isActive ? icFilter : icFilterOff} alt="필터 아이콘" />

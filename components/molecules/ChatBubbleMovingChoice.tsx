@@ -27,13 +27,8 @@ interface ChatBubbleMovingChoiceProps {
  * <ChatBubbleMovingChoice onSubmit={(selectedService) => alert(`선택된 서비스: ${selectedService}`)} />
  */
 
-function ChatBubbleMovingChoice({
-  onSubmit,
-  selectedService,
-}: ChatBubbleMovingChoiceProps) {
-  const [service, setService] = useState<ServiceType | undefined>(
-    selectedService
-  );
+function ChatBubbleMovingChoice({ onSubmit, selectedService }: ChatBubbleMovingChoiceProps) {
+  const [service, setService] = useState<ServiceType | undefined>(selectedService);
 
   const handleServiceChange = (service: ServiceType) => {
     setService(service);

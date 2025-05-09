@@ -1,8 +1,8 @@
-import DropdownSort from "@/components/molecules/DropdownSort";
-import InputSearchLeftIcon from "@/components/molecules/InputSearchLeftIcon";
-import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
-import { useForm } from "react-hook-form";
+import DropdownSort from '@/components/molecules/DropdownSort';
+import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 
 interface FormValues {
   keyword: string;
@@ -13,24 +13,24 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
   const searchParams = useSearchParams();
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      keyword: "",
+      keyword: '',
     },
   });
 
   const handleOrderBySelect = (order?: string) => {
     const newParams = new URLSearchParams(searchParams);
     switch (order) {
-      case "리뷰 많은순":
-        newParams.set("orderBy", "mostReview");
+      case '리뷰 많은순':
+        newParams.set('orderBy', 'mostReview');
         break;
-      case "평점 높은순":
-        newParams.set("orderBy", "highestRated");
+      case '평점 높은순':
+        newParams.set('orderBy', 'highestRated');
         break;
-      case "경력 높은순":
-        newParams.set("orderBy", "mostExperience");
+      case '경력 높은순':
+        newParams.set('orderBy', 'mostExperience');
         break;
-      case "확정 많은순":
-        newParams.set("orderBy", "mostConfirmed");
+      case '확정 많은순':
+        newParams.set('orderBy', 'mostConfirmed');
         break;
       default:
         return;
@@ -40,7 +40,7 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
 
   const onSubmit = (data: FormValues) => {
     const newParams = new URLSearchParams(searchParams);
-    newParams.set("search", data.keyword);
+    newParams.set('search', data.keyword);
     router.push(`?${newParams.toString()}`);
   };
 
@@ -55,18 +55,11 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
         />
       </form>
       <div className="w-full flex justify-between items-center ">
-        <span className="text-[16px] font-medium">{`전체 ${
-          totalCount || 0
-        }건`}</span>
+        <span className="text-[16px] font-medium">{`전체 ${totalCount || 0}건`}</span>
         <span className="z-10">
           <DropdownSort
             onChange={handleOrderBySelect}
-            options={[
-              "리뷰 많은순",
-              "평점 높은순",
-              "경력 높은순",
-              "확정 많은순",
-            ]}
+            options={['리뷰 많은순', '평점 높은순', '경력 높은순', '확정 많은순']}
           />
         </span>
       </div>

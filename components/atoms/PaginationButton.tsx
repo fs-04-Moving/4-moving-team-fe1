@@ -13,11 +13,7 @@ interface PaginationButtonProps {
   onClick: () => void;
 }
 
-function PaginationButton({
-  page,
-  isActive = false,
-  onClick,
-}: PaginationButtonProps) {
+function PaginationButton({ page, isActive = false, onClick }: PaginationButtonProps) {
   // 버튼 스타일
   const buttonClass = clsx(
     'flex items-center justify-center rounded-md transition-colors',
@@ -25,15 +21,11 @@ function PaginationButton({
     {
       ' text-black': isActive,
       'text-GrayScale-200 hover:bg-Primay-Blue-50': !isActive,
-    }
+    },
   );
 
   return (
-    <button
-      className={buttonClass}
-      onClick={onClick}
-      aria-current={isActive ? 'page' : undefined}
-    >
+    <button className={buttonClass} onClick={onClick} aria-current={isActive ? 'page' : undefined}>
       {page}
     </button>
   );

@@ -66,7 +66,7 @@ export const useKakaoShare = () => {
   const shareToKakao = (
     url: string,
     title: string = '이사 기사님 정보',
-    description: string = '이사 기사님 정보를 확인해보세요!'
+    description: string = '이사 기사님 정보를 확인해보세요!',
   ) => {
     if (typeof window === 'undefined') return;
 

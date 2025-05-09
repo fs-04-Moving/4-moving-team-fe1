@@ -38,31 +38,28 @@ function ShareSocial({
 
   return (
     <div className={className}>
-      <div className='flex flex-col gap-4 lg:gap-[22px] mt-12 lg:mt-18 text-[14px] lg:text-xl text-Black-200'>
+      <div className="flex flex-col gap-4 lg:gap-[22px] mt-12 lg:mt-18 text-[14px] lg:text-xl text-Black-200">
         <p>{text}</p>
-        <div className='flex gap-4'>
+        <div className="flex gap-4">
           <div
-            className={clsx(
-              iconContainerStyle,
-              'bg-white border border-BackGround-100'
-            )}
+            className={clsx(iconContainerStyle, 'bg-white border border-BackGround-100')}
             onClick={() => copyToClipboard(url)}
           >
-            <Image src={icClip} alt='클립복사' className={iconStyle} />
+            <Image src={icClip} alt="클립복사" className={iconStyle} />
           </div>
 
           <div
             className={clsx(iconContainerStyle, 'bg-[#fae100]')}
             onClick={() => shareToKakao(url, shareTitle, shareDescription)}
           >
-            <Image src={icKakaoBubble} alt='카카오공유' className={iconStyle} />
+            <Image src={icKakaoBubble} alt="카카오공유" className={iconStyle} />
           </div>
 
           <div
             className={clsx(iconContainerStyle, 'bg-[#4285F4]')}
             onClick={() => shareToFacebook(url)}
           >
-            <Image src={icFacebook} alt='페이스북공유' className={iconStyle} />
+            <Image src={icFacebook} alt="페이스북공유" className={iconStyle} />
           </div>
         </div>
       </div>

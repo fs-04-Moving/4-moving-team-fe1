@@ -16,11 +16,7 @@ interface Props {
   toggleCheckbox: (id: number) => void;
 }
 
-function IndividualTypeCheckBoxInWorkerPage({
-  items,
-  selected,
-  toggleCheckbox,
-}: Props) {
+function IndividualTypeCheckBoxInWorkerPage({ items, selected, toggleCheckbox }: Props) {
   return (
     <div className="flex flex-col">
       {items.map((item) => (

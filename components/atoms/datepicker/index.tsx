@@ -53,11 +53,7 @@ const DatePickerWrapper = ({ onSubmit, selectedDate }: Props) => {
                     disabled={prevMonthButtonDisabled}
                     className="w-6 h-6 lg:w-9 lg:h-9 flex items-center justify-center disabled:opacity-30 cursor-pointer"
                   >
-                    <Image
-                      src={ChevronLeft}
-                      alt="이전"
-                      className="w-6 h-6 lg:w-9 lg:h-9"
-                    />
+                    <Image src={ChevronLeft} alt="이전" className="w-6 h-6 lg:w-9 lg:h-9" />
                   </button>
                   <span className="text-[16px] lg:text-[20px] leading-[24px] lg:leading-[32px] font-semibold text-[#1F1F1F]">
                     {format(date, 'yyyy. MM')}
@@ -67,11 +63,7 @@ const DatePickerWrapper = ({ onSubmit, selectedDate }: Props) => {
                     disabled={nextMonthButtonDisabled}
                     className="w-6 h-6 lg:w-9 lg:h-9 flex items-center justify-center disabled:opacity-30 cursor-pointer"
                   >
-                    <Image
-                      src={ChevronRight}
-                      alt="다음"
-                      className="w-6 h-6 lg:w-9 lg:h-9"
-                    />
+                    <Image src={ChevronRight} alt="다음" className="w-6 h-6 lg:w-9 lg:h-9" />
                   </button>
                 </div>
               </div>

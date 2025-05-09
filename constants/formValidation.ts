@@ -3,15 +3,12 @@ import { z } from 'zod';
 const requiredStr: string = '필수 입력 항목입니다';
 const phoneNumberRegex = new RegExp(/^(01[016789]{1})[0-9]{3,4}[0-9]{4}$/);
 const passwordRegex = new RegExp(
-  /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+~`\-={}[\]:;"'<>,.?/\\]).{8,}$/
+  /^(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+~`\-={}[\]:;"'<>,.?/\\]).{8,}$/,
 );
 const isNumberRegex = /^[0-9]*$/; // 숫자만 체크
 
 export const logInValidation = z.object({
-  email: z
-    .string()
-    .min(1, { message: requiredStr })
-    .email({ message: '잘못된 이메일 형식입니다' }),
+  email: z.string().min(1, { message: requiredStr }).email({ message: '잘못된 이메일 형식입니다' }),
   password: z
     .string()
     .min(1, { message: requiredStr })
@@ -105,10 +102,7 @@ export const editCustomerInfoValidation = z
 
     newPasswordConfirm: z.string().optional(),
   })
-  .refine(
-    ({ newPassword, newPasswordConfirm }) => newPassword === newPasswordConfirm,
-    {
-      path: ['newPasswordConfirm'],
-      message: '비밀번호가 일치하지 않습니다.',
-    }
-  );
+  .refine(({ newPassword, newPasswordConfirm }) => newPassword === newPasswordConfirm, {
+    path: ['newPasswordConfirm'],
+    message: '비밀번호가 일치하지 않습니다.',
+  });

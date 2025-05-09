@@ -22,7 +22,7 @@ export default function OAuthCallbackPage() {
       if (errorCode) {
         const message = getErrorMessageFromCode(
           searchParams.get('errorCode'),
-          Object.fromEntries(searchParams)
+          Object.fromEntries(searchParams),
         );
         setErrorMessage(message);
         return;
@@ -39,12 +39,7 @@ export default function OAuthCallbackPage() {
 
   // 에러가 있는 경우: 메시지 + 로그인 페이지 이동 버튼 표시
   if (errorMessage) {
-    return (
-      <Error
-        message={errorMessage}
-        onRetry={() => router.push(ROUTES.LOG_IN)}
-      />
-    );
+    return <Error message={errorMessage} onRetry={() => router.push(ROUTES.LOG_IN)} />;
   }
 
   // 에러가 없는 경우: 소셜 로그인 로딩 화면

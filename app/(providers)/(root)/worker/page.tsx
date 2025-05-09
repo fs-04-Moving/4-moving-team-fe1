@@ -1,10 +1,10 @@
-import estimateRequestApi from "@/api/estimate-request/estimateRequest.api";
-import ProtectedPageWrapper from "@/components/atoms/ProtectedPageWrapper";
-import ReceivedRequests from "@/components/templates/ReceivedRequests";
-import { createServerQueryClient } from "@/libs/tanstack-query/reactQueryConfig";
-import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
-import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
-import { cookies } from "next/headers";
+import estimateRequestApi from '@/api/estimate-request/estimateRequest.api';
+import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
+import ReceivedRequests from '@/components/templates/ReceivedRequests';
+import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
+import { ReceivedEstimateRequestSearchParams } from '@/types/dtos/estimateRequest.dto';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { cookies } from 'next/headers';
 
 /**
  * 기사님의 '받은 요청' 목록 페이지
@@ -24,16 +24,19 @@ async function ReceivedRequestsPage() {
   const cookieHeader = cookieStore
     .getAll()
     .map((c) => `${c.name}=${c.value}`)
-    .join("; ");
+    .join('; ');
 
   const queryClient = createServerQueryClient();
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["ReceivedEstimateRequests", baseParams],
+    queryKey: ['ReceivedEstimateRequests', baseParams],
     queryFn: ({ pageParam = 1 }) => {
-      return estimateRequestApi.getReceivedEstimateRequestsSever({
-        ...baseParams,
-        page: pageParam,
-      },cookieHeader);
+      return estimateRequestApi.getReceivedEstimateRequestsSever(
+        {
+          ...baseParams,
+          page: pageParam,
+        },
+        cookieHeader,
+      );
     },
     initialPageParam: 1,
   });

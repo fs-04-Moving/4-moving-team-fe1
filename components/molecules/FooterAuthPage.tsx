@@ -14,14 +14,11 @@ interface Props {
  * @returns
  */
 function FooterAuthPage({ isSignUpPage, role }: Props) {
-  const text1: string = isSignUpPage
-    ? '이미 무빙 회원이신가요?'
-    : '아직 무빙 회원이 아니신가요?';
+  const text1: string = isSignUpPage ? '이미 무빙 회원이신가요?' : '아직 무빙 회원이 아니신가요?';
   const text2: string = isSignUpPage ? '로그인' : '이메일로 회원가입하기';
 
   const pageLink: string = isSignUpPage ? ROUTES.LOG_IN : ROUTES.SIGN_UP;
-  const linkQuery: string =
-    role === 'customer' ? '?role=customer' : '?role=worker';
+  const linkQuery: string = role === 'customer' ? '?role=customer' : '?role=worker';
 
   return (
     <div>

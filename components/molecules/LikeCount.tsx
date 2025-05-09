@@ -22,23 +22,10 @@ type Props = {
  */
 function LikeCount({ isFavorite, favoritesCount, isResponsive = true }: Props) {
   return (
-    <span
-      className={clsx(
-        'inline-flex gap-0.5',
-        isResponsive ? 'lg:gap-1 align-middle' : ''
-      )}
-    >
-      <Image
-        src={isFavorite ? icHeartNavy : icHeartGray}
-        width={14}
-        height={12}
-        alt="like heart"
-      />
+    <span className={clsx('inline-flex gap-0.5', isResponsive ? 'lg:gap-1 align-middle' : '')}>
+      <Image src={isFavorite ? icHeartNavy : icHeartGray} width={14} height={12} alt="like heart" />
       <span
-        className={clsx(
-          'text-[13px] relative top-[1px]',
-          isResponsive ? 'lg:text-[18px]' : ''
-        )}
+        className={clsx('text-[13px] relative top-[1px]', isResponsive ? 'lg:text-[18px]' : '')}
       >
         {favoritesCount}
       </span>

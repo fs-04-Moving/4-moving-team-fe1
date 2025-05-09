@@ -34,12 +34,7 @@ interface PaginationProps {
   className?: string;
 }
 
-function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-  className = '',
-}: PaginationProps) {
+function Pagination({ currentPage, totalPages, onPageChange, className = '' }: PaginationProps) {
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   useEffect(() => {
     const checkScreenSize = () => {
@@ -69,8 +64,7 @@ function Pagination({
         startPage = Math.max(1, totalPages - visibleCount + 1);
       } else {
         // 현재 페이지 기준으로 가운데로 표시하기
-        startPage =
-          currentPage - Math.floor(visibleCount / 2) + (isLargeScreen ? 0 : 1);
+        startPage = currentPage - Math.floor(visibleCount / 2) + (isLargeScreen ? 0 : 1);
       }
     }
 
@@ -104,14 +98,14 @@ function Pagination({
     (page: number) => {
       onPageChange(page);
     },
-    [onPageChange]
+    [onPageChange],
   );
 
   return (
     <div className={`flex items-center justify-center gap-1 ${className}`}>
       {/* 이전 페이지 버튼 */}
       <PaginationArrowButton
-        direction='left'
+        direction="left"
         onClick={handlePrevPage}
         disabled={currentPage === 1}
       />
@@ -123,9 +117,7 @@ function Pagination({
             isActive={currentPage === 1}
             onClick={() => handlePageClick(1)}
           />
-          {pageNumbers[0] > 2 && (
-            <span className='text-GrayScale-400'>...</span>
-          )}
+          {pageNumbers[0] > 2 && <span className="text-GrayScale-400">...</span>}
         </>
       )}
 
@@ -143,7 +135,7 @@ function Pagination({
       {!pageNumbers.includes(totalPages) && totalPages > 1 && (
         <>
           {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
-            <span className='text-GrayScale-400'>...</span>
+            <span className="text-GrayScale-400">...</span>
           )}
           <PaginationButton
             page={totalPages}
@@ -155,7 +147,7 @@ function Pagination({
 
       {/* 다음 페이지 버튼 */}
       <PaginationArrowButton
-        direction='right'
+        direction="right"
         onClick={handleNextPage}
         disabled={currentPage === totalPages}
       />

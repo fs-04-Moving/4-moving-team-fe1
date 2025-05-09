@@ -7,10 +7,7 @@ interface Props {
 
 export default function ButtonAuthStatic({ onOpenMenu }: Props) {
   return (
-    <button
-      onClick={onOpenMenu}
-      className="lg:hidden px-4 py-2 text-sm border rounded-md"
-    >
+    <button onClick={onOpenMenu} className="lg:hidden px-4 py-2 text-sm border rounded-md">
       메뉴
     </button>
   );

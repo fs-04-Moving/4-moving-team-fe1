@@ -60,23 +60,14 @@ const updateCustomerProfile = async (data: UpdateCustomerProfileDto) => {
 // 기사 프로필 생성
 const createWorkerProfile = async (data: CreateWorkerProfileDto) => {
   try {
-    const {
-      description,
-      experience,
-      nickname,
-      serviceAreas,
-      services,
-      summary,
-      profileImage,
-    } = data;
+    const { description, experience, nickname, serviceAreas, services, summary, profileImage } =
+      data;
     const formData = new FormData();
     formData.append('description', description);
     formData.append('experience', experience);
     formData.append('nickname', nickname);
     formData.append('summary', summary);
-    serviceAreas.forEach((serviceArea) =>
-      formData.append('serviceAreas', serviceArea)
-    );
+    serviceAreas.forEach((serviceArea) => formData.append('serviceAreas', serviceArea));
     services.forEach((service) => formData.append('services', service));
     if (profileImage) formData.append('profileImage', profileImage);
 
@@ -91,15 +82,8 @@ const createWorkerProfile = async (data: CreateWorkerProfileDto) => {
 // 기사 프로필 수정
 const updateWorkerProfile = async (data: UpdateWorkerProfileDto) => {
   try {
-    const {
-      description,
-      experience,
-      nickname,
-      serviceAreas,
-      services,
-      summary,
-      profileImage,
-    } = data;
+    const { description, experience, nickname, serviceAreas, services, summary, profileImage } =
+      data;
 
     const formData = new FormData();
 

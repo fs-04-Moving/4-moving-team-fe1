@@ -45,9 +45,7 @@ export default function EstimateDetailContent({ estimate }: Props) {
         <hr className="border-t border-GrayScale-100 lg:hidden" />
 
         <div className="flex flex-col lg:gap-[32px] md:gap-3 lg:mb-8">
-          <h3 className="lg:text-[24px] md:text-[16px] font-semibold">
-            견적가
-          </h3>
+          <h3 className="lg:text-[24px] md:text-[16px] font-semibold">견적가</h3>
           <p className="lg:text-[32px] md:text-[20px] font-bold">
             {estimate.price.toLocaleString()}원
           </p>

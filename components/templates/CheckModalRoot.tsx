@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import CheckLists from "@/components/organisms/CheckLists";
-import X from "@/assets/images/ic-X2.svg";
-import ButtonSolid from "../atoms/ButtonSolid";
-import Image from "next/image";
+import CheckLists from '@/components/organisms/CheckLists';
+import X from '@/assets/images/ic-X2.svg';
+import ButtonSolid from '../atoms/ButtonSolid';
+import Image from 'next/image';
 
 interface Props {
   closeModal: () => void; // 모달을 닫는 함수

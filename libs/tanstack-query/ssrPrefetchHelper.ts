@@ -20,7 +20,7 @@ export async function handleSSRPrefetch(queries: PrefetchQuery<unknown>[]) {
       } catch (e) {
         console.error(`SSR prefetch failed for [${queryKey}]:`, e);
       }
-    })
+    }),
   );
 
   return {

@@ -29,7 +29,7 @@ function RatingSummary({
     <span
       className={clsx(
         'inline-flex items-center gap-0.5 align-middle',
-        isResponsive ? 'lg:gap-1.5' : ''
+        isResponsive ? 'lg:gap-1.5' : '',
       )}
     >
       <Image
@@ -39,13 +39,13 @@ function RatingSummary({
         alt="star"
         className={clsx(
           'inline-block w-[14px] h-[14px]',
-          isResponsive ? 'lg:w-[20px] lg:h-[20px]' : ''
+          isResponsive ? 'lg:w-[20px] lg:h-[20px]' : '',
         )}
       />
       <span
         className={clsx(
           'text-[13px] leading-none relative top-[1px]',
-          isResponsive ? 'lg:text-[16px]' : ''
+          isResponsive ? 'lg:text-[16px]' : '',
         )}
       >
         {reviewsAverage.toFixed(1)}
@@ -53,7 +53,7 @@ function RatingSummary({
       <span
         className={clsx(
           'text-GrayScale-300 text-[13px] leading-none relative top-[1px]',
-          isResponsive ? 'lg:text-[16px]' : ''
+          isResponsive ? 'lg:text-[16px]' : '',
         )}
       >
         ({reviewsCount})

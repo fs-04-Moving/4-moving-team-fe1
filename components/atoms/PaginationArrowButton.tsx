@@ -29,7 +29,7 @@ function PaginationArrowButton({
     {
       'opacity-50 cursor-not-allowed': disabled,
       'hover:bg-Primay-Blue-50 cursor-pointer': !disabled,
-    }
+    },
   );
 
   // 이미지 선택 (비활성화 상태에 따라)

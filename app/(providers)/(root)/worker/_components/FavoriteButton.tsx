@@ -31,9 +31,7 @@ function FavoriteButton({ workerId, isFavorite }: FavoriteButtonProps) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['worker', workerId] });
-      console.log(
-        isFavorite ? '찜 목록에서 제거되었습니다.' : '찜 목록에 추가되었습니다.'
-      );
+      console.log(isFavorite ? '찜 목록에서 제거되었습니다.' : '찜 목록에 추가되었습니다.');
     },
     onError: (error) => {
       console.error('찜하기/취소하기 실패:', error);
@@ -56,19 +54,15 @@ function FavoriteButton({ workerId, isFavorite }: FavoriteButtonProps) {
 
   return (
     <ButtonOutlined onClick={handleFavorite} disabled={isPending}>
-      <div className='flex items-center justify-center gap-2'>
+      <div className="flex items-center justify-center gap-2">
         <Image
           src={isFavorite ? icHeartRed : icHeartGray}
-          alt='하트 아이콘'
+          alt="하트 아이콘"
           width={20}
           height={20}
         />
-        <span className='hidden lg:inline'>
-          {isPending
-            ? '처리 중...'
-            : isFavorite
-            ? '찜 취소하기'
-            : '기사님 찜하기'}
+        <span className="hidden lg:inline">
+          {isPending ? '처리 중...' : isFavorite ? '찜 취소하기' : '기사님 찜하기'}
         </span>
       </div>
     </ButtonOutlined>
