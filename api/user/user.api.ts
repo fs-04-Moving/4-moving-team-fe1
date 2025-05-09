@@ -3,10 +3,10 @@ import { client, errorHandler } from '../client';
 
 // 내 정보 조회
 const getUserMe = async () => {
-  // if (typeof window === 'undefined') {
-  //   // SSR에서는 axios 말고, getUserMeServer를 사용하도록 유도
-  //   throw new Error('getUserMe는 클라이언트에서만 사용 가능합니다.');
-  // }
+  if (typeof window === 'undefined') {
+    // SSR에서는 axios 말고, getUserMeServer를 사용하도록 유도
+    throw new Error('getUserMe는 클라이언트에서만 사용 가능합니다.');
+  }
   try {
     const url = '/user/me';
     const response = await client.get(url);

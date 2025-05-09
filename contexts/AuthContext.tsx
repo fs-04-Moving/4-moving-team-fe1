@@ -2,10 +2,9 @@
 
 import authApi from '@/api/auth/auth.api';
 import userApi from '@/api/user/user.api';
-import ROUTES from '@/constants/routes';
+import { getBrowserQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
 import { GetUserMe } from '@/types/dtos/user.dto';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import {
   createContext,
   ReactNode,
@@ -17,16 +16,16 @@ import {
 interface AuthContextValue {
   isLoggedIn?: boolean;
   isAuthInitialized?: boolean;
-  logIn?: () => Promise<void>;
-  logOut?: () => Promise<void>;
+  logIn?: () => void;
+  logOut?: () => void;
   user?: GetUserMe;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   isLoggedIn: false,
   isAuthInitialized: false,
-  logIn: async () => {},
-  logOut: async () => {},
+  logIn: () => {},
+  logOut: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -42,10 +41,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
-  const queryClient = useQueryClient();
-  const router = useRouter();
+  // const router = useRouter();
 
+  const userQueryClient = getBrowserQueryClient({
+    queries: {
+      staleTime: Infinity, // 사용자가 로그아웃 후 재로그인하거나 정보를 변경할 때에만 갱신,
+      retry: 0,
+    },
+  });
+
+  // accessToken 존재 여부 확인 후 isAuthInitialized 설정
   useEffect(() => {
+    // const accessToken =
+    //   typeof window !== 'undefined'
+    //     ? localStorage.getItem('accessToken')
+    //     : null;
+
+    // if (!accessToken) {
+    //   setIsLoggedIn(false);
+    // }
+
     setIsAuthInitialized(true); // accessToken 여부와 상관없이 초기화는 완료
   }, []);
 
@@ -57,29 +72,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     enabled: isAuthInitialized,
     retry: 0,
   });
-  useEffect(() => {
-    console.log('user:', user);
-  }, [user]);
 
   useEffect(() => {
+    // if (user) {
+    //   setIsLoggedIn(true);
+    // } else {
+    //   setIsLoggedIn(false);
+    // }
     setIsLoggedIn(!!user);
   }, [user]);
 
   const logIn = async () => {
-    console.log('login 시작');
     setIsLoggedIn(true);
     setIsAuthInitialized(true);
 
     // 로그인 후 accessToken이 생기므로 쿼리 재실행
-    await queryClient.refetchQueries({ queryKey: ['me'] });
+    await userQueryClient.invalidateQueries({ queryKey: ['me'] });
   };
 
   const logOut = async () => {
     await authApi.logOut();
-    router.replace(ROUTES.HOME);
+    // logoutHelper(() => router.replace('/'));
     setIsLoggedIn(false);
     setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
-    queryClient.removeQueries({ queryKey: ['me'] });
+    await userQueryClient.invalidateQueries({ queryKey: ['me'] });
   };
 
   const value: AuthContextValue = {
