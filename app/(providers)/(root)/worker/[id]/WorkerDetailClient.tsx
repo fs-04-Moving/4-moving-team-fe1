@@ -128,9 +128,9 @@ function WorkerDetailClient({ workerId }: WorkerDetailClientProps) {
           </div>
           <section className='hidden lg:inline'>
             <ShareSocial
-              url={`${
-                process.env.NEXT_PUBLIC_BASE_URL || 'https://your-domain.com'
-              }/worker/${workerData.id}`}
+              url={`${process.env.NEXT_PUBLIC_BASE_URL}/worker/${workerId}`}
+              nickname={workerData.nickname}
+              summary={workerData.summary}
             />
           </section>
         </div>
