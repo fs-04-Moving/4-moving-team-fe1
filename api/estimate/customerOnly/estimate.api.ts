@@ -1,34 +1,39 @@
-// /api/estimates/workerOnly/estimate.api.ts
+// api/estimate/customerOnly/estimate.api.ts
 
 import { client, errorHandler } from "@/api/client";
 import { Estimate } from "@/types/entities/estimate.entity";
 
-interface GetPendingEstimateResponse {
-  list: Estimate[];
+export type GetPendingEstimates = {
+  estimates: Estimate[];
   totalCount: number;
-}
+};
 
-export const getPendingEstimates = async ({
-  page,
-  pageSize,
-}: {
-  page: number;
-  pageSize: number;
-}): Promise<GetPendingEstimateResponse | undefined> => {
+/**
+ * 대기중인 견적 데이터를 조회하는 API
+ * @param page - 페이지 번호 (1부터 시작)
+ * @param pageSize - 페이지 크기
+ * @returns 대기중인 견적 리스트 및 전체 개수
+ */
+export async function getPendingEstimate(
+  page: number,
+  pageSize: number
+): Promise<GetPendingEstimates> {
   try {
-    const response = await client.get<GetPendingEstimateResponse>(
-      "/estimate/pending",
-      {
-        params: { page, pageSize },
-      }
-    );
+    const response = await client.get("estimate/pending", {
+      params: { page, pageSize },
+    });
 
-    return response.data;
+    const data = response.data;
+
+    return {
+      estimates: data.list as Estimate[],
+      totalCount: data.totalCount,
+    };
   } catch (error) {
     errorHandler(error);
-    return;
+    return { estimates: [], totalCount: 0 };
   }
-};
+}
 
 interface GetReceivedEstimatesResponse {
   list: Estimate[];
@@ -76,24 +81,11 @@ export const getEstimateDetailByCustomer = async (
   }
 };
 
-//견적 확정하기
-
-// types/entities/estimate.entity.ts (또는 별도 타입 파일)
-interface ConfirmEstimateResponse {
-  success: boolean;
-  message?: string;
-}
-
-export const confirmEstimateByCustomer = async (
-  estimateId: string
-): Promise<ConfirmEstimateResponse | undefined> => {
+//견적 확정짓기 API
+export async function confirmEstimate(estimateId: string): Promise<void> {
   try {
-    const response = await client.post<ConfirmEstimateResponse>(
-      `/estimate/customer/confirm/${estimateId}`
-    );
-    return response.data;
+    await client.put(`/estimate/confirm/${estimateId}`);
   } catch (error) {
     errorHandler(error);
-    return;
   }
-};
+}

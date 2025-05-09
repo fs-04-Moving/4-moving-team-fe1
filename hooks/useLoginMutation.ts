@@ -2,6 +2,7 @@ import authApi from '@/api/auth/auth.api';
 import { useAuth } from '@/contexts/AuthContext';
 import { LogInDto } from '@/types/dtos/auth.dto';
 import { User } from '@/types/entities/user.entity';
+import { getErrorMessageFromCode } from '@/utils/oauth/getErrorMessageFromCode';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -9,6 +10,22 @@ import { useRouter } from 'next/navigation';
 interface UseLoginMutationOptions {
   setIsProcessing: (v: boolean) => void;
   onError?: (error: AxiosError) => void;
+}
+
+interface ErrorResponse {
+  errorCode?:
+    | 'PROVIDER_MISMATCH'
+    | 'ROLE_MISMATCH'
+    | 'EMAIL_ALREADY_EXISTS'
+    | 'USER_CREATION_FAILED'
+    | 'UNKNOWN_ERROR';
+  existingProvider?: string;
+  provider?: string;
+  role?: string;
+  existingRole?: string;
+  requestedRole?: string;
+  email?: string;
+  [key: string]: string | undefined;
 }
 
 /**
@@ -29,11 +46,9 @@ export function useLoginMutation({
     mutationFn: (data: LogInDto) => authApi.logIn(data),
 
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ['me'] });
-
+      await authLogin?.();
       const user: User | undefined = queryClient.getQueryData(['me']);
       if (user) {
-        authLogin?.();
         const routePath = user.hasProfile ? '' : '/profile';
         router.push(`/${user.role}${routePath}`);
       }
@@ -41,7 +56,32 @@ export function useLoginMutation({
 
     onError: (error: AxiosError) => {
       setIsProcessing(false);
-      onError?.(error); // 외부에서 주입한 에러 처리 콜백이 있다면 실행
+
+      const data = (error.response?.data || {}) as ErrorResponse;
+
+      if (data?.errorCode) {
+        const message = getErrorMessageFromCode(data.errorCode, data);
+
+        // provider 또는 role 불일치 시 callback 페이지로 리디렉션
+        if (
+          data.errorCode === 'PROVIDER_MISMATCH' ||
+          data.errorCode === 'ROLE_MISMATCH'
+        ) {
+          const query = new URLSearchParams(
+            data as Record<string, string>
+          ).toString();
+          router.replace(`/auth/callback?${query}`);
+          return;
+        }
+
+        // 그 외 오류는 alert
+        alert(message);
+      } else {
+        alert('에러가 발생했습니다. 다시 시도해 주세요.');
+      }
+
+      // 외부에서 전달된 onError 콜백이 있다면 호출
+      onError?.(error);
     },
   });
 }

@@ -24,6 +24,7 @@ function RatingSummary({
   reviewsCount: number;
   isResponsive?: boolean;
 }) {
+  console.log('reviewsAverage', reviewsAverage);
   return (
     <span
       className={clsx(
