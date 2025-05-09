@@ -1,53 +1,129 @@
-import { cookies } from 'next/headers';
-import { getAccessTokenFromRefreshTest } from '@/utils/getAccessTokenTest';
-import { getSentEstimatesServer } from '@/api/estimate/workerOnly/getSentEstimatesServer';
-import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
-import EstimateDetailContent from '@/components/organisms/EstimateDetailContent';
-import { EstimateStatus, ServiceType } from '@/types/move.type';
+'use client';
 
-const ITEMS_PER_PAGE = 4;
+import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
+import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
+import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
+import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export default async function EstimateDetailPage({
-  params,
-}: {
-  params: { estimateId: string };
-}) {
-  const cookieStore = await cookies();
-  const refreshToken = cookieStore.get('refreshToken')?.value;
+export default function EstimatesDetailPage() {
+  const params = useParams();
+  const estimateId = params.id as string;
+  const router = useRouter();
 
-  if (!refreshToken) {
-    return <div>로그인이 필요합니다</div>;
-  }
+  const [estimate, setEstimate] = useState<Estimate | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const accessToken = await getAccessTokenFromRefreshTest();
-  if (!accessToken) {
-    return <div>로그인이 필요합니다</div>;
-  }
+  const safeDate = (date: Date) => {
+    const d = new Date(date);
+    return isNaN(d.getTime()) ? new Date() : d;
+  };
 
-  let data;
-  try {
-    data = await getSentEstimatesServer(1, ITEMS_PER_PAGE, accessToken);
-  } catch (e) {
-    return <div>데이터 로드 실패</div>;
-  }
+  const ShareButtons = (
+    <div className="w-full flex flex-col gap-y-4">
+      <p className="text-[20px] font-[600]">견적 공유하기</p>
+      <div className="flex gap-x-4">
+        <ButtonShareKakao onClick={() => router.push('/customer')} />
+        <ButtonShareFacebook onClick={() => {}} />
+        <ButtonClipOutlined onClick={() => {}} />
+      </div>
+    </div>
+  );
 
-  const estimate = data.list.find((item) => item.id === params.estimateId);
+  useEffect(() => {
+    if (!estimateId) return;
 
-  if (!estimate) {
-    return <div>견적을 찾을 수 없습니다</div>;
-  }
+    const fetchEstimate = async () => {
+      setLoading(true);
+      try {
+        const data = await getEstimateDetailByWorker(estimateId);
+        if (data) {
+          setEstimate(data); // 여기서 data가 undefined일 수 있으니 체크
+        } else {
+          setEstimate(null);
+        }
+      } catch (error) {
+        console.error('Failed to fetch estimate:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEstimate();
+  }, [estimateId]);
+
+  if (loading) return <div>로딩 중...</div>;
+  if (!estimate) return <div>견적을 불러오지 못했습니다.</div>;
+
+  // return (
+  //   <div>
+  //     <h1>견적 상세</h1>
+  //     <p>이사일: {new Date(estimate.movingDate).toLocaleString()}</p>
+  //     <p>출발지: {estimate.departureArea}</p>
+  //     <p>도착지: {estimate.destination}</p>
+  //     <p>가격: {estimate.price}원</p>
+  //     <p>작업자: {estimate.nickname}</p>
+  //   </div>
+  // );
 
   return (
-    <ProtectedPageWrapper>
-      <div className="w-full min-h-screen bg-BackGround-100 py-10">
-        <EstimateDetailContent
-          estimate={{
-            ...estimate,
-            status: estimate.status as EstimateStatus,
-            serviceType: estimate.serviceType as ServiceType,
-          }}
-        />
+    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col">
+      <div
+        className="w-full
+        font-[600]
+        text-[18px] lg:text-[24px]
+        py-4 md:py-4 lg:py-8
+        "
+      >
+        견적 상세
       </div>
-    </ProtectedPageWrapper>
+      <div className="w-full flex flex-row lg:flex-row lg:gap-x-20 gap-10">
+        {/* 왼쪽 영역 */}
+        <div className="w-full flex-1 flex flex-col gap-y-10 mt-4">
+          <CustomerCardInEstimate
+            id={estimate.id}
+            key={estimate.id}
+            serviceType={estimate.serviceType}
+            status={estimate.status}
+            customerName={estimate.customerName}
+            movingDate={new Date('2027-01-11')}
+            departure={estimate.departure}
+            destination={estimate.destination}
+            isConfirmed={estimate.isConfirmed}
+            requestDate={safeDate(estimate.requestDate)}
+            onViewDetail={() => {
+              router.push(`/worker/estimates/sending/${estimate.id}`);
+            }}
+          />
+          <div className="flex flex-col gap-y-4">
+            <p className="text-[24px] font-[600]">견적가</p>
+            <p className="text-[32px] font-[700]">{estimate.price ?? 0}원</p>
+          </div>
+
+          {/* Mobile/Tablet 공유 버튼 */}
+          <div className="block lg:hidden">{ShareButtons}</div>
+
+          <EstimateDetailInfo
+            requestDate={estimate.requestDate}
+            serviceType={estimate.serviceType}
+            movingDate={estimate.movingDate}
+            departure={estimate.departure}
+            destination={estimate.destination}
+          />
+        </div>
+
+        {/* 오른쪽 영역 */}
+        <div className=" flex gap-x-2 gap-y-10 mt-6">
+          <div className="w-full flex flex-col gap-y-10">
+            {/* Desktop 공유 버튼 */}
+            <div className="hidden lg:block">{ShareButtons}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

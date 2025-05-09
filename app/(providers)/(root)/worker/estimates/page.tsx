@@ -1,88 +1,69 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
-import Pagination from "@/components/molecules/Pagination";
+import { useEffect, useState } from 'react';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import Pagination from '@/components/molecules/Pagination';
+import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
+import { Estimate } from '@/types/entities/estimate.entity';
 
 function ManageEstimatesWorker() {
-  const mockCards = [
-    {
-      serviceType: "smallMove",
-      status: "assigned",
-      customerName: "김가나",
-      movingDate: new Date("2024-07-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-      price: 1000000,
-    },
-    {
-      serviceType: "smallMove",
-      status: "assigned",
-      customerName: "김다라",
-      movingDate: new Date("2023-06-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-05-30"),
-      price: 458470,
-    },
-    {
-      serviceType: "smallMove",
-      status: "assigned",
-      customerName: "김마바",
-      movingDate: new Date("2024-10-10"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-      price: 300000,
-    },
-    {
-      serviceType: "smallMove",
-      status: "assigned",
-      customerName: "김사아",
-      movingDate: new Date("2025-07-01"),
-      departure: "서울시 중구",
-      destination: "경기도 수원시",
-      isConfirmed: false,
-      requestDate: new Date("2024-06-30"),
-      price: 200000,
-    },
-  ];
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
 
-  const sortedCards = [...mockCards].sort((a, b) => {
+  const [estimates, setEstimates] = useState<Estimate[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    const fetchEstimates = async () => {
+      try {
+        const { list, totalCount } = await getSentEstimates({
+          page: currentPage,
+          pageSize: itemsPerPage,
+        });
+        setEstimates(list);
+        setTotalPages(Math.ceil(totalCount / itemsPerPage));
+      } catch (err) {
+        console.error('견적 데이터를 불러오는 데 실패했어요', err);
+      }
+    };
+
+    fetchEstimates();
+  }, [currentPage]);
+
+  const sortedCards = [...estimates].sort((a, b) => {
     const now = new Date();
-    const aIsFuture = a.movingDate > now;
-    const bIsFuture = b.movingDate > now;
+    const aIsFuture = new Date(a.movingDate) > now;
+    const bIsFuture = new Date(b.movingDate) > now;
 
     if (aIsFuture && !bIsFuture) return -1;
     if (!aIsFuture && bIsFuture) return 1;
 
-    return a.movingDate.getTime() - b.movingDate.getTime();
+    return new Date(a.movingDate).getTime() - new Date(b.movingDate).getTime();
   });
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentCards = sortedCards.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(sortedCards.length / itemsPerPage);
 
   return (
     <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[24px] md:gap-y-[32px] lg:gap-y-[48px] w-full max-w-[1400px] justify-items-center">
-        {currentCards.map((card, index) => (
+        {sortedCards.map((card) => (
           <div
-            key={index}
+            key={card.id}
             className="relative overflow-hidden
               w-[328px] h-[244px]
               md:w-[600px] md:h-[206px]
               lg:w-[688px] lg:h-[272px]"
           >
-            <CustomerCardInEstimate {...card} />
+            <CustomerCardInEstimate
+              id={card.id}
+              serviceType={card.serviceType}
+              status={card.status}
+              customerName={card.customerName}
+              movingDate={new Date(card.movingDate)}
+              departure={card.departure}
+              destination={card.destination}
+              isConfirmed={card.isConfirmed}
+              requestDate={new Date(card.requestDate)}
+              price={card.price}
+            />
           </div>
         ))}
       </div>

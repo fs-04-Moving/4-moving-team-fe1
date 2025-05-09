@@ -1,7 +1,27 @@
 import Link from 'next/link';
 import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
 
-function SentEstimateList({ data }: { data: any[] }) {
+type EstimateCard = {
+  id: string;
+  serviceType: string;
+  status: string;
+  customerName: string;
+  movingDate: string | Date;
+  departure: string;
+  destination: string;
+  isConfirmed: boolean;
+  requestDate: string | Date;
+  price?: number;
+  onSendEstimate?: () => void;
+  onReject?: () => void;
+  onViewDetail?: () => void;
+};
+
+interface SentEstimateListProps {
+  data: EstimateCard[];
+}
+
+function SentEstimateList({ data }: SentEstimateListProps) {
   const sortedCards = [...data].sort((a, b) => {
     const now = new Date();
     const aDate = new Date(a.movingDate);
