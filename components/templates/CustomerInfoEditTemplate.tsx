@@ -11,9 +11,10 @@ import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { editCustomerInfoValidation } from '@/constants/formValidation';
 import clsx from 'clsx';
+import { CustomerInfoEditFormValues } from './CustomerInfoEditPage';
 
 interface CustomerInfoEditTemplateProps {
-  defaultValues: UpdateUserInfoDto;
+  defaultValues: CustomerInfoEditFormValues;
   onSubmit: SubmitHandler<UpdateUserInfoDto>;
 }
 
@@ -100,16 +101,22 @@ function CustomerInfoEditTemplate({ defaultValues, onSubmit }: CustomerInfoEditT
               <hr className="block border-[1px] border-Line-100 lg:hidden" />
             </div>
             <div className="flex flex-col gap-8 w-[327px] lg:w-[640px]">
-              <div className={clsx(fixedHeightClassName)}>
-                <InputPassword
-                  label="현재 비밀번호"
-                  name="password"
-                  control={control}
-                  bgColor={true}
-                  placeholder={'현재 비밀번호를 입력해주세요'}
-                />
-              </div>
-              <hr className="border-[1px] border-Line-100" />
+              {/* 가입 방법이 '이메일/패스워드'(local)일 경우에만 표시 */}
+              {defaultValues.provider === 'local' && (
+                <div>
+                  <div className={clsx(fixedHeightClassName)}>
+                    <InputPassword
+                      label="현재 비밀번호"
+                      name="password"
+                      control={control}
+                      bgColor={true}
+                      placeholder={'현재 비밀번호를 입력해주세요'}
+                    />
+                  </div>
+                  <hr className="border-[1px] border-Line-100 mt-8" />
+                </div>
+              )}
+
               <div className={clsx(fixedHeightClassName)}>
                 <InputPassword
                   label="새 비밀번호 (선택)"
