@@ -100,43 +100,39 @@ function CustomerInfoEditTemplate({ defaultValues, onSubmit }: CustomerInfoEditT
               </div>
               <hr className="block border-[1px] border-Line-100 lg:hidden" />
             </div>
-            <div className="flex flex-col gap-8 w-[327px] lg:w-[640px]">
-              {/* 가입 방법이 '이메일/패스워드'(local)일 경우에만 표시 */}
-              {defaultValues.provider === 'local' && (
-                <div>
-                  <div className={clsx(fixedHeightClassName)}>
-                    <InputPassword
-                      label="현재 비밀번호"
-                      name="password"
-                      control={control}
-                      bgColor={true}
-                      placeholder={'현재 비밀번호를 입력해주세요'}
-                    />
-                  </div>
-                  <hr className="border-[1px] border-Line-100 mt-8" />
+            {defaultValues.provider !== 'local' && (
+              <div className="flex flex-col gap-8 w-[327px] lg:w-[640px]">
+                <div className={clsx(fixedHeightClassName)}>
+                  <InputPassword
+                    label="현재 비밀번호"
+                    name="password"
+                    control={control}
+                    bgColor={true}
+                    placeholder={'현재 비밀번호를 입력해주세요'}
+                  />
                 </div>
-              )}
-
-              <div className={clsx(fixedHeightClassName)}>
-                <InputPassword
-                  label="새 비밀번호 (선택)"
-                  name="newPassword"
-                  control={control}
-                  bgColor={true}
-                  placeholder={'변경을 원할 경우 새 비밀번호를 입력해 주세요'}
-                />
+                <hr className="border-[1px] border-Line-100" />
+                <div className={clsx(fixedHeightClassName)}>
+                  <InputPassword
+                    label="새 비밀번호 (선택)"
+                    name="newPassword"
+                    control={control}
+                    bgColor={true}
+                    placeholder={'변경을 원할 경우 새 비밀번호를 입력해 주세요'}
+                  />
+                </div>
+                <hr className="border-[1px] border-Line-100" />
+                <div className={clsx(fixedHeightClassName)}>
+                  <InputPassword
+                    label="새 비밀번호 확인"
+                    name="newPasswordConfirm"
+                    control={control}
+                    bgColor={true}
+                    placeholder={'새 비밀번호를 다시 한번 입력해주세요'}
+                  />
+                </div>
               </div>
-              <hr className="border-[1px] border-Line-100" />
-              <div className={clsx(fixedHeightClassName)}>
-                <InputPassword
-                  label="새 비밀번호 확인"
-                  name="newPasswordConfirm"
-                  control={control}
-                  bgColor={true}
-                  placeholder={'새 비밀번호를 다시 한번 입력해주세요'}
-                />
-              </div>
-            </div>
+            )}
           </div>
           <div className="flex flex-col-reverse gap-2 mt-8 w-[327px] lg:w-full lg:gap-8 lg:flex-row lg:mt-15">
             <ButtonOutlined>취소</ButtonOutlined>
