@@ -17,7 +17,7 @@ interface SubmittedReviewsClientProps {
 function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const page = parseInt(searchParams.get('page') || '1', 2);
+  const page = parseInt(searchParams.get('page') || '1', 10);
 
   const {
     data: reviewsData,
@@ -28,6 +28,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
     queryKey: ['myWrittenReviews', page],
     queryFn: () => reviewsApi.getMyWrittenReviews({ page }),
     initialData: { list: initialReviews || [], totalCount: initialReviews?.length || 0 },
+    
   });
 
   const reviews = reviewsData?.list || initialReviews || [];

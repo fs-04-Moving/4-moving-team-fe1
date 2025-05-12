@@ -3,7 +3,6 @@ import writableReviewApi from '@/api/review/writableReview.api';
 import PendingReviewsClient from './PendingReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { cookies } from 'next/headers';
 
 // 메타데이터 OG 넣기
 export const metadata: Metadata = {
@@ -26,25 +25,31 @@ export const metadata: Metadata = {
   },
 };
 
+const defaultPageParams = {
+  page: 1,
+  pageSize: 6, 
+};
+
 async function PendingReviewsPage() {
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join('; ');
 
   const { queryClient } = await handleSSRPrefetch([
     {
-      queryKey: ['pendingReviews'],
-      queryFn: () => writableReviewApi.getReviewableEstimatesServer(cookieHeader),
+      queryKey: [
+        'pendingReviews', 
+        { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize }
+      ],
+      queryFn: () => 
+        writableReviewApi.getReviewableEstimatesServer({
+          page: defaultPageParams.page,
+          pageSize: defaultPageParams.pageSize,}),
     },
   ]);
 
-  const dehydrateState = dehydrate(queryClient);
-  console.log('dehydrateState', dehydrateState);
+  const dehydratedState = dehydrate(queryClient); 
+  console.log('dehydratedState', dehydratedState);
 
   return (
-    <HydrationBoundary state={dehydrateState}>
+    <HydrationBoundary state={dehydratedState}> 
       <PendingReviewsClient />
     </HydrationBoundary>
   );
