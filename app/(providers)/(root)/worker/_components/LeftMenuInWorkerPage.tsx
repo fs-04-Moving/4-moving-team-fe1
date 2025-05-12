@@ -5,17 +5,25 @@ import { useEffect, useState } from 'react';
 import AllChoiceCheckBoxInWorkerPage from './AllChoiceCheckBoxInWorkerPage';
 import TypeCheckBox from './IndividualTypeCheckBoxInWorkerPage';
 
-
-
-
-function LeftMenuInWorkerPage({smallMove,officeMove,homeMove,serviceAreaCounts,assignedCount}:{smallMove:number,officeMove:number,homeMove:number,serviceAreaCounts:number,assignedCount:number}) {
-  
+function LeftMenuInWorkerPage({
+  smallMove,
+  officeMove,
+  homeMove,
+  serviceAreaCounts,
+  assignedCount,
+}: {
+  smallMove: number;
+  officeMove: number;
+  homeMove: number;
+  serviceAreaCounts: number;
+  assignedCount: number;
+}) {
   const movingTypes = [
     { id: 1, name: '소형이사', value: 'smallMove', count: smallMove },
     { id: 2, name: '가정이사', value: 'homeMove', count: homeMove },
     { id: 3, name: '사무실이사', value: 'officeMove', count: officeMove },
   ];
-  
+
   const filterLists = [
     { id: 1, name: '서비스 가능 지역', value: 'area', count: serviceAreaCounts },
     { id: 2, name: '지정 견적 요청', value: 'assigned', count: assignedCount },

@@ -1,16 +1,17 @@
-"use client";
-import LeftMenuInWorkerPage from "@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage";
-import TopMemuInWorkerPage from "@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage";
-import { useReceivedRequestsQuery } from "@/hooks/useReceivedRequestsQuery";
-import { ReceivedEstimateRequestSearchParams } from "@/types/dtos/estimateRequest.dto";
-import { EstimateRequest } from "@/types/entities/estimateRequest.entity";
-import { ServiceType } from "@/types/move.type";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import CustomerCardInEstimate from "../organisms/CustomerCardInEstimate";
-import ResponsiveModal from "./ResponsiveModal";
-import EstimateSend from "./EstimateSend";
-import EstimateRejectSend from "./EstimateRejectSend";
+'use client';
+import LeftMenuInWorkerPage from '@/app/(providers)/(root)/worker/_components/LeftMenuInWorkerPage';
+import TopMemuInWorkerPage from '@/app/(providers)/(root)/worker/_components/TopMemuInWorkerPage';
+import { useReceivedRequestsQuery } from '@/hooks/useReceivedRequestsQuery';
+import { ReceivedEstimateRequestSearchParams } from '@/types/dtos/estimateRequest.dto';
+import { EstimateRequest } from '@/types/entities/estimateRequest.entity';
+import { ServiceType } from '@/types/move.type';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import CustomerCardInEstimate from '../organisms/CustomerCardInEstimate';
+import ResponsiveModal from './ResponsiveModal';
+import EstimateSend from './EstimateSend';
+import EstimateRejectSend from './EstimateRejectSend';
+import { useInView } from 'react-intersection-observer';
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -35,10 +36,19 @@ function ReceivedRequests() {
     return { page, pageSize, filter, orderBy, serviceType, search };
   }, [searchParams]);
 
-  const { data } = useReceivedRequestsQuery(queryParams);
+  const { ref } = useInView({
+    threshold: 1,
+    onChange: (inView) => {
+      if (inView && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+  });
 
-  const [requestEstimate, setRequestEstimate] =
-    useState<ReceivedEstimateRequest | null>(null);
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
+    useReceivedRequestsQuery(queryParams);
+
+  const [requestEstimate, setRequestEstimate] = useState<ReceivedEstimateRequest | null>(null);
 
   // 모달 관련 //
   const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
@@ -61,13 +71,16 @@ function ReceivedRequests() {
   }, [router]);
 
   const totalCount = data?.pages?.[0]?.totalCount;
-  const smallMove = data?.pages?.[0]?.smallMove;
-  const officeMove = data?.pages?.[0]?.officeMove;
-  const homeMove = data?.pages?.[0]?.homeMove;
-  const serviceAreaCounts = data?.pages?.[0]?.serviceAreaCounts;
-  const assignedCount = data?.pages?.[0]?.assignedCount;
-  
-
+  const pageData = useMemo(() => {
+    const page0 = data?.pages?.[0];
+    return {
+      smallMove: page0?.smallMove,
+      officeMove: page0?.officeMove,
+      homeMove: page0?.homeMove,
+      serviceAreaCounts: page0?.serviceAreaCounts,
+      assignedCount: page0?.assignedCount,
+    };
+  }, [data]);
 
   return (
     <main>
@@ -77,7 +90,7 @@ function ReceivedRequests() {
         </h2>
       </div>
       <div className="flex justify-center gap-28">
-        <LeftMenuInWorkerPage smallMove={smallMove} officeMove={officeMove} homeMove={homeMove} serviceAreaCounts={serviceAreaCounts} assignedCount={assignedCount}/>
+        <LeftMenuInWorkerPage {...pageData} />
         <section className="w-[327px] md:w-[600px] lg:w-[955px] flex flex-col gap-[32px]">
           <TopMemuInWorkerPage totalCount={totalCount} />
           <div className="flex flex-col gap-12">
@@ -96,13 +109,12 @@ function ReceivedRequests() {
                   price={request.price}
                   onSendEstimate={() => openEstimateModal(request)}
                   onReject={() => openRejectModal(request)}
-                  onViewDetail={() => console.log("상세보기")}
+                  onViewDetail={() => console.log('상세보기')}
                 />
               ));
             })}
           </div>
-
-          {/* <div ref={ref}></div>  나중에 무한 스크롤 */}
+          <div ref={ref}></div>
         </section>
       </div>
       <ResponsiveModal
@@ -118,10 +130,7 @@ function ReceivedRequests() {
         isOpen={isRejectModalOpen}
         onClose={closeRejectModal}
       >
-        <EstimateRejectSend
-          onClose={closeRejectModal}
-          request={requestEstimate}
-        />
+        <EstimateRejectSend onClose={closeRejectModal} request={requestEstimate} />
       </ResponsiveModal>
     </main>
   );
