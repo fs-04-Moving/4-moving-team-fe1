@@ -9,6 +9,13 @@ export const metadata: Metadata = {
   description: '고객이 찜한 기사님 목록을 확인하는 페이지입니다.',
 };
 
+const defaultPageParams = {
+  page: 1,
+  // 이 값이 ListFavoriteWorker에서 설정되는 값과 같으면 refetch하지 않고, 다르면 refetch됨
+  // 그러므로 데스크탑보다 모바일에서 더 자주 사용될 것으로 예상될 경우 '4'로 변경하는 것이 SSR에 유리함
+  pageSize: 6,
+};
+
 async function FavoriteWorkersPage() {
   const { queryClient } = await handleSSRPrefetch([
     // layout(ProvidersLayout)에서 user를 setQueryData로 캐싱하고 있으므로 현재 구조에선 불필요
@@ -18,8 +25,15 @@ async function FavoriteWorkersPage() {
     //   queryFn: () => userApi.getUserMeServer(accessToken),
     // },
     {
-      queryKey: ['favorites'],
-      queryFn: () => favoriteServerApi.getFavoriteWorkersServer(),
+      queryKey: [
+        'favorites',
+        { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize },
+      ],
+      queryFn: () =>
+        favoriteServerApi.getFavoriteWorkersServer({
+          page: defaultPageParams.page,
+          pageSize: defaultPageParams.pageSize,
+        }),
     },
   ]);
 
