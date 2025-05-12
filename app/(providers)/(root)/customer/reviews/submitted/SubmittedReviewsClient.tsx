@@ -31,7 +31,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
     
   });
 
-  const reviews = reviewsData?.list || initialReviews || [];
+  const reviews:Review[] = reviewsData?.list || initialReviews || [];
   const totalCount = reviewsData?.totalCount || initialReviews?.length || 0;
   const totalPages = Math.ceil(totalCount / 6);
 

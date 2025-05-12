@@ -2,7 +2,6 @@
 
 import { Review } from '@/types/dtos/review.dto';
 import { client, errorHandler } from '../client';
-import exampleReviewData from './exampleReviewData';
 import { API_URL } from '@/constants/env';
 
 interface GetMyWrittenReviewsParams {
@@ -14,7 +13,7 @@ interface GetMyWrittenReviewsResponse {
   totalCount: number;
 }
 
-const getMyWrittenReviews = async (params?: GetMyWrittenReviewsParams): Promise<GetMyWrittenReviewsResponse> => {
+const getMyWrittenReviews = async (params?: GetMyWrittenReviewsParams) => {
   const url = '/review';
   try {
     const response = await client.get(url, { params });
@@ -23,7 +22,6 @@ const getMyWrittenReviews = async (params?: GetMyWrittenReviewsParams): Promise<
   } catch (error) {
     console.error('백엔드에서 리뷰 목록을 가져오는 데 실패했습니다ㅠㅠㅠ', error);
     console.log('백엔드 호출 실패. 🍚예시 데이터를 사용합니다.');
-    return { list: exampleReviewData, totalCount: exampleReviewData.length }; // 예시 데이터와 총 개수 반환
   }
 };
 

@@ -13,7 +13,8 @@ export interface Review {
   isReviewWritten: boolean;
   onClickWriteReview?: () => void;
   driver?: DriverWithMeta;
-  estimateId?: string; 
+  estimateId?: string;
+  workerId:string; 
 }
 
 export interface CreateReviewParams {

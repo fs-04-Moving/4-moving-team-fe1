@@ -39,8 +39,8 @@ const getReviewableEstimatesServer = async (params: GetReviewableEstimatesServer
   return data;
 };
 
-const writableReviewApi = {
+const writableReviewApiServer = {
   getReviewableEstimatesServer,
 };
 
-export default writableReviewApi;
+export default writableReviewApiServer;

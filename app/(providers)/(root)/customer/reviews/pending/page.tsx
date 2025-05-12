@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import writableReviewApi from '@/api/review/writableReview.api';
 import PendingReviewsClient from './PendingReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import writableReviewApiServer from '@/api/review/writableReview.server.api';
 
 // 메타데이터 OG 넣기
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ async function PendingReviewsPage() {
         { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize }
       ],
       queryFn: () => 
-        writableReviewApi.getReviewableEstimatesServer({
+        writableReviewApiServer.getReviewableEstimatesServer({
           page: defaultPageParams.page,
           pageSize: defaultPageParams.pageSize,}),
     },
