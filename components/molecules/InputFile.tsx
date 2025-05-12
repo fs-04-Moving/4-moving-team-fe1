@@ -32,6 +32,8 @@ function InputFile<
   useEffect(() => {
     if (defaultImageUrl) {
       setPickedFileUrl(defaultImageUrl);
+    } else {
+      setPickedFileUrl('');
     }
   }, [defaultImageUrl]);
 
