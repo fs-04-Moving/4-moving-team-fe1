@@ -63,16 +63,14 @@ function WorkerInfoBoxA({
     <div
       className={clsx(
         `flex justify-between items-center gap-3 bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 h-[78px] shadow-2xs`,
-        isResponsive ? 'lg:px-[18px] lg:py-4 lg:gap-6 lg:[92px]' : ''
+        isResponsive ? 'lg:px-[18px] lg:py-4 lg:gap-6 lg:[92px]' : '',
       )}
     >
       <UserAvartar imgUrl={profileImage} isResponsive={isResponsive} />
       <div className="flex-1 flex flex-col justify-between h-[58px]">
         {/* 기사 이름 */}
         <div className="flex justify-between">
-          <span
-            className={clsx('text-[14px]', isResponsive ? 'lg:text-lg' : '')}
-          >
+          <span className={clsx('text-[14px]', isResponsive ? 'lg:text-lg' : '')}>
             {nickname} 기사님
           </span>
           <LikeCount
@@ -85,9 +83,7 @@ function WorkerInfoBoxA({
         <div
           className={clsx(
             'flex items-center gap-1.5 text-[14px]',
-            isResponsive
-              ? 'lg:text-[16px] md:gap-2.5 lg:gap-4 md:justify-normal'
-              : ''
+            isResponsive ? 'lg:text-[16px] md:gap-2.5 lg:gap-4 md:justify-normal' : '',
           )}
         >
           <RatingSummary

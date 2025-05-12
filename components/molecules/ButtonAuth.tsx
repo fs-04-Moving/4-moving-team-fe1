@@ -37,36 +37,19 @@ function ButtonAuth() {
   if (user) {
     return (
       <div className="flex items-center">
-        <Image
-          src={icAlarm}
-          alt="알림"
-          className="w-6 h-6 lg:w-9 lg:h-9 cursor-pointer"
-        />
+        <Image src={icAlarm} alt="알림" className="w-6 h-6 lg:w-9 lg:h-9 cursor-pointer" />
 
         <div className="flex items-center relative w-6 h-6 lg:w-9 lg:h-9 ml-6 lg:ml-8 cursor-pointer">
           {user.profileImage ? (
-            <Image
-              src={user.profileImage}
-              alt="프로필 이미지"
-              fill
-              className="rounded-full"
-            />
+            <Image src={user.profileImage} alt="프로필 이미지" fill className="rounded-full" />
           ) : (
-            <Image
-              src={icProfile}
-              alt="빈 프로필"
-              className="w-6 h-6 lg:w-9 lg:h-9"
-            />
+            <Image src={icProfile} alt="빈 프로필" className="w-6 h-6 lg:w-9 lg:h-9" />
           )}
         </div>
         <p className="hidden ml-4 lg:block text-lg font-medium text-Black-400 cursor-pointer">
           {user.name}
         </p>
-        <Image
-          src={icMenu}
-          alt="메뉴 아이콘"
-          className="w-6 h-6 ml-6 cursor-pointer lg:hidden"
-        />
+        <Image src={icMenu} alt="메뉴 아이콘" className="w-6 h-6 ml-6 cursor-pointer lg:hidden" />
         <p onClick={handleClickLogOut} className="ml-4 hidden lg:inline">
           로그아웃
         </p>

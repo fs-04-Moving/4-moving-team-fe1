@@ -44,18 +44,17 @@ interface FormProfileWorkerProps {
 }
 
 function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
-  const { control, handleSubmit, formState, reset, trigger } =
-    useForm<FormProfileInput>({
-      defaultValues: {
-        profileImage: null,
-        nickname: initialProfile?.nickname ?? '',
-        experience: initialProfile?.experience ?? '',
-        summary: initialProfile?.summary ?? '',
-        description: initialProfile?.description ?? '',
-      },
-      mode: 'onTouched',
-      resolver: zodResolver(createWorkerProfileValiation),
-    });
+  const { control, handleSubmit, formState, reset, trigger } = useForm<FormProfileInput>({
+    defaultValues: {
+      profileImage: null,
+      nickname: initialProfile?.nickname ?? '',
+      experience: initialProfile?.experience ?? '',
+      summary: initialProfile?.summary ?? '',
+      description: initialProfile?.description ?? '',
+    },
+    mode: 'onTouched',
+    resolver: zodResolver(createWorkerProfileValiation),
+  });
 
   const router = useRouter();
 
@@ -84,9 +83,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
   }, [initialProfile, reset, trigger]);
 
   const { mutate: submitProfile } = useCreateProfileMutation(
-    initialProfile
-      ? profilesApi.updateWorkerProfile
-      : profilesApi.createWorkerProfile
+    initialProfile ? profilesApi.updateWorkerProfile : profilesApi.createWorkerProfile,
   );
 
   const handleClickSubmit = (inputData: FormProfileInput) => {
@@ -104,10 +101,7 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
   };
 
   const isEnabledButton =
-    formState.isValid &&
-    services.length > 0 &&
-    serviceAreas.length > 0 &&
-    !isProcessing;
+    formState.isValid && services.length > 0 && serviceAreas.length > 0 && !isProcessing;
 
   if (isInitializing) return null;
 
@@ -144,20 +138,10 @@ function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
       <div>
         <div className="flex lg:flex-row-reverse flex-col lg:justify-end gap-2 lg:gap-8">
           <ButtonSolid disabled={!isEnabledButton} className="lg:w-[684px]">
-            {isProcessing ? (
-              <Loader />
-            ) : initialProfile ? (
-              '수정하기'
-            ) : (
-              '시작하기'
-            )}
+            {isProcessing ? <Loader /> : initialProfile ? '수정하기' : '시작하기'}
           </ButtonSolid>
           {initialProfile && (
-            <ButtonOutlined
-              onClick={handleClickCancel}
-              className="lg:w-[684px]"
-              type="button"
-            >
+            <ButtonOutlined onClick={handleClickCancel} className="lg:w-[684px]" type="button">
               취소
             </ButtonOutlined>
           )}

@@ -21,7 +21,7 @@ function EstimateSend(props: Props) {
   const { onClose, request } = props;
 
   const [price, setPrice] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
   const queryClient = useQueryClient();
 

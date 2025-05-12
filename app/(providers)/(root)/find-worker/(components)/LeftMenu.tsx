@@ -68,9 +68,7 @@ function FilterArea() {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <label className="text-lg font-semibold">
-            어떤 서비스가 필요하세요?
-          </label>
+          <label className="text-lg font-semibold">어떤 서비스가 필요하세요?</label>
           <DropdownService onSelect={handleServiceSelect} />
         </div>
         {isLoggedIn && (
@@ -80,11 +78,7 @@ function FilterArea() {
               !isLoading &&
               data.list.map((worker, index) => (
                 <Link key={index} href={`${ROUTES.WORKER.ROOT}/${worker.id}`}>
-                  <WorkerCardInSearch
-                    key={index}
-                    {...worker}
-                    isResponsive={false}
-                  />
+                  <WorkerCardInSearch key={index} {...worker} isResponsive={false} />
                 </Link>
               ))}
           </div>

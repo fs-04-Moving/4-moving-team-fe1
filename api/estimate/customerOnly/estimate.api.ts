@@ -1,7 +1,7 @@
 // api/estimate/customerOnly/estimate.api.ts
 
-import { client, errorHandler } from "@/api/client";
-import { Estimate } from "@/types/entities/estimate.entity";
+import { client, errorHandler } from '@/api/client';
+import { Estimate } from '@/types/entities/estimate.entity';
 
 export type GetPendingEstimates = {
   estimates: Estimate[];
@@ -16,10 +16,10 @@ export type GetPendingEstimates = {
  */
 export async function getPendingEstimate(
   page: number,
-  pageSize: number
+  pageSize: number,
 ): Promise<GetPendingEstimates> {
   try {
-    const response = await client.get("estimate/pending", {
+    const response = await client.get('estimate/pending', {
       params: { page, pageSize },
     });
 
@@ -57,7 +57,7 @@ export const getReceivedEstimates = async ({
           page,
           pageSize,
         },
-      }
+      },
     );
 
     return response.data;
@@ -68,12 +68,10 @@ export const getReceivedEstimates = async ({
 };
 
 export const getEstimateDetailByCustomer = async (
-  estimateId: string
+  estimateId: string,
 ): Promise<Estimate | undefined> => {
   try {
-    const response = await client.get<Estimate>(
-      `/estimate/customer/detail/${estimateId}`
-    );
+    const response = await client.get<Estimate>(`/estimate/customer/detail/${estimateId}`);
     return response.data;
   } catch (error) {
     errorHandler(error);

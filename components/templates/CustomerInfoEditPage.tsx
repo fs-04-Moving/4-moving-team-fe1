@@ -36,12 +36,7 @@ function CustomerInfoEditPage() {
     mutation.mutate(formData);
   };
 
-  return (
-    <CustomerInfoEditTemplate
-      defaultValues={defaultValues}
-      onSubmit={onSubmit}
-    />
-  );
+  return <CustomerInfoEditTemplate defaultValues={defaultValues} onSubmit={onSubmit} />;
 }
 
 export default CustomerInfoEditPage;

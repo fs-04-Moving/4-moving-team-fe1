@@ -7,7 +7,6 @@ export function useFindWorkerQuery(params: WorkerSearchParams) {
   return useInfiniteQuery({
     queryKey: ['workers', params],
     queryFn: ({ pageParam = 1 }: { pageParam: number }) => {
-      console.log('[CSR] 실행되어선 안 되는 queryFn');
       return profilesApi.getWorkerProfiles({
         ...params,
         page: pageParam,
@@ -16,9 +15,7 @@ export function useFindWorkerQuery(params: WorkerSearchParams) {
     },
     getNextPageParam: (lastPage, allPages) => {
       const totalLoaded = allPages.flatMap((p) => p.list).length;
-      return totalLoaded < lastPage.totalCount
-        ? allPages.length + 1
-        : undefined;
+      return totalLoaded < lastPage.totalCount ? allPages.length + 1 : undefined;
     },
     initialPageParam: 1,
   });

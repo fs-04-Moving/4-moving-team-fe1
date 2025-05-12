@@ -1,10 +1,10 @@
 //ButtonStarRating.tsx
 
-"use client";
+'use client';
 
-import React, { memo, useState, useEffect } from "react";
-import FullStar from "@/components/atoms/IconFullStar";
-import EmptyStar from "@/components/atoms/IconEmptyStar";
+import React, { memo, useState, useEffect } from 'react';
+import FullStar from '@/components/atoms/IconFullStar';
+import EmptyStar from '@/components/atoms/IconEmptyStar';
 
 type Props = {
   disabled?: boolean;
@@ -41,12 +41,7 @@ type Props = {
 const MemoizedFullStar = memo(FullStar);
 const MemoizedEmptyStar = memo(EmptyStar);
 
-function ButtonStarRating({
-  disabled = false,
-  initialRating,
-  starSize = 20,
-  setRating,
-}: Props) {
+function ButtonStarRating({ disabled = false, initialRating, starSize = 20, setRating }: Props) {
   const ArrayIndexes = [1, 2, 3, 4, 5];
   const [ratingIndex, setRatingIndex] = useState(5);
 
@@ -68,9 +63,7 @@ function ButtonStarRating({
       {ArrayIndexes.map((arrayindex, index) => (
         <div
           key={`rating_${index}`}
-          className={`size-[${starSize}px] ${
-            disabled ? "cursor-default" : "cursor-pointer"
-          }`}
+          className={`size-[${starSize}px] ${disabled ? 'cursor-default' : 'cursor-pointer'}`}
           onClick={() => handleStarClick(arrayindex)}
         >
           {arrayindex <= ratingIndex ? (

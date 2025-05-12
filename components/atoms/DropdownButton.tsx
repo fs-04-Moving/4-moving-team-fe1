@@ -44,7 +44,7 @@ function DropdownButton<T extends string>({
     'flex items-center justify-between px-4 h-[36px] border border-GrayScale-100 cursor-pointer rounded-lg font-medium text-Black-400',
     // 모바일/태블릿에서는 동적 너비, PC에서는 원래 스타일로 적용
     mobileButtonWidthClass,
-    'lg:w-full lg:h-16 lg:rounded-2xl'
+    'lg:w-full lg:h-16 lg:rounded-2xl',
   );
 
   const activeClassName = clsx({
@@ -56,21 +56,14 @@ function DropdownButton<T extends string>({
   });
 
   return (
-    <button
-      className={clsx(defaultClassName, activeClassName, doneClassName)}
-      onClick={onClick}
-    >
-      <div className='w-full flex items-center justify-between'>
-        <span className='text-sm lg:text-lg lg:whitespace-normal'>
-          {selectedValue}
-        </span>
+    <button className={clsx(defaultClassName, activeClassName, doneClassName)} onClick={onClick}>
+      <div className="w-full flex items-center justify-between">
+        <span className="text-sm lg:text-lg lg:whitespace-normal">{selectedValue}</span>
         <Image
           src={isActive ? icChevronDown : icChevronDownBlack}
-          alt='펼치기 아이콘'
+          alt="펼치기 아이콘"
           className={`w-6 lg:w-9 ${
-            status === 'active'
-              ? 'rotate-180 transition'
-              : 'rotate-0 transition'
+            status === 'active' ? 'rotate-180 transition' : 'rotate-0 transition'
           }`}
         />
       </div>

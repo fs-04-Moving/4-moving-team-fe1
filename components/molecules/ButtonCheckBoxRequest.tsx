@@ -45,9 +45,7 @@ function ButtonCheckBoxRequest({
   selectedService,
   onChange,
 }: ButtonCheckBoxRequestProps) {
-  const handleServiceChange = (
-    service: 'smallMove' | 'homeMove' | 'officeMove'
-  ) => {
+  const handleServiceChange = (service: 'smallMove' | 'homeMove' | 'officeMove') => {
     onChange(service);
   };
 
@@ -60,9 +58,7 @@ function ButtonCheckBoxRequest({
         <div className="flex items-center lg:gap-4 p-[14px]">
           <Image
             className="h-6 w-6 md:w-6 md:h-6 lg:w-8 lg:h-8"
-            src={
-              selectedService === 'smallMove' ? CheckBoxActive : CheckBoxDefault
-            }
+            src={selectedService === 'smallMove' ? CheckBoxActive : CheckBoxDefault}
             alt={selectedService === 'smallMove' ? '체크됨' : '체크 안됨'}
           />
           <span className="ml-1 lg:ml-2 text-Black-400 text-[14px] lg:text-[18px]">
@@ -78,9 +74,7 @@ function ButtonCheckBoxRequest({
         <div className="w-full flex items-center lg:gap-4 p-[14px]">
           <Image
             className="h-6 w-6 md:w-6 md:h-6 lg:w-8 lg:h-8"
-            src={
-              selectedService === 'homeMove' ? CheckBoxActive : CheckBoxDefault
-            }
+            src={selectedService === 'homeMove' ? CheckBoxActive : CheckBoxDefault}
             alt={selectedService === 'homeMove' ? '체크됨' : '체크 안됨'}
           />
           <span className="ml-0.5 lg:ml-1 text-Black-400 text-[14px] lg:text-[18px]">
@@ -96,11 +90,7 @@ function ButtonCheckBoxRequest({
         <div className="w-full flex items-center lg:gap-4 p-[14px]">
           <Image
             className="h-6 w-6 md:w-6 md:h-6 lg:w-8 lg:h-8"
-            src={
-              selectedService === 'officeMove'
-                ? CheckBoxActive
-                : CheckBoxDefault
-            }
+            src={selectedService === 'officeMove' ? CheckBoxActive : CheckBoxDefault}
             alt={selectedService === 'officeMove' ? '체크됨' : '체크 안됨'}
           />
           <span className="ml-0.5 lg:ml-1 text-Black-400 text-[14px] lg:text-[18px]">

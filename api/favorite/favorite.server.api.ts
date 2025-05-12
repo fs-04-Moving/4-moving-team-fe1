@@ -7,11 +7,24 @@
 
 import { API_URL } from '@/constants/env';
 import { getCookieHeader } from '@/utils/server/getCookieHeader.server';
+import { GetFavoriteWorkersParams } from './favorite.api';
 
 // - 따라서 직접 headers에 토큰(cookieHeader)을 설정해야 함
-const getFavoriteWorkersServer = async () => {
+const getFavoriteWorkersServer = async (param: GetFavoriteWorkersParams) => {
+  // 모든 값을 string으로 변환
+  const query = new URLSearchParams(
+    Object.entries(param).reduce(
+      (acc, [key, value]) => {
+        acc[key] = String(value);
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
+  ).toString();
+
   const cookieHeader = await getCookieHeader();
-  const res = await fetch(`${API_URL}/favorite`, {
+
+  const res = await fetch(`${API_URL}/favorite?${query}`, {
     method: 'GET',
     headers: {
       Cookie: cookieHeader,

@@ -2,12 +2,7 @@ import icGallery from '@/assets/images/ic-gallery.svg';
 import { ALLOWED_TYPES, MAX_FILE_SIZE, MAX_FILE_SIZE_MB } from '@/constants';
 import Image from 'next/image';
 import React, { ChangeEventHandler, useEffect, useRef, useState } from 'react';
-import {
-  FieldPath,
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
@@ -23,11 +18,8 @@ interface Props extends React.ComponentProps<'input'> {
  */
 function InputFile<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
->({
-  defaultImageUrl,
-  ...props
-}: Props & UseControllerProps<TFieldValues, TName>) {
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({ defaultImageUrl, ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { onChange, onBlur },
     fieldState: { error },
@@ -101,11 +93,7 @@ function InputFile<
               className="rounded-xl aspect-square object-cover"
             />
           ) : (
-            <Image
-              src={icGallery}
-              alt="갤러리 아이콘"
-              className="w-8 lg:w-10"
-            />
+            <Image src={icGallery} alt="갤러리 아이콘" className="w-8 lg:w-10" />
           )}
         </div>
         {pickedFileUrl && (

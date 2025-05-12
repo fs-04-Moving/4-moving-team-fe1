@@ -92,12 +92,7 @@ function TopMenu() {
         <span className="z-10 pt-4 lg:pt-0">
           <DropdownSort
             onChange={handleOrderBySelect}
-            options={[
-              '리뷰 많은순',
-              '평점 높은순',
-              '경력 높은순',
-              '확정 많은순',
-            ]}
+            options={['리뷰 많은순', '평점 높은순', '경력 높은순', '확정 많은순']}
           />
         </span>
       </div>

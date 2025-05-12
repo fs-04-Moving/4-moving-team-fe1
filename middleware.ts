@@ -4,12 +4,8 @@ import { getUserFromRequestLite } from './utils/getUserFromRequestLite';
 
 // 접근 가능한 경로 정의
 const OPEN_ROUTES = [ROUTES.FIND_WORKER];
-const PUBLIC_ROUTES = [
-  ROUTES.HOME,
-  ROUTES.LOG_IN,
-  ROUTES.SIGN_UP,
-  ROUTES.FIND_WORKER,
-];
+const OPEN_ROUTE_PATTERNS = [/^\/worker\/[^\/]+$/]; // worker/:id 패턴 추가
+const PUBLIC_ROUTES = [ROUTES.HOME, ROUTES.LOG_IN, ROUTES.SIGN_UP, ROUTES.FIND_WORKER];
 const PROFILE_ROUTES = [ROUTES.CUSTOMER.PROFILE, ROUTES.WORKER.PROFILE];
 
 /**
@@ -23,9 +19,7 @@ export async function middleware(req: NextRequest) {
   const result = await getUserFromRequestLite();
 
   const end = performance.now(); // 측정 끝
-  console.log(
-    `⏱ getUserFromRequestLite: duration: ${(end - start).toFixed(2)}ms`
-  );
+  console.log(`⏱ getUserFromRequestLite: duration: ${(end - start).toFixed(2)}ms`);
 
   const { pathname } = req.nextUrl;
   console.log('🧭 pathname:', pathname);
@@ -36,16 +30,15 @@ export async function middleware(req: NextRequest) {
   }
 
   // 1. 오픈 라우트 (로그인 여부 관계없이 접근 허용)
-  if (OPEN_ROUTES.includes(pathname)) {
+  if (
+    OPEN_ROUTES.includes(pathname) ||
+    OPEN_ROUTE_PATTERNS.some((pattern) => pattern.test(pathname))
+  ) {
     return NextResponse.next();
   }
 
   // 2. 퍼블릭 라우트: 로그인 X → 허용 / 로그인 O → 리다이렉트
-  if (
-    PUBLIC_ROUTES.some(
-      (path) => pathname === path || pathname.startsWith(`${path}/`)
-    )
-  ) {
+  if (PUBLIC_ROUTES.some((path) => pathname === path || pathname.startsWith(`${path}/`))) {
     if (!result) return NextResponse.next();
 
     const { role, hasProfile } = result;

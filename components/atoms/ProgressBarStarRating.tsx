@@ -42,9 +42,7 @@ function ProgressBarStarRating({ ratings: ratingData }: ProgressBarStarRatingPro
               className="bg-Secondary-Yellow-100 h-2.5 rounded-full"
               style={{
                 width:
-                  totalRatings > 0
-                    ? `${(currentRatings[4 - index] / totalRatings) * 100}%`
-                    : '0%',
+                  totalRatings > 0 ? `${(currentRatings[4 - index] / totalRatings) * 100}%` : '0%',
               }}
             ></div>
           </div>

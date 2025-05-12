@@ -27,11 +27,10 @@ function ReceivedRequests() {
   const queryParams: ReceivedEstimateRequestSearchParams = useMemo(() => {
     const page = 1;
     const pageSize = 3;
-    const serviceType =
-      (searchParams.get("serviceType") as ServiceType) || undefined;
-    const filter = searchParams.get("filter") || undefined;
-    const orderBy = searchParams.get("orderBy") || undefined;
-    const search = searchParams.get("search") || undefined;
+    const serviceType = (searchParams.get('serviceType') as ServiceType) || undefined;
+    const filter = searchParams.get('filter') || undefined;
+    const orderBy = searchParams.get('orderBy') || undefined;
+    const search = searchParams.get('search') || undefined;
 
     return { page, pageSize, filter, orderBy, serviceType, search };
   }, [searchParams]);

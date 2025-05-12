@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  FieldPath,
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import TextArea from '../atoms/TextArea';
 
 interface Props extends React.ComponentProps<'textarea'> {
@@ -19,7 +14,7 @@ interface Props extends React.ComponentProps<'textarea'> {
  */
 function InputTextBox<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur },

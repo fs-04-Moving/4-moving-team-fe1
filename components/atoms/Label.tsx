@@ -17,9 +17,7 @@ interface Props {
  * @returns
  */
 function Label({ children, intent = 'lg', required = false }: Props) {
-  const defaultClassName = clsx(
-    'text-Black-400 font-semibold text-lg lg:text-[32px]'
-  );
+  const defaultClassName = clsx('text-Black-400 font-semibold text-lg lg:text-[32px]');
   const mediumClassName = clsx({
     'text-base lg:!text-[24px]': intent === 'md',
   });
@@ -30,9 +28,7 @@ function Label({ children, intent = 'lg', required = false }: Props) {
     '!text-[16px]': intent === 'xs',
   });
 
-  const defaultRequierdClassName = clsx(
-    'text-Primay-Blue-300 text-lg lg:text-[32px]'
-  );
+  const defaultRequierdClassName = clsx('text-Primay-Blue-300 text-lg lg:text-[32px]');
   const meidumRequierdClassName = clsx({
     '!text-Primay-Blue-300 !text-base lg:!text-[24px]': intent === 'md',
   });
@@ -43,14 +39,7 @@ function Label({ children, intent = 'lg', required = false }: Props) {
     '!text-Primay-Blue-300 !text-[16px]': intent === 'xs',
   });
   return (
-    <h1
-      className={clsx(
-        defaultClassName,
-        mediumClassName,
-        smallClassName,
-        extraSmallClassName
-      )}
-    >
+    <h1 className={clsx(defaultClassName, mediumClassName, smallClassName, extraSmallClassName)}>
       {required ? (
         <div>
           {children}
@@ -59,7 +48,7 @@ function Label({ children, intent = 'lg', required = false }: Props) {
               defaultRequierdClassName,
               meidumRequierdClassName,
               smallRequierdClassName,
-              extraSmallRequierdClassName
+              extraSmallRequierdClassName,
             )}
           >
             {' '}

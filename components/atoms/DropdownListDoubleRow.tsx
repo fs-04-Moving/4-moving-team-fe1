@@ -24,17 +24,15 @@ function DropdownListDoubleRow<T extends string>({
   return (
     <div
       className={`${
-        isShow
-          ? 'scale-y-none transition origin-top'
-          : 'scale-y-0 transition origin-top'
+        isShow ? 'scale-y-none transition origin-top' : 'scale-y-0 transition origin-top'
       } absolute top-12 lg:top-18 w-[150px] lg:w-[328px] `}
     >
-      <div className='grid grid-cols-2 divide-x divide-GrayScale-100 max-h-[180px] lg:max-h-[320px] overflow-y-auto bg-white drop-shadow-sm border border-Line-200 rounded-lg lg:rounded-2xl lg:text-lg'>
+      <div className="grid grid-cols-2 divide-x divide-GrayScale-100 max-h-[180px] lg:max-h-[320px] overflow-y-auto bg-white drop-shadow-sm border border-Line-200 rounded-lg lg:rounded-2xl lg:text-lg">
         {menuOptions?.map((option) => (
           <div
             key={option}
             onClick={handleSelectOption(option)}
-            className='h-9 lg:h-16 flex items-center px-3.5 lg:px-6 cursor-pointer text-sm lg:text-lg'
+            className="h-9 lg:h-16 flex items-center px-3.5 lg:px-6 cursor-pointer text-sm lg:text-lg"
           >
             {option}
           </div>

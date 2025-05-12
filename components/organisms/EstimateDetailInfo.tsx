@@ -1,6 +1,6 @@
-import { format } from "date-fns";
-import { ko } from "date-fns/locale";
-import { ServiceType } from "@/types/move.type";
+import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
+import { ServiceType } from '@/types/move.type';
 
 type Props = {
   requestDate: Date;
@@ -39,32 +39,30 @@ function EstimateDetailInfo({
   destination,
 }: Props) {
   // 견적 요청일 포맷팅 (YYYY.MM.DD)
-  const formattedRequestDate = format(requestDate, "yy.MM.dd", { locale: ko });
+  const formattedRequestDate = format(requestDate, 'yy.MM.dd', { locale: ko });
 
   // 이사 날짜 및 시간 포맷팅 (YYYY. MM. DD(요일) 오전/오후 HH:MM)
-  const formattedMovingDate = format(movingDate, "yyyy. MM. dd(eee) a h:mm", {
+  const formattedMovingDate = format(movingDate, 'yyyy. MM. dd(eee) a h:mm', {
     locale: ko,
   });
 
   // 서비스 타입 한글 변환
   const getServiceTypeKorean = (type: ServiceType) => {
     switch (type) {
-      case "smallMove":
-        return "소형이사";
-      case "homeMove":
-        return "가정이사";
-      case "officeMove":
-        return "사무실이사";
+      case 'smallMove':
+        return '소형이사';
+      case 'homeMove':
+        return '가정이사';
+      case 'officeMove':
+        return '사무실이사';
       default:
-        return "";
+        return '';
     }
   };
 
   return (
     <div className="w-full flex flex-col gap-6">
-      <h2 className="text-[16px] md:text-[16px] lg:text-[24px] font-[600]">
-        견적 정보
-      </h2>
+      <h2 className="text-[16px] md:text-[16px] lg:text-[24px] font-[600]">견적 정보</h2>
       <div className="w-full h-[192px] md:h-[208px] lg:h-[258px] bg-BackGround-200 rounded-2xl p-4 md:p-0">
         <div className="h-full flex flex-col gap-2.5 md:px-6 md:py-6 lg:px-10 lg:py-8">
           <div className="flex flex-col gap-2.5 lg:gap-4">

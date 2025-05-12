@@ -13,9 +13,7 @@ interface Props {
 function TitleLandingImage({ title, subTitle }: Props) {
   return (
     <div className="mt-6 ml-[30px] lg:mt-10 lg:ml-[42px]">
-      <p className="font-semibold text-xl lg:text-[28px] mb-1 lg:mb-2">
-        {title}
-      </p>
+      <p className="font-semibold text-xl lg:text-[28px] mb-1 lg:mb-2">{title}</p>
       <p className="text-sm lg:text-xl text-GrayScale-400">{subTitle}</p>
     </div>
   );

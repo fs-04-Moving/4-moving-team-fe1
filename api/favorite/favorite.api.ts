@@ -1,5 +1,5 @@
-import { WorkerCardInLikedProps } from "@/components/organisms/WorkerCardInLiked";
-import { client, errorHandler } from "../client";
+import { WorkerCardInLikedProps } from '@/components/organisms/WorkerCardInLiked';
+import { client, errorHandler } from '../client';
 
 export type FavoriteWorkersResponse = {
   list: WorkerCardInLikedProps[];
@@ -18,14 +18,21 @@ export async function createFavorite(workerId: string): Promise<void> {
   }
 }
 
-const getFavoriteWorkers = async () => {
+// 찜한 기사님 목록을 조회하는 API
+// 페이지네이션을 위해 page와 pageSize를 파라미터로 받습니다.
+
+export interface GetFavoriteWorkersParams {
+  page?: number;
+  pageSize?: number;
+}
+const getFavoriteWorkers = async (params?: GetFavoriteWorkersParams) => {
   try {
-    const url = "/favorite";
-    const response = await client.get(url);
+    const url = '/favorite';
+    const response = await client.get(url, { params });
     return response.data;
   } catch (error) {
     errorHandler(error);
-    throw error; // error를 던져줘야 useQuery에서 error handling이 가능해져
+    throw error; //
   }
 };
 
@@ -40,7 +47,7 @@ async function getFavoriteCountByWorkerId(workerId: string): Promise<number> {
     const data = response.data;
 
     // 서버에서 단순 숫자를 반환한다고 가정
-    return typeof data === "number" ? data : Number(data.count ?? 0);
+    return typeof data === 'number' ? data : Number(data.count ?? 0);
   } catch (error) {
     errorHandler(error);
     return 0;

@@ -1,67 +1,68 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
-import Pagination from "@/components/molecules/Pagination";
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/contexts/AuthContext';
+import { getRejectedEstimates } from '@/api/estimate/workerOnly/estimate.api';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import Pagination from '@/components/molecules/Pagination';
+import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
+import LoadingSpinner from '@/components/atoms/LoadingSpinner';
+import ErrorMessage from '@/components/atoms/ErrorMessage';
 
-import ProtectedPageWrapper from "@/components/atoms/ProtectedPageWrapper";
-import { Estimate } from "@/types/entities/estimate.entity";
-import { getRejectedEstimates } from "@/api/estimate/workerOnly/estimate.api";
+const ITEMS_PER_PAGE = 4;
 
 function RejectedEstimatesPage() {
+  const { user } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2; // -> Pagination 숫자 안정해서 추후 요녀석 수정
-  const [fetchedCards, setFetchedCards] = useState<Estimate[]>([]);
 
-  // const indexOfLastItem = currentPage * itemsPerPage;
-  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // const currentCards = mockCards.slice(indexOfFirstItem, indexOfLastItem);
-  // const totalPages = Math.ceil(mockCards.length / itemsPerPage);
-  const [totalPages, setTotalPages] = useState(1);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['rejected-estimates', currentPage],
+    queryFn: () => getRejectedEstimates({ page: currentPage, pageSize: ITEMS_PER_PAGE }),
+    enabled: !!user?.sub,
+    staleTime: 1000 * 10,
+    gcTime: 1000 * 60 * 10,
+  });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { list, totalCount } = await getRejectedEstimates({
-          page: currentPage,
-          pageSize: itemsPerPage,
-        });
-        setFetchedCards(list);
-        setTotalPages(Math.ceil(totalCount / itemsPerPage));
-      } catch (error) {
-        console.error("Failed to fetch rejected estimates", error);
-      }
-    };
+  if (isLoading) return <LoadingSpinner />;
+  if (isError || !data) return <ErrorMessage />;
 
-    fetchData();
-  }, [currentPage]);
+  const { list, totalCount } = data;
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   return (
     <ProtectedPageWrapper>
       <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[24px] md:gap-y-[32px] lg:gap-y-[48px] w-full max-w-[1400px] justify-items-center">
-          {fetchedCards.length === 0 ? (
-            <div className="text-gray-500 text-center mt-8">
-              거절된 견적이 없습니다.
-            </div>
+          {list.length === 0 ? (
+            <div className="text-gray-500 text-center mt-8">거절된 견적이 없습니다.</div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[24px] md:gap-y-[32px] lg:gap-y-[48px] w-full max-w-[1400px] justify-items-center">
-              {fetchedCards.map((card, index) => (
-                <div
-                  key={index}
-                  className="w-[328px] h-[192px] md:w-[600px] md:h-[164px] lg:w-[688px] lg:h-[216px]"
-                >
-                  <CustomerCardInEstimate {...card} />
-                </div>
-              ))}
-            </div>
+            list.map((card) => (
+              <div
+                key={card.id}
+                className="w-[328px] h-[192px] md:w-[600px] md:h-[164px] lg:w-[688px] lg:h-[216px]"
+              >
+                <CustomerCardInEstimate
+                  id={card.id}
+                  serviceType={card.serviceType}
+                  status={card.status}
+                  customerName={card.customerName}
+                  movingDate={new Date(card.movingDate)}
+                  departure={card.departure}
+                  destination={card.destination}
+                  isConfirmed={card.isConfirmed}
+                  requestDate={new Date(card.requestDate)}
+                  price={card.price}
+                />
+              </div>
+            ))
           )}
         </div>
 
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={(page) => setCurrentPage(page)}
+          onPageChange={setCurrentPage}
           className="mt-2"
         />
       </div>

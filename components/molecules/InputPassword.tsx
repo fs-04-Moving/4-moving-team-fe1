@@ -2,12 +2,7 @@ import icVisibilityOn from '@/assets/images/ic-visibility-on.svg';
 import icVisibility from '@/assets/images/ic-visibility.svg';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import {
-  FieldPath,
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form';
+import { FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import Input from '../atoms/Input';
 
 interface Props extends React.ComponentProps<'input'> {
@@ -23,7 +18,7 @@ interface Props extends React.ComponentProps<'input'> {
  */
 function InputPassword<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({ ...props }: Props & UseControllerProps<TFieldValues, TName>) {
   const {
     field: { value, onChange, onBlur },

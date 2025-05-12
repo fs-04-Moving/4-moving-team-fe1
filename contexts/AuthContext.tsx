@@ -6,13 +6,7 @@ import ROUTES from '@/constants/routes';
 import { GetUserMe } from '@/types/dtos/user.dto';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
 interface AuthContextValue {
   isLoggedIn?: boolean;

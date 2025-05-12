@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { getSentEstimates } from "@/api/estimate/workerOnly/estimate.api";
-import CustomerCardInEstimate from "@/components/organisms/CustomerCardInEstimate";
-import { Estimate } from "@/types/entities/estimate.entity";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import { Estimate } from '@/types/entities/estimate.entity';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function SendingEstimatesPage() {
   const router = useRouter();
@@ -40,11 +40,7 @@ function SendingEstimatesPage() {
   if (loading) return <p>Loading...</p>;
 
   if (totalCount === 0) {
-    return (
-      <div className="text-center mt-12 text-gray-500">
-        보낸 견적이 없습니다.
-      </div>
-    );
+    return <div className="text-center mt-12 text-gray-500">보낸 견적이 없습니다.</div>;
   }
 
   return (
@@ -59,6 +55,7 @@ function SendingEstimatesPage() {
       <ul>
         {estimates.map((estimate) => (
           <CustomerCardInEstimate
+            id={estimate.id}
             key={estimate.id}
             serviceType={estimate.serviceType}
             status={estimate.status}

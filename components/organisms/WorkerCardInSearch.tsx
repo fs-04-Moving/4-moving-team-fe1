@@ -70,22 +70,16 @@ function WorkerCardInSearch({
     <div
       className={clsx(
         'flex flex-col justify-between gap-2 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl min-w-[327px] h-[188px] px-3.5 py-4 shadow-xs',
-        isResponsive ? 'lg:px-6 lg:py-5 md:w-full lg:h-[230px]' : ''
+        isResponsive ? 'lg:px-6 lg:py-5 md:w-full lg:h-[230px]' : '',
       )}
     >
       <div className="flex gap-2.5">
         {services.map((service, index) => (
-          <ChipMovingType
-            key={index}
-            type={service}
-            isResponsive={isResponsive}
-          />
+          <ChipMovingType key={index} type={service} isResponsive={isResponsive} />
         ))}
       </div>
       {/* 기사 한줄 소개 */}
-      <div className={clsx('text-[14px]', isResponsive ? 'lg:text-2xl' : '')}>
-        {summary}
-      </div>
+      <div className={clsx('text-[14px]', isResponsive ? 'lg:text-2xl' : '')}>{summary}</div>
       {/* 기사 소개 박스 */}
       <WorkerInfoBoxA
         profileImage={profileImage}

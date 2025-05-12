@@ -18,12 +18,11 @@ export type FormLogInInput = {
 };
 
 function FormLogIn({ role }: { role: Role }) {
-  const { control, handleSubmit, formState, setError } =
-    useForm<FormLogInInput>({
-      defaultValues: { email: '', password: '' },
-      mode: 'onTouched',
-      resolver: zodResolver(logInValidation),
-    });
+  const { control, handleSubmit, formState, setError } = useForm<FormLogInInput>({
+    defaultValues: { email: '', password: '' },
+    mode: 'onTouched',
+    resolver: zodResolver(logInValidation),
+  });
 
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -35,9 +34,7 @@ function FormLogIn({ role }: { role: Role }) {
         setError('email', { message: '존재하지 않는 이메일입니다' });
       } else if (errorMessage === 'Incorrect password') {
         setError('password', { message: '비밀번호가 일치하지 않습니다' });
-      } else if (
-        errorMessage === 'password must be 8 or more characters long'
-      ) {
+      } else if (errorMessage === 'password must be 8 or more characters long') {
         setError('password', { message: '비밀번호는 8자 이상이어야 합니다' });
       } else {
         alert('에러가 발생했습니다. 다시 시도해 주세요.');
@@ -53,10 +50,7 @@ function FormLogIn({ role }: { role: Role }) {
   return (
     <div className="w-full flex justify-center">
       <div className="w-[327px] lg:w-[640px]">
-        <form
-          className="flex flex-col"
-          onSubmit={handleSubmit(handleClickLogIn)}
-        >
+        <form className="flex flex-col" onSubmit={handleSubmit(handleClickLogIn)}>
           <div className="flex flex-col gap-4 lg:gap-8 mb-8 lg:mb-14">
             <InputEmail
               name="email"

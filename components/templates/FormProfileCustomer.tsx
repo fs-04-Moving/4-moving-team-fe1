@@ -56,15 +56,10 @@ function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   };
 
   const isEnabledButton =
-    formState.isValid &&
-    services.length > 0 &&
-    livingArea !== null &&
-    !isProcessing;
+    formState.isValid && services.length > 0 && livingArea !== null && !isProcessing;
 
   const { mutate: submitProfile } = useCreateProfileMutation(
-    initialProfile
-      ? profilesApi.updateCustomerProfile
-      : profilesApi.createCustomerProfile
+    initialProfile ? profilesApi.updateCustomerProfile : profilesApi.createCustomerProfile,
   );
 
   const handleClickSubmit = (inputData: FormProfileInput) => {
@@ -89,10 +84,7 @@ function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
 
   return (
     <form onSubmit={handleSubmit(handleClickSubmit)}>
-      <GroupProfileImageInput
-        control={control}
-        defaultImageUrl={initialProfile?.profileImage}
-      />
+      <GroupProfileImageInput control={control} defaultImageUrl={initialProfile?.profileImage} />
       <GroupServiceTypeSelect
         services={services}
         setServices={setServices}
@@ -100,10 +92,7 @@ function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
         title2="* 중복 선택 및 수정 가능, 견적 요청 시 선택 가능"
       />
       <DividerHor />
-      <GroupRegionSelect
-        selectedRegion={livingArea}
-        onRegionSelect={handleRegionSelect}
-      />
+      <GroupRegionSelect selectedRegion={livingArea} onRegionSelect={handleRegionSelect} />
       <ButtonSolid disabled={!isEnabledButton}>
         {isProcessing ? <Loader /> : initialProfile ? '수정하기' : '시작하기'}
       </ButtonSolid>

@@ -12,11 +12,7 @@ interface Props<T> {
  * - onSelect: 목록의 값 선택 시 실행 함수(Dropdown컴포넌트로부터 전달)
  * @returns
  */
-function DropdownList<T extends string>({
-  listOptions: menuOptions,
-  isShow,
-  onSelect,
-}: Props<T>) {
+function DropdownList<T extends string>({ listOptions: menuOptions, isShow, onSelect }: Props<T>) {
   const handleSelectOption = (option: T) => {
     return () => onSelect(option);
   };
@@ -24,16 +20,14 @@ function DropdownList<T extends string>({
   return (
     <div
       className={`${
-        isShow
-          ? 'scale-y-none transition origin-top'
-          : 'scale-y-0 transition origin-top'
+        isShow ? 'scale-y-none transition origin-top' : 'scale-y-0 transition origin-top'
       } absolute top-12 lg:top-18 lg:w-full drop-shadow-2xl border border-Line-200 rounded-lg lg:rounded-2xl lg:text-lg  bg-white`}
     >
       {menuOptions.map((option) => (
         <div
           key={option}
           onClick={handleSelectOption(option)}
-          className='h-9 lg:h-16 flex items-center px-2 lg:px-6 cursor-pointer text-sm lg:text-lg w-[87px] lg:w-full'
+          className="h-9 lg:h-16 flex items-center px-2 lg:px-6 cursor-pointer text-sm lg:text-lg w-[87px] lg:w-full"
         >
           {option}
         </div>

@@ -56,7 +56,6 @@ function WorkerCardInLiked({
   reviewsAverage,
   reviewsCount,
 }: WorkerCardInLikedProps) {
-  console.log(experience, confirmedEstimatesCount);
   return (
     <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[150px] md:w-[600px] lg:w-[688px] lg:h-[202px] px-3.5 py-4">
       <div className="flex gap-2.5">
@@ -71,17 +70,11 @@ function WorkerCardInLiked({
           {/* 기사 이름 */}
           <div className="flex justify-between">
             <span className="text-[14px] lg:text-lg">{nickname} 기사님</span>
-            <LikeCount
-              isFavorite={isFavorite}
-              favoritesCount={favoritesCount}
-            />
+            <LikeCount isFavorite={isFavorite} favoritesCount={favoritesCount} />
           </div>
           {/* 별점, 경력, 확정 건수 */}
           <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-            <RatingSummary
-              reviewsAverage={reviewsAverage}
-              reviewsCount={reviewsCount}
-            />
+            <RatingSummary reviewsAverage={reviewsAverage} reviewsCount={reviewsCount} />
             <span className="text-GrayScale-100">|</span>
             <span>
               <span className="text-GrayScale-300">경력</span>

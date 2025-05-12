@@ -18,7 +18,7 @@ function NavMenuGnb() {
     .filter(
       (item) =>
         item.showIn?.includes('gnb') &&
-        item.condition(role, user?.hasProfile ?? false, isLoggedIn ?? false)
+        item.condition(role, user?.hasProfile ?? false, isLoggedIn ?? false),
     )
     .map((item) => {
       let effectiveHref = item.href;
@@ -43,16 +43,12 @@ function NavMenuGnb() {
       ROUTES.CUSTOMER.ESTIMATES.RECEIVED,
       ROUTES.FIND_WORKER,
     ],
-    worker: [
-      ROUTES.WORKER.ROOT,
-      ROUTES.WORKER.ESTIMATES.SENDING,
-      ROUTES.WORKER.ESTIMATES.REJECTED,
-    ],
+    worker: [ROUTES.WORKER.ROOT, ROUTES.WORKER.ESTIMATES.SENDING, ROUTES.WORKER.ESTIMATES.REJECTED],
   };
 
   // 현재 경로가 허용된 GNB 강조 경로에 정확히 일치하는지 확인
   const isWithinAllowedPath = allowedPathsByRole[role ?? '']?.some(
-    (basePath) => pathname === basePath
+    (basePath) => pathname === basePath,
   );
 
   // 가장 잘 매칭되는 href 하나만 선택되게 처리
@@ -68,9 +64,7 @@ function NavMenuGnb() {
     <div className="w-full pl-20 gap-10 hidden lg:flex">
       {filteredItems.map((item, index) => {
         // 허용된 경로 안이면 bestMatch만 강조, 그 외에는 모두 강조
-        const isSelected = isWithinAllowedPath
-          ? item.effectiveHref === bestMatchHref
-          : true;
+        const isSelected = isWithinAllowedPath ? item.effectiveHref === bestMatchHref : true;
 
         return (
           <NavMenuItem

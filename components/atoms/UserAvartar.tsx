@@ -31,7 +31,7 @@ function UserAvartar({ imgUrl, sizeInLarge = 56, isResponsive = true }: Props) {
     <Image
       className={clsx(
         isResponsive ? sizeClassNames : '',
-        'inline-block rounded-full border-2 border-Primay-Blue-400 w-[46px] h-[46px] object-cover'
+        'inline-block rounded-full border-2 border-Primay-Blue-400 w-[46px] h-[46px] object-cover',
       )}
       src={imgUrl || avatar_1}
       width={isResponsive ? 56 : 46}

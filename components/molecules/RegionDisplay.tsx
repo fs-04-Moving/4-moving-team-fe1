@@ -29,9 +29,9 @@ interface RegionDisplayProps {
 function RegionDisplay({ region }: RegionDisplayProps) {
   if (Array.isArray(region)) {
     return (
-      <div className='flex flex-wrap gap-2'>
+      <div className="flex flex-wrap gap-2">
         {region.map((item) => (
-          <div key={item} className='inline-block'>
+          <div key={item} className="inline-block">
             <ChipBubbleTypeBox text={AREA_CONSTANTS[item]} canClick={false} />
           </div>
         ))}
@@ -40,7 +40,7 @@ function RegionDisplay({ region }: RegionDisplayProps) {
   }
 
   return (
-    <div className='inline-block'>
+    <div className="inline-block">
       <ChipBubbleTypeBox text={AREA_CONSTANTS[region]} canClick={false} />
     </div>
   );

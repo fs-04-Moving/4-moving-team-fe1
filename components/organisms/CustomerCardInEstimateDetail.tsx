@@ -1,7 +1,7 @@
-import ChipMovingType from "../atoms/ChipMovingType";
-import UserAvartar from "../atoms/UserAvartar";
-import LikeCount from "../molecules/LikeCount";
-import RatingSummary from "../molecules/RatingSummary";
+import ChipMovingType from '../atoms/ChipMovingType';
+import UserAvartar from '../atoms/UserAvartar';
+import LikeCount from '../molecules/LikeCount';
+import RatingSummary from '../molecules/RatingSummary';
 
 export type WorkerCardInDetailProps = {
   id: string;
@@ -68,27 +68,19 @@ function CustomerCardInEstimateDetail({
       </div>
       {/* 기사 소개 박스 */}
       {/* 기사 코멘트 */}
-      <div className="text-GrayScale-600 text-[14px] font-normal lg:text-xl">
-        {summary}
-      </div>
+      <div className="text-GrayScale-600 text-[14px] font-normal lg:text-xl">{summary}</div>
       <div className="flex justify-between items-center gap-3 shadow-xs bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:h-[112px]">
         <UserAvartar imgUrl={profileImage} sizeInLarge={80} />
         <div className="flex-1 flex flex-col justify-between h-[58px] lg:h-[68px]">
           {/* 기사 이름 */}
           <div className="flex justify-between">
             <span className="text-[14px] lg:text-lg">{nickname} 기사님</span>
-            <LikeCount
-              isFavorite={isFavorite}
-              favoritesCount={favoritesCount}
-            />
+            <LikeCount isFavorite={isFavorite} favoritesCount={favoritesCount} />
           </div>
 
           {/* 별점, 경력, 확정 건수 */}
           <div className="flex items-center justify-between md:justify-normal text-[14px] lg:text-[16px] md:gap-2.5 lg:gap-4">
-            <RatingSummary
-              reviewsAverage={reviewsAverage}
-              reviewsCount={reviewsCount}
-            />
+            <RatingSummary reviewsAverage={reviewsAverage} reviewsCount={reviewsCount} />
             <span className="text-GrayScale-100">|</span>
             <span>
               <span className="text-GrayScale-300">경력</span>

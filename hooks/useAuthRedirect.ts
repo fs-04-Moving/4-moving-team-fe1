@@ -31,17 +31,14 @@ export function useAuthRedirect() {
   useEffect(() => {
     if (!isAuthInitialized) return; // 로그인 상태 초기화가 된 경우만
 
-    const isPublic =
-      PUBLIC_ROUTES.includes(pathname) || TEST_ROUTES.includes(pathname);
+    const isPublic = PUBLIC_ROUTES.includes(pathname) || TEST_ROUTES.includes(pathname);
     const isProfilePage = PROFILE_ROUTES.includes(pathname);
     const isPrivate = !isPublic;
 
     // 1. 퍼블릭 페이지에서 로그인한 경우
     if (isPublic && isLoggedIn) {
       if (!user?.role) return;
-      const target = user?.hasProfile
-        ? `/${user?.role}`
-        : `/${user?.role}/profile`;
+      const target = user?.hasProfile ? `/${user?.role}` : `/${user?.role}/profile`;
       router.replace(target);
       return;
     }
@@ -66,11 +63,7 @@ export function useAuthRedirect() {
         return;
       }
 
-      if (
-        !user?.hasProfile &&
-        user?.role &&
-        pathname !== `/${user?.role}/profile`
-      ) {
+      if (!user?.hasProfile && user?.role && pathname !== `/${user?.role}/profile`) {
         router.replace(`/${user?.role}/profile`);
         return;
       }

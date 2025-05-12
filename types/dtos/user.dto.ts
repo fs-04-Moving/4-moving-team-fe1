@@ -1,10 +1,7 @@
 import { User } from '../entities/user.entity';
 
 // 사용자 기본 정보 수정 시 사용합니다.
-export type UpdateUserInfoDto = Pick<
-  User,
-  'name' | 'email' | 'phoneNumber' | 'password'
-> &
+export type UpdateUserInfoDto = Pick<User, 'name' | 'email' | 'phoneNumber' | 'password'> &
   Partial<Pick<User, 'newPassword' | 'newPasswordConfirm'>>;
 
 export interface Worker {
