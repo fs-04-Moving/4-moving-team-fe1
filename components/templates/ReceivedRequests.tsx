@@ -77,7 +77,7 @@ function ReceivedRequests() {
       smallMove: page0?.smallMove,
       officeMove: page0?.officeMove,
       homeMove: page0?.homeMove,
-      serviceAreaCounts: page0?.serviceAreaCounts,
+      serviceAreaCount: page0?.serviceAreaCount,
       assignedCount: page0?.assignedCount,
     };
   }, [data]);

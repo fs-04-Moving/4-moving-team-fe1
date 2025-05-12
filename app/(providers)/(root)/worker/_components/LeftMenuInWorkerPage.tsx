@@ -9,13 +9,13 @@ function LeftMenuInWorkerPage({
   smallMove,
   officeMove,
   homeMove,
-  serviceAreaCounts,
+  serviceAreaCount,
   assignedCount,
 }: {
   smallMove: number;
   officeMove: number;
   homeMove: number;
-  serviceAreaCounts: number;
+  serviceAreaCount: number;
   assignedCount: number;
 }) {
   const movingTypes = [
@@ -25,7 +25,7 @@ function LeftMenuInWorkerPage({
   ];
 
   const filterLists = [
-    { id: 1, name: '서비스 가능 지역', value: 'area', count: serviceAreaCounts },
+    { id: 1, name: '서비스 가능 지역', value: 'area', count: serviceAreaCount },
     { id: 2, name: '지정 견적 요청', value: 'assigned', count: assignedCount },
   ];
 
