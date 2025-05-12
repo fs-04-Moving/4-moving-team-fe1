@@ -18,6 +18,7 @@ export interface User {
   phoneNumber: string;
   profileImage: string;
   refreshToken: string;
+  provider: Provider;
   role: Role;
   hasProfile: boolean; // 프로필 작성 여부
   hasRequest: boolean; // 활성 견적 존재 여부
@@ -38,5 +39,7 @@ export interface User {
 }
 
 export type Role = 'customer' | 'worker';
+
+export type Provider = 'kakao' | 'naver' | 'google' | 'local';
 
 export type Area = keyof AreaType;

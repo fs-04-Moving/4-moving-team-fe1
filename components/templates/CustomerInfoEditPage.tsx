@@ -5,11 +5,18 @@ import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import CustomerInfoEditTemplate from '@/components/templates/CustomerInfoEditTemplate';
 import { useCustomerInfoQuery } from '@/hooks/useCustomerInfoQuery';
 import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
+import { Provider } from '@/types/entities/user.entity';
 import { useMutation } from '@tanstack/react-query';
+
+export interface CustomerInfoEditFormValues extends UpdateUserInfoDto {
+  provider: Provider;
+}
 
 function CustomerInfoEditPage() {
   const { data, isLoading, isError } = useCustomerInfoQuery();
-
+  if (data) {
+    console.log(data);
+  }
   const mutation = useMutation({
     mutationFn: userApi.updateUserInfo,
     onSuccess: () => {
@@ -23,7 +30,8 @@ function CustomerInfoEditPage() {
   if (isLoading) return <LoadingSpinner />;
   if (isError) return <div>데이터를 불러올 수 없습니다.</div>;
 
-  const defaultValues: UpdateUserInfoDto = {
+  const defaultValues: CustomerInfoEditFormValues = {
+    provider: data.provider,
     name: data.name,
     email: data.email,
     phoneNumber: data.phoneNumber,
