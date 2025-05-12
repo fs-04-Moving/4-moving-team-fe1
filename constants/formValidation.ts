@@ -49,7 +49,7 @@ export const signUpValidation = z
   });
 
 export const createWorkerProfileValiation = z.object({
-  profileImage: z.instanceof(File).nullable(),
+  profileImage: z.instanceof(File).nullable().optional(),
   nickname: z
     .string()
     .trim()
