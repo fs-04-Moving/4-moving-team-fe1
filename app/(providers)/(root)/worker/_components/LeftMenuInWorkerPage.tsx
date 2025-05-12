@@ -5,18 +5,30 @@ import { useEffect, useState } from 'react';
 import AllChoiceCheckBoxInWorkerPage from './AllChoiceCheckBoxInWorkerPage';
 import TypeCheckBox from './IndividualTypeCheckBoxInWorkerPage';
 
-const movingTypes = [
-  { id: 1, name: '소형이사', value: 'smallMove', count: 4 },
-  { id: 2, name: '가정이사', value: 'homeMove', count: 2 },
-  { id: 3, name: '사무실이사', value: 'officeMove', count: 10 },
-];
+function LeftMenuInWorkerPage({
+  smallMove,
+  officeMove,
+  homeMove,
+  serviceAreaCount,
+  assignedCount,
+}: {
+  smallMove: number;
+  officeMove: number;
+  homeMove: number;
+  serviceAreaCount: number;
+  assignedCount: number;
+}) {
+  const movingTypes = [
+    { id: 1, name: '소형이사', value: 'smallMove', count: smallMove },
+    { id: 2, name: '가정이사', value: 'homeMove', count: homeMove },
+    { id: 3, name: '사무실이사', value: 'officeMove', count: officeMove },
+  ];
 
-const filterLists = [
-  { id: 1, name: '서비스 가능 지역', value: 'area', count: 6 },
-  { id: 2, name: '지정 견적 요청', value: 'assigned', count: 10 },
-];
+  const filterLists = [
+    { id: 1, name: '서비스 가능 지역', value: 'area', count: serviceAreaCount },
+    { id: 2, name: '지정 견적 요청', value: 'assigned', count: assignedCount },
+  ];
 
-function LeftMenuInWorkerPage() {
   const [movingSelected, setMovingSelected] = useState<Record<number, boolean>>({});
   const [filterSelected, setFilterSelected] = useState<Record<number, boolean>>({});
   const [selectedServiceTypes, setSelectedServiceTypes] = useState<string[]>([]);

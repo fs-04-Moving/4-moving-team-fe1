@@ -24,6 +24,7 @@ export interface Estimate {
   departureArea: Area;
   requestDate: Date;
   rejectionMessage?: string;
+  comment?: string;
 }
 
 export type ServiceTypeKor = '소형이사' | '가정이사' | '사무실이사';
