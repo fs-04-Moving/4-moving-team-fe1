@@ -35,6 +35,9 @@ const updateCustomerProfile = async (data: UpdateCustomerProfileDto) => {
     const { livingArea, services, profileImage } = data;
     const formData = new FormData();
 
+    console.log('[FORMDATA] profileImage instanceof File:', profileImage instanceof File);
+    console.log('[FORMDATA] profileImage === null:', profileImage === null);
+    console.log('[FORMDATA] profileImage === undefined:', profileImage === undefined);
     if (livingArea !== undefined) {
       formData.append('livingArea', livingArea);
     }
