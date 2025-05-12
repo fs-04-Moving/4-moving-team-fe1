@@ -18,7 +18,7 @@ import GroupRegionSelect from '../organisms/GroupRegionSelect';
 import GroupServiceTypeSelect from '../organisms/GroupServiceTypeSelector';
 
 export interface FormProfileInput {
-  profileImage: File | null;
+  profileImage: File | null | undefined;
 }
 
 interface FormProfileCustomerProps {
@@ -31,7 +31,7 @@ interface FormProfileCustomerProps {
 
 function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   const { control, handleSubmit, formState } = useForm<FormProfileInput>({
-    defaultValues: { profileImage: null },
+    defaultValues: { profileImage: undefined },
     mode: 'onTouched',
   });
 
@@ -63,6 +63,7 @@ function FormProfileCustomer({ initialProfile }: FormProfileCustomerProps) {
   );
 
   const handleClickSubmit = (inputData: FormProfileInput) => {
+    console.log('[SUBMIT] profileImage 값:', inputData.profileImage);
     if (!livingArea) return; // livingArea 없으면 안전하게 빠지기
     setIsProcessing(true);
     const data: CreateCustomerProfileDto = {

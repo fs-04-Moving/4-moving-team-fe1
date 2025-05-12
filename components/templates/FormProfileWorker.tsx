@@ -24,7 +24,7 @@ import GroupServiceTypeSelect from '../organisms/GroupServiceTypeSelector';
 import GroupSummaryInput from '../organisms/GroupSummaryInput';
 
 export interface FormProfileInput {
-  profileImage: File | null;
+  profileImage?: File | null | undefined;
   nickname: string;
   experience: string;
   summary: string;
@@ -46,7 +46,7 @@ interface FormProfileWorkerProps {
 function FormProfileWorker({ initialProfile }: FormProfileWorkerProps) {
   const { control, handleSubmit, formState, reset, trigger } = useForm<FormProfileInput>({
     defaultValues: {
-      profileImage: null,
+      profileImage: undefined,
       nickname: initialProfile?.nickname ?? '',
       experience: initialProfile?.experience ?? '',
       summary: initialProfile?.summary ?? '',

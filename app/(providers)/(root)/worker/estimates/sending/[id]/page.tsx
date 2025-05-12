@@ -101,7 +101,9 @@ export default function EstimatesDetailPage() {
           />
           <div className="flex flex-col gap-y-4">
             <p className="text-[24px] font-[600]">견적가</p>
-            <p className="text-[32px] font-[700]">{estimate.price ?? 0}원</p>
+            <p className="text-[32px] font-[700]">
+              {(estimate.price ?? 0).toLocaleString()}원
+            </p>
           </div>
 
           {/* Mobile/Tablet 공유 버튼 */}
