@@ -38,7 +38,7 @@ function PendingReviewsClient() {
   } = useQuery({
     queryKey: ["pendingReviews", page],
     queryFn: () =>
-      writableReviewApi.getReviewableEstimates({ page, pageSize: 1 }),
+      writableReviewApi.getReviewableEstimates({ page, pageSize: 6 }),
     // keepPreviousData: true,
   });
 
@@ -148,7 +148,7 @@ function PendingReviewsClient() {
         {totalCount > 0 && (
           <Pagination
             currentPage={page}
-            totalPages={Math.ceil(totalCount / 1)}
+            totalPages={Math.ceil(totalCount / 6)}
             onPageChange={handlePageChange}
             className="mt-5 mb-3"
           />
