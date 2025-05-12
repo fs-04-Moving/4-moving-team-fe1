@@ -61,6 +61,13 @@ function ReceivedRequests() {
   }, [router]);
 
   const totalCount = data?.pages?.[0]?.totalCount;
+  const smallMove = data?.pages?.[0]?.smallMove;
+  const officeMove = data?.pages?.[0]?.officeMove;
+  const homeMove = data?.pages?.[0]?.homeMove;
+  const serviceAreaCounts = data?.pages?.[0]?.serviceAreaCounts;
+  const assignedCount = data?.pages?.[0]?.assignedCount;
+  
+
 
   return (
     <main>
@@ -70,7 +77,7 @@ function ReceivedRequests() {
         </h2>
       </div>
       <div className="flex justify-center gap-28">
-        <LeftMenuInWorkerPage />
+        <LeftMenuInWorkerPage smallMove={smallMove} officeMove={officeMove} homeMove={homeMove} serviceAreaCounts={serviceAreaCounts} assignedCount={assignedCount}/>
         <section className="w-[327px] md:w-[600px] lg:w-[955px] flex flex-col gap-[32px]">
           <TopMemuInWorkerPage totalCount={totalCount} />
           <div className="flex flex-col gap-12">
