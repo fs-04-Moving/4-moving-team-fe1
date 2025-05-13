@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Pagination from '@/components/molecules/Pagination';
 import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
-import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
+import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal'; // 변경됨
 import { Estimate } from '@/types/entities/estimate.entity';
 import { getRejectedEstimates } from '@/api/estimate/workerOnly/estimate.api';
 
@@ -70,8 +70,8 @@ export default function RejectedEstimatesPage() {
                   status={card.status}
                   customerName={card.customerName}
                   movingDate={card.movingDate}
-                  departure={card.departure.split(' ').slice(0, 2).join(' ')}
-                  destination={card.destination.split(' ').slice(0, 2).join(' ')} 
+                  departure={card.departure}
+                  destination={card.destination}
                   isConfirmed={card.isConfirmed}
                   price={card.price}
                   onViewDetail={() => {

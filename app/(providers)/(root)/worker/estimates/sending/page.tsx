@@ -72,7 +72,10 @@ export default function SendingEstimatesPage() {
                   customerName={card.customerName}
                   movingDate={card.movingDate}
                   departure={card.departure.split(' ').slice(0, 2).join(' ')}
-                  destination={card.destination.split(' ').slice(0, 2).join(' ')} 
+                  destination={card.destination
+                    .split(' ')
+                    .slice(0, 2)
+                    .join(' ')}
                   isConfirmed={card.isConfirmed}
                   price={card.price}
                   onViewDetail={() => {
