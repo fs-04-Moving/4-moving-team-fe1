@@ -57,7 +57,7 @@ function ShareSocial({
 
           <div
             className={clsx(iconContainerStyle, 'bg-[#4285F4]')}
-            onClick={() => shareToFacebook(url)}
+            onClick={() => shareToFacebook(url, shareDescription)}
           >
             <Image src={icFacebook} alt="페이스북공유" className={iconStyle} />
           </div>
