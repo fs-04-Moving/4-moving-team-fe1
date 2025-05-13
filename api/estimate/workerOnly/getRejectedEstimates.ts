@@ -1,8 +1,6 @@
 import axios from 'axios';
-import { API_URL } from '@/constants/env';
 
-type Estimate = {
-  id: string;
+export type Estimate = {
   serviceType: string;
   status: string;
   customerName: string;
@@ -11,25 +9,26 @@ type Estimate = {
   destination: string;
   isConfirmed: boolean;
   requestDate: string;
+  price: number;
+  id: string;
 };
 
-type RejectEstimatesResponse = {
+export type RejectedEstimatesResponse = {
   list: Estimate[];
   totalCount: number;
 };
 
-export async function getRejectedEstimatesSSR(
+export const getRejectedEstimatesServer = async (
   page: number,
   pageSize: number,
   accessToken: string,
-): Promise<RejectEstimatesResponse> {
-  const res = await axios.get(`${API_URL}/estimate/reject`, {
+): Promise<RejectedEstimatesResponse> => {
+  const res = await axios.get(`${process.env.API_URL}/estimate/reject`, {
     params: { page, pageSize },
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
     withCredentials: true,
   });
-
   return res.data;
-}
+};
