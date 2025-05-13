@@ -19,26 +19,40 @@ export default function SendingEstimatesPage() {
 
   useEffect(() => {
     const fetchEstimates = async () => {
-      try {
-        const { list, totalCount } = await getSentEstimates({
-          page: currentPage,
-          pageSize: ITEMS_PER_PAGE,
-        });
+  try {
+    const { list, totalCount } = await getSentEstimates({
+      page: currentPage,
+      pageSize: ITEMS_PER_PAGE,
+    });
 
-        const parsedList = list.map((item) => ({
-          ...item,
-          movingDate: safeParseDate(item.movingDate),
-          requestDate: safeParseDate(item.requestDate),
-        }));
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  const parsedList = list
+  .map((item) => ({
+    ...item,
+    movingDate: safeParseDate(item.movingDate),
+    requestDate: safeParseDate(item.requestDate),
+  }))
+  .sort((a, b) => {
+    const aIsPastOrToday = a.movingDate <= today;
+    const bIsPastOrToday = b.movingDate <= today;
 
-        setEstimates(parsedList);
-        setTotalCount(totalCount);
-      } catch (err) {
-        console.error('견적 데이터를 불러오는 데 실패했어요', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (aIsPastOrToday && !bIsPastOrToday) return 1;
+    if (!aIsPastOrToday && bIsPastOrToday) return -1;
+
+    return a.movingDate.getTime() - b.movingDate.getTime();
+  });
+
+
+    setEstimates(parsedList);
+    setTotalCount(totalCount);
+  } catch (err) {
+    console.error('견적 데이터를 불러오는 데 실패했어요', err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     fetchEstimates();
   }, [currentPage]);
