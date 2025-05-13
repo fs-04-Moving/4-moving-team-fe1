@@ -1,4 +1,4 @@
-import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
+import { UpdateUserInfoDto, UserInfoEditFormValues } from '@/types/dtos/user.dto';
 import { client, errorHandler } from '../client';
 
 // 내 정보 조회
@@ -30,9 +30,9 @@ const getUserInfo = async () => {
   }
 };
 
-const updateUserInfo = async (dto: UpdateUserInfoDto) => {
+const updateUserInfo = async (dto: UserInfoEditFormValues) => {
   try {
-    console.log('dto', dto);
+    console.log(dto);
     const url = '/user';
     const response = await client.put(url, dto);
     return response.data;
