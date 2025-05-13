@@ -10,6 +10,8 @@ import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
 import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
 import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
 import ButtonSolid from '@/components/atoms/ButtonSolid';
+import LoadingSpinner from '@/components/atoms/LoadingSpinner';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import WorkerCardInDetail from '@/components/organisms/WorkerCardInDetail';
 import { Estimate } from '@/types/entities/estimate.entity';
@@ -93,11 +95,17 @@ export default function Page() {
     }
   }, [favoriteData]);
 
-  if (loading) return <div>로딩 중...</div>;
-  if (!estimate) return <div>견적 정보를 불러오지 못했습니다.</div>;
+  if (loading)
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <LoadingSpinner size="md" />
+        <p className="text-3xl mt-10">상세 견적 불러오는 중입니다...</p>
+      </div>
+    );
+  if (!estimate) return <EmptyListMessage message={'대기중인 견적이 없습니다.'} />;
 
   return (
-    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-20 gap-10">
+    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-20 gap-10 mt-10">
       {/* 왼쪽 영역 */}
       <div className="flex-1 flex flex-col gap-y-10">
         <WorkerCardInDetail
@@ -106,7 +114,7 @@ export default function Page() {
           nickname={estimate.nickname}
           confirmedEstimatesCount={estimate.confirmedEstimatesCount}
           isFavorite={liked}
-          favoritesCount={likeCount ?? 0}
+          favoritesCount={likeCount ?? -1}
           services={[estimate.serviceType]}
           reviewsAverage={estimate.rating ?? 0}
           reviewsCount={estimate.reviewsCount}

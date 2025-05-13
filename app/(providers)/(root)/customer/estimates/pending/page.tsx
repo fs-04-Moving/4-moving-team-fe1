@@ -28,6 +28,15 @@ export default function PendingEstimatesPage() {
     fetchEstimates();
   }, []);
 
+  if (isLoading)
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <LoadingSpinner size="md" />
+        <p className="text-3xl mt-10">상세 견적 불러오는 중입니다...</p>
+      </div>
+    );
+  if (!estimates) return <EmptyListMessage message={'대기중인 견적이 없습니다.'} />;
+
   return (
     <div
       className="
@@ -37,57 +46,48 @@ export default function PendingEstimatesPage() {
         grid grid-cols-1 lg:grid-cols-2 gap-4
       "
     >
-      {isLoading ? (
-        <div className="flex flex-col items-center justify-center">
-          <LoadingSpinner size="md" />
-          <p className="text-3xl mt-10">대기중인 견적 불러오는 중입니다...</p>
-        </div>
-      ) : estimates.length === 0 ? (
-        <EmptyListMessage message={'대기중인 견적이 없습니다.'} />
-      ) : (
-        estimates.map((estimate) => (
-          <WorkerCardInWating
-            key={estimate.id}
-            profileImage={estimate.profileImage}
-            nickname={estimate.nickname}
-            experience={estimate.experience}
-            confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-            isFavorite={false}
-            favoritesCount={estimate.favoritesCount}
-            services={[estimate.serviceType]} // ✅ 이렇게 배열로 감싸기
-            isDirectEstimate={false}
-            price={estimate.price || 0}
-            status={'general'}
-            movingDate={estimate.movingDate}
-            departure={estimate.departure}
-            destination={estimate.destination}
-            reviewsAverage={3.3} //??
-            reviewsCount={estimate.reviewsCount}
-            onConfirm={async () => {
-              if (!estimate.price || estimate.price <= 0) {
-                alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
-                return;
-              }
+      {estimates.map((estimate) => (
+        <WorkerCardInWating
+          key={estimate.id}
+          profileImage={estimate.profileImage}
+          nickname={estimate.nickname}
+          experience={estimate.experience}
+          confirmedEstimatesCount={estimate.confirmedEstimatesCount}
+          isFavorite={false}
+          favoritesCount={estimate.favoritesCount}
+          services={[estimate.serviceType]} // ✅ 이렇게 배열로 감싸기
+          isDirectEstimate={false}
+          price={estimate.price || -1}
+          status={'general'}
+          movingDate={estimate.movingDate}
+          departure={estimate.departure}
+          destination={estimate.destination}
+          reviewsAverage={estimate.rating ?? 0}
+          reviewsCount={estimate.reviewsCount}
+          onConfirm={async () => {
+            if (!estimate.price || estimate.price <= 0) {
+              alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
+              return;
+            }
 
-              try {
-                await confirmEstimate(estimate.id);
-                alert('견적이 확정되었습니다.');
-                setIsLoading(true);
-                const { estimates } = await getPendingEstimate(1, 10);
-                setEstimates(estimates);
-              } catch (error) {
-                alert('견적 확정에 실패했습니다.');
-                console.error(error);
-              } finally {
-                setIsLoading(false);
-              }
-            }}
-            onViewDetail={() => {
-              router.push(`/customer/estimates/pending/${estimate.id}`);
-            }}
-          />
-        ))
-      )}
+            try {
+              await confirmEstimate(estimate.id);
+              alert('견적이 확정되었습니다.');
+              setIsLoading(true);
+              const { estimates } = await getPendingEstimate(1, 10);
+              setEstimates(estimates);
+            } catch (error) {
+              alert('견적 확정에 실패했습니다.');
+              console.error(error);
+            } finally {
+              setIsLoading(false);
+            }
+          }}
+          onViewDetail={() => {
+            router.push(`/customer/estimates/pending/${estimate.id}`);
+          }}
+        />
+      ))}
     </div>
   );
 }
