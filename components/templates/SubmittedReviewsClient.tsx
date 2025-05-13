@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import WorkerCardInCompletedReview from '@/components/organisms/WorkerCardInCompletedReview';
 import Pagination from '@/components/molecules/Pagination';
 import EmptyReview from '@/components/molecules/EmptyReview';
@@ -61,6 +61,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
   }
 
   return (
+    <div className="bg-BackGround-200 min-h-full">
     <div className="bg-background-100 flex items-center justify-center">
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px]">
         <div className="flex flex-wrap w-full justify-nomal">
@@ -99,6 +100,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
           />
         )}
       </div>
+    </div>
     </div>
   );
 }

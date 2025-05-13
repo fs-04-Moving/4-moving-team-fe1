@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import reviewsApi from '@/api/review/writtenReview.api';
-import SubmittedReviewsClient from './SubmittedReviewsClient';
+import SubmittedReviewsClient from '@/components/templates/SubmittedReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
