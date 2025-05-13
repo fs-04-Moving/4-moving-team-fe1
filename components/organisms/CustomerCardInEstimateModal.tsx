@@ -13,7 +13,7 @@ type Props = {
   departure: string;
   destination: string;
   isConfirmed: boolean;
-  requestDate: Date;
+  requestDate?: Date;
   price?: number;
   onSendEstimate?: () => void;
   onReject?: () => void;
@@ -65,6 +65,7 @@ function CustomerCardInEstimateModal({
   departure,
   destination,
   price,
+  onViewDetail,
 }: // requestDate,
 Props) {
   const currentDate = new Date();
@@ -91,7 +92,11 @@ Props) {
         <div className="flex justify-between items-center">
           <span className="flex gap-2.5">
             <ChipMovingType type={serviceType} />
-            {status === 'assigned' ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
+            {status === 'assigned' ? (
+              <ChipEstimateStatus type="assigned" isShort={true} />
+            ) : (
+              ''
+            )}
           </span>
         </div>
         {/* 고객 이름 및 견적 관련 정보 */}
@@ -115,7 +120,9 @@ Props) {
         </div>
         {price && (
           <div className="flex justify-end items-end gap-2 lg:gap-4">
-            <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
+            <span className="text-[14px] lg:text-lg leading-none">
+              견적 금액
+            </span>
             <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
           </div>
         )}
@@ -130,10 +137,12 @@ Props) {
               <div className="max-w-[108px] lg:max-w-[123px]">
                 <ButtonOutlined
                   intent="active"
-                  // onClick={onViewDetail}
-                  onClick={() => {}}
+                  onClick={onViewDetail}
+                  // onClick={() => {}}
                 >
-                  <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
+                  <span className="text-[14px] lg:text-[16px] px-3">
+                    견적 상세보기
+                  </span>
                 </ButtonOutlined>
               </div>
             </div>

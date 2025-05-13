@@ -1,7 +1,7 @@
-import clsx from 'clsx';
-import { ChangeEventHandler, FocusEventHandler } from 'react';
+import clsx from "clsx";
+import { ChangeEventHandler, FocusEventHandler } from "react";
 
-interface Props extends React.ComponentProps<'textarea'> {
+interface Props extends React.ComponentProps<"textarea"> {
   label?: string;
   bgColor?: boolean;
   errorMessage?: string;
@@ -27,7 +27,7 @@ function TextArea({
   });
 
   const bgClassName = clsx({
-    'bg-[#f7f7f7] !border-none': bgColor,
+    "bg-[#f7f7f7] !border-none": bgColor,
   });
 
   return (

@@ -1,7 +1,11 @@
 // api/estimate/workerOnly/estimate.api.ts
 
-import { client, errorHandler } from '@/api/client';
-import { Estimate, RawEstimate } from '@/types/entities/estimate.entity';
+import { client, errorHandler } from "@/api/client";
+import {
+  CreateGeneralEstimateDto,
+  RejectEstimateRequestDto,
+} from "@/types/dtos/estimate.dto";
+import { Estimate, RawEstimate } from "@/types/entities/estimate.entity";
 
 export interface GetSentEstimatesParams {
   page?: number;
@@ -53,3 +57,50 @@ export async function getRejectedEstimates(
     throw error;
   }
 }
+
+async function rejectEstimate(
+  dto: RejectEstimateRequestDto,
+  estimateId: string
+) {
+  try {
+    await client.put(`/estimate/reject/${estimateId}`, dto);
+    return;
+  } catch (error) {
+    errorHandler(error);
+    throw error;
+  }
+}
+
+async function priceEstimate(
+  dto: CreateGeneralEstimateDto,
+  estimateId: string
+) {
+  try {
+    await client.put(`/estimate/price/${estimateId}`, dto);
+    return;
+  } catch (error) {
+    errorHandler(error);
+    throw error;
+  }
+}
+
+async function createGeneralEstimate(
+  dto: CreateGeneralEstimateDto,
+  customerId: string
+) {
+  try {
+    await client.post(`/estimate/general/${customerId}`, dto);
+    return;
+  } catch (error) {
+    errorHandler(error);
+    throw error;
+  }
+}
+
+const workerEstimateApi = {
+  rejectEstimate,
+  priceEstimate,
+  createGeneralEstimate,
+};
+
+export default workerEstimateApi;
