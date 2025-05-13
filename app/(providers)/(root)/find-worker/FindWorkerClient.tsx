@@ -34,7 +34,6 @@ function FindWorkerClient() {
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useFindWorkerQuery(queryParams);
 
-
   return (
     <div className="flex justify-center gap-28">
       <LeftMenu />

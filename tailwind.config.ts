@@ -19,4 +19,12 @@ module.exports = {
     },
   },
   plugins: [],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+
+    // Storybook용 경로 추가
+    './stories/**/*.{js,ts,jsx,tsx,mdx}',
+    './**/*.stories.@(js|ts|jsx|tsx|mdx)',
+  ],
 };

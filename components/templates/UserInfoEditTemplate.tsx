@@ -7,19 +7,18 @@ import InputEmail from '@/components/molecules/InputEmail';
 import InputPassword from '@/components/molecules/InputPassword';
 import InputText from '@/components/molecules/InputText';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { UpdateUserInfoDto } from '@/types/dtos/user.dto';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { editCustomerInfoValidation } from '@/constants/formValidation';
+import { editUserInfoValidation } from '@/constants/formValidation';
 import clsx from 'clsx';
-import { CustomerInfoEditFormValues } from './CustomerInfoEditPage';
+import { UserInfoEditFormValues } from '@/types/dtos/user.dto';
 
-interface CustomerInfoEditTemplateProps {
-  defaultValues: CustomerInfoEditFormValues;
-  onSubmit: SubmitHandler<UpdateUserInfoDto>;
+interface UserInfoEditTemplateProps {
+  defaultValues: UserInfoEditFormValues;
+  onSubmit: SubmitHandler<UserInfoEditFormValues>;
 }
 
 /**
- * CustomerInfoEditTemplate
+ * UserInfoEditTemplate
  *
  * 사용자 정보 수정 페이지에 공통으로 사용할 수 있는 템플릿 컴포넌트입니다.
  * 이름, 이메일, 전화번호, 비밀번호 수정 등의 항목을 포함하며,
@@ -28,7 +27,7 @@ interface CustomerInfoEditTemplateProps {
  * @component
  * @example
  * ```tsx
- * <CustomerInfoEditTemplate
+ * <UserInfoEditTemplate
  *   defaultValues={{
  *     name: '홍길동',
  *     email: 'hong@example.com',
@@ -48,14 +47,14 @@ interface CustomerInfoEditTemplateProps {
  * @param {string} defaultValues.password - 현재 비밀번호
  * @param {string} defaultValues.newPassword - 새 비밀번호
  * @param {string} defaultValues.newPasswordConfirm - 새 비밀번호 확인
- * @param {SubmitHandler<UpdateUserInfoDto>} onSubmit - 폼 제출 시 호출될 핸들러
+ * @param {SubmitHandler<UserInfoEditFormValues>} onSubmit - 폼 제출 시 호출될 핸들러
  */
 
-function CustomerInfoEditTemplate({ defaultValues, onSubmit }: CustomerInfoEditTemplateProps) {
-  const { control, handleSubmit, formState } = useForm({
+function UserInfoEditTemplate({ defaultValues, onSubmit }: UserInfoEditTemplateProps) {
+  const { control, handleSubmit, formState } = useForm<UserInfoEditFormValues>({
     defaultValues,
     mode: 'onChange',
-    resolver: zodResolver(editCustomerInfoValidation),
+    resolver: zodResolver(editUserInfoValidation),
   });
 
   const fixedHeightClassName = clsx('lg:h-[140px]');
@@ -100,7 +99,7 @@ function CustomerInfoEditTemplate({ defaultValues, onSubmit }: CustomerInfoEditT
               </div>
               <hr className="block border-[1px] border-Line-100 lg:hidden" />
             </div>
-            {defaultValues.provider !== 'local' && (
+            {defaultValues.provider === 'local' && (
               <div className="flex flex-col gap-8 w-[327px] lg:w-[640px]">
                 <div className={clsx(fixedHeightClassName)}>
                   <InputPassword
@@ -144,4 +143,4 @@ function CustomerInfoEditTemplate({ defaultValues, onSubmit }: CustomerInfoEditT
   );
 }
 
-export default CustomerInfoEditTemplate;
+export default UserInfoEditTemplate;
