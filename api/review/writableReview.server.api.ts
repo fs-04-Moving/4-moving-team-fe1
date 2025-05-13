@@ -20,7 +20,7 @@ const getReviewableEstimatesServer = async (params: GetReviewableEstimatesServer
 
   const cookieHeader = await getCookieHeader();
 
-  const res = await fetch(`${API_URL}/estimates/reviewable?${queryParams}`, {
+  const res = await fetch(`${API_URL}/estimate/reviewable?${queryParams}`, {
     method: 'GET',
     headers: {
       Cookie: cookieHeader,
