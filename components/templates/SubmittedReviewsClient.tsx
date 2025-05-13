@@ -79,7 +79,12 @@ function SubmittedReviewsClient() {
           <div className="flex flex-wrap w-full justify-center lg:justify-start pt-2"> 
             {reviews.length === 0 && !isFetching ? ( 
               <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]"> 
-                <EmptyListMessage message="작성한 리뷰가 없습니다." />
+                <EmptyListMessage
+                  message="작성한 리뷰가 없습니다." 
+                  isUsingButton={true} 
+                  buttonText="리뷰 작성하러 가기" 
+                  buttonLink="/customer/reviews/pending" 
+                  />
               </div>
             ) : (
               reviews.map((review) => (
