@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Pagination from '@/components/molecules/Pagination';
 import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
 
@@ -19,27 +19,48 @@ export default function SendingEstimatesPage() {
 
   useEffect(() => {
     const fetchEstimates = async () => {
-      try {
-        const { list, totalCount } = await getSentEstimates({
-          page: currentPage,
-          pageSize: ITEMS_PER_PAGE,
-        });
-        setEstimates(list);
-        setTotalCount(totalCount);
-<<<<<<< HEAD
-      } catch (error) {
-        console.error("Failed to fetch estimates:", error);
-=======
-      } catch (err) {
-        console.error('견적 데이터를 불러오는 데 실패했어요', err);
->>>>>>> 72268cbc99eaebd483ed71ceb3d71814cd1e0511
-      } finally {
-        setLoading(false);
-      }
-    };
+  try {
+    const { list, totalCount } = await getSentEstimates({
+      page: currentPage,
+      pageSize: ITEMS_PER_PAGE,
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+  const parsedList = list
+  .map((item) => ({
+    ...item,
+    movingDate: safeParseDate(item.movingDate),
+    requestDate: safeParseDate(item.requestDate),
+  }))
+  .sort((a, b) => {
+    const aIsPastOrToday = a.movingDate <= today;
+    const bIsPastOrToday = b.movingDate <= today;
+
+    if (aIsPastOrToday && !bIsPastOrToday) return 1;
+    if (!aIsPastOrToday && bIsPastOrToday) return -1;
+
+    return a.movingDate.getTime() - b.movingDate.getTime();
+  });
+
+
+    setEstimates(parsedList);
+    setTotalCount(totalCount);
+  } catch (err) {
+    console.error('견적 데이터를 불러오는 데 실패했어요', err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
     fetchEstimates();
   }, [currentPage]);
+
+  function safeParseDate(input: any): Date {
+    const date = new Date(input);
+    return isNaN(date.getTime()) ? new Date('2099-12-31') : date;
+  }
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
@@ -57,18 +78,19 @@ export default function SendingEstimatesPage() {
             {estimates.map((card) => (
               <div
                 key={card.id}
-                className="w-[328px] md:w-[600px] lg:w-[688px]"
+                className="w-[328px] md:w-[600px] lg:w-[688px] text-sm lg:text-base"
               >
-                <CustomerCardInEstimate
-                  id={card.id}
+                <CustomerCardInEstimateModal
                   serviceType={card.serviceType}
                   status={card.status}
                   customerName={card.customerName}
-                  movingDate={new Date(card.movingDate)}
-                  departure={card.departure}
-                  destination={card.destination}
+                  movingDate={card.movingDate}
+                  departure={card.departure.split(' ').slice(0, 2).join(' ')}
+                  destination={card.destination
+                    .split(' ')
+                    .slice(0, 2)
+                    .join(' ')}
                   isConfirmed={card.isConfirmed}
-                  requestDate={new Date(card.requestDate)}
                   price={card.price}
                   onViewDetail={() => {
                     router.push(`/worker/estimates/sending/${card.id}`);

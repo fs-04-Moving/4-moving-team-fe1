@@ -1,7 +1,7 @@
-import CustomerInfoEditPage from '@/components/templates/CustomerInfoEditPage';
+import UserInfoEditPage from '@/components/templates/UserInfoEditPage';
 
 function WorkerInfoEditPage() {
-  return <CustomerInfoEditPage />;
+  return <UserInfoEditPage />;
 }
 
 export default WorkerInfoEditPage;
