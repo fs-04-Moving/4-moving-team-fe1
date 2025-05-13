@@ -13,7 +13,7 @@ type Props = {
   departure: string;
   destination: string;
   isConfirmed: boolean;
-  requestDate: Date;
+  requestDate?: Date;
   price?: number;
   onSendEstimate?: () => void;
   onReject?: () => void;
@@ -65,6 +65,7 @@ function CustomerCardInEstimateModal({
   departure,
   destination,
   price,
+  onViewDetail,
 }: // requestDate,
 Props) {
   const currentDate = new Date();
@@ -130,8 +131,8 @@ Props) {
               <div className="max-w-[108px] lg:max-w-[123px]">
                 <ButtonOutlined
                   intent="active"
-                  // onClick={onViewDetail}
-                  onClick={() => {}}
+                  onClick={onViewDetail}
+                  // onClick={() => {}}
                 >
                   <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
                 </ButtonOutlined>
