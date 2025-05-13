@@ -46,7 +46,6 @@ async function PendingReviewsPage() {
   ]);
 
   const dehydratedState = dehydrate(queryClient); 
-  console.log('dehydratedState', dehydratedState);
 
   return (
     <HydrationBoundary state={dehydratedState}> 

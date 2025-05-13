@@ -138,7 +138,7 @@ function PendingReviewsClient() {
             <div className="text-center text-gray-500 mb-4">데이터 업데이트 중...</div>
         )}
 
-        <div className="flex flex-wrap w-full justify-center lg:justify-start">
+        <div className="flex flex-wrap w-full justify-center lg:justify-start pt-2" >
           {reviews.length === 0 ? (
             <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]"> 
               <EmptyListMessage message="작성 가능한 리뷰가 없습니다." />
@@ -147,7 +147,7 @@ function PendingReviewsClient() {
             
             reviews.map((review) => {
               return (
-                <div key={review.id} className=" p-2 w-full lg:w-1/2 flex justify-center"> 
+                <div key={review.id} className="pt-8 lg:pt-10 lg:pr-3 w-full lg:w-1/2 flex justify-center"> 
                   <WorkerCardInWritableReview
                     serviceType={review.serviceType as ServiceType}
                     profileImage={review.profileImage}
@@ -162,7 +162,7 @@ function PendingReviewsClient() {
             })
           )}
         </div>
-
+        <div className="mt-6 mb-[65px] lg:mt-6 lg:mb-[65px]">
         {totalCount > 0 && Math.ceil(totalCount / pageSize) > 1 && (
           <Pagination
             currentPage={page}
@@ -171,6 +171,7 @@ function PendingReviewsClient() {
             className="mt-8 mb-8" 
           />
         )}
+        </div>
 
         {isModalOpen && selectedReview && workerData && (
             <GeneralModal
