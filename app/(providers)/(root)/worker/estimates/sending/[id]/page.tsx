@@ -60,7 +60,7 @@ export default function EstimatesDetailPage() {
   return (
     <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col">
       <div
-        className="w-full
+        className="w-full mt-4
         font-[600]
         text-[18px] lg:text-[24px]
         py-4 md:py-4 lg:py-8
