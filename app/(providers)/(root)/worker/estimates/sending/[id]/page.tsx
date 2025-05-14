@@ -8,6 +8,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ShareSocial from '@/components/molecules/ShareSocial';
 import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
@@ -44,7 +45,15 @@ export default function EstimatesDetailPage() {
   }, [estimateId]);
 
   if (loading) return <div>로딩 중...</div>;
-  if (!estimate) return <div>견적을 불러오지 못했습니다.</div>;
+  if (!estimate)
+    return (
+      <EmptyListMessage
+        message="대기중인 견적이 없습니다."
+        isUsingButton={true}
+        buttonText="이전 페이지로"
+        buttonLink="/customer" // 원하는 경로로 수정 가능
+      />
+    );
 
   // return (
   //   <div>
