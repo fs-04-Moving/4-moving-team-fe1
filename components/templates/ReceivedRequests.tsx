@@ -12,6 +12,7 @@ import ResponsiveModal from './ResponsiveModal';
 import EstimateSend from './EstimateSend';
 import EstimateRejectSend from './EstimateRejectSend';
 import { useInView } from 'react-intersection-observer';
+import CheckModalRoot from './CheckModalRoot';
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -53,6 +54,7 @@ function ReceivedRequests() {
   // 모달 관련 //
   const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const openEstimateModal = (request: ReceivedEstimateRequest) => {
     setRequestEstimate(request);
@@ -92,7 +94,10 @@ function ReceivedRequests() {
       <div className="flex justify-center gap-28">
         <LeftMenuInWorkerPage {...pageData} />
         <section className="w-[327px] md:w-[600px] lg:w-[955px] flex flex-col gap-[32px]">
-          <TopMemuInWorkerPage totalCount={totalCount} />
+          <TopMemuInWorkerPage
+            totalCount={totalCount}
+            openModal={() => setIsFilterModalOpen(true)}
+          />
           <div className="flex flex-col gap-12">
             {data?.pages.flatMap((page) => {
               return page.list.map((request: ReceivedEstimateRequest) => (
@@ -117,20 +122,21 @@ function ReceivedRequests() {
           <div ref={ref}></div>
         </section>
       </div>
-      <ResponsiveModal
-        width="lg:w-[608px] md:w-[375px] "
-        isOpen={isEstimateModalOpen}
-        onClose={closeEstimateModal}
-      >
+      <ResponsiveModal width="lg:w-[608px] md:w-[375px] " isOpen={isEstimateModalOpen}>
         <EstimateSend onClose={closeEstimateModal} request={requestEstimate} />
       </ResponsiveModal>
 
-      <ResponsiveModal
-        width="md:w-[375px] lg:w-[608px]"
-        isOpen={isRejectModalOpen}
-        onClose={closeRejectModal}
-      >
+      <ResponsiveModal width="md:w-[375px] lg:w-[608px]" isOpen={isRejectModalOpen}>
         <EstimateRejectSend onClose={closeRejectModal} request={requestEstimate} />
+      </ResponsiveModal>
+
+      <ResponsiveModal width="w-[375px]" isOpen={isFilterModalOpen}>
+        <CheckModalRoot
+          closeModal={() => {
+            setIsFilterModalOpen(false);
+          }}
+          {...pageData}
+        />
       </ResponsiveModal>
     </main>
   );
