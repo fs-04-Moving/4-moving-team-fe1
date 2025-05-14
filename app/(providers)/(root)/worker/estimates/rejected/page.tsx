@@ -53,25 +53,20 @@ export default function RejectedEstimatesPage() {
 
   return (
     <ProtectedPageWrapper>
-      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10">
+      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10 bg-BackGround-100">
         {estimates.length === 0 ? (
-          <div className="text-gray-500 text-center mt-8">
-            반려된 견적이 없습니다.
-          </div>
+          <div className="text-gray-500 text-center mt-8">반려된 견적이 없습니다.</div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[48px] w-full max-w-[1400px] justify-items-center">
             {estimates.map((card) => (
-              <div
-                key={card.id}
-                className="w-[328px] md:w-[600px] lg:w-[688px]"
-              >
+              <div key={card.id} className="w-[328px] md:w-[600px] lg:w-[688px]">
                 <CustomerCardInEstimateModal
                   serviceType={card.serviceType}
                   status={card.status}
                   customerName={card.customerName}
                   movingDate={card.movingDate}
-                  departure={card.departure}
-                  destination={card.destination}
+                  departure={card.departure.split(' ').slice(0, 2).join(' ')}
+                  destination={card.destination.split(' ').slice(0, 2).join(' ')}
                   isConfirmed={card.isConfirmed}
                   price={card.price}
                   onViewDetail={() => {
