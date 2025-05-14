@@ -1,5 +1,4 @@
 import icChevronDownBlack from '@/assets/images/ic-chevron-down-black.svg';
-import { sortOption } from '@/constants/dropdownSortConstants';
 import clsx from 'clsx';
 import Image from 'next/image';
 

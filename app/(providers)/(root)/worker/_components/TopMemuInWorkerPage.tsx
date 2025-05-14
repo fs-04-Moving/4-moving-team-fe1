@@ -18,6 +18,13 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
     },
   });
 
+  const defaultSortOption =
+    searchParams.get('orderBy') === 'earliestMove'
+      ? '이사 빠른순'
+      : searchParams.get('orderBy') === 'earliestRequest'
+        ? '요청일 빠른순'
+        : DEFAULT_SORT_OPTION_IN_WORKER_PAGE;
+
   const handleOrderBySelect = (order?: string) => {
     const newParams = new URLSearchParams(searchParams);
     switch (order) {
@@ -55,7 +62,7 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
           <DropdownSort
             onChange={handleOrderBySelect}
             options={['이사 빠른순', '요청일 빠른순']}
-            defaultValue={DEFAULT_SORT_OPTION_IN_WORKER_PAGE}
+            defaultValue={defaultSortOption}
           />
         </span>
       </div>

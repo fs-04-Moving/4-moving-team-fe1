@@ -45,7 +45,7 @@ function EstimateSend(props: Props) {
   });
 
   const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/,/g, '');
     if (/^\d*$/.test(value)) {
       setPrice(Number(value));
     }
@@ -59,6 +59,10 @@ function EstimateSend(props: Props) {
     const formatted = format(date, 'yyyy. MM. dd', { locale: ko });
     const day = format(date, 'eee', { locale: ko }); // '월', '화' 등
     return `${formatted}(${day})`;
+  };
+
+  const formatNumberWithComma = (num: number) => {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   };
 
   if (!request) return null;
@@ -123,7 +127,12 @@ function EstimateSend(props: Props) {
         {/* 견적가를 ~*/}
         <div className="flex flex-col gap-4">
           <h2 className="text-[16px] lg:text-[20px] font-semibold">견적가를 입력해 주세요</h2>
-          <Input bgColor={true} placeholder="견적가 입력" value={price} onChange={onChangePrice} />
+          <Input
+            bgColor={true}
+            placeholder="견적가 입력"
+            value={formatNumberWithComma(price)}
+            onChange={onChangePrice}
+          />
         </div>
         {/* 코멘트를 입력 ~*/}
         <div>
@@ -138,7 +147,7 @@ function EstimateSend(props: Props) {
         </div>
       </div>
 
-      <ButtonSolid disabled={price === 0 || comment === ''}>견적보내기</ButtonSolid>
+      <ButtonSolid disabled={price === 0 || comment.length < 10}>견적보내기</ButtonSolid>
     </form>
   );
 }

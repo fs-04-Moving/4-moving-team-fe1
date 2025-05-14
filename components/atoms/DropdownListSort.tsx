@@ -1,4 +1,3 @@
-import { sortOption as T } from '@/constants/dropdownSortConstants';
 import clsx from 'clsx';
 
 interface Props<T extends string> {

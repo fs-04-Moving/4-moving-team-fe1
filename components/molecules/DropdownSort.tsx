@@ -1,6 +1,5 @@
 'use client';
 
-import { DEFAULT_SORT_OPTION, sortOption as T } from '@/constants/dropdownSortConstants';
 import { useEffect, useRef, useState } from 'react';
 import DropdownButtonSort from '../atoms/DropdownButtonSort';
 import DropdownListSort from '../atoms/DropdownListSort';

@@ -112,7 +112,7 @@ function EstimateRejectSend(props: Props) {
         </div>
       </div>
 
-      <ButtonSolid disabled={comment === ''}>반려하기</ButtonSolid>
+      <ButtonSolid disabled={comment.length < 10}>반려하기</ButtonSolid>
     </form>
   );
 }
