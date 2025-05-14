@@ -95,7 +95,7 @@ export default function PendingEstimatesPage() {
             favoritesCount={estimate.favoritesCount}
             services={[estimate.serviceType]}
             isDirectEstimate={false}
-            price={estimate.price || -1}
+            price={estimate.price || 0}
             status={estimate.status}
             movingDate={estimate.movingDate}
             departure={estimate.departure}

@@ -27,9 +27,8 @@ export default function Page() {
   const [liked, setLiked] = useState(false);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const ShareButtons = (
-    <div className="flex flex-col gap-y-4">
-      <p className="text-[#1F1F1F] text-[16px] lg:text-[24px] font-[600]">견적 공유하기</p>
-      <ShareSocial text="" />
+    <div className="flex flex-col">
+      <ShareSocial text="견적 공유하기" />
     </div>
   );
 
@@ -84,7 +83,7 @@ export default function Page() {
         setLikeCount(favoriteData.count);
         setIsFirstLoad(false);
       } else {
-        setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : prev - 1));
+        setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : Math.max(0, prev - 1)));
       }
     }
   }, [favoriteData, isFirstLoad]);
@@ -136,8 +135,7 @@ export default function Page() {
         {/* Mobile/Tablet 공유 버튼 */}
         <div className="block lg:hidden">{ShareButtons}</div>
 
-        <div className="block lg:hidden border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
-
+        <div className="hidden md:block border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
         <EstimateDetailInfo
           requestDate={estimate.requestDate}
           serviceType={estimate.serviceType}
