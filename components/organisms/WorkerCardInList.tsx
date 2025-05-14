@@ -69,9 +69,10 @@ function WorkerCardInList({
 }: Props) {
   return (
     <div
+      style={{ boxShadow: '2px 2px 10px 0px #DCDCDC24' }}
       className="flex flex-col justify-between shadow-sm
       gap-y-[14px] sm:gap-y-4
-    bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-full px-3.5 py-4"
+    bg-GrayScale-50 border-Line-100 border-[1px] rounded-2xl w-full px-3.5 py-4"
     >
       <div className="flex gap-2.5">
         {services.map((service, index) => (
