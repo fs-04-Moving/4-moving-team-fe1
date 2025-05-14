@@ -26,13 +26,8 @@ export default function SendingEstimatesPage() {
         });
         setEstimates(list);
         setTotalCount(totalCount);
-<<<<<<< HEAD
-      } catch (error) {
-        console.error("Failed to fetch estimates:", error);
-=======
       } catch (err) {
         console.error('견적 데이터를 불러오는 데 실패했어요', err);
->>>>>>> 72268cbc99eaebd483ed71ceb3d71814cd1e0511
       } finally {
         setLoading(false);
       }
@@ -49,16 +44,11 @@ export default function SendingEstimatesPage() {
     <ProtectedPageWrapper>
       <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10">
         {estimates.length === 0 ? (
-          <div className="text-gray-500 text-center mt-8">
-            보낸 견적이 없습니다.
-          </div>
+          <div className="text-gray-500 text-center mt-8">보낸 견적이 없습니다.</div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[48px] w-full max-w-[1400px] justify-items-center">
             {estimates.map((card) => (
-              <div
-                key={card.id}
-                className="w-[328px] md:w-[600px] lg:w-[688px]"
-              >
+              <div key={card.id} className="w-[328px] md:w-[600px] lg:w-[688px]">
                 <CustomerCardInEstimate
                   id={card.id}
                   serviceType={card.serviceType}

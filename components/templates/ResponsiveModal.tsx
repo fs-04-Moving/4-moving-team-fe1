@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 interface ResponsiveModalProps {
   isOpen: boolean;
-  onClose: () => void;
   children: React.ReactNode;
   width?: string; // width prop 추가
   height?: string; // height prop 추가
@@ -15,7 +14,6 @@ interface ResponsiveModalProps {
 
 const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
   isOpen,
-  onClose,
   children,
   width = 'w-full', // 기본값은 w-full
   height = 'h-auto', // 기본값은 h-auto
@@ -25,10 +23,7 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
       {isOpen && (
         <>
           {/* sm일때, 아래에서 위 적용 */}
-          <div
-            onClick={onClose}
-            className="fixed inset-0 z-40 bg-gray-300/30 backdrop-blur-[1px] transition-all duration-300"
-          />
+          <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-[1px] transition-all duration-300" />
 
           {/* mobile에서 w-[327px] 이하일 때 아래에서 위 적용, 그 외는 일반 모달 */}
           <motion.div
@@ -40,13 +35,13 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
             className={`
               fixed z-50 bg-white p-6
               ${width} ${height}
-              bottom-0 left-0
-              rounded-2xl
-              sm:w-[400px] sm:top-1/2 sm:left-1/2 sm:bottom-auto
-              sm:translate-x-[-50%] sm:translate-y-[-50%]
-              sm:rounded-2xl sm:shadow-xl
+              bottom-0
+              rounded-4xl
+              md:top-1/2 md:left-1/2 md:bottom-auto
+              md:translate-x-[-50%] md:translate-y-[-50%]
+              md:rounded-2xl md:shadow-xl
               rounded-t-3xl
-              xs:w-[327px] xs:bottom-0 xs:left-0 xs:translate-x-0 xs:translate-y-[-100%] xs:fixed
+              left-1/2 translate-x-[-50%]
             `}
           >
             {children}

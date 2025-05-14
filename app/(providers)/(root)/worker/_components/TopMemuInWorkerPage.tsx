@@ -1,5 +1,6 @@
 import DropdownSort from '@/components/molecules/DropdownSort';
 import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
+import { DEFAULT_SORT_OPTION_IN_WORKER_PAGE } from '@/constants/dropdownSortConstants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,17 +21,11 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
   const handleOrderBySelect = (order?: string) => {
     const newParams = new URLSearchParams(searchParams);
     switch (order) {
-      case '리뷰 많은순':
-        newParams.set('orderBy', 'mostReview');
+      case '이사 빠른순':
+        newParams.set('orderBy', 'earliestMove');
         break;
-      case '평점 높은순':
-        newParams.set('orderBy', 'highestRated');
-        break;
-      case '경력 높은순':
-        newParams.set('orderBy', 'mostExperience');
-        break;
-      case '확정 많은순':
-        newParams.set('orderBy', 'mostConfirmed');
+      case '요청일 빠른순':
+        newParams.set('orderBy', 'earliestRequest');
         break;
       default:
         return;
@@ -59,7 +54,8 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
         <span className="z-10">
           <DropdownSort
             onChange={handleOrderBySelect}
-            options={['리뷰 많은순', '평점 높은순', '경력 높은순', '확정 많은순']}
+            options={['이사 빠른순', '요청일 빠른순']}
+            defaultValue={DEFAULT_SORT_OPTION_IN_WORKER_PAGE}
           />
         </span>
       </div>

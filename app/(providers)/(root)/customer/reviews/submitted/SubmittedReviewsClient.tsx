@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import WorkerCardInCompletedReview from '@/components/organisms/WorkerCardInCompletedReview';
 import Pagination from '@/components/molecules/Pagination';
 import EmptyReview from '@/components/molecules/EmptyReview';
@@ -28,10 +28,9 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
     queryKey: ['myWrittenReviews', page],
     queryFn: () => reviewsApi.getMyWrittenReviews({ page }),
     initialData: { list: initialReviews || [], totalCount: initialReviews?.length || 0 },
-    
   });
 
-  const reviews:Review[] = reviewsData?.list || initialReviews || [];
+  const reviews: Review[] = reviewsData?.list || initialReviews || [];
   const totalCount = reviewsData?.totalCount || initialReviews?.length || 0;
   const totalPages = Math.ceil(totalCount / 6);
 
@@ -72,11 +71,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
             reviews.map((review) => (
               <div key={review.id} className="p-2 w-full lg:w-1/2">
                 <WorkerCardInCompletedReview
-                  serviceType={
-                    review.serviceType as
-                      | "smallMove"
-                      | "homeMove"
-                      | "officeMove"}
+                  serviceType={review.serviceType as 'smallMove' | 'homeMove' | 'officeMove'}
                   profileImage={review.profileImage}
                   nickname={review.nickname}
                   movingDate={new Date(review.movingDate)}

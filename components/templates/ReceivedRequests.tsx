@@ -117,19 +117,11 @@ function ReceivedRequests() {
           <div ref={ref}></div>
         </section>
       </div>
-      <ResponsiveModal
-        width="lg:w-[608px] md:w-[375px] "
-        isOpen={isEstimateModalOpen}
-        onClose={closeEstimateModal}
-      >
+      <ResponsiveModal width="lg:w-[608px] md:w-[375px] " isOpen={isEstimateModalOpen}>
         <EstimateSend onClose={closeEstimateModal} request={requestEstimate} />
       </ResponsiveModal>
 
-      <ResponsiveModal
-        width="md:w-[375px] lg:w-[608px]"
-        isOpen={isRejectModalOpen}
-        onClose={closeRejectModal}
-      >
+      <ResponsiveModal width="md:w-[375px] lg:w-[608px]" isOpen={isRejectModalOpen}>
         <EstimateRejectSend onClose={closeRejectModal} request={requestEstimate} />
       </ResponsiveModal>
     </main>

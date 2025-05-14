@@ -1,32 +1,32 @@
 'use client';
 
-import { DEFAULT_SORT_OPTION, sortOption } from '@/constants/dropdownSortConstants';
+import { DEFAULT_SORT_OPTION, sortOption as T } from '@/constants/dropdownSortConstants';
 import { useEffect, useRef, useState } from 'react';
 import DropdownButtonSort from '../atoms/DropdownButtonSort';
 import DropdownListSort from '../atoms/DropdownListSort';
 
-interface Props {
-  options: sortOption[];
-  defaultValue?: sortOption;
-  onChange?: (value: sortOption) => void;
+interface Props<T extends string> {
+  options: T[];
+  defaultValue: T;
+  onChange?: (value: T) => void;
   className?: string;
 }
 
-function DropdownSort({
+function DropdownSort<T extends string>({
   options,
-  defaultValue = DEFAULT_SORT_OPTION,
+  defaultValue,
   onChange,
   className = '',
-}: Props) {
+}: Props<T>) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<sortOption>(defaultValue);
+  const [selectedValue, setSelectedValue] = useState<T>(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleSelect = (value: sortOption) => {
+  const handleSelect = (value: T) => {
     setSelectedValue(value);
     setIsOpen(false);
     onChange?.(value);
