@@ -65,7 +65,7 @@ export default function SendingEstimatesPage() {
 
   return (
     <ProtectedPageWrapper>
-      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10">
+      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10 bg-BackGround-100">
         {estimates.length === 0 ? (
           <div className="text-gray-500 text-center mt-8">보낸 견적이 없습니다.</div>
         ) : (
