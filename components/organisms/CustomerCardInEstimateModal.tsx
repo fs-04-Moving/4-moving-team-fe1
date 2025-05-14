@@ -18,10 +18,11 @@ type Props = {
   onSendEstimate?: () => void;
   onReject?: () => void;
   onViewDetail?: () => void;
+  showOverlay?: boolean;
 };
 
 /**
- * CustomerCardInEstimate 컴포넌트
+ * CustomerCardInEstimateModal 컴포넌트
  *
  * 고객이 요청한 이사 견적 정보를 표시하는 카드 UI입니다.
  * 이사 서비스 유형, 고객명, 출발지/도착지, 이사일, 견적 금액 등 정보를 시각적으로 구성하며,
@@ -42,7 +43,7 @@ type Props = {
  * @param {() => void} [onViewDetail] - '견적 상세보기' 클릭 시 실행될 콜백
  *
  * @example
- * <CustomerCardInEstimate
+ * <CustomerCardInEstimateModal
  *   serviceType="smallMove"
  *   status="assigned"
  *   customerName="김인서"
@@ -66,6 +67,7 @@ function CustomerCardInEstimateModal({
   destination,
   price,
   onViewDetail,
+  showOverlay,
 }: // requestDate,
 Props) {
   const currentDate = new Date();
@@ -127,7 +129,7 @@ Props) {
         )}
       </div>
       {/* 조건 만족시 오버레이 */}
-      {(isRejected || isPastMovingDate) && (
+      {showOverlay !== false && (isRejected || isPastMovingDate) && (
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
           {!hasPrice && isRejected && <p>반려된 요청이에요</p>}
           {hasPrice && isPastMovingDate && (
