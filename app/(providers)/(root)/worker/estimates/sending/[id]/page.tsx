@@ -12,7 +12,6 @@ import ShareSocial from '@/components/molecules/ShareSocial';
 export default function EstimatesDetailPage() {
   const params = useParams();
   const estimateId = params.id as string;
-  const router = useRouter();
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);
