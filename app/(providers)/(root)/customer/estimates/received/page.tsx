@@ -29,7 +29,7 @@ function ReceivedPage() {
 
   return (
     <div className="bg-BackGround-200 min-h-full ">
-      <div className="p-8 lg:p-10 bg-BackGround-200"></div>
+      <div className="bg-BackGround-200"></div>
       <div
         className="
     mx-auto

@@ -21,7 +21,7 @@ type Props = {
 };
 
 /**
- * CustomerCardInEstimate 컴포넌트
+ * CustomerCardInEstimateModal 컴포넌트
  *
  * 고객이 요청한 이사 견적 정보를 표시하는 카드 UI입니다.
  * 이사 서비스 유형, 고객명, 출발지/도착지, 이사일, 견적 금액 등 정보를 시각적으로 구성하며,
@@ -42,7 +42,7 @@ type Props = {
  * @param {() => void} [onViewDetail] - '견적 상세보기' 클릭 시 실행될 콜백
  *
  * @example
- * <CustomerCardInEstimate
+ * <CustomerCardInEstimateModal
  *   serviceType="smallMove"
  *   status="assigned"
  *   customerName="김인서"
@@ -92,11 +92,7 @@ Props) {
         <div className="flex justify-between items-center">
           <span className="flex gap-2.5">
             <ChipMovingType type={serviceType} />
-            {status === 'assigned' ? (
-              <ChipEstimateStatus type="assigned" isShort={true} />
-            ) : (
-              ''
-            )}
+            {status === 'assigned' ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
           </span>
         </div>
         {/* 고객 이름 및 견적 관련 정보 */}
@@ -120,9 +116,7 @@ Props) {
         </div>
         {price && (
           <div className="flex justify-end items-end gap-2 lg:gap-4">
-            <span className="text-[14px] lg:text-lg leading-none">
-              견적 금액
-            </span>
+            <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
             <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
           </div>
         )}
@@ -140,9 +134,7 @@ Props) {
                   onClick={onViewDetail}
                   // onClick={() => {}}
                 >
-                  <span className="text-[14px] lg:text-[16px] px-3">
-                    견적 상세보기
-                  </span>
+                  <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
                 </ButtonOutlined>
               </div>
             </div>
