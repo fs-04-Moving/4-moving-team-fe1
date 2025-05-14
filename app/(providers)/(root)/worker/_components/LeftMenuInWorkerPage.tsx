@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import AllChoiceCheckBoxInWorkerPage from './AllChoiceCheckBoxInWorkerPage';
 import TypeCheckBox from './IndividualTypeCheckBoxInWorkerPage';
+import { useFilter } from '@/contexts/FilterContext';
 
 function LeftMenuInWorkerPage({
   smallMove,
@@ -29,10 +30,16 @@ function LeftMenuInWorkerPage({
     { id: 2, name: '지정 견적 요청', value: 'assigned', count: assignedCount },
   ];
 
-  const [movingSelected, setMovingSelected] = useState<Record<number, boolean>>({});
-  const [filterSelected, setFilterSelected] = useState<Record<number, boolean>>({});
-  const [selectedServiceTypes, setSelectedServiceTypes] = useState<string[]>([]);
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const {
+    movingSelected,
+    setMovingSelected,
+    filterSelected,
+    setFilterSelected,
+    selectedServiceTypes,
+    setSelectedServiceTypes,
+    selectedFilters,
+    setSelectedFilters,
+  } = useFilter();
 
   const searchParams = useSearchParams();
   const router = useRouter();

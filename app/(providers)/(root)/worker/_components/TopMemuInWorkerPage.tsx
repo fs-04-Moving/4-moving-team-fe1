@@ -10,7 +10,13 @@ interface FormValues {
   keyword: string;
 }
 
-function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
+function TopMemuInWorkerPage({
+  totalCount,
+  openModal,
+}: {
+  totalCount: number;
+  openModal: () => void;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { control, handleSubmit } = useForm({
@@ -65,7 +71,11 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
             options={['이사 빠른순', '요청일 빠른순']}
             defaultValue={defaultSortOption}
           />
-          <ButtonReacitveFilter onClick={() => {}} />
+          <ButtonReacitveFilter
+            onClick={() => {
+              openModal();
+            }}
+          />
         </span>
       </div>
     </div>

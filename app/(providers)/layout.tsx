@@ -1,4 +1,5 @@
 import { AuthProvider } from '@/contexts/AuthContext';
+import { FilterProvider } from '@/contexts/FilterContext';
 import { ModalProvider } from '@/contexts/ModalContext';
 import TanstackQueryProvider from '@/libs/tanstack-query';
 import { createServerQueryClient } from '@/libs/tanstack-query/reactQueryConfig';
@@ -23,7 +24,9 @@ async function ProvidersLayout({ children }: { children: ReactNode }) {
     <TanstackQueryProvider>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <AuthProvider>
-          <ModalProvider>{children}</ModalProvider>
+          <FilterProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </FilterProvider>
         </AuthProvider>
       </HydrationBoundary>
     </TanstackQueryProvider>
