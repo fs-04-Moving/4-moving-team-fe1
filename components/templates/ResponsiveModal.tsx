@@ -27,7 +27,7 @@ const ResponsiveModal: React.FC<ResponsiveModalProps> = ({
           {/* sm일때, 아래에서 위 적용 */}
           <div
             onClick={onClose}
-            className="fixed inset-0 z-40 bg-gray-300/30 backdrop-blur-[1px] transition-all duration-300"
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-all duration-300"
           />
 
           {/* mobile에서 w-[327px] 이하일 때 아래에서 위 적용, 그 외는 일반 모달 */}
