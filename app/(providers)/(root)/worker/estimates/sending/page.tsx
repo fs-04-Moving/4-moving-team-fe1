@@ -19,45 +19,42 @@ export default function SendingEstimatesPage() {
 
   useEffect(() => {
     const fetchEstimates = async () => {
-  try {
-    const { list, totalCount } = await getSentEstimates({
-      page: currentPage,
-      pageSize: ITEMS_PER_PAGE,
-    });
+      try {
+        const { list, totalCount } = await getSentEstimates({
+          page: currentPage,
+          pageSize: ITEMS_PER_PAGE,
+        });
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-  const parsedList = list
-  .map((item) => ({
-    ...item,
-    movingDate: safeParseDate(item.movingDate),
-    requestDate: safeParseDate(item.requestDate),
-  }))
-  .sort((a, b) => {
-    const aIsPastOrToday = a.movingDate <= today;
-    const bIsPastOrToday = b.movingDate <= today;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const parsedList = list
+          .map((item) => ({
+            ...item,
+            movingDate: safeParseDate(item.movingDate),
+            requestDate: safeParseDate(item.requestDate),
+          }))
+          .sort((a, b) => {
+            const aIsPastOrToday = a.movingDate <= today;
+            const bIsPastOrToday = b.movingDate <= today;
 
-    if (aIsPastOrToday && !bIsPastOrToday) return 1;
-    if (!aIsPastOrToday && bIsPastOrToday) return -1;
+            if (aIsPastOrToday && !bIsPastOrToday) return 1;
+            if (!aIsPastOrToday && bIsPastOrToday) return -1;
 
-    return a.movingDate.getTime() - b.movingDate.getTime();
-  });
+            return a.movingDate.getTime() - b.movingDate.getTime();
+          });
 
-
-    setEstimates(parsedList);
-    setTotalCount(totalCount);
-  } catch (err) {
-    console.error('견적 데이터를 불러오는 데 실패했어요', err);
-  } finally {
-    setLoading(false);
-  }
-};
-
+        setEstimates(parsedList);
+        setTotalCount(totalCount);
+      } catch (err) {
+        console.error('견적 데이터를 불러오는 데 실패했어요', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
     fetchEstimates();
   }, [currentPage]);
-
-  function safeParseDate(input: any): Date {
+  function safeParseDate(input: string | Date): Date {
     const date = new Date(input);
     return isNaN(date.getTime()) ? new Date('2099-12-31') : date;
   }
@@ -68,11 +65,9 @@ export default function SendingEstimatesPage() {
 
   return (
     <ProtectedPageWrapper>
-      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10">
+      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10 bg-BackGround-100">
         {estimates.length === 0 ? (
-          <div className="text-gray-500 text-center mt-8">
-            보낸 견적이 없습니다.
-          </div>
+          <div className="text-gray-500 text-center mt-8">보낸 견적이 없습니다.</div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[48px] w-full max-w-[1400px] justify-items-center">
             {estimates.map((card) => (
@@ -86,10 +81,7 @@ export default function SendingEstimatesPage() {
                   customerName={card.customerName}
                   movingDate={card.movingDate}
                   departure={card.departure.split(' ').slice(0, 2).join(' ')}
-                  destination={card.destination
-                    .split(' ')
-                    .slice(0, 2)
-                    .join(' ')}
+                  destination={card.destination.split(' ').slice(0, 2).join(' ')}
                   isConfirmed={card.isConfirmed}
                   price={card.price}
                   onViewDetail={() => {
