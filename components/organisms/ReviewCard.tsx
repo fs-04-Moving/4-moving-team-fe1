@@ -19,7 +19,7 @@ function ReviewCard({ content, rating, createdAt, customerEmail }: Props) {
           <span className="text-GrayScale-300 font-normal">|</span>
           <span className="text-GrayScale-300 font-normal">{formatted}</span>
         </div>
-        <ButtonStarRating initialRating={rating} />
+        <ButtonStarRating initialRating={rating} disabled={true}/>
       </div>
       <div>{content}</div>
     </div>

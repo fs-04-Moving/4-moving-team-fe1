@@ -10,6 +10,7 @@ export interface Review {
   content: string;
   createdAt: string;
   rating: number;
+  star: number;
   isReviewWritten: boolean;
   onClickWriteReview?: () => void;
   driver?: DriverWithMeta;

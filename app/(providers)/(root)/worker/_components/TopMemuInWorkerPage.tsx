@@ -1,3 +1,4 @@
+import ButtonReacitveFilter from '@/components/atoms/ButtonReacitveFilter';
 import DropdownSort from '@/components/molecules/DropdownSort';
 import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
 import { DEFAULT_SORT_OPTION_IN_WORKER_PAGE } from '@/constants/dropdownSortConstants';
@@ -58,12 +59,13 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
       </form>
       <div className="w-full flex justify-between items-center ">
         <span className="text-[16px] font-medium">{`전체 ${totalCount || 0}건`}</span>
-        <span className="z-10">
+        <span className="z-10 flex gap-1 items-center">
           <DropdownSort
             onChange={handleOrderBySelect}
             options={['이사 빠른순', '요청일 빠른순']}
             defaultValue={defaultSortOption}
           />
+          <ButtonReacitveFilter onClick={() => {}} />
         </span>
       </div>
     </div>

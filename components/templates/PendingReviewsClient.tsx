@@ -3,7 +3,6 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import WorkerCardInWritableReview from "@/components/organisms/WorkerCardInWritableReview";
 import Pagination from "@/components/molecules/Pagination"; 
-import EmptyWritableReview from "@/components/molecules/EmptyWritableReview"; 
 import { Review } from "@/types/dtos/review.dto"; 
 import ReviewRegister from "@/components/organisms/ReviewRegister"; 
 import { ServiceType } from "@/types/move.type"; 
@@ -13,7 +12,7 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import LoadingSpinner from "@/components/atoms/LoadingSpinner"; 
 import GeneralModal from "@/components/templates/GeneralModal"; 
 import useDeviceSize from "@/hooks/useDeviceSize"; 
-
+import EmptyListMessage from "../molecules/EmptyListMessage";
 
 type workerData = {
   driverId: string;
@@ -23,30 +22,16 @@ type workerData = {
   price: number; 
 };
 
-
 interface GetReviewableEstimatesResponse {
   list: Review[]; 
   totalCount: number; 
- 
-}
-
-// interface Review {
-//     id: string; 
-//     workerId: string; 
-//     serviceType: ServiceType; 
-//     movingDate: string; 
-//     price: number; 
-//     profileImage?: string; 
-//     nickname: string; 
-//     isReviewWritten: boolean; 
-// }    
+} 
 
 function PendingReviewsClient() {
   const queryClient: QueryClient = useQueryClient();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname(); 
-
   
   const page = parseInt(searchParams.get("page") || "1", 10);
 
@@ -146,22 +131,23 @@ function PendingReviewsClient() {
   }
 
   return (
-    <div className="bg-background-100 flex items-center justify-center"> 
+    <div className="bg-BackGround-200 min-h-full">
+    <div className="bg-background-200 flex items-center justify-center"> 
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px] "> 
         {isFetching && !isLoading && (
             <div className="text-center text-gray-500 mb-4">데이터 업데이트 중...</div>
         )}
 
-        <div className="flex flex-wrap w-full justify-center lg:justify-start">
+        <div className="flex flex-wrap w-full justify-center lg:justify-start pt-2" >
           {reviews.length === 0 ? (
             <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]"> 
-              <EmptyWritableReview text={"작성 가능한 리뷰가 없습니다."} />
+              <EmptyListMessage message="작성 가능한 리뷰가 없습니다." />
             </div>
           ) : (
             
             reviews.map((review) => {
               return (
-                <div key={review.id} className=" p-2 w-full lg:w-1/2 flex justify-center"> 
+                <div key={review.id} className="pt-8 lg:pt-10 lg:pr-3 w-full lg:w-1/2 flex justify-center"> 
                   <WorkerCardInWritableReview
                     serviceType={review.serviceType as ServiceType}
                     profileImage={review.profileImage}
@@ -176,7 +162,7 @@ function PendingReviewsClient() {
             })
           )}
         </div>
-
+        <div className="mt-6 mb-[65px] lg:mt-6 lg:mb-[65px]">
         {totalCount > 0 && Math.ceil(totalCount / pageSize) > 1 && (
           <Pagination
             currentPage={page}
@@ -185,6 +171,7 @@ function PendingReviewsClient() {
             className="mt-8 mb-8" 
           />
         )}
+        </div>
 
         {isModalOpen && selectedReview && workerData && (
             <GeneralModal
@@ -203,6 +190,7 @@ function PendingReviewsClient() {
             </GeneralModal>
         )}
       </div>
+    </div>
     </div>
   );
 }

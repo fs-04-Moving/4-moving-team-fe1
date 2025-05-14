@@ -38,7 +38,7 @@ function ShareSocial({
 
   return (
     <div className={className}>
-      <div className="flex flex-col gap-4 lg:gap-[22px] mt-12 lg:mt-18 text-[14px] lg:text-xl text-Black-200">
+      <div className="flex flex-col gap-4 font-semibold lg:gap-[22px] mt-12 lg:mt-18 text-[14px] lg:text-xl text-Black-400">
         <p>{text}</p>
         <div className="flex gap-4">
           <div
@@ -57,7 +57,7 @@ function ShareSocial({
 
           <div
             className={clsx(iconContainerStyle, 'bg-[#4285F4]')}
-            onClick={() => shareToFacebook(url)}
+            onClick={() => shareToFacebook(url, shareDescription)}
           >
             <Image src={icFacebook} alt="페이스북공유" className={iconStyle} />
           </div>

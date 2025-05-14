@@ -1,5 +1,3 @@
-//ButtonStarRating.tsx
-
 'use client';
 
 import React, { memo, useState, useEffect } from 'react';
@@ -43,7 +41,9 @@ const MemoizedEmptyStar = memo(EmptyStar);
 
 function ButtonStarRating({ disabled = false, initialRating, starSize = 20, setRating }: Props) {
   const ArrayIndexes = [1, 2, 3, 4, 5];
-  const [ratingIndex, setRatingIndex] = useState(5);
+  // **⭐ 상태 초기값을 initialRating으로 설정 ⭐**
+  const [ratingIndex, setRatingIndex] = useState(Math.round(initialRating));
+  // const [ratingIndex, setRatingIndex] = useState(5);
 
   useEffect(() => {
     if (initialRating !== undefined) {

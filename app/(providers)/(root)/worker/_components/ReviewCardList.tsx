@@ -46,6 +46,9 @@ function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewC
   const totalCount = data?.totalCount || 0;
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
+  console.log('🚀 ~ ReviewCardList.tsx:47 ~ ReviewCardList ~ totalCount:', totalCount);
+  console.log('🚀 ~ ReviewCardList.tsx:48 ~ ReviewCardList ~ totalPages:', totalPages);
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -93,7 +96,8 @@ function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewC
           </div>
 
           {/* 페이지네이션 */}
-          {totalPages > 1 && (
+          {/* 은모님 이야기 듣고 1개만 있더라도 넘버 나오게 수정했음 */}
+          {totalPages >= 1 && (
             <div className="mt-8 flex justify-center">
               <Pagination
                 currentPage={currentPage}

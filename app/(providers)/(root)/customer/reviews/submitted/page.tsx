@@ -1,35 +1,60 @@
 import type { Metadata } from 'next';
-import reviewsApi from '@/api/review/writtenReview.api';
-import SubmittedReviewsClient from './SubmittedReviewsClient';
+import writtenReviewApiServer from '@/api/review/writtenReview.sever.api';
+import SubmittedReviewsClient from '@/components/templates/SubmittedReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers'; 
 
-// 메타데이터 OG 넣기기
 export const metadata: Metadata = {
   title: '작성한 리뷰',
   description: '내가 작성한 리뷰들 입니다.',
+  
+  openGraph: {
+    title: '이사할땐, 무빙',
+    description: '내가 작성한 리뷰들 입니다.',
+    siteName: '이사할땐, 무빙',
+    type: 'website',
+    images: [
+      {
+        url: 'https://m.luxblock.co.kr/file_data/luxblook/2020/08/17/4b0708ca352f2f903ed0ef0162bac4f2.png',
+        width: 1200,
+        height: 630,
+        alt: '작성한 리뷰 페이지 미리보기 이미지',
+      },
+    ],
+  },
+};
+
+const defaultPageParams = {
+  page: 1,
+  pageSize: 6,
 };
 
 async function SubmittedReviewsPage() {
-  const cookieStore = await cookies();
-  const cookieHeader = cookieStore
-    .getAll()
-    .map((c) => `${c.name}=${c.value}`)
-    .join('; ');
-
+  const headersList = headers();
+  const cookieHeaderString = (await headersList).get('Cookie') || '';
+  
   const { queryClient } = await handleSSRPrefetch([
     {
-      queryKey: ['myWrittenReviews', 1],
-      queryFn: () => reviewsApi.getMyWrittenReviewsServer(cookieHeader, { page: 1 }),
+      queryKey: [
+        'myWrittenReviews',
+        { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize },
+      ],
+      queryFn: () =>
+        writtenReviewApiServer.getMyWrittenReviewsServer(
+          cookieHeaderString,
+          {
+            page: defaultPageParams.page,
+            pageSize: defaultPageParams.pageSize,
+          }
+        ),
     },
   ]);
 
-  const dehydrateState = dehydrate(queryClient);
-  console.log('dehydrateState for written reviews', dehydrateState);
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydrateState}>
+    <HydrationBoundary state={dehydratedState}>
       <SubmittedReviewsClient />
     </HydrationBoundary>
   );

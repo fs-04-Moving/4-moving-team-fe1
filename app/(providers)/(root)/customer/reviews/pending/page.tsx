@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import PendingReviewsClient from './PendingReviewsClient';
+import PendingReviewsClient from '@/components/templates/PendingReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import writableReviewApiServer from '@/api/review/writableReview.server.api';
@@ -46,7 +46,6 @@ async function PendingReviewsPage() {
   ]);
 
   const dehydratedState = dehydrate(queryClient); 
-  console.log('dehydratedState', dehydratedState);
 
   return (
     <HydrationBoundary state={dehydratedState}> 

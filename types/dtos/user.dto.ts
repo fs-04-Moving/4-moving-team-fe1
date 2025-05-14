@@ -1,8 +1,12 @@
-import { User } from '../entities/user.entity';
+import { Provider, User } from '../entities/user.entity';
 
 // 사용자 기본 정보 수정 시 사용합니다.
-export type UpdateUserInfoDto = Pick<User, 'name' | 'email' | 'phoneNumber' | 'password'> &
-  Partial<Pick<User, 'newPassword' | 'newPasswordConfirm'>>;
+export type UpdateUserInfoDto = Pick<User, 'name' | 'email' | 'phoneNumber'> &
+  Partial<Pick<User, 'password' | 'newPassword' | 'newPasswordConfirm'>>;
+
+export interface UserInfoEditFormValues extends UpdateUserInfoDto {
+  provider: Provider;
+}
 
 export interface Worker {
   workerId: number;
