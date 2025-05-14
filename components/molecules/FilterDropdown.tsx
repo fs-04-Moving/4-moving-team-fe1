@@ -38,10 +38,15 @@ const FilterDropdown = ({ options, onSelect }: FilterDropdownProps) => {
   };
 
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left text-[14px] lg:text-[18px]">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex justify-between items-center w-[190px] h-[64px] px-6 py-4 text-[#1890FF] text-[18px] bg-[#F5FAFF] border border-[#1B92FF] rounded-xl shadow-sm"
+        className="flex justify-between items-center w-[127px] lg:w-[190px] 
+      h-[36px] lg:h-[64px] 
+      px-[10px] lg:px-6
+      py-[6px] lg:py-4 text-[#1890FF] 
+      bg-[#F5FAFF] 
+      border border-[#1B92FF] rounded-lg lg:rounded-2xl shadow-sm"
       >
         {selected}
         <ChevronDown className="w-4 h-4 text-[#1890FF]" />
@@ -53,7 +58,7 @@ const FilterDropdown = ({ options, onSelect }: FilterDropdownProps) => {
             <button
               key={option}
               onClick={() => handleSelect(option)}
-              className="block w-full text-left text-4 px-6 py-4 hover:bg-gray-100"
+              className="block w-full text-left px-6 py-4 hover:bg-gray-100"
             >
               {option}
             </button>

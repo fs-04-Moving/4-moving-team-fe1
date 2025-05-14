@@ -5,65 +5,34 @@ import {
   getEstimateDetailByCustomer,
 } from '@/api/estimate/customerOnly/estimate.api';
 import favoriteApi from '@/api/favorite/favorite.api';
-import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
-import ButtonLikeOutlined from '@/components/atoms/ButtonLikeOutlined';
-import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
-import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
+import FavoriteButton from '@/app/(providers)/(root)/worker/_components/FavoriteButton';
 import ButtonSolid from '@/components/atoms/ButtonSolid';
+import LoadingSpinner from '@/components/atoms/LoadingSpinner';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
+import ShareSocial from '@/components/molecules/ShareSocial';
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import WorkerCardInDetail from '@/components/organisms/WorkerCardInDetail';
 import { Estimate } from '@/types/entities/estimate.entity';
-import { useParams, useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
   const params = useParams();
   const id = params.id as string;
-  const router = useRouter();
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);
-  const [likeCount, setLikeCount] = useState<number | null>(null);
+  const [likeCount, setLikeCount] = useState<number>(0);
   const [liked, setLiked] = useState(false);
-
-  console.log('likeCount 확인', likeCount);
-
-  const handleLikeClick = async () => {
-    const workerId = estimate?.workerId;
-
-    if (!workerId) {
-      console.warn('workerId가 없습니다.');
-      alert('작업자 정보가 없어 좋아요를 누를 수 없습니다.');
-      return;
-    }
-
-    try {
-      if (liked) {
-        await favoriteApi.deleteFavorite(workerId);
-      } else {
-        await favoriteApi.createFavorite(workerId);
-      }
-
-      const updatedCount = await favoriteApi.getFavoriteCountByWorkerId(workerId);
-      setLikeCount(updatedCount);
-      setLiked(!liked);
-    } catch (error) {
-      console.error('좋아요 토글 실패', error);
-      alert('좋아요 처리 중 오류가 발생했습니다.');
-    }
-  };
-
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const ShareButtons = (
-    <div className="flex flex-col gap-y-4">
-      <p className="text-[20px] font-[600]">견적 공유하기</p>
-      <div className="flex gap-x-4">
-        <ButtonShareKakao onClick={() => router.push('/customer')} />
-        <ButtonShareFacebook onClick={() => {}} />
-        <ButtonClipOutlined onClick={() => {}} />
-      </div>
+    <div className="flex flex-col">
+      <ShareSocial text="견적 공유하기" />
     </div>
   );
 
+  // 견적 정보 불러오기
   useEffect(() => {
     if (!id) return;
 
@@ -73,56 +42,100 @@ export default function Page() {
         const data = await getEstimateDetailByCustomer(id);
         if (data) {
           setEstimate(data);
-
-          if (data.workerId) {
-            const count = await favoriteApi.getFavoriteCountByWorkerId(data.workerId);
-            setLikeCount(count);
-
-            // ✅ 추가: 현재 유저의 좋아요 목록을 조회하고, workerId가 포함되어 있는지 확인
-            const favoriteData = await favoriteApi.getFavoriteWorkers();
-            const isLiked = favoriteData?.list.some(
-              (worker: { id: string }) => worker.id === data.workerId,
-            );
-            setLiked(isLiked);
-          }
+          setLikeCount(data.favoritesCount);
+        } else {
+          setEstimate(null);
         }
       } catch (err) {
-        console.error('견적 정보 또는 좋아요 상태 조회 실패', err);
+        console.error('견적 정보 조회 실패', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchEstimate();
   }, [id]);
 
-  if (loading) return <div>로딩 중...</div>;
-  if (!estimate) return <div>견적 정보를 불러오지 못했습니다.</div>;
+  // 좋아요 정보 쿼리
+  const { data: favoriteData } = useQuery({
+    queryKey: ['worker', estimate?.workerId],
+    queryFn: async () => {
+      if (!estimate?.workerId) return;
+      const [count, favoriteList] = await Promise.all([
+        favoriteApi.getFavoriteCountByWorkerId(estimate.workerId),
+        favoriteApi.getFavoriteWorkers(),
+      ]);
+
+      const isLiked = favoriteList?.list.some(
+        (worker: { id: string }) => worker.id === estimate.workerId,
+      );
+
+      return { count, isLiked };
+    },
+    enabled: !!estimate?.workerId,
+  });
+
+  useEffect(() => {
+    if (favoriteData) {
+      setLiked(favoriteData.isLiked);
+
+      if (isFirstLoad) {
+        setLikeCount(favoriteData.count);
+        setIsFirstLoad(false);
+      } else {
+        setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : Math.max(0, prev - 1)));
+      }
+    }
+  }, [favoriteData, isFirstLoad]);
+
+  if (loading)
+    return (
+      <div className="flex flex-col items-center justify-center">
+        <LoadingSpinner size="md" />
+        <p className="text-3xl mt-10">상세 견적 불러오는 중입니다...</p>
+      </div>
+    );
+  if (!estimate) return <EmptyListMessage message={'대기중인 견적이 없습니다.'} />;
 
   return (
-    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-20gap-10">
+    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-[117px] gap-10 mt-10">
       {/* 왼쪽 영역 */}
-      <div className="flex-1 flex flex-col gap-y-10">
-        <WorkerCardInDetail
-          id={estimate.id}
-          profileImage={estimate.profileImage}
-          nickname={estimate.nickname} // ✅ 수정
-          confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-          isFavorite={liked}
-          favoritesCount={estimate.favoritesCount}
-          services={[estimate.serviceType]}
-          reviewsAverage={estimate.rating ?? 0}
-          reviewsCount={estimate.reviewsCount}
-          summary={estimate.summary}
-          experience={estimate.experience.toString()}
-        />
-        <div className="flex flex-col gap-y-4">
-          <p className="text-[24px] font-[600]">견적가</p>
-          <p className="text-[32px] font-[700]">{estimate.price ?? '-'}원</p>
+      <div
+        className="flex-1 flex flex-col 
+        gap-y-6 lg:gap-y-8 
+        gap-x-8 lg:gap-x-10"
+      >
+        <h1 className="text-[#2B2B2B] text-[16px] lg:text-[24px] font-[600]">견적 상세</h1>
+        <div className="backdrop-blur-[#DCDCDC] shadow-[10%]">
+          <WorkerCardInDetail
+            id={estimate.id}
+            profileImage={estimate.profileImage}
+            nickname={estimate.nickname}
+            confirmedEstimatesCount={estimate.confirmedEstimatesCount}
+            isFavorite={liked}
+            favoritesCount={likeCount ?? 0}
+            services={[estimate.serviceType]}
+            reviewsAverage={estimate.rating ?? 0}
+            reviewsCount={estimate.reviewsCount}
+            summary={estimate.summary}
+            experience={estimate.experience.toString()}
+          />
         </div>
+
+        <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
+
+        <div className="flex flex-col gap-y-4 lg:gap-y-8">
+          <p className="text-[#1F1F1F] text-[16px] lg:text-[24px] font-[600]">견적가</p>
+          <p className="text-[#1F1F1F] text-[20px] lg:text-[32px] font-[700]">
+            {(estimate.price ?? 0).toLocaleString()} 원
+          </p>
+        </div>
+        <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
         {/* Mobile/Tablet 공유 버튼 */}
         <div className="block lg:hidden">{ShareButtons}</div>
 
+        <div className="hidden md:block border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
         <EstimateDetailInfo
           requestDate={estimate.requestDate}
           serviceType={estimate.serviceType}
@@ -133,14 +146,16 @@ export default function Page() {
       </div>
 
       {/* 오른쪽 영역 */}
-      <div className="flex-1 flex gap-x-2 gap-y-10 mt-6">
-        <div className="block lg:hidden">
-          <ButtonLikeOutlined onClick={handleLikeClick} />
-        </div>
-        <div className="w-full flex flex-col gap-y-10">
+      <div className="flex-1 gap-x-2 mt-6 gap-y-6 lg:gap-y-10">
+        <div className="w-full flex flex-row lg:flex-col gap-x-2 gap-y-10">
+          <div className="w-[54px] h-[54px] lg:w-auto lg:h-auto">
+            <FavoriteButton workerId={estimate.workerId} isFavorite={liked} />
+          </div>
+
           <ButtonSolid
+            disabled={estimate.isConfirmed}
             onClick={async () => {
-              if (!estimate.price || estimate.price <= 0) {
+              if (!estimate.price || estimate.price < 0) {
                 alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
                 return;
               }
@@ -156,6 +171,8 @@ export default function Page() {
           >
             견적 확정하기
           </ButtonSolid>
+
+          <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
           {/* Desktop 공유 버튼 */}
           <div className="hidden lg:block">{ShareButtons}</div>

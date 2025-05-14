@@ -11,7 +11,7 @@ import RatingSummary from '../molecules/RatingSummary';
 type Props = {
   profileImage: string;
   nickname: string;
-  experience: string;
+  experience: number;
   confirmedEstimatesCount: number;
   services: ServiceType[];
   onConfirm?: () => void;

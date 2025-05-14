@@ -16,6 +16,10 @@ module.exports = {
         'slide-up': 'slide-up 0.3s ease-out',
         'fade-in': 'fade-in 0.3s ease-out',
       },
+      boxShadow: {
+        'soft-gray': '2px 2px 10px 0px #DCDCDC24',
+        'soft-gray-reverse': '-2px -2px 10px 0px #DCDCDC24',
+      },
     },
   },
   plugins: [],

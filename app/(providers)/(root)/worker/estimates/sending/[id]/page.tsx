@@ -1,19 +1,18 @@
 'use client';
 
 import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
-import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
-import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
-import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import { Estimate } from '@/types/entities/estimate.entity';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import ShareSocial from '@/components/molecules/ShareSocial';
+import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
   const estimateId = params.id as string;
-  const router = useRouter();
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);
@@ -23,17 +22,6 @@ export default function EstimatesDetailPage() {
     return isNaN(d.getTime()) ? new Date() : d;
   };
 
-  const ShareButtons = (
-    <div className="w-full flex flex-col gap-y-4">
-      <p className="text-[20px] font-[600]">견적 공유하기</p>
-      <div className="flex gap-x-4">
-        <ButtonShareKakao onClick={() => router.push('/customer')} />
-        <ButtonShareFacebook onClick={() => {}} />
-        <ButtonClipOutlined onClick={() => {}} />
-      </div>
-    </div>
-  );
-
   useEffect(() => {
     if (!estimateId) return;
 
@@ -42,7 +30,7 @@ export default function EstimatesDetailPage() {
       try {
         const data = await getEstimateDetailByWorker(estimateId);
         if (data) {
-          setEstimate(data); // 여기서 data가 undefined일 수 있으니 체크
+          setEstimate(data);
         } else {
           setEstimate(null);
         }
@@ -57,7 +45,15 @@ export default function EstimatesDetailPage() {
   }, [estimateId]);
 
   if (loading) return <div>로딩 중...</div>;
-  if (!estimate) return <div>견적을 불러오지 못했습니다.</div>;
+  if (!estimate)
+    return (
+      <EmptyListMessage
+        message="대기중인 견적이 없습니다."
+        isUsingButton={true}
+        buttonText="이전 페이지로"
+        buttonLink="/customer" // 원하는 경로로 수정 가능
+      />
+    );
 
   // return (
   //   <div>
@@ -73,7 +69,7 @@ export default function EstimatesDetailPage() {
   return (
     <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col">
       <div
-        className="w-full
+        className="w-full mt-4
         font-[600]
         text-[18px] lg:text-[24px]
         py-4 md:py-4 lg:py-8
@@ -81,34 +77,34 @@ export default function EstimatesDetailPage() {
       >
         견적 상세
       </div>
-      <div className="w-full flex flex-row lg:flex-row lg:gap-x-20 gap-10">
+      <div className="w-full flex flex-row lg:flex-row lg:gap-x-20">
         {/* 왼쪽 영역 */}
-        <div className="w-full flex-1 flex flex-col gap-y-10 mt-4">
-          <CustomerCardInEstimate
-            id={estimate.id}
+        <div className="w-full flex-1 flex flex-col gap-6 lg:gap-[40px] mt-4">
+          <CustomerCardInEstimateModal
             key={estimate.id}
             serviceType={estimate.serviceType}
             status={estimate.status}
             customerName={estimate.customerName}
-            movingDate={new Date('2027-01-11')}
-            departure={estimate.departure}
-            destination={estimate.destination}
+            movingDate={estimate.movingDate}
+            departure={estimate.departure.split(' ').slice(0, 2).join(' ')}
+            destination={estimate.destination.split(' ').slice(0, 2).join(' ')}
             isConfirmed={estimate.isConfirmed}
             requestDate={safeDate(estimate.requestDate)}
-            onViewDetail={() => {
-              router.push(`/worker/estimates/sending/${estimate.id}`);
-            }}
+            showOverlay={false}
           />
-          <div className="flex flex-col gap-y-4">
-            <p className="text-[24px] font-[600]">견적가</p>
-            <p className="text-[32px] font-[700]">
+
+          {/* Mobile/Tablet 공유 버튼 */}
+          <div className="block lg:hidden md:-mt-[36px] -mt-[48px]">
+            <ShareSocial text="견적서 공유하기" />
+          </div>
+          <div className="lg:hidden w-full h-px bg-gray-100" />
+          <div className="flex flex-col gap-4 lg:gap-8 sm:py-0 md:py-4">
+            <p className="lg:text-[24px] font-[600] md:text-[16px]">견적가</p>
+            <p className="text-[20px] md:text-[20px] lg:text-[32px] font-[700]">
               {(estimate.price ?? 0).toLocaleString()}원
             </p>
           </div>
-
-          {/* Mobile/Tablet 공유 버튼 */}
-          <div className="block lg:hidden">{ShareButtons}</div>
-
+          <div className="w-full h-px bg-gray-100" />
           <EstimateDetailInfo
             requestDate={estimate.requestDate}
             serviceType={estimate.serviceType}
@@ -119,10 +115,9 @@ export default function EstimatesDetailPage() {
         </div>
 
         {/* 오른쪽 영역 */}
-        <div className=" flex gap-x-2 gap-y-10 mt-6">
-          <div className="w-full flex flex-col gap-y-10">
-            {/* Desktop 공유 버튼 */}
-            <div className="hidden lg:block">{ShareButtons}</div>
+        <div className=" flex gap-x-2 ">
+          <div className="hidden lg:block -mt-12">
+            <ShareSocial text="견적서 공유하기" className="!mt-0" />
           </div>
         </div>
       </div>

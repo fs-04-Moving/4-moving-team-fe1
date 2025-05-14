@@ -57,7 +57,8 @@ function EstimateCardList({ estimateRequestId }: Props) {
 
   return (
     <div
-      className="w-full flex flex-col gap-y-6
+      className="w-full flex flex-col gap-y-6 
+      shadow-soft-gray-reverse
     "
     >
       <h2 className="text-[16px] md:text-[16px] lg:text-[24px] font-[600]">견적 목록</h2>
@@ -71,7 +72,10 @@ function EstimateCardList({ estimateRequestId }: Props) {
        "
       >
         {filteredEstimates.map((estimate) => (
-          <div className="w-full" key={estimate.id}>
+          <div
+            className="flex flex-col gap=-y-6 md:gap-y-8 lg:gap-y-14 shadow-[#DCDCDC] shadow-[1px] backdrop-blur-[10px]"
+            key={estimate.id}
+          >
             <WorkerCardInList
               profileImage={estimate.profileImage}
               nickname={estimate.nickname}
@@ -79,10 +83,10 @@ function EstimateCardList({ estimateRequestId }: Props) {
               confirmedEstimatesCount={estimate.confirmedEstimatesCount}
               isFavorite={false}
               favoritesCount={estimate.favoritesCount}
-              services={['smallMove', 'homeMove']}
+              services={[estimate.serviceType]}
               isDirectEstimate={false}
               price={estimate.price ?? 0}
-              reviewsAverage={0}
+              reviewsAverage={estimate.rating ?? 0}
               reviewsCount={estimate.reviewsCount}
               summary={estimate.summary}
             />
