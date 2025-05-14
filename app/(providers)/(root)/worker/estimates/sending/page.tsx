@@ -7,6 +7,7 @@ import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
 import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -65,40 +66,49 @@ export default function SendingEstimatesPage() {
 
   return (
     <ProtectedPageWrapper>
-      <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10 bg-BackGround-100">
-        {estimates.length === 0 ? (
-          <div className="text-gray-500 text-center mt-8">보낸 견적이 없습니다.</div>
-        ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[48px] w-full max-w-[1400px] justify-items-center">
-            {estimates.map((card) => (
-              <div
-                key={card.id}
-                className="w-[328px] md:w-[600px] lg:w-[688px] text-sm lg:text-base"
-              >
-                <CustomerCardInEstimateModal
-                  serviceType={card.serviceType}
-                  status={card.status}
-                  customerName={card.customerName}
-                  movingDate={card.movingDate}
-                  departure={card.departure.split(' ').slice(0, 2).join(' ')}
-                  destination={card.destination.split(' ').slice(0, 2).join(' ')}
-                  isConfirmed={card.isConfirmed}
-                  price={card.price}
-                  onViewDetail={() => {
-                    router.push(`/worker/estimates/sending/${card.id}`);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="bg-[#FAFAFA] min-h-screen w-full pt-10 flex flex-col items-center gap-[24px] md:gap-[32px] lg:gap-[48px]">
+        <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10">
+          {estimates.length === 0 ? (
+            <EmptyListMessage
+              message="보낸 견적이 없습니다."
+              isUsingButton={true}
+              buttonText="견적 목록 보기"
+              buttonLink="/worker"
+            />
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[48px] w-full max-w-[1400px] justify-items-center">
+              {estimates.map((card) => (
+                <div
+                  key={card.id}
+                  className="w-[328px] md:w-[600px] lg:w-[688px] text-sm lg:text-base"
+                >
+                  <CustomerCardInEstimateModal
+                    serviceType={card.serviceType}
+                    status={card.status}
+                    customerName={card.customerName}
+                    movingDate={card.movingDate}
+                    departure={card.departure.split(' ').slice(0, 2).join(' ')}
+                    destination={card.destination.split(' ').slice(0, 2).join(' ')}
+                    isConfirmed={card.isConfirmed}
+                    price={card.price}
+                    onViewDetail={() => {
+                      router.push(`/worker/estimates/sending/${card.id}`);
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          className="mt-2"
-        />
+          {estimates.length > 0 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              className="mt-2"
+            />
+          )}
+        </div>
       </div>
     </ProtectedPageWrapper>
   );

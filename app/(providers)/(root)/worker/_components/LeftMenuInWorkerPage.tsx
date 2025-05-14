@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AllChoiceCheckBoxInWorkerPage from './AllChoiceCheckBoxInWorkerPage';
 import TypeCheckBox from './IndividualTypeCheckBoxInWorkerPage';
 import { useFilter } from '@/contexts/FilterContext';
