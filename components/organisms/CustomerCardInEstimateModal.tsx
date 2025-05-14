@@ -86,17 +86,18 @@ Props) {
   return (
     <div className="relative">
       {/* 카드 전체 내용 */}
-      <div className="flex flex-col justify-between gap-3.5 lg:gap-4 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] px-3.5 py-4">
+      <div
+        className="flex flex-col justify-between gap-3.5 lg:gap-4 bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] px-3.5 py-4"
+        style={{
+          filter: `drop-shadow(2px 2px 10px rgba(220, 220, 220, 0.14)) drop-shadow(-2px -2px 10px rgba(220, 220, 220, 0.14))`,
+        }}
+      >
         <div className="bg-Black-100 w-full h-full z-10"></div>
         {/* chip 정보 */}
         <div className="flex justify-between items-center">
           <span className="flex gap-2.5">
             <ChipMovingType type={serviceType} />
-            {status === 'assigned' ? (
-              <ChipEstimateStatus type="assigned" isShort={true} />
-            ) : (
-              ''
-            )}
+            {status === 'assigned' ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
           </span>
         </div>
         {/* 고객 이름 및 견적 관련 정보 */}
@@ -120,9 +121,7 @@ Props) {
         </div>
         {price && (
           <div className="flex justify-end items-end gap-2 lg:gap-4">
-            <span className="text-[14px] lg:text-lg leading-none">
-              견적 금액
-            </span>
+            <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
             <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
           </div>
         )}
@@ -140,9 +139,7 @@ Props) {
                   onClick={onViewDetail}
                   // onClick={() => {}}
                 >
-                  <span className="text-[14px] lg:text-[16px] px-3">
-                    견적 상세보기
-                  </span>
+                  <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
                 </ButtonOutlined>
               </div>
             </div>
