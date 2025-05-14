@@ -6,23 +6,20 @@ import {
 } from '@/api/estimate/customerOnly/estimate.api';
 import favoriteApi from '@/api/favorite/favorite.api';
 import FavoriteButton from '@/app/(providers)/(root)/worker/_components/FavoriteButton';
-import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
-import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
-import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
 import ButtonSolid from '@/components/atoms/ButtonSolid';
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
+import ShareSocial from '@/components/molecules/ShareSocial';
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import WorkerCardInDetail from '@/components/organisms/WorkerCardInDetail';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { useQuery } from '@tanstack/react-query';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
   const params = useParams();
   const id = params.id as string;
-  const router = useRouter();
 
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [loading, setLoading] = useState(true);
@@ -31,12 +28,8 @@ export default function Page() {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const ShareButtons = (
     <div className="flex flex-col gap-y-4">
-      <p className="text-[20px] font-[600]">견적 공유하기</p>
-      <div className="flex gap-x-4">
-        <ButtonShareKakao onClick={() => router.push('/customer')} />
-        <ButtonShareFacebook onClick={() => {}} />
-        <ButtonClipOutlined onClick={() => {}} />
-      </div>
+      <p className="text-[#1F1F1F] text-[16px] lg:text-[24px] font-[600]">견적 공유하기</p>
+      <ShareSocial text="" />
     </div>
   );
 
@@ -106,30 +99,44 @@ export default function Page() {
   if (!estimate) return <EmptyListMessage message={'대기중인 견적이 없습니다.'} />;
 
   return (
-    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-20 gap-10 mt-10">
+    <div className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] flex flex-col lg:flex-row lg:gap-x-[117px] gap-10 mt-10">
       {/* 왼쪽 영역 */}
-      <div className="flex-1 flex flex-col gap-y-10">
-        <WorkerCardInDetail
-          id={estimate.id}
-          profileImage={estimate.profileImage}
-          nickname={estimate.nickname}
-          confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-          isFavorite={liked}
-          favoritesCount={likeCount ?? -1}
-          services={[estimate.serviceType]}
-          reviewsAverage={estimate.rating ?? 0}
-          reviewsCount={estimate.reviewsCount}
-          summary={estimate.summary}
-          experience={estimate.experience.toString()}
-        />
-
-        <div className="flex flex-col gap-y-4">
-          <p className="text-[24px] font-[600]">견적가</p>
-          <p className="text-[32px] font-[700]">{estimate.price ?? 0} 원</p>
+      <div
+        className="flex-1 flex flex-col 
+        gap-y-6 lg:gap-y-8 
+        gap-x-8 lg:gap-x-10"
+      >
+        <h1 className="text-[#2B2B2B] text-[16px] lg:text-[24px] font-[600]">견적 상세</h1>
+        <div className="backdrop-blur-[#DCDCDC] shadow-[10%]">
+          <WorkerCardInDetail
+            id={estimate.id}
+            profileImage={estimate.profileImage}
+            nickname={estimate.nickname}
+            confirmedEstimatesCount={estimate.confirmedEstimatesCount}
+            isFavorite={liked}
+            favoritesCount={likeCount ?? 0}
+            services={[estimate.serviceType]}
+            reviewsAverage={estimate.rating ?? 0}
+            reviewsCount={estimate.reviewsCount}
+            summary={estimate.summary}
+            experience={estimate.experience.toString()}
+          />
         </div>
+
+        <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
+
+        <div className="flex flex-col gap-y-4 lg:gap-y-8">
+          <p className="text-[#1F1F1F] text-[16px] lg:text-[24px] font-[600]">견적가</p>
+          <p className="text-[#1F1F1F] text-[20px] lg:text-[32px] font-[700]">
+            {(estimate.price ?? 0).toLocaleString()} 원
+          </p>
+        </div>
+        <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
         {/* Mobile/Tablet 공유 버튼 */}
         <div className="block lg:hidden">{ShareButtons}</div>
+
+        <div className="block lg:hidden border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
         <EstimateDetailInfo
           requestDate={estimate.requestDate}
@@ -141,13 +148,14 @@ export default function Page() {
       </div>
 
       {/* 오른쪽 영역 */}
-      <div className="flex-1 gap-x-2 mt-6">
+      <div className="flex-1 gap-x-2 mt-6 gap-y-6 lg:gap-y-10">
         <div className="w-full flex flex-row lg:flex-col gap-x-2 gap-y-10">
           <div className="w-[54px] h-[54px] lg:w-auto lg:h-auto">
             <FavoriteButton workerId={estimate.workerId} isFavorite={liked} />
           </div>
 
           <ButtonSolid
+            disabled={estimate.isConfirmed}
             onClick={async () => {
               if (!estimate.price || estimate.price < 0) {
                 alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
@@ -165,6 +173,8 @@ export default function Page() {
           >
             견적 확정하기
           </ButtonSolid>
+
+          <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
           {/* Desktop 공유 버튼 */}
           <div className="hidden lg:block">{ShareButtons}</div>

@@ -65,56 +65,64 @@ export default function PendingEstimatesPage() {
   }
 
   if (unconfirmedEstimates.length === 0) {
-    return <EmptyListMessage message="대기중인 견적이 없습니다." />;
+    return (
+      <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
+        <EmptyListMessage message="대기중인 견적이 없습니다." />
+      </div>
+    );
   }
 
   return (
-    <div
-      className="
+    <div className="bg-BackGround-200 min-h-full ">
+      <div className="p-8 lg:p-10 bg-BackGround-200"></div>
+      <div
+        className="
         mx-auto
-        mt-12
         w-[327px] md:w-[600px] lg:w-[1400px]
-        grid grid-cols-1 lg:grid-cols-2 gap-4
+        grid grid-cols-1 lg:grid-cols-2 
+        gap-x-6 
+        gap-y-8 lg:gap-y-12
       "
-    >
-      {unconfirmedEstimates.map((estimate) => (
-        <WorkerCardInWating
-          key={estimate.id}
-          profileImage={estimate.profileImage}
-          nickname={estimate.nickname}
-          experience={estimate.experience}
-          confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-          isFavorite={false}
-          favoritesCount={estimate.favoritesCount}
-          services={[estimate.serviceType]}
-          isDirectEstimate={false}
-          price={estimate.price || -1}
-          status={estimate.status}
-          movingDate={estimate.movingDate}
-          departure={estimate.departure}
-          destination={estimate.destination}
-          reviewsAverage={estimate.rating ?? 0}
-          reviewsCount={estimate.reviewsCount}
-          onConfirm={async () => {
-            if (!estimate.price || estimate.price <= 0) {
-              alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
-              return;
-            }
+      >
+        {unconfirmedEstimates.map((estimate) => (
+          <WorkerCardInWating
+            key={estimate.id}
+            profileImage={estimate.profileImage}
+            nickname={estimate.nickname}
+            experience={estimate.experience}
+            confirmedEstimatesCount={estimate.confirmedEstimatesCount}
+            isFavorite={false}
+            favoritesCount={estimate.favoritesCount}
+            services={[estimate.serviceType]}
+            isDirectEstimate={false}
+            price={estimate.price || -1}
+            status={estimate.status}
+            movingDate={estimate.movingDate}
+            departure={estimate.departure}
+            destination={estimate.destination}
+            reviewsAverage={estimate.rating ?? 0}
+            reviewsCount={estimate.reviewsCount}
+            onConfirm={async () => {
+              if (!estimate.price || estimate.price <= 0) {
+                alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
+                return;
+              }
 
-            try {
-              await confirmEstimate(estimate.id);
-              alert('견적이 확정되었습니다.');
-              setRefreshKey((prev) => prev + 1); // ✅ 상태 갱신
-            } catch (error) {
-              alert('견적 확정에 실패했습니다.');
-              console.error(error);
-            }
-          }}
-          onViewDetail={() => {
-            router.push(`/customer/estimates/pending/${estimate.id}`);
-          }}
-        />
-      ))}
+              try {
+                await confirmEstimate(estimate.id);
+                alert('견적이 확정되었습니다.');
+                setRefreshKey((prev) => prev + 1); // ✅ 상태 갱신
+              } catch (error) {
+                alert('견적 확정에 실패했습니다.');
+                console.error(error);
+              }
+            }}
+            onViewDetail={() => {
+              router.push(`/customer/estimates/pending/${estimate.id}`);
+            }}
+          />
+        ))}
+      </div>
     </div>
   );
 }
