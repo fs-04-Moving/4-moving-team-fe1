@@ -94,7 +94,7 @@ export default function Page() {
         setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : prev - 1));
       }
     }
-  }, [favoriteData]);
+  }, [favoriteData, isFirstLoad]);
 
   if (loading)
     return (
