@@ -105,12 +105,9 @@ export default function EstimatesDetailPage() {
         </div>
 
         {/* 오른쪽 영역 */}
-        <div className=" flex gap-x-2 gap-y-10 mt-6">
-          <div className="w-full flex flex-col gap-y-10">
-            {/* Desktop 공유 버튼 */}
-            <div className="hidden lg:block">
-              <ShareSocial text="견적서 공유하기" />
-            </div>
+        <div className=" flex gap-x-2 ">
+          <div className="hidden lg:block -mt-12">
+            <ShareSocial text="견적서 공유하기" className="!mt-0" />
           </div>
         </div>
       </div>
