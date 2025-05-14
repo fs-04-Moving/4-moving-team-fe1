@@ -3,6 +3,7 @@ import { createAssignedEstimate } from '@/api/estimate/customerOnly/estimate.api
 import ButtonSolid from '@/components/atoms/ButtonSolid';
 import { useAuth } from '@/contexts/AuthContext';
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -10,33 +11,46 @@ interface RequestEstimateButtonProps {
   workerId: string;
 }
 
+// API 에러 응답 타입 정의
+interface ApiErrorResponse {
+  message: string;
+  statusCode?: number;
+}
+
 function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { isLoggedIn, user } = useAuth();
+  const [hasRequested, setHasRequested] = useState(false); // 이미 요청했는지 상태 추가
 
   // 지정 견적 요청 mutation 설정
   const assignedEstimateMutation = useMutation({
     mutationFn: (workerId: string) => createAssignedEstimate(workerId),
     onSuccess: () => {
+      setHasRequested(true); // 요청 성공 시 상태 업데이트
       Swal.fire({
-        title: '성공',
+        title: '경적요청 성공!',
         text: '지정 견적 요청이 성공적으로 전송되었습니다.',
         icon: 'success',
         confirmButtonText: '확인',
       });
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError<ApiErrorResponse>) => {
+      console.log('🚀 error:', error.response);
+      console.log('🚀 error:', error.response?.data);
       // 에러 메시지 처리
-      let errorMessage = '지정 견적 요청 중 오류가 발생했습니다.';
+      let errorMessage = '';
 
       // 백엔드에서 보내는 에러 메시지가 있는 경우
       if (error.response?.data?.message) {
+        console.log('백앤드에서온 에러', error.response.data.message);
         errorMessage = error.response.data.message;
       }
 
-      // 이미 지정 견적을 요청한 경우 (백엔드 응답에 따라 조건 수정 필요)
-      if (error.response?.status === 400 && error.response?.data?.message?.includes('이미 요청')) {
-        errorMessage = '이미 이 작업자에게 지정 견적을 요청하셨습니다.';
+      // 이미 요청한 경우는 백앤드에 없는데... 메시지라도 받아야하나?
+
+      if (error.response?.status === 400 && error.response?.data?.message?.includes('already')) {
+        errorMessage = '이미 견적이 존재합니다';
+        setHasRequested(true); // 이미 요청한 상태로 설정
       }
 
       // 일반 견적이 없는 경우
@@ -45,15 +59,26 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
       }
 
       Swal.fire({
-        title: '오류',
+        // title: '오류',
         text: errorMessage,
-        icon: 'error',
+        icon: 'info',
         confirmButtonText: '확인',
       });
     },
   });
 
   const handleClick = async () => {
+    // 이미 요청한 상태라면 메시지 표시
+    if (hasRequested) {
+      Swal.fire({
+        title: '알림',
+        text: '이미 이 기사에게 지정 견적을 요청하셨습니다.',
+        icon: 'info',
+        confirmButtonText: '확인',
+      });
+      return;
+    }
+
     // 로그인 상태 확인
     if (!isLoggedIn) {
       Swal.fire({
@@ -77,9 +102,19 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
     assignedEstimateMutation.mutate(workerId);
   };
 
+  // 버튼 텍스트 결정
+  const buttonText = hasRequested
+    ? '이미 요청한 기사입니다'
+    : assignedEstimateMutation.isPending
+      ? '요청 중...'
+      : '지정 견적 요청하기';
+
   return (
-    <ButtonSolid onClick={handleClick} disabled={isLoading || assignedEstimateMutation.isPending}>
-      {assignedEstimateMutation.isPending ? '요청 중...' : '지정 견적 요청하기'}
+    <ButtonSolid
+      onClick={handleClick}
+      disabled={isLoading || assignedEstimateMutation.isPending || hasRequested}
+    >
+      {buttonText}
     </ButtonSolid>
   );
 }
