@@ -2,12 +2,12 @@
 
 import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
 
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ShareSocial from '@/components/molecules/ShareSocial';
+import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
@@ -29,7 +29,7 @@ export default function EstimatesDetailPage() {
       try {
         const data = await getEstimateDetailByWorker(estimateId);
         if (data) {
-          setEstimate(data); // 여기서 data가 undefined일 수 있으니 체크
+          setEstimate(data);
         } else {
           setEstimate(null);
         }
@@ -71,24 +71,21 @@ export default function EstimatesDetailPage() {
       <div className="w-full flex flex-row lg:flex-row lg:gap-x-20">
         {/* 왼쪽 영역 */}
         <div className="w-full flex-1 flex flex-col gap-6 lg:gap-[40px] mt-4">
-          <CustomerCardInEstimate
-            id={estimate.id}
+          <CustomerCardInEstimateModal
             key={estimate.id}
             serviceType={estimate.serviceType}
             status={estimate.status}
             customerName={estimate.customerName}
             movingDate={estimate.movingDate}
-            departure={estimate.departure}
-            destination={estimate.destination}
+            departure={estimate.departure.split(' ').slice(0, 2).join(' ')}
+            destination={estimate.destination.split(' ').slice(0, 2).join(' ')}
             isConfirmed={estimate.isConfirmed}
             requestDate={safeDate(estimate.requestDate)}
             showOverlay={false}
           />
 
-          <div className="lg:hidden w-full h-px bg-line-100" />
-
           {/* Mobile/Tablet 공유 버튼 */}
-          <div className="block lg:hidden md:-mt-[48px] -mt-[60px]">
+          <div className="block lg:hidden md:-mt-[36px] -mt-[48px]">
             <ShareSocial text="견적서 공유하기" />
           </div>
           <div className="lg:hidden w-full h-px bg-gray-100" />

@@ -18,6 +18,7 @@ type Props = {
   onSendEstimate?: () => void;
   onReject?: () => void;
   onViewDetail?: () => void;
+  showOverlay?: boolean;
 };
 
 /**
@@ -66,6 +67,7 @@ function CustomerCardInEstimateModal({
   destination,
   price,
   onViewDetail,
+  showOverlay,
 }: // requestDate,
 Props) {
   const currentDate = new Date();
@@ -127,7 +129,7 @@ Props) {
         )}
       </div>
       {/* 조건 만족시 오버레이 */}
-      {(isRejected || isPastMovingDate) && (
+      {showOverlay !== false && (isRejected || isPastMovingDate) && (
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
           {!hasPrice && isRejected && <p>반려된 요청이에요</p>}
           {hasPrice && isPastMovingDate && (
