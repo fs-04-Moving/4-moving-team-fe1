@@ -8,6 +8,7 @@ import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEs
 import { Estimate } from '@/types/entities/estimate.entity';
 import { getRejectedEstimates } from '@/api/estimate/workerOnly/estimate.api';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
+import ROUTES from '@/constants/routes';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -55,12 +56,12 @@ export default function RejectedEstimatesPage() {
   return (
     <ProtectedPageWrapper>
       <div className="bg-[#FAFAFA] min-h-screen w-full pt-10 flex flex-col items-center gap-[24px] md:gap-[32px] lg:gap-[48px]">
-        <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center mt-10 bg-[#FAFAFA]">
+        <div className="flex flex-col gap-[24px] md:gap-[32px] lg:gap-[48px] items-center bg-[#FAFAFA]">
           {estimates.length === 0 ? (
             <EmptyListMessage
               message="반려된 견적이 없습니다."
               isUsingButton={true}
-              buttonText="견적 목록 보기"
+              buttonText="받은 요청 목록 보기"
               buttonLink="/worker"
             />
           ) : (
@@ -77,7 +78,7 @@ export default function RejectedEstimatesPage() {
                     isConfirmed={card.isConfirmed}
                     price={card.price}
                     onViewDetail={() => {
-                      router.push(`/worker/estimates/rejected/${card.id}`);
+                      router.push(ROUTES.WORKER.ESTIMATES.DETAIL(card.id));
                     }}
                   />
                 </div>
