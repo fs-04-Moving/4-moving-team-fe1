@@ -33,6 +33,7 @@ function ReceivedPage() {
     mx-auto
     mt-12
     w-[327px] md:w-[600px] lg:w-[1400px]
+    
     "
     >
       {requests.map((req) => (
@@ -42,6 +43,7 @@ function ReceivedPage() {
         w-full flex flex-col
         px-4 py-6 lg:px-10 lg:py-12 md:px-8 md:py-4
         gap-y-8 lg:gap-y-12
+        rounded-xl shadow-lg
         "
         >
           <EstimateDetailInfo
