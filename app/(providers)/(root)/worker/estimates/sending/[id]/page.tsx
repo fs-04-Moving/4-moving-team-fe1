@@ -1,14 +1,13 @@
 'use client';
 
 import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
-import ButtonClipOutlined from '@/components/atoms/ButtonClipOutlined';
-import ButtonShareFacebook from '@/components/atoms/ButtonShareFacebook';
-import ButtonShareKakao from '@/components/atoms/ButtonShareKakao';
+
 import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import ShareSocial from '@/components/molecules/ShareSocial';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
@@ -22,17 +21,6 @@ export default function EstimatesDetailPage() {
     const d = new Date(date);
     return isNaN(d.getTime()) ? new Date() : d;
   };
-
-  const ShareButtons = (
-    <div className="w-full flex flex-col gap-y-4">
-      <p className="text-[20px] font-[600]">견적 공유하기</p>
-      <div className="flex gap-x-4">
-        <ButtonShareKakao onClick={() => router.push('/customer')} />
-        <ButtonShareFacebook onClick={() => {}} />
-        <ButtonClipOutlined onClick={() => {}} />
-      </div>
-    </div>
-  );
 
   useEffect(() => {
     if (!estimateId) return;
@@ -90,24 +78,22 @@ export default function EstimatesDetailPage() {
             serviceType={estimate.serviceType}
             status={estimate.status}
             customerName={estimate.customerName}
-            movingDate={new Date('2027-01-11')}
+            movingDate={estimate.movingDate}
             departure={estimate.departure}
             destination={estimate.destination}
             isConfirmed={estimate.isConfirmed}
             requestDate={safeDate(estimate.requestDate)}
-            onViewDetail={() => {
-              router.push(`/worker/estimates/sending/${estimate.id}`);
-            }}
+            showOverlay={false}
           />
           <div className="flex flex-col gap-y-4">
             <p className="text-[24px] font-[600]">견적가</p>
-            <p className="text-[32px] font-[700]">
-              {(estimate.price ?? 0).toLocaleString()}원
-            </p>
+            <p className="text-[32px] font-[700]">{(estimate.price ?? 0).toLocaleString()}원</p>
           </div>
 
           {/* Mobile/Tablet 공유 버튼 */}
-          <div className="block lg:hidden">{ShareButtons}</div>
+          <div className="block lg:hidden">
+            <ShareSocial text="견적서 공유하기" />
+          </div>
 
           <EstimateDetailInfo
             requestDate={estimate.requestDate}
@@ -122,7 +108,9 @@ export default function EstimatesDetailPage() {
         <div className=" flex gap-x-2 gap-y-10 mt-6">
           <div className="w-full flex flex-col gap-y-10">
             {/* Desktop 공유 버튼 */}
-            <div className="hidden lg:block">{ShareButtons}</div>
+            <div className="hidden lg:block">
+              <ShareSocial text="견적서 공유하기" />
+            </div>
           </div>
         </div>
       </div>
