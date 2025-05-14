@@ -28,7 +28,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [likeCount, setLikeCount] = useState<number>(0);
   const [liked, setLiked] = useState(false);
-
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const ShareButtons = (
     <div className="flex flex-col gap-y-4">
       <p className="text-[20px] font-[600]">견적 공유하기</p>
@@ -87,10 +87,11 @@ export default function Page() {
     if (favoriteData) {
       setLiked(favoriteData.isLiked);
 
-      if (favoriteData.isLiked) {
-        setLikeCount((prev) => prev + 1);
+      if (isFirstLoad) {
+        setLikeCount(favoriteData.count);
+        setIsFirstLoad(false);
       } else {
-        setLikeCount((prev) => prev - 1);
+        setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : prev - 1));
       }
     }
   }, [favoriteData]);
