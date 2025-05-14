@@ -69,9 +69,9 @@ export default function EstimatesDetailPage() {
       >
         견적 상세
       </div>
-      <div className="w-full flex flex-row lg:flex-row lg:gap-x-20 gap-10">
+      <div className="w-full flex flex-row lg:flex-row lg:gap-x-20">
         {/* 왼쪽 영역 */}
-        <div className="w-full flex-1 flex flex-col gap-y-10 mt-4">
+        <div className="w-full flex-1 flex flex-col gap-6 lg:gap-[40px] mt-4">
           <CustomerCardInEstimate
             id={estimate.id}
             key={estimate.id}
@@ -85,16 +85,21 @@ export default function EstimatesDetailPage() {
             requestDate={safeDate(estimate.requestDate)}
             showOverlay={false}
           />
-          <div className="flex flex-col gap-y-4">
-            <p className="text-[24px] font-[600]">견적가</p>
-            <p className="text-[32px] font-[700]">{(estimate.price ?? 0).toLocaleString()}원</p>
-          </div>
+
+          <div className="lg:hidden w-full h-px bg-line-100" />
 
           {/* Mobile/Tablet 공유 버튼 */}
-          <div className="block lg:hidden">
+          <div className="block lg:hidden md:-mt-[48px] -mt-[60px]">
             <ShareSocial text="견적서 공유하기" />
           </div>
-
+          <div className="lg:hidden w-full h-px bg-gray-100" />
+          <div className="flex flex-col gap-4 lg:gap-8 sm:py-0 md:py-4">
+            <p className="lg:text-[24px] font-[600] md:text-[16px]">견적가</p>
+            <p className="text-[20px] md:text-[20px] lg:text-[32px] font-[700]">
+              {(estimate.price ?? 0).toLocaleString()}원
+            </p>
+          </div>
+          <div className="w-full h-px bg-gray-100" />
           <EstimateDetailInfo
             requestDate={estimate.requestDate}
             serviceType={estimate.serviceType}
