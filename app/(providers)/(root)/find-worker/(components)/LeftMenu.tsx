@@ -63,13 +63,15 @@ function FilterArea() {
         </div>
         <div className="flex flex-col gap-4">
           <label className="text-lg font-semibold">지역을 선택해 주세요</label>
-          <div className="z-10">
+          <div className="z-20">
             <DropdownArea defaultValue="지역" onSelect={handleAreaSelect} />
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <label className="text-lg font-semibold">어떤 서비스가 필요하세요?</label>
-          <DropdownService onSelect={handleServiceSelect} />
+          <div className="z-10">
+            <DropdownService onSelect={handleServiceSelect} />
+          </div>
         </div>
         {isLoggedIn && (
           <div className="flex flex-col gap-4 w-[640px] max-w-full">
