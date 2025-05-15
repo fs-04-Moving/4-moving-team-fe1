@@ -4,6 +4,7 @@ import { confirmEstimate, getPendingEstimate } from '@/api/estimate/customerOnly
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
+import ROUTES from '@/constants/routes';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -91,10 +92,10 @@ export default function PendingEstimatesPage() {
             nickname={estimate.nickname}
             experience={estimate.experience}
             confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-            isFavorite={false}
+            isFavorite={estimate.isFavorite ?? false}
             favoritesCount={estimate.favoritesCount}
             services={[estimate.serviceType]}
-            isDirectEstimate={false}
+            isDirectEstimate={estimate.status === 'assigned'}
             price={estimate.price || 0}
             status={estimate.status}
             movingDate={estimate.movingDate}
@@ -118,7 +119,7 @@ export default function PendingEstimatesPage() {
               }
             }}
             onViewDetail={() => {
-              router.push(`/customer/estimates/pending/${estimate.id}`);
+              router.push(ROUTES.CUSTOMER.ESTIMATES.DETAIL(estimate.id));
             }}
           />
         ))}
