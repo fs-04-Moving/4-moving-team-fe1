@@ -8,7 +8,7 @@ import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import { useQuery } from '@tanstack/react-query';
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 1000; // 충분히 큰 숫자로 한 번에 전체 데이터를 받아오도록 설정
 
 function ReceivedPage() {
   const { data, isLoading, isError, error } = useQuery<{
@@ -21,7 +21,7 @@ function ReceivedPage() {
         page: 1,
         pageSize: PAGE_SIZE,
       }),
-    staleTime: 1000 * 60 * 5, // 5분
+    staleTime: 1000 * 60 * 5,
     retry: 1,
   });
 
@@ -60,7 +60,7 @@ function ReceivedPage() {
 
       <div
         className="mx-auto w-[327px] md:w-[600px] lg:w-[1400px] 
-      flex flex-col gap-y-8 lg:gap-y-10 "
+        flex flex-col gap-y-8 lg:gap-y-10 "
       >
         {requests.map((req) => (
           <div
