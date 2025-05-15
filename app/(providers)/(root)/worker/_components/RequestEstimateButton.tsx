@@ -19,7 +19,7 @@ interface ApiErrorResponse {
 }
 
 function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [hasRequested, setHasRequested] = useState(false); // 이미 요청했는지 상태 추가
   const router = useRouter();
 
