@@ -10,8 +10,8 @@ import DividerHor from '../atoms/DividerHor';
 import ErrorMessage from '../atoms/ErrorMessage';
 import Label from '../atoms/Label';
 import LoadingSpinner from '../atoms/LoadingSpinner';
-import ChartStarRatingReview from './ChartStarRatingReview';
 import WorkerCardInProfile from './WorkerCardInProfile';
+import ReviewCardList from '@/app/(providers)/(root)/worker/_components/ReviewCardList';
 
 function WorkerMyPage() {
   const { user } = useAuth();
@@ -67,8 +67,9 @@ function WorkerMyPage() {
             <div className="my-6 lg:my-12">
               <DividerHor />
             </div>
-            <p className="text-base lg:text-2xl font-bold mb-8">리뷰({profile.reviewsCount})</p>
-            <ChartStarRatingReview ratingData={reviews.starCountList} />
+            {/* <p className="text-base lg:text-2xl font-bold mb-8">리뷰({profile.reviewsCount})</p>
+            <ChartStarRatingReview ratingData={reviews.starCountList} /> */}
+            {user && <ReviewCardList workerId={user.sub} />}
           </div>
         </div>
       )}

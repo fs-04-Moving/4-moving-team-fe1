@@ -130,7 +130,7 @@ export default function Page() {
             {(estimate.price ?? 0).toLocaleString()} 원
           </p>
         </div>
-        <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
+        <div className="block lg:hidden border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
         {/* Mobile/Tablet 공유 버튼 */}
         <div className="block lg:hidden">{ShareButtons}</div>
@@ -147,35 +147,68 @@ export default function Page() {
 
       {/* 오른쪽 영역 */}
       <div className="flex-1 gap-x-2 mt-6 gap-y-6 lg:gap-y-10">
-        <div className="w-full flex flex-row lg:flex-col gap-x-2 gap-y-10">
-          <div className="w-[54px] h-[54px] lg:w-auto lg:h-auto">
-            <FavoriteButton workerId={estimate.workerId} isFavorite={liked} />
+        <div className="w-full hidden lg:block">
+          <div className="w-full flex flex-row lg:flex-col gap-x-2 gap-y-10">
+            <div className="w-[54px] h-[54px] lg:w-auto lg:h-auto">
+              <FavoriteButton workerId={estimate.workerId} isFavorite={liked} />
+            </div>
+
+            <ButtonSolid
+              disabled={estimate.isConfirmed}
+              onClick={async () => {
+                if (!estimate.price || estimate.price < 0) {
+                  alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
+                  return;
+                }
+
+                try {
+                  await confirmEstimate(estimate.id);
+                  alert('견적이 확정되었습니다.');
+                } catch (error) {
+                  alert('견적 확정에 실패했습니다.');
+                  console.error(error);
+                }
+              }}
+            >
+              견적 확정하기
+            </ButtonSolid>
           </div>
-
-          <ButtonSolid
-            disabled={estimate.isConfirmed}
-            onClick={async () => {
-              if (!estimate.price || estimate.price < 0) {
-                alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
-                return;
-              }
-
-              try {
-                await confirmEstimate(estimate.id);
-                alert('견적이 확정되었습니다.');
-              } catch (error) {
-                alert('견적 확정에 실패했습니다.');
-                console.error(error);
-              }
-            }}
-          >
-            견적 확정하기
-          </ButtonSolid>
 
           <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
           {/* Desktop 공유 버튼 */}
           <div className="hidden lg:block">{ShareButtons}</div>
+        </div>
+
+        {/* sm~md 뷰에서만 보여지는 고정 하단 버튼 */}
+        <div className="w-full ">
+          <div
+            className="mx-auto bg-white z-[9999] h-auto w-[327px] md:w-[600px] lg:w-[1400px]
+           fixed bottom-0 left-0 right-0 p-4  flex gap-x-2 items-center lg:hidden"
+          >
+            <div className="w-[54px] h-[54px] lg:w-auto lg:h-auto">
+              <FavoriteButton workerId={estimate.workerId} isFavorite={liked} />
+            </div>
+            <ButtonSolid
+              disabled={estimate.isConfirmed}
+              onClick={async () => {
+                if (!estimate.price || estimate.price < 0) {
+                  alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
+                  return;
+                }
+
+                try {
+                  await confirmEstimate(estimate.id);
+                  alert('견적이 확정되었습니다.');
+                } catch (error) {
+                  alert('견적 확정에 실패했습니다.');
+                  console.error(error);
+                }
+              }}
+            >
+              견적 확정
+            </ButtonSolid>
+          </div>
         </div>
       </div>
     </div>
