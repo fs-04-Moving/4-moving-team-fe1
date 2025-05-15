@@ -77,7 +77,7 @@ export default function SendingEstimatesPage() {
               buttonLink="/worker"
             />
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[24px] gap-y-[48px] w-full max-w-[1400px] justify-items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-[24px] md:gap-[32px] lg:gap-[48px] w-full max-w-[1400px] justify-items-center">
               {estimates.map((card) => (
                 <div
                   key={card.id}
