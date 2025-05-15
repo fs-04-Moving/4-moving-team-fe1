@@ -1,12 +1,19 @@
 'use client';
-/**
- *
- * 로그인 및 기다 설정이 필요하면 추가로 SDK를 설정해야함
- */
+
 export const useFacebookShare = () => {
   const shareToFacebook = (url: string, quote?: string) => {
-    // URL이 없는 경우 현재 페이지 URL 사용
-    const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+    // URL이 없거나 undefined인 경우 현재 페이지 URL 사용
+    let shareUrl = url;
+
+    if (!shareUrl && typeof window !== 'undefined') {
+      shareUrl = window.location.href;
+    }
+
+    // 여전히 URL이 없는 경우 (서버 사이드 렌더링 중일 수 있음)
+    if (!shareUrl) {
+      console.error('공유할 URL이 제공되지 않았습니다.');
+      return;
+    }
 
     // Facebook 공유 URL 생성
     const facebookShareUrl = new URL('https://www.facebook.com/sharer/sharer.php');

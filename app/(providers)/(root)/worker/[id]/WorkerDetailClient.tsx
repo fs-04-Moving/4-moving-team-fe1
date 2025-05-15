@@ -4,10 +4,9 @@ import profilesApi from '@/api/profiles/profiles.api';
 import DividerHor from '@/components/atoms/DividerHor';
 import MovingTypeDisplay from '@/components/molecules/MovingTypeDisplay';
 import RegionDisplay from '@/components/molecules/RegionDisplay';
+import ShareSocial from '@/components/molecules/ShareSocial';
 import WorkerCardInSearch from '@/components/organisms/WorkerCardInSearch';
 import { AreaType, ServiceType } from '@/types/move.type';
-// import { useAuth } from '@/contexts/AuthContext';
-import ShareSocial from '@/components/molecules/ShareSocial';
 import { useQuery } from '@tanstack/react-query';
 import ReviewCardList from '../_components/ReviewCardList';
 import WorkerActionButtons from '../_components/WorkerActionButtons';
@@ -120,11 +119,7 @@ function WorkerDetailClient({ workerId }: WorkerDetailClientProps) {
             <DividerHor />
           </div>
           <section className="hidden lg:inline">
-            <ShareSocial
-              url={`${process.env.NEXT_PUBLIC_BASE_URL}/worker/${workerId}`}
-              nickname={workerData.nickname}
-              summary={workerData.summary}
-            />
+            <ShareSocial nickname={workerData.nickname} summary={workerData.summary} />
           </section>
         </div>
       </div>
