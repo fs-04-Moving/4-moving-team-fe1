@@ -13,6 +13,7 @@ import EstimateSend from './EstimateSend';
 import EstimateRejectSend from './EstimateRejectSend';
 import { useInView } from 'react-intersection-observer';
 import CheckModalRoot from './CheckModalRoot';
+import EmptyListMessage from '../molecules/EmptyListMessage';
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -99,25 +100,29 @@ function ReceivedRequests() {
             openModal={() => setIsFilterModalOpen(true)}
           />
           <div className="flex flex-col gap-12">
-            {data?.pages.flatMap((page) => {
-              return page.list.map((request: ReceivedEstimateRequest) => (
-                <CustomerCardInEstimate
-                  key={request.id}
-                  serviceType={request.serviceType}
-                  status={request.status}
-                  customerName={request.customerName}
-                  movingDate={new Date(request.movingDate)}
-                  departure={request.departure}
-                  destination={request.destination}
-                  isConfirmed={false}
-                  requestDate={new Date(request.createdAt)}
-                  price={request.price}
-                  onSendEstimate={() => openEstimateModal(request)}
-                  onReject={() => openRejectModal(request)}
-                  onViewDetail={() => console.log('상세보기')}
-                />
-              ));
-            })}
+            {data ? (
+              data.pages.flatMap((page) => {
+                return page.list.map((request: ReceivedEstimateRequest) => (
+                  <CustomerCardInEstimate
+                    key={request.id}
+                    serviceType={request.serviceType}
+                    status={request.status}
+                    customerName={request.customerName}
+                    movingDate={new Date(request.movingDate)}
+                    departure={request.departure}
+                    destination={request.destination}
+                    isConfirmed={false}
+                    requestDate={new Date(request.createdAt)}
+                    price={request.price}
+                    onSendEstimate={() => openEstimateModal(request)}
+                    onReject={() => openRejectModal(request)}
+                    onViewDetail={() => console.log('상세보기')}
+                  />
+                ));
+              })
+            ) : (
+              <EmptyListMessage message="아직 받은 요청이 없어요!" />
+            )}
           </div>
           <div ref={ref}></div>
         </section>

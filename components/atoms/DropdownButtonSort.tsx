@@ -20,7 +20,7 @@ function DropdownButtonSort<T extends string>({
 
   return (
     <button className={buttonClassName} onClick={onClick}>
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-center justify-between whitespace-nowrap">
         <span>{selectedValue}</span>
         <Image
           src={icChevronDownBlack}
