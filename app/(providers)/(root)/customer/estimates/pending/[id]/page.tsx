@@ -130,7 +130,7 @@ export default function Page() {
             {(estimate.price ?? 0).toLocaleString()} 원
           </p>
         </div>
-        <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
+        <div className="block lg:hidden border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
         {/* Mobile/Tablet 공유 버튼 */}
         <div className="block lg:hidden">{ShareButtons}</div>

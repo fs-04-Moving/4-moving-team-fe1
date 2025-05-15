@@ -8,7 +8,7 @@ const ROUTES = {
     ROOT: '/customer', // 견적 요청
     ESTIMATES: {
       ROOT: '/customer/estimates',
-      DETAIL: (id: string) => `/customer/estimates/${id}`, // 견적 상세
+      DETAIL: (id: string) => `/customer/estimates/pending/${id}`, // 견적 상세
       PENDING: '/customer/estimates/pending', // 내 견적 관리 - 대기 중인 견적
       RECEIVED: '/customer/estimates/received', // 내 견적 관리 - 받았던 견적
     },
