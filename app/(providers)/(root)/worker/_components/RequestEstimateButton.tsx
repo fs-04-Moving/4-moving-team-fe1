@@ -43,6 +43,10 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
       if (error.message?.includes('already')) {
         errorMessage = '이미 견적이 존재합니다';
         setHasRequested(true);
+        Swal.fire({
+          title: errorMessage,
+          icon: 'info',
+        });
       }
 
       // 일반 견적이 없는 경우
