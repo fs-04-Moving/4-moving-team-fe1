@@ -27,6 +27,7 @@ const ROUTES = {
     DETAIL: (id: string) => `/worker/${id}`, // 기사님 상세
     ESTIMATES: {
       ROOT: '/worker/estimates',
+      DETAIL: (id: string) => `/worker/estimates/${id}`, // 견적 상세
       REJECTED: '/worker/estimates/rejected', // 내 견적 관리 - 반려 요청
       SENDING: '/worker/estimates/sending', // 내 견적 관리 - 보낸 견적 조회
     },
