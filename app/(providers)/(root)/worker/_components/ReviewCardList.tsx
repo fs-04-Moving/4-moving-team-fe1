@@ -70,7 +70,7 @@ function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewC
         </div>
       )}
 
-      <h2 className="text-xl font-bold mb-4">리뷰 ({totalCount})</h2>
+      <h2 className="text-base lg:text-2xl font-bold mb-8">리뷰 ({totalCount})</h2>
 
       {/* 별점 차트 */}
       {totalCount > 0 && (
