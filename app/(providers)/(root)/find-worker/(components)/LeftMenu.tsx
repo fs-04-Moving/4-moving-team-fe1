@@ -57,7 +57,7 @@ function FilterArea() {
       <div className="flex flex-col gap-9">
         <div className="flex justify-between px-2.5 py-4 border-b-[1px] border-Line-200">
           <span className="text-xl">필터</span>
-          <span className="text-GrayScale-300" onClick={handleFilterReset}>
+          <span className="text-GrayScale-300 cursor-pointer" onClick={handleFilterReset}>
             초기화
           </span>
         </div>
