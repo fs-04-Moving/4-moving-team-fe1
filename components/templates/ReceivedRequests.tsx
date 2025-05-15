@@ -47,7 +47,7 @@ function ReceivedRequests() {
     },
   });
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading, isFetching } =
     useReceivedRequestsQuery(queryParams);
 
   const [requestEstimate, setRequestEstimate] = useState<ReceivedEstimateRequest | null>(null);
@@ -74,15 +74,38 @@ function ReceivedRequests() {
   }, [router]);
 
   const totalCount = data?.pages?.[0]?.totalCount;
-  const pageData = useMemo(() => {
-    const page0 = data?.pages?.[0];
-    return {
-      smallMove: page0?.smallMove,
-      officeMove: page0?.officeMove,
-      homeMove: page0?.homeMove,
-      serviceAreaCount: page0?.serviceAreaCount,
-      assignedCount: page0?.assignedCount,
-    };
+  // 깜빡임 방지를 위해서 스타일 변경
+  // const pageData = useMemo(() => {
+  //   const page0 = data?.pages?.[0];
+  //   return {
+  //     smallMove: page0?.smallMove,
+  //     officeMove: page0?.officeMove,
+  //     homeMove: page0?.homeMove,
+  //     serviceAreaCount: page0?.serviceAreaCount,
+  //     assignedCount: page0?.assignedCount,
+  //   };
+  // }, [data]);
+
+  const [pageData, setPageData] = useState({
+    smallMove: 0,
+    officeMove: 0,
+    homeMove: 0,
+    serviceAreaCount: 0,
+    assignedCount: 0,
+  });
+
+  useEffect(() => {
+    if (data?.pages?.[0]) {
+      const page0 = data.pages[0];
+      setPageData({
+        smallMove: page0.smallMove,
+        officeMove: page0.officeMove,
+        homeMove: page0.homeMove,
+        serviceAreaCount: page0.serviceAreaCount,
+        assignedCount: page0.assignedCount,
+      });
+    }
+    // else: data 없으면 기존 pageData 유지!
   }, [data]);
 
   return (
@@ -100,7 +123,18 @@ function ReceivedRequests() {
             openModal={() => setIsFilterModalOpen(true)}
           />
           <div className="flex flex-col gap-12">
-            {data ? (
+            {(isLoading || (isFetching && !data)) && <div></div>}
+
+            {!isLoading &&
+              !isFetching &&
+              data &&
+              data.pages.flatMap((page) => page.list).length === 0 && (
+                <EmptyListMessage message="아직 받은 요청이 없어요!" />
+              )}
+
+            {!isLoading &&
+              !isFetching &&
+              data &&
               data.pages.flatMap((page) => {
                 return page.list.map((request: ReceivedEstimateRequest) => (
                   <CustomerCardInEstimate
@@ -119,10 +153,7 @@ function ReceivedRequests() {
                     onViewDetail={() => console.log('상세보기')}
                   />
                 ));
-              })
-            ) : (
-              <EmptyListMessage message="아직 받은 요청이 없어요!" />
-            )}
+              })}
           </div>
           <div ref={ref}></div>
         </section>
