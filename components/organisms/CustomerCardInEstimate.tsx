@@ -146,7 +146,9 @@ function CustomerCardInEstimate({
             <ButtonSolid onClick={onSendEstimate} showIcon={true}>
               견적 보내기
             </ButtonSolid>
-            <ButtonOutlined onClick={onReject}>반려</ButtonOutlined>
+            <ButtonOutlined onClick={onReject} disabled={status === 'assigned' ? false : true}>
+              반려
+            </ButtonOutlined>
           </div>
         ) : (
           ''
