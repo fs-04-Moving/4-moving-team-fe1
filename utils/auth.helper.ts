@@ -14,13 +14,15 @@ export const logoutHelper = async (onAfterLogout?: () => void) => {
     console.error('서버 로그아웃 실패', e);
   }
 
-  // client.defaults.headers['Authorization'] = '';
-  // localStorage.removeItem('accessToken');
-
   const queryClient = getBrowserQueryClient();
   queryClient.removeQueries({ queryKey: ['me'] });
 
-  if (onAfterLogout) {
-    onAfterLogout();
+  if (typeof window !== 'undefined') {
+    // 강제 fallback: onAfterLogout이 없으면 그냥 홈으로 리다이렉트
+    if (onAfterLogout) {
+      onAfterLogout();
+    } else {
+      window.location.href = '/';
+    }
   }
 };
