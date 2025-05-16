@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://m.luxblock.co.kr/file_data/luxblook/2020/08/17/4b0708ca352f2f903ed0ef0162bac4f2.png',
-        width: 1200,
-        height: 630,
+        url: 'https://i.postimg.cc/zfmnrJ0F/moving.jpg',
+        width: 1017,
+        height: 570,
         alt: '작성한 리뷰 페이지 미리보기 이미지',
       },
     ],

@@ -4,6 +4,22 @@ import './globals.css';
 
 export const metadata = {
   title: { default: '이사할 땐, 무빙', template: '무빙 | %s' },
+  description: '소형이사, 가정이사, 사무실이사, 모든이사는 무빙',
+  
+  openGraph: {
+    title: '이사할땐, 무빙',
+    description: '이사를 하시나요? 어떤 이사든 다양한 기사님에게 견적을 받아보고 원하는 기사님과 이사해보세요! 무:무조건 무빙에서 이사하면 빙:빙그레 웃게 됩니다! ',
+    siteName: '이사할땐, 무빙',
+    type: 'website',
+    images: [
+      {
+        url: 'https://i.postimg.cc/zfmnrJ0F/moving.jpg',
+        width: 1017,
+        height: 570,
+        alt: '무빙 런칭',
+      },
+    ],
+  },
 };
 
 export default function HTMLLayout({ children }: { children: ReactNode }) {
