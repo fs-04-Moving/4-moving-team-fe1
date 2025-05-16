@@ -185,6 +185,11 @@
         <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="40" height="40" alt="GitHub BE"/>
       </a>
     </td>
+    <td align="center" width="150">
+      <a href="https://68255332f0ee06c4d95ed53b-smusddisct.chromatic.com/?path=/docs/organisms-customercardinestimate--docs" target="_blank">
+        <img src="https://api.iconify.design/logos/storybook-icon.svg" width="40" height="40" alt="Storybook"/>
+      </a>
+    </td>
   </tr>
   <tr>
     <td align="center">
@@ -195,6 +200,9 @@
     </td>
     <td align="center">
       <strong>Backend Repo</strong>
+    </td>
+    <td align="center">
+      <strong>Storybook</strong>
     </td>
   </tr>
 </table>
