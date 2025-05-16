@@ -32,7 +32,7 @@ function LandingPage() {
               />
             </div>
             <div className="relative bg-GrayScale-50 rounded-4xl w-[327px] lg:w-[764px] h-[240px] lg:h-[287px]">
-              <TitleLandingImage title="가정이사" subTitle="쓰리룸, 20평대 미만" />
+              <TitleLandingImage title="기업이사" subTitle="사무실, 상업공간" />
               <Image
                 src={landing03}
                 alt="랜딩이미지"
