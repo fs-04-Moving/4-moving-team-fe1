@@ -134,9 +134,9 @@ function PendingReviewsClient() {
     <div className="bg-BackGround-100 min-h-full">
     <div className="flex items-center justify-center"> 
       <div className="flex flex-col justify-between items-center w-[327px] md:w-[600px] lg:w-[1400px] "> 
-        {isFetching && !isLoading && (
+        {/* {isFetching && !isLoading && (
             <div className="text-center text-gray-500 mb-4">데이터 업데이트 중...</div>
-        )}
+        )} */}
 
         <div className="flex flex-wrap w-full justify-center lg:justify-start pt-2" >
           {reviews.length === 0 ? (
