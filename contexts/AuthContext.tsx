@@ -78,7 +78,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoggedIn(false);
     setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
     queryClient.removeQueries({ queryKey: ['me'] });
-    router.replace(ROUTES.HOME);
   };
 
   const value: AuthContextValue = {
