@@ -1,5 +1,7 @@
+import ButtonReacitveFilter from '@/components/atoms/ButtonReacitveFilter';
 import DropdownSort from '@/components/molecules/DropdownSort';
 import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
+import { DEFAULT_SORT_OPTION_IN_WORKER_PAGE } from '@/constants/dropdownSortConstants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -8,7 +10,13 @@ interface FormValues {
   keyword: string;
 }
 
-function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
+function TopMemuInWorkerPage({
+  totalCount,
+  openModal,
+}: {
+  totalCount: number;
+  openModal: () => void;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { control, handleSubmit } = useForm({
@@ -17,20 +25,21 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
     },
   });
 
+  const defaultSortOption =
+    searchParams.get('orderBy') === 'earliestMove'
+      ? '이사 빠른순'
+      : searchParams.get('orderBy') === 'earliestRequest'
+        ? '요청일 빠른순'
+        : DEFAULT_SORT_OPTION_IN_WORKER_PAGE;
+
   const handleOrderBySelect = (order?: string) => {
     const newParams = new URLSearchParams(searchParams);
     switch (order) {
-      case '리뷰 많은순':
-        newParams.set('orderBy', 'mostReview');
+      case '이사 빠른순':
+        newParams.set('orderBy', 'earliestMove');
         break;
-      case '평점 높은순':
-        newParams.set('orderBy', 'highestRated');
-        break;
-      case '경력 높은순':
-        newParams.set('orderBy', 'mostExperience');
-        break;
-      case '확정 많은순':
-        newParams.set('orderBy', 'mostConfirmed');
+      case '요청일 빠른순':
+        newParams.set('orderBy', 'earliestRequest');
         break;
       default:
         return;
@@ -56,10 +65,16 @@ function TopMemuInWorkerPage({ totalCount }: { totalCount: number }) {
       </form>
       <div className="w-full flex justify-between items-center ">
         <span className="text-[16px] font-medium">{`전체 ${totalCount || 0}건`}</span>
-        <span className="z-10">
+        <span className="z-10 flex gap-1 items-center">
           <DropdownSort
             onChange={handleOrderBySelect}
-            options={['리뷰 많은순', '평점 높은순', '경력 높은순', '확정 많은순']}
+            options={['이사 빠른순', '요청일 빠른순']}
+            defaultValue={defaultSortOption}
+          />
+          <ButtonReacitveFilter
+            onClick={() => {
+              openModal();
+            }}
           />
         </span>
       </div>

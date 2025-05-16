@@ -1,15 +1,18 @@
 import icChevronDownBlack from '@/assets/images/ic-chevron-down-black.svg';
-import { sortOption } from '@/constants/dropdownSortConstants';
 import clsx from 'clsx';
 import Image from 'next/image';
 
-interface Props {
-  selectedValue: sortOption;
+interface Props<T extends string> {
+  selectedValue: T;
   isOpen?: boolean;
   onClick: () => void;
 }
 
-function DropdownButtonSort({ selectedValue, isOpen = false, onClick }: Props) {
+function DropdownButtonSort<T extends string>({
+  selectedValue,
+  isOpen = false,
+  onClick,
+}: Props<T>) {
   // 아웃라인 스타일 없이 간단한 스타일 적용
   const buttonClassName = clsx(
     'w-[91px] md:w-[114px] lg:w-[114px] h-[32px] md:h-[40px] lg:h-[40px] px-1.5 md:px-2.5 lg:px-2.5 cursor-pointer rounded-lg text-xs md:text-sm lg:text-sm font-semibold text-Black-400',
@@ -17,7 +20,7 @@ function DropdownButtonSort({ selectedValue, isOpen = false, onClick }: Props) {
 
   return (
     <button className={buttonClassName} onClick={onClick}>
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-center justify-between whitespace-nowrap">
         <span>{selectedValue}</span>
         <Image
           src={icChevronDownBlack}

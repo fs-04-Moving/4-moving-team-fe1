@@ -87,3 +87,14 @@ export async function confirmEstimate(estimateId: string): Promise<void> {
     errorHandler(error);
   }
 }
+
+// 지정 견적 요청하기: 로그인사용자가 요청하기
+export async function createAssignedEstimate(workerId: string): Promise<boolean> {
+  try {
+    await client.post(`/estimate/assigned/${workerId}`);
+    return true;
+  } catch (error) {
+    errorHandler(error);
+    return false;
+  }
+}

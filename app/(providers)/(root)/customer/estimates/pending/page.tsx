@@ -4,62 +4,66 @@ import { confirmEstimate, getPendingEstimate } from '@/api/estimate/customerOnly
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
+import Pagination from '@/components/molecules/Pagination'; // ✅ 추가
+import ROUTES from '@/constants/routes';
 import { Estimate } from '@/types/entities/estimate.entity';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+const PAGE_SIZE = 10; // 페이지 당 항목 수
 
 export default function PendingEstimatesPage() {
   const router = useRouter();
-  const [estimates, setEstimates] = useState<Estimate[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [refreshKey, setRefreshKey] = useState(0); // ✅ 상태 리프레시용 key
+  const queryClient = useQueryClient();
+  const [currentPage, setCurrentPage] = useState(1); // ✅ 현재 페이지 상태
 
-  // 데이터 요청
-  useEffect(() => {
-    async function fetchEstimates() {
-      setIsLoading(true);
-      try {
-        const { estimates } = await getPendingEstimate(1, 10);
-        setEstimates(estimates);
-      } catch (error: unknown) {
-        if (
-          typeof error === 'object' &&
-          error !== null &&
-          'isAxiosError' in error &&
-          (error as AxiosError).isAxiosError
-        ) {
-          const axiosError = error as AxiosError<{ message: string }>;
-          const status = axiosError.response?.status;
-          const message = axiosError.response?.data?.message;
+  const { data, isLoading, isError, error } = useQuery<
+    { estimates: Estimate[]; totalCount: number },
+    AxiosError
+  >({
+    queryKey: ['pending-estimates', currentPage],
+    queryFn: () => getPendingEstimate(currentPage, PAGE_SIZE),
+    staleTime: 1000 * 60 * 5,
+    retry: 0,
+  });
 
-          if (
-            status === 400 &&
-            typeof message === 'string' &&
-            message.includes('active Estimate Request not found')
-          ) {
-            setEstimates([]); // 빈 목록 처리
-          } else {
-            console.error('견적 목록을 불러오는 데 실패했습니다.', axiosError);
-          }
-        } else {
-          console.error('예상치 못한 에러입니다.', error);
-        }
-      } finally {
-        setIsLoading(false);
-      }
+  const estimates = data?.estimates ?? [];
+  const totalCount = data?.totalCount ?? 0;
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  const unconfirmedEstimates = estimates.filter((e) => !e.isConfirmed);
+
+  const handleConfirm = async (estimateId: string, price?: number) => {
+    if (!price || price <= 0) {
+      alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
+      return;
     }
 
-    fetchEstimates();
-  }, [refreshKey]); // ✅ refreshKey 변경 시 다시 호출
-
-  const unconfirmedEstimates = estimates.filter((e) => !e.isConfirmed); // ✅ 필터링
+    try {
+      await confirmEstimate(estimateId);
+      alert('견적이 확정되었습니다.');
+      await queryClient.invalidateQueries({ queryKey: ['pending-estimates'] });
+    } catch (err) {
+      alert('견적 확정에 실패했습니다.');
+      console.error(err);
+    }
+  };
 
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center">
         <LoadingSpinner size="md" />
         <p className="text-3xl mt-10">상세 견적 불러오는 중입니다...</p>
+      </div>
+    );
+  }
+
+  if (isError) {
+    console.error('에러 발생:', error);
+    return (
+      <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
+        <EmptyListMessage message="견적을 불러오는 데 실패했습니다." />
       </div>
     );
   }
@@ -77,12 +81,12 @@ export default function PendingEstimatesPage() {
       <div className="p-8 lg:p-10 bg-BackGround-200"></div>
       <div
         className="
-        mx-auto
-        w-[327px] md:w-[600px] lg:w-[1400px]
-        grid grid-cols-1 lg:grid-cols-2 
-        gap-x-6 
-        gap-y-8 lg:gap-y-12
-      "
+          mx-auto
+          w-[327px] md:w-[600px] lg:w-[1400px]
+          grid grid-cols-1 lg:grid-cols-2 
+          gap-x-6 
+          gap-y-8 lg:gap-y-12
+        "
       >
         {unconfirmedEstimates.map((estimate) => (
           <WorkerCardInWating
@@ -91,10 +95,10 @@ export default function PendingEstimatesPage() {
             nickname={estimate.nickname}
             experience={estimate.experience}
             confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-            isFavorite={false}
+            isFavorite={estimate.isFavorite ?? false}
             favoritesCount={estimate.favoritesCount}
             services={[estimate.serviceType]}
-            isDirectEstimate={false}
+            isDirectEstimate={estimate.status === 'assigned'}
             price={estimate.price || 0}
             status={estimate.status}
             movingDate={estimate.movingDate}
@@ -102,27 +106,21 @@ export default function PendingEstimatesPage() {
             destination={estimate.destination}
             reviewsAverage={estimate.rating ?? 0}
             reviewsCount={estimate.reviewsCount}
-            onConfirm={async () => {
-              if (!estimate.price || estimate.price <= 0) {
-                alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
-                return;
-              }
-
-              try {
-                await confirmEstimate(estimate.id);
-                alert('견적이 확정되었습니다.');
-                setRefreshKey((prev) => prev + 1); // ✅ 상태 갱신
-              } catch (error) {
-                alert('견적 확정에 실패했습니다.');
-                console.error(error);
-              }
-            }}
+            onConfirm={() => handleConfirm(estimate.id, estimate.price)}
             onViewDetail={() => {
-              router.push(`/customer/estimates/pending/${estimate.id}`);
+              router.push(ROUTES.CUSTOMER.ESTIMATES.DETAIL(estimate.id));
             }}
           />
         ))}
       </div>
+
+      {/* ✅ 페이지네이션 컴포넌트 추가 */}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+        className="mt-12 mb-6"
+      />
     </div>
   );
 }

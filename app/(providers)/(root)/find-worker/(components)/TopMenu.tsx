@@ -2,6 +2,7 @@ import DropdownArea from '@/components/molecules/DropdownArea';
 import DropdownService from '@/components/molecules/DropdownService';
 import DropdownSort from '@/components/molecules/DropdownSort';
 import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
+import { DEFAULT_SORT_OPTION } from '@/constants/dropdownSortConstants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
@@ -93,6 +94,7 @@ function TopMenu() {
           <DropdownSort
             onChange={handleOrderBySelect}
             options={['리뷰 많은순', '평점 높은순', '경력 높은순', '확정 많은순']}
+            defaultValue={DEFAULT_SORT_OPTION}
           />
         </span>
       </div>

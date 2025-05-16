@@ -1,14 +1,18 @@
-import { sortOption } from '@/constants/dropdownSortConstants';
 import clsx from 'clsx';
 
-interface Props {
-  options: sortOption[];
-  selectedValue: sortOption;
+interface Props<T extends string> {
+  options: T[];
+  selectedValue: T;
   isOpen: boolean;
-  onSelect: (value: sortOption) => void;
+  onSelect: (value: T) => void;
 }
 
-function DropdownListSort({ options, selectedValue, isOpen, onSelect }: Props) {
+function DropdownListSort<T extends string>({
+  options,
+  selectedValue,
+  isOpen,
+  onSelect,
+}: Props<T>) {
   if (!isOpen) return null;
 
   return (

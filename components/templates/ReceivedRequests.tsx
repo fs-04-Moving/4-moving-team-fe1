@@ -12,6 +12,8 @@ import ResponsiveModal from './ResponsiveModal';
 import EstimateSend from './EstimateSend';
 import EstimateRejectSend from './EstimateRejectSend';
 import { useInView } from 'react-intersection-observer';
+import CheckModalRoot from './CheckModalRoot';
+import EmptyListMessage from '../molecules/EmptyListMessage';
 
 export interface ReceivedEstimateRequest extends EstimateRequest {
   customerId: string;
@@ -45,7 +47,7 @@ function ReceivedRequests() {
     },
   });
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading, isFetching } =
     useReceivedRequestsQuery(queryParams);
 
   const [requestEstimate, setRequestEstimate] = useState<ReceivedEstimateRequest | null>(null);
@@ -53,6 +55,7 @@ function ReceivedRequests() {
   // 모달 관련 //
   const [isEstimateModalOpen, setIsEstimateModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   const openEstimateModal = (request: ReceivedEstimateRequest) => {
     setRequestEstimate(request);
@@ -71,15 +74,38 @@ function ReceivedRequests() {
   }, [router]);
 
   const totalCount = data?.pages?.[0]?.totalCount;
-  const pageData = useMemo(() => {
-    const page0 = data?.pages?.[0];
-    return {
-      smallMove: page0?.smallMove,
-      officeMove: page0?.officeMove,
-      homeMove: page0?.homeMove,
-      serviceAreaCount: page0?.serviceAreaCount,
-      assignedCount: page0?.assignedCount,
-    };
+  // 깜빡임 방지를 위해서 스타일 변경
+  // const pageData = useMemo(() => {
+  //   const page0 = data?.pages?.[0];
+  //   return {
+  //     smallMove: page0?.smallMove,
+  //     officeMove: page0?.officeMove,
+  //     homeMove: page0?.homeMove,
+  //     serviceAreaCount: page0?.serviceAreaCount,
+  //     assignedCount: page0?.assignedCount,
+  //   };
+  // }, [data]);
+
+  const [pageData, setPageData] = useState({
+    smallMove: 0,
+    officeMove: 0,
+    homeMove: 0,
+    serviceAreaCount: 0,
+    assignedCount: 0,
+  });
+
+  useEffect(() => {
+    if (data?.pages?.[0]) {
+      const page0 = data.pages[0];
+      setPageData({
+        smallMove: page0.smallMove,
+        officeMove: page0.officeMove,
+        homeMove: page0.homeMove,
+        serviceAreaCount: page0.serviceAreaCount,
+        assignedCount: page0.assignedCount,
+      });
+    }
+    // else: data 없으면 기존 pageData 유지!
   }, [data]);
 
   return (
@@ -92,45 +118,61 @@ function ReceivedRequests() {
       <div className="flex justify-center gap-28">
         <LeftMenuInWorkerPage {...pageData} />
         <section className="w-[327px] md:w-[600px] lg:w-[955px] flex flex-col gap-[32px]">
-          <TopMemuInWorkerPage totalCount={totalCount} />
+          <TopMemuInWorkerPage
+            totalCount={totalCount}
+            openModal={() => setIsFilterModalOpen(true)}
+          />
           <div className="flex flex-col gap-12">
-            {data?.pages.flatMap((page) => {
-              return page.list.map((request: ReceivedEstimateRequest) => (
-                <CustomerCardInEstimate
-                  key={request.id}
-                  serviceType={request.serviceType}
-                  status={request.status}
-                  customerName={request.customerName}
-                  movingDate={new Date(request.movingDate)}
-                  departure={request.departure}
-                  destination={request.destination}
-                  isConfirmed={false}
-                  requestDate={new Date(request.createdAt)}
-                  price={request.price}
-                  onSendEstimate={() => openEstimateModal(request)}
-                  onReject={() => openRejectModal(request)}
-                  onViewDetail={() => console.log('상세보기')}
-                />
-              ));
-            })}
+            {(isLoading || (isFetching && !data)) && <div></div>}
+
+            {!isLoading &&
+              !isFetching &&
+              data &&
+              data.pages.flatMap((page) => page.list).length === 0 && (
+                <EmptyListMessage message="아직 받은 요청이 없어요!" />
+              )}
+
+            {!isLoading &&
+              !isFetching &&
+              data &&
+              data.pages.flatMap((page) => {
+                return page.list.map((request: ReceivedEstimateRequest) => (
+                  <CustomerCardInEstimate
+                    key={request.id}
+                    serviceType={request.serviceType}
+                    status={request.status}
+                    customerName={request.customerName}
+                    movingDate={new Date(request.movingDate)}
+                    departure={request.departure}
+                    destination={request.destination}
+                    isConfirmed={false}
+                    requestDate={new Date(request.createdAt)}
+                    price={request.price}
+                    onSendEstimate={() => openEstimateModal(request)}
+                    onReject={() => openRejectModal(request)}
+                    onViewDetail={() => console.log('상세보기')}
+                  />
+                ));
+              })}
           </div>
           <div ref={ref}></div>
         </section>
       </div>
-      <ResponsiveModal
-        width="lg:w-[608px] md:w-[375px] "
-        isOpen={isEstimateModalOpen}
-        onClose={closeEstimateModal}
-      >
+      <ResponsiveModal width="lg:w-[608px] md:w-[375px] " isOpen={isEstimateModalOpen}>
         <EstimateSend onClose={closeEstimateModal} request={requestEstimate} />
       </ResponsiveModal>
 
-      <ResponsiveModal
-        width="md:w-[375px] lg:w-[608px]"
-        isOpen={isRejectModalOpen}
-        onClose={closeRejectModal}
-      >
+      <ResponsiveModal width="md:w-[375px] lg:w-[608px]" isOpen={isRejectModalOpen}>
         <EstimateRejectSend onClose={closeRejectModal} request={requestEstimate} />
+      </ResponsiveModal>
+
+      <ResponsiveModal width="w-[375px]" isOpen={isFilterModalOpen}>
+        <CheckModalRoot
+          closeModal={() => {
+            setIsFilterModalOpen(false);
+          }}
+          {...pageData}
+        />
       </ResponsiveModal>
     </main>
   );
