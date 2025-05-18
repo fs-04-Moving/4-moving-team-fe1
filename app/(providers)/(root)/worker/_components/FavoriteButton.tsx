@@ -22,15 +22,15 @@ function FavoriteButton({ workerId, isFavorite }: FavoriteButtonProps) {
   const { mutate: toggleFavorite, isPending } = useMutation({
     mutationFn: async () => {
       if (isFavorite) {
-        console.log('체크 1');
         return favoriteApi.deleteFavorite(workerId);
       } else {
-        console.log('체크 2');
         return favoriteApi.createFavorite(workerId);
       }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['worker', workerId] });
+      queryClient.invalidateQueries({ queryKey: ['workers'] });
+      queryClient.invalidateQueries({ queryKey: ['favoriteWorkers'] });
       console.log(isFavorite ? '찜 목록에서 제거되었습니다.' : '찜 목록에 추가되었습니다.');
     },
     onError: (error) => {
