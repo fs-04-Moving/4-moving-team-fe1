@@ -87,13 +87,19 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     const eventSource = new EventSource(`${process.env.NEXT_PUBLIC_API_URL}/notification`, {
       withCredentials: true,
     });
+
+    eventSource.onopen = () => {
+      console.log('SSE 연결 성공');
+    };
+
     eventSource.onmessage = (event) => {
+      console.log('SSE 메시지 수신:', event.data);
       const parsedData = JSON.parse(event.data);
       //맨처음 알림은 10개 배열로 받아오고 그 이후 알람은 배열이 아니여서 처리가 필요함
       const newNotifications = Array.isArray(parsedData.notification)
         ? parsedData.notification
         : [parsedData.notification];
-
+      console.log('파싱된 알림:', newNotifications);
       setNotifications((prevNotifications) => [...newNotifications, ...prevNotifications]);
     };
 

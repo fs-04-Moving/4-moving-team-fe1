@@ -29,8 +29,8 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
     onSuccess: () => {
       setHasRequested(true);
       Swal.fire({
-        title: '경적요청 성공!',
-        text: '지정 견적 요청이 성공적으로 전송되었습니다.',
+        title: '견적요청 성공!',
+        text: '지정 견적요청이 성공적으로 전송되었습니다.',
         icon: 'success',
         confirmButtonText: '확인',
       });
