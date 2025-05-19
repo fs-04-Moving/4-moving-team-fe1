@@ -6,6 +6,7 @@ import { getErrorMessageFromCode } from '@/utils/oauth/getErrorMessageFromCode';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 interface UseLoginMutationOptions {
   setIsProcessing: (v: boolean) => void;
@@ -55,6 +56,26 @@ export function useLoginMutation({ setIsProcessing, onError }: UseLoginMutationO
       setIsProcessing(false);
 
       const data = (error.response?.data || {}) as ErrorResponse;
+      // 메시지 매핑 처리
+      if (data.toString() === '유저가 존재하지 않습니다.') {
+        Swal.fire({
+          title: '로그인 실패',
+          text: '유저가 존재하지 않습니다.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
+        return;
+      }
+
+      if (data.toString() === 'Incorrect password') {
+        Swal.fire({
+          title: '로그인 실패',
+          text: '패스워드가 일치하지 않습니다.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
+        return;
+      }
 
       if (data?.errorCode) {
         const message = getErrorMessageFromCode(data.errorCode, data);
@@ -66,10 +87,19 @@ export function useLoginMutation({ setIsProcessing, onError }: UseLoginMutationO
           return;
         }
 
-        // 그 외 오류는 alert
-        alert(message);
+        Swal.fire({
+          title: '로그인 실패',
+          text: message,
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
       } else {
-        alert('에러가 발생했습니다. 다시 시도해 주세요.');
+        Swal.fire({
+          title: '오류 발생',
+          text: '에러가 발생했습니다. 다시 시도해 주세요.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
       }
 
       // 외부에서 전달된 onError 콜백이 있다면 호출
