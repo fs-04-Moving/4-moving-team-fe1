@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       },
     };
   } catch (error) {
+    console.error('워커 프로필 데이터를 가져오는 중 오류 발생:', error);
     // 오류 발생 시 기본 메타데이터 반환
     return {
       title: '기사님 정보',
