@@ -5,7 +5,6 @@
 
 <br>
 
-
 ## 목차
 
 1. [**웹 서비스 소개**](#1)
@@ -111,7 +110,6 @@
 
 ---
 
-
 ### 💻 FrontEnd
 
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=white)
@@ -132,10 +130,7 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white)
 
-
-
 ---
-
 
 ### ☁️ Infrastructure
 
@@ -215,12 +210,13 @@
 
 <img src="https://bakey-api.codeit.kr/api/files/resource?root=static&seqId=11061&version=1&directory=/%25E1%2584%2586%25E1%2585%25AE%25E1%2584%2587%25E1%2585%25B5%25E1%2586%25BC_%25E1%2584%258B%25E1%2585%25A1%25E1%2584%258F%25E1%2585%25B5%25E1%2584%2590%25E1%2585%25A6%25E1%2586%25A8%25E1%2584%258E%25E1%2585%25A5.png&name=%25E1%2584%2586%25E1%2585%25AE%25E1%2584%2587%25E1%2585%25B5%25E1%2586%25BC_%25E1%2584%258B%25E1%2585%25A1%25E1%2584%258F%25E1%2585%25B5%25E1%2584%2590%25E1%2585%25A6%25E1%2586%25A8%25E1%2584%258E%25E1%2585%25A5.png" alt="architecture" height="800" />
 
-
 <br/>
 
 <div id="6"></div>
 
 ## 🖥️ 서비스 화면
+
+<img src='@/assets/images/customerlanding.gif'alt='customerlanding' />
 
 <br>
 
@@ -228,14 +224,14 @@
 
 ## 👥 P&R
 
-| 이름 | 담당 파트 | 주요 역할 |
-|------|-----------|-----------|
+| 이름   | 담당 파트        | 주요 역할                  |
+| ------ | ---------------- | -------------------------- |
 | 조형민 | Frontend&Backend | - 팀장<br>- 내용<br>- 내용 |
-| 김주영 | Frontend | - 내용<br>- 내용<br>- 내용 |
-| 구은모 | Frontend | - 내용<br>- 내용<br>- 내용 |
-| 정진호 | Frontend | - 내용<br>- 내용<br>- 내용 |
-| 김형준 | Frontend | - 내용<br>- 내용<br>- 내용 |
-| 엄성민 | Backend | - 내용<br>- 내용<br>- 내용 |
-| 김희주 | Frontend | - 내용<br>- 내용<br>- 내용 |
+| 김주영 | Frontend         | - 내용<br>- 내용<br>- 내용 |
+| 구은모 | Frontend         | - 내용<br>- 내용<br>- 내용 |
+| 정진호 | Frontend         | - 내용<br>- 내용<br>- 내용 |
+| 김형준 | Frontend         | - 내용<br>- 내용<br>- 내용 |
+| 엄성민 | Backend          | - 내용<br>- 내용<br>- 내용 |
+| 김희주 | Frontend         | - 내용<br>- 내용<br>- 내용 |
 
 </div>
