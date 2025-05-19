@@ -216,7 +216,14 @@
 
 ## 🖥️ 서비스 화면
 
-<img src='@/assets/images/customerlanding.gif'alt='customerlanding' />
+### 1. 고객 견적 요청 페이지
+<img src="https://raw.githubusercontent.com/fs-04-Moving/4-moving-team-fe1/develop/assets/images/customerlanding.gif" width="600"/>
+
+### 2. 견적 보내기, 보낸 견적 관리 페이지
+<img src="https://raw.githubusercontent.com/lucy-kim04/BaekJoonCode/main/847c55483cc440e387bd435321764b0c.gif" width="600"/>
+
+### 3. 기사 정보 수정 페이지
+<img src="https://raw.githubusercontent.com/lucy-kim04/BaekJoonCode/main/a55492e8d07247d4abf595742e1a570e.gif" width="600"/>
 
 <br>
 
