@@ -5,6 +5,7 @@ import ButtonSolid from '../atoms/ButtonSolid';
 import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
 import ChipText from '../atoms/ChipText';
+import Swal from 'sweetalert2';
 
 type Props = {
   id?: string;
@@ -21,6 +22,7 @@ type Props = {
   onReject?: () => void;
   onViewDetail?: () => void;
   showOverlay?: boolean;
+  rejectedMessage?: string;
 };
 
 /**
@@ -37,6 +39,7 @@ type Props = {
  * @param {Date} movingDate - 예정된 이사 날짜
  * @param {string} departure - 출발지 주소
  * @param {string} destination - 도착지 주소
+ * @param {string} rejectedMessage - 반려시 작성한 메시지
  * @param {boolean} isConfirmed - 견적이 확정되었는지 여부
  * @param {Date} requestDate - 견적 요청 생성 시간
  * @param {number} [price] - 견적 금액 (선택적)
@@ -58,6 +61,7 @@ type Props = {
  *   onSendEstimate={() => console.log('견적 보내기')}
  *   onReject={() => console.log('반려')}
  *   onViewDetail={() => console.log('상세보기')}
+ *   rejectedMessage={'반려시 작성한 메시지'}
  * />
  */
 function CustomerCardInEstimate({
@@ -73,6 +77,7 @@ function CustomerCardInEstimate({
   onReject,
   onViewDetail,
   showOverlay,
+  rejectedMessage,
 }: Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
@@ -94,6 +99,13 @@ function CustomerCardInEstimate({
 
   const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
   const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
+
+  const onViewRejectedMessage = (rejectedMessage: string) => {
+    Swal.fire({
+      title: '반려 메시지',
+      text: rejectedMessage,
+    });
+  };
 
   return (
     <div className="relative">
@@ -157,7 +169,19 @@ function CustomerCardInEstimate({
       {/* 조건 만족시 오버레이 */}
       {showOverlay !== false && (isRejected || isPastMovingDate) && (
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
-          {!hasPrice && isRejected && <p>반려된 요청이에요</p>}
+          {!hasPrice && isRejected && (
+            <div className="flex flex-col items-center gap-4">
+              <p>반려된 요청이에요</p>
+              <div className="max-w-[108px] lg:max-w-[123px]">
+                <ButtonOutlined
+                  intent="active"
+                  onClick={() => onViewRejectedMessage(rejectedMessage)}
+                >
+                  <span className="text-[14px] lg:text-[16px] px-3">상세보기</span>
+                </ButtonOutlined>
+              </div>
+            </div>
+          )}
           {hasPrice && isPastMovingDate && (
             <div className="flex flex-col items-center gap-4">
               <p>이사 완료된 견적이에요</p>
