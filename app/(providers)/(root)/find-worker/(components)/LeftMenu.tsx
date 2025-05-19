@@ -60,7 +60,6 @@ function FilterArea() {
   useEffect(() => {
     setServiceAreaParam(searchParams.get('serviceArea'));
     setServiceTypeParam(searchParams.get('serviceType'));
-    console.log(serviceAreaParam, serviceTypeParam);
   }, [searchParams]);
 
   return (

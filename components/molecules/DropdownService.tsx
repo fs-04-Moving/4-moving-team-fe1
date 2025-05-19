@@ -1,7 +1,7 @@
 import Dropdown from './Dropdown';
 
 type Props = {
-  defaultValue: string;
+  defaultValue?: string;
   onSelect: (service: string) => void;
 };
 
