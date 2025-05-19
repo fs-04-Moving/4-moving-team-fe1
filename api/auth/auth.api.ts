@@ -49,7 +49,7 @@ const handleOAuthLogin = (role: Role | null, provider: 'google' | 'kakao' | 'nav
   const state = generateOAuthState(role);
   const redirectUrl = `${
     process.env.NEXT_PUBLIC_API_URL
-  }auth/${provider}?state=${encodeURIComponent(state)}`;
+  }/auth/${provider}?state=${encodeURIComponent(state)}`; // 수정
 
   window.location.href = redirectUrl;
 };
