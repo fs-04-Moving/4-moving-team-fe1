@@ -66,6 +66,7 @@ function LeftMenuInWorkerPage({
     setFilterSelected({});
     setSelectedServiceTypes([]);
     setSelectedFilters([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleCheckboxMovingTypes = (id: number) => {
