@@ -98,9 +98,9 @@ function FilterArea() {
             <h3 className="text-xl font-semibold">찜한 기사님</h3>
             {data &&
               !isLoading &&
-              data.list.map((worker, index) => (
-                <Link key={index} href={`${ROUTES.WORKER.ROOT}/${worker.id}`}>
-                  <WorkerCardInSearch key={index} {...worker} isResponsive={false} />
+              data.list.map((worker) => (
+                <Link key={worker.id} href={`${ROUTES.WORKER.ROOT}/${worker.id}`}>
+                  <WorkerCardInSearch {...worker} isResponsive={false} />
                 </Link>
               ))}
             {data && data.list.length >= 3 && (
