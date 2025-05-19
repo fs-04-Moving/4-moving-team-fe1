@@ -22,6 +22,7 @@ import Label from '../atoms/Label';
 import ChatBubbleAddress from '../molecules/ChatBubbleAddress';
 import ChatBubbleMovingChoice from '../molecules/ChatBubbleMovingChoice';
 import ProgressBar from '../molecules/ProgressBar';
+import Swal from 'sweetalert2';
 
 function RequestEstimate() {
   const [step, setStep] = useState(1);
@@ -37,16 +38,24 @@ function RequestEstimate() {
   const { user } = useAuth();
   const router = useRouter();
   const queryClient = useQueryClient();
-  console.log('estimate request user', user);
 
   const { mutate: createEstimateRequest } = useMutation({
     mutationFn: (data: CreateEstimateRequestDto) => estimateRequestApi.createEstimateRequest(data),
     onSuccess: () => {
-      router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING);
-      // TODO: 내 견적 관리의 '대기 중인 견적' 쿼리 무효화 함수 추가
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ['me'] });
       }, 1000);
+      Swal.fire({
+        text: '완료되었습니다.',
+        icon: 'info',
+        confirmButtonText: '확인 ',
+        confirmButtonColor: '#3085d6',
+      }).then((result) => {
+        if (!user) return;
+        if (result.isConfirmed) {
+          router.push(ROUTES.CUSTOMER.ESTIMATES.PENDING);
+        }
+      });
     },
     onError: () => {
       setIsProcessing(false);

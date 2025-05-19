@@ -69,7 +69,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logOut = async () => {
-    await authApi.logOut();
+    try {
+      await authApi.logOut();
+    } catch (e) {
+      console.error('서버 로그아웃 실패', e);
+    }
     router.replace(ROUTES.HOME);
     setIsLoggedIn(false);
     setIsAuthInitialized(true); // 로그아웃도 초기화 완료로 처리
