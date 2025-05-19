@@ -5,6 +5,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { UseFormSetError } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 interface ErrorResponse {
   errorCode?:
@@ -50,6 +51,18 @@ export function useSignUpMutation({
       setIsProcessing(false);
 
       const data = (error.response?.data || {}) as ErrorResponse;
+      if (data.toString() === '이미 존재하는 이메일입니다.') {
+        setError('email', { message: '이미 존재하는 이메일입니다.' });
+
+        Swal.fire({
+          title: '회원가입 실패',
+          text: '이미 존재하는 이메일입니다.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
+
+        return;
+      }
 
       if (data?.errorCode) {
         const message = getErrorMessageFromCode(data.errorCode, data);
@@ -60,13 +73,19 @@ export function useSignUpMutation({
           return;
         }
 
-        if (data.errorCode === 'EMAIL_ALREADY_EXISTS') {
-          setError('email', { message });
-        } else {
-          alert(message);
-        }
+        Swal.fire({
+          title: '회원가입 실패',
+          text: message,
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
       } else {
-        alert('에러가 발생했습니다. 다시 시도해 주세요.');
+        Swal.fire({
+          title: '오류 발생',
+          text: '에러가 발생했습니다. 다시 시도해 주세요.',
+          icon: 'error',
+          confirmButtonText: '확인',
+        });
       }
     },
   });
