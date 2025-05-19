@@ -31,7 +31,7 @@
 'use client';
 
 import { AREA_CONSTANTS, AREA_KEYS } from '@/constants/areaConstants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DropdownButtonArea from '../atoms/DropdownButtonArea';
 import DropdownListDoubleRow from '../atoms/DropdownListDoubleRow';
 
@@ -50,10 +50,15 @@ function DropdownArea({ includeAll = true, defaultValue, onSelect }: Props) {
   const areaOptions = includeAll ? [ALL_OPTION, ...areaValues] : areaValues;
 
   // 기본값 설정
-  const initialValue = defaultValue || (includeAll ? ALL_OPTION : areaValues[0]);
 
+  const initialValue = defaultValue || (includeAll ? ALL_OPTION : areaValues[0]);
   const [selectedOption, setSelectedOption] = useState(initialValue);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+
+  useEffect(() => {
+    const newInitialValue = defaultValue;
+    setSelectedOption(newInitialValue);
+  }, [defaultValue]);
 
   const dropdownButtonStatus: DropdownButtonStatus = isShowDropdown ? 'active' : 'done';
 

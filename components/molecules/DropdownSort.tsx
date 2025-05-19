@@ -21,6 +21,10 @@ function DropdownSort<T extends string>({
   const [selectedValue, setSelectedValue] = useState<T>(defaultValue);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setSelectedValue(defaultValue);
+  }, [defaultValue]);
+
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };

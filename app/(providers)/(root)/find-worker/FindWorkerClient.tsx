@@ -31,6 +31,7 @@ function FindWorkerClient() {
 
     return { page, pageSize, serviceArea, serviceType, orderBy, search };
   }, [searchParams]);
+
   const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage } =
     useFindWorkerQuery(queryParams);
 

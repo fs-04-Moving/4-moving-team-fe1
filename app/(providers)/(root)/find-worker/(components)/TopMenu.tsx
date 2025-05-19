@@ -2,9 +2,14 @@ import DropdownArea from '@/components/molecules/DropdownArea';
 import DropdownService from '@/components/molecules/DropdownService';
 import DropdownSort from '@/components/molecules/DropdownSort';
 import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
-import { DEFAULT_SORT_OPTION } from '@/constants/dropdownSortConstants';
+import {
+  DEFAULT_SORT_OPTION,
+  SORT_OPTIONS_LABELS,
+  SortOptionKey,
+} from '@/constants/dropdownSortConstants';
+import { AREA_DATA, AreaType, SERVICE_TYPE_DATA, ServiceType } from '@/types/move.type';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface FormValues {
@@ -16,9 +21,18 @@ function TopMenu() {
   const searchParams = useSearchParams();
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      keyword: '',
+      keyword: searchParams.get('search') || '',
     },
   });
+  const [serviceAreaParam, setServiceAreaParam] = useState(searchParams.get('serviceArea'));
+  const [serviceTypeParam, setServiceTypeParam] = useState(searchParams.get('serviceType'));
+  const [orderByParam, setOrderByParam] = useState(searchParams.get('orderBy'));
+
+  useEffect(() => {
+    setServiceAreaParam(searchParams.get('serviceArea'));
+    setServiceTypeParam(searchParams.get('serviceType'));
+    setOrderByParam(searchParams.get('orderBy'));
+  }, [searchParams]);
 
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -84,17 +98,31 @@ function TopMenu() {
       <div className="w-full flex justify-between lg:justify-end">
         <div className="flex gap-3 w-[300px] pt-4 lg:hidden">
           <span className="w-[90px] z-10">
-            <DropdownArea onSelect={handleAreaSelect} />
+            <DropdownArea
+              defaultValue={
+                serviceAreaParam ? AREA_DATA[serviceAreaParam as keyof AreaType] : '지역'
+              }
+              onSelect={handleAreaSelect}
+            />
           </span>
           <span className="w-[90px] z-30">
-            <DropdownService onSelect={handleServiceSelect} />
+            <DropdownService
+              defaultValue={
+                serviceTypeParam ? SERVICE_TYPE_DATA[serviceTypeParam as ServiceType] : '서비스'
+              }
+              onSelect={handleServiceSelect}
+            />
           </span>
         </div>
         <span className="z-10 pt-4 lg:pt-0">
           <DropdownSort
             onChange={handleOrderBySelect}
             options={['리뷰 많은순', '평점 높은순', '경력 높은순', '확정 많은순']}
-            defaultValue={DEFAULT_SORT_OPTION}
+            defaultValue={
+              orderByParam
+                ? SORT_OPTIONS_LABELS[orderByParam as SortOptionKey]
+                : DEFAULT_SORT_OPTION
+            }
           />
         </span>
       </div>
