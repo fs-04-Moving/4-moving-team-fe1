@@ -28,7 +28,7 @@ export default function Page() {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const ShareButtons = (
     <div className="flex flex-col">
-      <ShareSocial text="견적 공유하기" />
+      <ShareSocial text="견적서 공유하기" />
     </div>
   );
 

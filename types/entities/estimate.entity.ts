@@ -24,7 +24,7 @@ export interface Estimate {
   departureArea: Area;
   requestDate: Date;
   rejectionMessage?: string;
-  isFavorite?: boolean;
+  isFavorite: boolean;
   comment?: string;
 }
 

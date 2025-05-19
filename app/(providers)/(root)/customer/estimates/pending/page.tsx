@@ -12,7 +12,7 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const PAGE_SIZE = 10; // 페이지 당 항목 수
+const PAGE_SIZE = 11; // 페이지 당 항목 수
 
 export default function PendingEstimatesPage() {
   const router = useRouter();
@@ -91,6 +91,7 @@ export default function PendingEstimatesPage() {
         {unconfirmedEstimates.map((estimate) => (
           <WorkerCardInWating
             key={estimate.id}
+            isConfirm={estimate.isConfirmed}
             profileImage={estimate.profileImage}
             nickname={estimate.nickname}
             experience={estimate.experience}
