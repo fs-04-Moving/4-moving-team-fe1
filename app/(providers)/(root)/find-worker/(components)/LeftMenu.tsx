@@ -103,11 +103,13 @@ function FilterArea() {
                   <WorkerCardInSearch key={index} {...worker} isResponsive={false} />
                 </Link>
               ))}
-            <div className="mx-auto w-[50px] text-center h-2">
-              <Link href={'/customer/favorites'}>
-                <span className="cursor-pointer underline hover:text-[#1b92ff]">더보기</span>
-              </Link>
-            </div>
+            {data && data.list.length >= 3 && (
+              <div className="mx-auto w-[50px] text-center h-2">
+                <Link href={'/customer/favorites'}>
+                  <span className="cursor-pointer underline hover:text-[#1b92ff]">더보기</span>
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>
