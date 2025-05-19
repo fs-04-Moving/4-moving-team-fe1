@@ -1,4 +1,4 @@
-import favoriteApi from '@/api/favorite/favorite.api';
+import favoriteApi, { GetFavoriteWorkersParams } from '@/api/favorite/favorite.api';
 import { Worker } from '@/types/dtos/Worker.dto';
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,9 +7,9 @@ type FavoriteWorkersResponse = {
   totalCount: number;
 };
 
-export function useFavoriteWorkersQuery() {
+export function useFavoriteWorkersQuery(params: GetFavoriteWorkersParams) {
   return useQuery<FavoriteWorkersResponse>({
     queryKey: ['favoriteWorkers'],
-    queryFn: () => favoriteApi.getFavoriteWorkers(),
+    queryFn: () => favoriteApi.getFavoriteWorkers(params),
   });
 }

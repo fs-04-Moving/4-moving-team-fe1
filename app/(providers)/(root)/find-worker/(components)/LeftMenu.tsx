@@ -14,7 +14,7 @@ function FilterArea() {
   const pathname = usePathname();
   const { isLoggedIn } = useAuth();
 
-  const { data, isLoading } = useFavoriteWorkersQuery();
+  const { data, isLoading } = useFavoriteWorkersQuery({ pageSize: 3 });
 
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -83,6 +83,11 @@ function FilterArea() {
                   <WorkerCardInSearch key={index} {...worker} isResponsive={false} />
                 </Link>
               ))}
+            <div className="mx-auto w-[50px] text-center h-2">
+              <Link href={'/customer/favorites'}>
+                <span className="cursor-pointer underline hover:text-[#1b92ff]">더보기</span>
+              </Link>
+            </div>
           </div>
         )}
       </div>
