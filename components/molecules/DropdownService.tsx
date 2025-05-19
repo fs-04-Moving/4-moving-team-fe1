@@ -1,10 +1,11 @@
 import Dropdown from './Dropdown';
 
 type Props = {
+  defaultValue: string;
   onSelect: (service: string) => void;
 };
 
-function DropdownService({ onSelect }: Props) {
+function DropdownService({ defaultValue, onSelect }: Props) {
   const options: string[] = ['전체', '소형 이사', '가정 이사', '사무실 이사'];
 
   const handleSelect = (service: string) => {
@@ -28,7 +29,7 @@ function DropdownService({ onSelect }: Props) {
 
   return (
     <div className="w-full">
-      <Dropdown options={options} defaultValue="서비스" onSelect={handleSelect} />
+      <Dropdown options={options} defaultValue={defaultValue || '서비스'} onSelect={handleSelect} />
     </div>
   );
 }

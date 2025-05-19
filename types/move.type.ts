@@ -1,5 +1,11 @@
 export type ServiceType = 'smallMove' | 'homeMove' | 'officeMove';
 
+export const SERVICE_TYPE_DATA = {
+  smallMove: '소형 이사',
+  homeMove: '가정 이사',
+  officeMove: '사무실 이사',
+};
+
 export type EstimateStatus = 'general' | 'assigned' | 'rejected';
 
 export type EstimateRequestStatus = 'active' | 'inactive' | 'confirmed';

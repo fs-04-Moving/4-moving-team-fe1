@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DropdownButton from '../atoms/DropdownButton';
 import DropdownList from '../atoms/DropdownList';
 
@@ -25,6 +25,10 @@ function Dropdown<T extends string>({ defaultValue, options, onSelect }: Props<T
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
   const dropdownButtonStatus: DropdownButtonStatus = isShowDropdown ? 'active' : 'done';
+
+  useEffect(() => {
+    setSelectedOption(defaultValue);
+  }, [defaultValue]);
 
   /**
    * 포커스 아웃시 onBlur가 호출되었을 때 blur이벤트로 드롭다운 메뉴가 클릭되지 않는 문제 발생

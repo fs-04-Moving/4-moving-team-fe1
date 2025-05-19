@@ -2,17 +2,20 @@ import DropdownArea from '@/components/molecules/DropdownArea';
 import DropdownService from '@/components/molecules/DropdownService';
 import { useAuth } from '@/contexts/AuthContext';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFavoriteWorkersQuery } from '@/hooks/useFavoriteWorkersQuery';
 import WorkerCardInSearch from '@/components/organisms/WorkerCardInSearch';
 import Link from 'next/link';
 import ROUTES from '@/constants/routes';
+import { AREA_DATA, AreaType, SERVICE_TYPE_DATA, ServiceType } from '@/types/move.type';
 
 function FilterArea() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { isLoggedIn } = useAuth();
+  const searchParams = useSearchParams();
+  const [serviceAreaParam, setServiceAreaParam] = useState(searchParams.get('serviceArea'));
+  const [serviceTypeParam, setServiceTypeParam] = useState(searchParams.get('serviceType'));
 
   const { data, isLoading } = useFavoriteWorkersQuery({ pageSize: 3 });
 
@@ -50,7 +53,15 @@ function FilterArea() {
 
   const handleFilterReset = () => {
     router.push(pathname);
+    setServiceAreaParam(null);
+    setServiceTypeParam(null);
   };
+
+  useEffect(() => {
+    setServiceAreaParam(searchParams.get('serviceArea'));
+    setServiceTypeParam(searchParams.get('serviceType'));
+    console.log(serviceAreaParam, serviceTypeParam);
+  }, [searchParams]);
 
   return (
     <aside className="hidden w-full max-w-[328px] lg:w-[32%] lg:block">
@@ -64,13 +75,23 @@ function FilterArea() {
         <div className="flex flex-col gap-4">
           <label className="text-lg font-semibold">지역을 선택해 주세요</label>
           <div className="z-20">
-            <DropdownArea defaultValue="지역" onSelect={handleAreaSelect} />
+            <DropdownArea
+              defaultValue={
+                serviceAreaParam ? AREA_DATA[serviceAreaParam as keyof AreaType] : '지역'
+              }
+              onSelect={handleAreaSelect}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-4">
           <label className="text-lg font-semibold">어떤 서비스가 필요하세요?</label>
           <div className="z-10">
-            <DropdownService onSelect={handleServiceSelect} />
+            <DropdownService
+              defaultValue={
+                serviceTypeParam ? SERVICE_TYPE_DATA[serviceTypeParam as ServiceType] : '서비스'
+              }
+              onSelect={handleServiceSelect}
+            />
           </div>
         </div>
         {isLoggedIn && (
