@@ -31,6 +31,8 @@ export default function PendingEstimatesPage() {
     retry: 0,
   });
 
+  console.log('data in page', data);
+
   const estimates = data?.estimates ?? [];
   const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);

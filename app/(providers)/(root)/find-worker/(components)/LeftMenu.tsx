@@ -17,7 +17,8 @@ function FilterArea() {
   const [serviceAreaParam, setServiceAreaParam] = useState(searchParams.get('serviceArea'));
   const [serviceTypeParam, setServiceTypeParam] = useState(searchParams.get('serviceType'));
 
-  const { data, isLoading } = useFavoriteWorkersQuery({ pageSize: 3 });
+  const { data, isLoading } = useFavoriteWorkersQuery({ pageSize: 4 });
+  console.log(data);
 
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -73,7 +74,7 @@ function FilterArea() {
         </div>
         <div className="flex flex-col gap-4">
           <label className="text-lg font-semibold">지역을 선택해 주세요</label>
-          <div className="z-20">
+          <div className="z-11">
             <DropdownArea
               defaultValue={
                 serviceAreaParam ? AREA_DATA[serviceAreaParam as keyof AreaType] : '지역'
@@ -96,15 +97,17 @@ function FilterArea() {
         {isLoggedIn && (
           <div className="flex flex-col gap-4 w-[640px] max-w-full">
             <h3 className="text-xl font-semibold">찜한 기사님</h3>
-            {!data && !isLoading && <p className="text-GrayScale-500">찜한 기사님이 없습니다.</p>}
+            {data && !isLoading && data.totalCount === 0 && (
+              <p className="text-GrayScale-500">찜한 기사님이 없습니다.</p>
+            )}
             {data &&
               !isLoading &&
-              data.list.map((worker) => (
+              data.list.slice(0, 3).map((worker) => (
                 <Link key={worker.id} href={`${ROUTES.WORKER.ROOT}/${worker.id}`}>
                   <WorkerCardInSearch {...worker} isResponsive={false} />
                 </Link>
               ))}
-            {data && data.list.length >= 3 && (
+            {data && data.list.length >= 4 && (
               <div className="mx-auto w-[50px] text-center h-2">
                 <Link href={'/customer/favorites'}>
                   <span className="cursor-pointer underline hover:text-[#1b92ff]">더보기</span>

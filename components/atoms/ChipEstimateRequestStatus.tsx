@@ -21,7 +21,7 @@ function ChipEstimateRequestStatus({ type }: Props) {
       className={`inline-flex items-center align-middle gap-0.5 rounded-sm text-[13px] lg:text-[16px] px-1.5 py-0.5 lg:py-1 font-semibold w-fit bg-[#F2F3F8] text-[#242945] `}
     >
       <span className="leading-none relative top-[1px]">
-        {type === 'assigned' ? '견적 확정' : '견적 대기'}
+        {type === 'assigned' && '견적 확정 대기'}
       </span>
     </span>
   );

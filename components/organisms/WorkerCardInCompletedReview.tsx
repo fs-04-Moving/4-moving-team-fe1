@@ -91,12 +91,12 @@ function WorkerCardInCompletedReview({
             <span className="text-GrayScale-100">|</span>
             <span className="flex gap-1.5 lg:gap-3">
               <span className="text-GrayScale-300">견적가</span>
-              <span>{`${price.toLocaleString()}원`}</span>
+              <span>{`${price ? price.toLocaleString() : '-'}원`}</span>
             </span>
           </div>
           <div className="hidden lg:block">
             {/* 이 컴포넌트 다시보기 */}
-            <ButtonStarRating initialRating={rating} disabled={true}/>
+            <ButtonStarRating initialRating={rating} disabled={true} />
           </div>
         </div>
       </div>
