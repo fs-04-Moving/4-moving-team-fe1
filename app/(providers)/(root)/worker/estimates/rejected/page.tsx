@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Pagination from '@/components/molecules/Pagination';
 import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
-import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { getRejectedEstimates } from '@/api/estimate/workerOnly/estimate.api';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
@@ -68,7 +68,7 @@ export default function RejectedEstimatesPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-[24px] md:gap-[32px] lg:gap-[48px] w-full max-w-[1400px] justify-items-center">
               {estimates.map((card) => (
                 <div key={card.id} className="w-[328px] md:w-[600px] lg:w-[688px]">
-                  <CustomerCardInEstimateModal
+                  <CustomerCardInEstimate
                     serviceType={card.serviceType}
                     status={card.status}
                     customerName={card.customerName}
@@ -76,10 +76,13 @@ export default function RejectedEstimatesPage() {
                     departure={card.departure.split(' ').slice(0, 2).join(' ')}
                     destination={card.destination.split(' ').slice(0, 2).join(' ')}
                     isConfirmed={card.isConfirmed}
+                    requestDate={card.requestDate}
                     price={card.price}
                     onViewDetail={() => {
                       router.push(ROUTES.WORKER.ESTIMATES.DETAIL(card.id));
                     }}
+                    showOverlay={true}
+                    rejectedMessage={card.rejectedMessage}
                   />
                 </div>
               ))}
