@@ -23,6 +23,7 @@ import ChatBubbleAddress from '../molecules/ChatBubbleAddress';
 import ChatBubbleMovingChoice from '../molecules/ChatBubbleMovingChoice';
 import ProgressBar from '../molecules/ProgressBar';
 import Swal from 'sweetalert2';
+import { simplifyAddress } from '@/utils/simplifyAddress';
 
 function RequestEstimate() {
   const [step, setStep] = useState(1);
@@ -64,14 +65,17 @@ function RequestEstimate() {
 
   const handleSubmit = () => {
     if (!service || !date || !departure || !destination) return;
-
     if (!departureArea) return;
+
+    const formattedDeparture = simplifyAddress(departure);
+    const formattedDestination = simplifyAddress(destination);
+
     const requestData: CreateEstimateRequestDto = {
       serviceType: service,
       movingDate: date,
       departureArea: departureArea,
-      departure,
-      destination,
+      departure: formattedDeparture,
+      destination: formattedDestination,
     };
     setIsProcessing(true);
     createEstimateRequest(requestData);

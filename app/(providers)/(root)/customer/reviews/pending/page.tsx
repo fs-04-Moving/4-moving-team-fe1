@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PendingReviewsClient from '@/components/templates/PendingReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import writableReviewApiServer from '@/api/review/writableReview.server.api';
+import serverApi from '@/api/server.api';
 
 // 메타데이터 OG 넣기
 export const metadata: Metadata = {
@@ -27,28 +27,28 @@ export const metadata: Metadata = {
 
 const defaultPageParams = {
   page: 1,
-  pageSize: 6, 
+  pageSize: 6,
 };
 
 async function PendingReviewsPage() {
-
   const { queryClient } = await handleSSRPrefetch([
     {
       queryKey: [
-        'pendingReviews', 
-        { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize }
+        'pendingReviews',
+        { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize },
       ],
-      queryFn: () => 
-        writableReviewApiServer.getReviewableEstimatesServer({
+      queryFn: () =>
+        serverApi.getReviewableEstimatesServer({
           page: defaultPageParams.page,
-          pageSize: defaultPageParams.pageSize,}),
+          pageSize: defaultPageParams.pageSize,
+        }),
     },
   ]);
 
-  const dehydratedState = dehydrate(queryClient); 
+  const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}> 
+    <HydrationBoundary state={dehydratedState}>
       <PendingReviewsClient />
     </HydrationBoundary>
   );

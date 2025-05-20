@@ -57,7 +57,7 @@ function ShareSocial({
 
   return (
     <div className={className}>
-      <div className="flex flex-col gap-4 font-semibold lg:gap-[22px] mt-12 lg:mt-18 text-[14px] lg:text-xl text-Black-400">
+      <div className="flex flex-col gap-4 font-semibold lg:gap-[22px] text-[14px] lg:text-xl text-Black-400">
         <p>{text}</p>
         <div className="flex gap-4">
           <div

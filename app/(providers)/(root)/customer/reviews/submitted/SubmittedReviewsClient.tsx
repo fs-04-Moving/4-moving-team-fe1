@@ -6,9 +6,9 @@ import Pagination from '@/components/molecules/Pagination';
 import EmptyReview from '@/components/molecules/EmptyReview';
 import { Review } from '@/types/dtos/review.dto';
 import { useQuery } from '@tanstack/react-query';
-import reviewsApi from '@/api/review/writtenReview.api';
 import { useSearchParams, useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
+import reviewApi from '@/api/review/review.api';
 
 interface SubmittedReviewsClientProps {
   initialReviews?: Review[];
@@ -26,7 +26,7 @@ function SubmittedReviewsClient({ initialReviews }: SubmittedReviewsClientProps)
     error,
   } = useQuery({
     queryKey: ['myWrittenReviews', page],
-    queryFn: () => reviewsApi.getMyWrittenReviews({ page }),
+    queryFn: () => reviewApi.getMyWrittenReviews({ page }),
     initialData: { list: initialReviews || [], totalCount: initialReviews?.length || 0 },
   });
 

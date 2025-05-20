@@ -2,7 +2,7 @@
 import { createAssignedEstimate } from '@/api/estimate/customerOnly/estimate.api';
 import ButtonSolid from '@/components/atoms/ButtonSolid';
 import { useAuth } from '@/contexts/AuthContext';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation'; // Next.js의 router import 추가
 import { useState } from 'react';
@@ -22,11 +22,15 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
   const { isLoggedIn } = useAuth();
   const [hasRequested, setHasRequested] = useState(false); // 이미 요청했는지 상태 추가
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   // 지정 견적 요청 mutation 설정
   const assignedEstimateMutation = useMutation({
     mutationFn: (workerId: string) => createAssignedEstimate(workerId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['worker', workerId] });
+      queryClient.invalidateQueries({ queryKey: ['workers'] });
+      queryClient.invalidateQueries({ queryKey: ['pending-estimates'] });
       setHasRequested(true);
       Swal.fire({
         title: '견적요청 성공!',
