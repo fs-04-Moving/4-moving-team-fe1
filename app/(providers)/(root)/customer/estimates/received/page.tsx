@@ -39,17 +39,13 @@ function ReceivedPage() {
 
   if (isError) {
     console.error('에러 발생:', error);
-    return (
-      <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
-        <EmptyListMessage message="견적 요청 목록 조회에 실패했습니다." />
-      </div>
-    );
+    return <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]"></div>;
   }
 
   if (totalCount === 0) {
     return (
       <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
-        <EmptyListMessage message="대기중인 견적이 없습니다." />
+        <EmptyListMessage message="진행중인 견적이 없습니다." />
       </div>
     );
   }

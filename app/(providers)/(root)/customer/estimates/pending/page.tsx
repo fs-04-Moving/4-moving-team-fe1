@@ -2,15 +2,17 @@
 
 import { confirmEstimate, getPendingEstimate } from '@/api/estimate/customerOnly/estimate.api';
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
-import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
 import Pagination from '@/components/molecules/Pagination'; // ✅ 추가
 import ROUTES from '@/constants/routes';
 import { Estimate } from '@/types/entities/estimate.entity';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+import ToastPopUp from '@/components/molecules/toastPopUp';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 
 const PAGE_SIZE = 10; // 페이지 당 항목 수
 
@@ -33,21 +35,39 @@ export default function PendingEstimatesPage() {
   const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
 
+  const mutationConfirm = useMutation({
+    mutationFn: (estimateId: string) => confirmEstimate(estimateId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pending-estimates', currentPage] });
+      Swal.fire('성공', '견적이 확정되었습니다.', 'success');
+    },
+    onError: (error) => {
+      if (error instanceof Error) {
+        <ToastPopUp size="large" />;
+        // 백엔드 견적 확정 오류
+      } else {
+        <ToastPopUp size="large" />;
+        // 견적 확정 알수 없는 오류
+      }
+    },
+  });
+
   const handleConfirm = async (estimateId: string, price?: number) => {
     if (!price || price <= 0) {
-      alert('아직 가격이 등록되지 않아 확정할 수 없습니다.');
+      Swal.fire('오류', '아직 가격이 등록되지 않아 확정할 수 없습니다.', 'error');
       return;
     }
 
-    try {
-      await confirmEstimate(estimateId);
-      alert('견적이 확정되었습니다.');
-      await queryClient.invalidateQueries({ queryKey: ['pending-estimates'] });
-    } catch (err) {
-      alert('견적 확정에 실패했습니다.');
-      console.error(err);
-    }
+    mutationConfirm.mutate(estimateId);
   };
+
+  if (estimates.length <= 0) {
+    return (
+      <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
+        <EmptyListMessage message="진행중인 견적이 없습니다." />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
@@ -59,10 +79,11 @@ export default function PendingEstimatesPage() {
   }
 
   if (isError) {
-    console.error('에러 발생:', error);
     return (
-      <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
-        <EmptyListMessage message="견적을 불러오는 데 실패했습니다." />
+      <div className="bg-background-100 flex items-center justify-center h-screen">
+        <div className="text-red-600">
+          🥺 진행중인 견적들을 불러오는 데 실패했습니다: {error.message}
+        </div>
       </div>
     );
   }
@@ -90,7 +111,7 @@ export default function PendingEstimatesPage() {
             favoritesCount={estimate.favoritesCount}
             services={[estimate.serviceType]}
             isDirectEstimate={estimate.status === 'assigned'}
-            price={estimate.price || 0}
+            price={estimate.price}
             status={estimate.status}
             movingDate={estimate.movingDate}
             departure={estimate.departure}
