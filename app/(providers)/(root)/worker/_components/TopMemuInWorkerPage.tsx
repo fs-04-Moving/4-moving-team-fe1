@@ -1,9 +1,10 @@
+'use client';
 import ButtonReacitveFilter from '@/components/atoms/ButtonReacitveFilter';
 import DropdownSort from '@/components/molecules/DropdownSort';
 import InputSearchLeftIcon from '@/components/molecules/InputSearchLeftIcon';
 import { DEFAULT_SORT_OPTION_IN_WORKER_PAGE } from '@/constants/dropdownSortConstants';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface FormValues {
@@ -19,11 +20,15 @@ function TopMemuInWorkerPage({
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      keyword: '',
+      keyword: searchParams.get('search') || '',
     },
   });
+
+  useEffect(() => {
+    reset({ keyword: searchParams.get('search') || '' });
+  }, [searchParams, reset]);
 
   const defaultSortOption =
     searchParams.get('orderBy') === 'earliestMove'
@@ -44,13 +49,13 @@ function TopMemuInWorkerPage({
       default:
         return;
     }
-    router.push(`?${newParams.toString()}`);
+    router.replace(`?${newParams.toString()}`);
   };
 
   const onSubmit = (data: FormValues) => {
     const newParams = new URLSearchParams(searchParams);
     newParams.set('search', data.keyword);
-    router.push(`?${newParams.toString()}`);
+    router.replace(`?${newParams.toString()}`);
   };
 
   return (

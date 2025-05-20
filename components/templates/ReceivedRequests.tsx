@@ -39,7 +39,7 @@ function ReceivedRequests() {
   }, [searchParams]);
 
   const { ref } = useInView({
-    threshold: 1,
+    threshold: 0.5,
     onChange: (inView) => {
       if (inView && hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
@@ -47,7 +47,7 @@ function ReceivedRequests() {
     },
   });
 
-  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading, isFetching } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, isLoading } =
     useReceivedRequestsQuery(queryParams);
 
   const [requestEstimate, setRequestEstimate] = useState<ReceivedEstimateRequest | null>(null);
@@ -71,20 +71,10 @@ function ReceivedRequests() {
 
   useEffect(() => {
     router.replace(window.location.pathname);
-  }, [router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const totalCount = data?.pages?.[0]?.totalCount;
-  // 깜빡임 방지를 위해서 스타일 변경
-  // const pageData = useMemo(() => {
-  //   const page0 = data?.pages?.[0];
-  //   return {
-  //     smallMove: page0?.smallMove,
-  //     officeMove: page0?.officeMove,
-  //     homeMove: page0?.homeMove,
-  //     serviceAreaCount: page0?.serviceAreaCount,
-  //     assignedCount: page0?.assignedCount,
-  //   };
-  // }, [data]);
 
   const [pageData, setPageData] = useState({
     smallMove: 0,
@@ -123,20 +113,16 @@ function ReceivedRequests() {
             openModal={() => setIsFilterModalOpen(true)}
           />
           <div className="flex flex-col gap-12">
-            {(isLoading || (isFetching && !data)) && <div></div>}
+            {isLoading && <div>Loading…</div>}
 
-            {!isLoading &&
-              !isFetching &&
-              data &&
-              data.pages.flatMap((page) => page.list).length === 0 && (
-                <EmptyListMessage message="아직 받은 요청이 없어요!" />
-              )}
+            {!isLoading && data && data.pages.flatMap((p) => p.list).length === 0 && (
+              <EmptyListMessage message="아직 받은 요청이 없어요!" />
+            )}
 
-            {!isLoading &&
-              !isFetching &&
-              data &&
-              data.pages.flatMap((page) => {
-                return page.list.map((request: ReceivedEstimateRequest) => (
+            {data &&
+              data.pages
+                .flatMap((p) => p.list)
+                .map((request: ReceivedEstimateRequest) => (
                   <CustomerCardInEstimate
                     key={request.id}
                     serviceType={request.serviceType}
@@ -152,10 +138,12 @@ function ReceivedRequests() {
                     onReject={() => openRejectModal(request)}
                     onViewDetail={() => console.log('상세보기')}
                   />
-                ));
-              })}
+                ))}
+
+            <div style={{ height: 1 }} ref={ref}></div>
+
+            {isFetchingNextPage && <div className="text-center py-4">Loading more…</div>}
           </div>
-          <div ref={ref}></div>
         </section>
       </div>
       <ResponsiveModal width="lg:w-[608px] md:w-[375px] " isOpen={isEstimateModalOpen}>
