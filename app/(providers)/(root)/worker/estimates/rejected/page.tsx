@@ -82,7 +82,7 @@ export default function RejectedEstimatesPage() {
                       router.push(ROUTES.WORKER.ESTIMATES.DETAIL(card.id));
                     }}
                     showOverlay={true}
-                    rejectedMessage={card.rejectedMessage}
+                    rejectionMessage={card.rejectionMessage}
                   />
                 </div>
               ))}
