@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
-import writtenReviewApiServer from '@/api/review/writtenReview.sever.api';
 import SubmittedReviewsClient from '@/components/templates/SubmittedReviewsClient';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { headers } from 'next/headers'; 
+import { headers } from 'next/headers';
+import serverApi from '@/api/server.api';
 
 export const metadata: Metadata = {
   title: '작성한 리뷰',
   description: '내가 작성한 리뷰들 입니다.',
-  
+
   openGraph: {
     title: '이사할땐, 무빙',
     description: '내가 작성한 리뷰들 입니다.',
@@ -33,7 +33,7 @@ const defaultPageParams = {
 async function SubmittedReviewsPage() {
   const headersList = headers();
   const cookieHeaderString = (await headersList).get('Cookie') || '';
-  
+
   const { queryClient } = await handleSSRPrefetch([
     {
       queryKey: [
@@ -41,13 +41,10 @@ async function SubmittedReviewsPage() {
         { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize },
       ],
       queryFn: () =>
-        writtenReviewApiServer.getMyWrittenReviewsServer(
-          cookieHeaderString,
-          {
-            page: defaultPageParams.page,
-            pageSize: defaultPageParams.pageSize,
-          }
-        ),
+        serverApi.getMyWrittenReviewsServer(cookieHeaderString, {
+          page: defaultPageParams.page,
+          pageSize: defaultPageParams.pageSize,
+        }),
     },
   ]);
 

@@ -1,4 +1,4 @@
-import favoriteServerApi from '@/api/favorite/favorite.server.api';
+import serverApi from '@/api/server.api';
 import ListFavoriteWorker from '@/components/organisms/ListFavoriteWorker';
 import { handleSSRPrefetch } from '@/libs/tanstack-query/ssrPrefetchHelper';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
@@ -30,7 +30,7 @@ async function FavoriteWorkersPage() {
         { page: defaultPageParams.page, pageSize: defaultPageParams.pageSize },
       ],
       queryFn: () =>
-        favoriteServerApi.getFavoriteWorkersServer({
+        serverApi.getFavoriteWorkersServer({
           page: defaultPageParams.page,
           pageSize: defaultPageParams.pageSize,
         }),
