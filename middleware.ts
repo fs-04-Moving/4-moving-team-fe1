@@ -95,5 +95,5 @@ export async function middleware(req: NextRequest) {
  * matcher 설정 (정적 리소스 제외)
  */
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|api).*)'],
+  matcher: ['/', '/((?!_next/static|_next/image|favicon.ico|api).*)'],
 };
