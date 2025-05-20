@@ -25,7 +25,8 @@ type Props = {
   destination: string;
   reviewsAverage: number;
   reviewsCount: number;
-  isConfirm: boolean;
+  isConfirmed: boolean;
+  estimateRequestStatus: string;
   onConfirm?: () => void;
   onViewDetail?: () => void;
 };
@@ -47,6 +48,7 @@ type Props = {
  * @param {number} favoritesCount - 이 기사를 찜한 총 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
  * @param {boolean} isDirectEstimate - 지정 견적 여부
+ * @param {boolean} isConfirmed - 견적 확정 여부
  * @param {number} price - 견적 금액 (단위: 원)
  * @param {EstimateStatus} status - 견적 요청 상태
  * @param {Date} movingDate - 이사일 (날짜 객체)
@@ -54,6 +56,7 @@ type Props = {
  * @param {string} destination - 도착지
  * @param {number} reviewsAverage - 리뷰 평균
  * @param {number} reviewsCount - 리뷰 개수
+ * @param {string} estimateRequestStatus - 견적 활성 상태
  * @param {() => void} [onConfirm] - '견적 확정하기' 버튼 클릭 시 호출되는 콜백 함수
  * @param {() => void} [onViewDetail] - '상세 보기' 버튼 클릭 시 호출되는 콜백 함수
  *
@@ -74,8 +77,10 @@ type Props = {
  *   destination="경기도 수원시"
  *   onConfirm={() => console.log('견적 확정하기 클릭')}
  *   onViewDetail={() => console.log('상세 보기 클릭')}
+ *   isConfirmed={false}
  *   reviewsAverage={4.7}
  *   reviewsCount={108}
+ *   estimateRequestStatus={'assigned'}
  * />
  */
 function WorkerCardInWating({
@@ -94,7 +99,8 @@ function WorkerCardInWating({
   destination,
   reviewsAverage,
   reviewsCount,
-  isConfirm,
+  isConfirmed,
+  estimateRequestStatus,
   onConfirm,
   onViewDetail,
 }: Props) {
@@ -113,7 +119,9 @@ function WorkerCardInWating({
     <div className="relative">
       <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
         <div className="flex gap-2.5">
-          <ChipEstimateRequestStatus type={status} />
+          {estimateRequestStatus !== 'confirmed' && (
+            <ChipEstimateRequestStatus type={status} price={price} />
+          )}
           {services.map((service, index) => (
             <ChipMovingType key={index} type={service} isShort={true} />
           ))}
@@ -155,7 +163,7 @@ function WorkerCardInWating({
           <ButtonOutlined onClick={onViewDetail}>상세 보기</ButtonOutlined>
         </div>
 
-        {isConfirm !== false && (
+        {isConfirmed === true && (
           <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
             <div className="flex flex-col items-center gap-4">
               <p>확정된 견적이에요</p>
@@ -164,6 +172,13 @@ function WorkerCardInWating({
                   <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
                 </ButtonOutlined>
               </div>
+            </div>
+          </div>
+        )}
+        {estimateRequestStatus === 'confirmed' && isConfirmed === false && (
+          <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
+            <div className="flex flex-col items-center gap-4">
+              <p>이미 마감된 견적이에요.</p>
             </div>
           </div>
         )}
