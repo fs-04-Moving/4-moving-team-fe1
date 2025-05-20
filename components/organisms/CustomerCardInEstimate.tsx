@@ -22,7 +22,7 @@ type Props = {
   onReject?: () => void;
   onViewDetail?: () => void;
   showOverlay?: boolean;
-  rejectedMessage?: string;
+  rejectionMessage?: string;
 };
 
 /**
@@ -77,7 +77,7 @@ function CustomerCardInEstimate({
   onReject,
   onViewDetail,
   showOverlay,
-  rejectedMessage,
+  rejectionMessage,
 }: Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
@@ -175,7 +175,7 @@ function CustomerCardInEstimate({
               <div className="max-w-[108px] lg:max-w-[123px]">
                 <ButtonOutlined
                   intent="active"
-                  onClick={() => onViewRejectedMessage(rejectedMessage)}
+                  onClick={() => onViewRejectedMessage(rejectionMessage ?? '')}
                 >
                   <span className="text-[14px] lg:text-[16px] px-3">상세보기</span>
                 </ButtonOutlined>
