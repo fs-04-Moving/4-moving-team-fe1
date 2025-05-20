@@ -7,12 +7,12 @@ import { Review } from '@/types/dtos/review.dto';
 import ReviewRegister from '@/components/organisms/ReviewRegister';
 import { ServiceType } from '@/types/move.type';
 import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query';
-import writableReviewApi from '@/api/review/writableReview.api';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import GeneralModal from '@/components/templates/GeneralModal';
 import useDeviceSize from '@/hooks/useDeviceSize';
 import EmptyListMessage from '../molecules/EmptyListMessage';
+import reviewApi from '@/api/review/review.api';
 
 type workerData = {
   driverId: string;
@@ -49,7 +49,7 @@ function PendingReviewsClient() {
     error,
   } = useQuery<GetReviewableEstimatesResponse, Error>({
     queryKey: ['pendingReviews', { page, pageSize }],
-    queryFn: () => writableReviewApi.getReviewableEstimates({ page, pageSize }),
+    queryFn: () => reviewApi.getReviewableEstimates({ page, pageSize }),
     placeholderData: (previousData) => previousData,
   });
 
