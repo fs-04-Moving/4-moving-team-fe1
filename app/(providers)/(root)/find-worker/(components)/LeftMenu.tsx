@@ -102,7 +102,7 @@ function FilterArea() {
             )}
             {data &&
               !isLoading &&
-              data.list.map((worker) => (
+              data.list.slice(0, 3).map((worker) => (
                 <Link key={worker.id} href={`${ROUTES.WORKER.ROOT}/${worker.id}`}>
                   <WorkerCardInSearch {...worker} isResponsive={false} />
                 </Link>
