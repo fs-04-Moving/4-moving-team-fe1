@@ -78,7 +78,7 @@ function WorkerCardInWritableReview({
             <span className="text-GrayScale-100">|</span>
             <span className="flex gap-1.5 lg:gap-3">
               <span className="text-GrayScale-300">견적가</span>
-              <span>{`${price.toLocaleString()}원`}</span>
+              <span>{`${price ? price.toLocaleString() : '-'}원`}</span>
             </span>
           </div>
         </div>

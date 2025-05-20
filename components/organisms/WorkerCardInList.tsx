@@ -19,7 +19,7 @@ type Props = {
 };
 
 /**
- * WorkerCardInEstimate 컴포넌트
+ * WorkerCardInList 컴포넌트
  *
  * 견적 내역 리스트에서 사용되는 기사 카드 컴포넌트입니다.
  * 서비스 유형 칩, 기사 프로필 정보, 기사 소개, 지정 견적 여부, 견적 금액 등을 시각적으로 구성합니다.
@@ -38,7 +38,7 @@ type Props = {
  * @param {number} reviewsCount - 리뷰 개수
  *
  * @example
- * <WorkerCardInEstimate
+ * <WorkerCardInList
  *   profileImage="/images/sample.jpg"
  *   nickname="김코드"
  *   experience={7}
@@ -95,7 +95,7 @@ function WorkerCardInList({
       />
       <div className="flex justify-end items-end gap-2 lg:gap-4">
         <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
-        <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
+        <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price ? price.toLocaleString() : '-'}원`}</span>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import UserAvartar from "../atoms/UserAvartar";
-import ChipMovingType from "../atoms/ChipMovingType";
-import { ServiceType } from "@/types/move.type";
+import UserAvartar from '../atoms/UserAvartar';
+import ChipMovingType from '../atoms/ChipMovingType';
+import { ServiceType } from '@/types/move.type';
 
 type Props = {
   serviceType: ServiceType;
@@ -43,10 +43,10 @@ function WorkerSummaryCardInModal({
   movingDate,
   price,
 }: Props) {
-  const formattedMovingDate = movingDate.toLocaleDateString("ko-KR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
+  const formattedMovingDate = movingDate.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
   });
 
   return (
@@ -68,9 +68,7 @@ function WorkerSummaryCardInModal({
         >
           {/* 기사 이름 */}
           <div className="flex justify-between">
-            <span className="text-[14px] lg:text-[16px]">
-              {nickname} 기사님
-            </span>
+            <span className="text-[14px] lg:text-[16px]">{nickname} 기사님</span>
           </div>
           {/* 이사일, 견적가, 별점 */}
           <div className="flex items-center justify-between md:justify-normal text-[16px] lg:text-xl md:gap-2.5 lg:gap-4 ">
@@ -81,7 +79,7 @@ function WorkerSummaryCardInModal({
             <span className="text-GrayScale-100">|</span>
             <span className="flex gap-1.5 lg:gap-3">
               <span className="text-GrayScale-300">견적가</span>
-              <span>{`${price.toLocaleString()}원`}</span>
+              <span>{`${price ? price.toLocaleString() : '-'}원`}</span>
             </span>
           </div>
         </div>

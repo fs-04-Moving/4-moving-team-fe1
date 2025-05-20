@@ -124,7 +124,7 @@ Props) {
         {price && (
           <div className="flex justify-end items-end gap-2 lg:gap-4">
             <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
-            <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
+            <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price ? price.toLocaleString() : '-'}원`}</span>
           </div>
         )}
       </div>
