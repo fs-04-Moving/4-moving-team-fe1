@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: '54.180.2.174',
         pathname: '/static/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'movings.kro.kr',
+        pathname: '/static/**',
+      },
     ],
   },
   env: {
