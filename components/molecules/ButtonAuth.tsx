@@ -30,6 +30,7 @@ function ButtonAuth() {
 
   const handleClickLogOut = () => {
     logOut?.();
+    router.replace(ROUTES.HOME);
   };
 
   console.log(user);

@@ -12,6 +12,8 @@ import Portal from '../atoms/Portal';
 import DropdownNotification from './DropdownNotifications';
 import DropdownProfile from './DropdownProfile';
 import UserProfile from './UserProfile';
+import ROUTES from '@/constants/routes';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   user: GetUserMe;
@@ -20,6 +22,7 @@ interface Props {
 
 export default function LoggedInMenu({ user, onOpenMenu }: Props) {
   const { logOut } = useAuth();
+  const router = useRouter();
   const [isShowProfilePopup, setIsShowProfilePopup] = useState(false);
   const [isShowNotificationsPopup, setIsShowNotificationsPopup] = useState(false);
 
@@ -40,6 +43,8 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
     setIsShowNotificationsPopup(false);
     setIsShowProfilePopup(false);
     logOut?.();
+    router.replace(ROUTES.HOME);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logOut]);
 
   const handleClickAlarm = () => {

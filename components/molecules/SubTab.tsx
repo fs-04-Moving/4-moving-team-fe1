@@ -9,8 +9,8 @@ function SubTab() {
 
   if (pathName.startsWith(ROUTES.CUSTOMER.ESTIMATES.ROOT)) {
     tabs = [
-      { label: '대기 중인 견적', route: ROUTES.CUSTOMER.ESTIMATES.PENDING },
-      { label: '받았던 견적', route: ROUTES.CUSTOMER.ESTIMATES.RECEIVED },
+      { label: '진행 중인 견적', route: ROUTES.CUSTOMER.ESTIMATES.PENDING },
+      { label: '완료된 견적', route: ROUTES.CUSTOMER.ESTIMATES.RECEIVED },
     ];
   } else if (pathName.startsWith(ROUTES.WORKER.ESTIMATES.ROOT)) {
     tabs = [
