@@ -38,8 +38,9 @@ export default function PendingEstimatesPage() {
   const mutationConfirm = useMutation({
     mutationFn: (estimateId: string) => confirmEstimate(estimateId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['pending-estimates', currentPage] });
-      Swal.fire('성공', '견적이 확정되었습니다.', 'success');
+      Swal.fire('성공', '견적이 확정되었습니다.', 'success').then(() => {
+        queryClient.invalidateQueries({ queryKey: ['pending-estimates', currentPage, PAGE_SIZE] });
+      });
     },
     onError: (error) => {
       if (error instanceof Error) {
@@ -53,7 +54,7 @@ export default function PendingEstimatesPage() {
   });
 
   const handleConfirm = async (estimateId: string, price?: number) => {
-    if (!price || price <= 0) {
+    if (typeof price !== 'number' || price <= 0) {
       Swal.fire('오류', '아직 가격이 등록되지 않아 확정할 수 없습니다.', 'error');
       return;
     }
