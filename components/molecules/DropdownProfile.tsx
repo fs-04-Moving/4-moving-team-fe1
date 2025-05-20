@@ -58,6 +58,7 @@ const DropdownProfile = forwardRef<HTMLDivElement, DropdownProfileProps>(functio
   // 로그아웃 처리
   const handleClickLogout = () => {
     logOut();
+    router.replace(ROUTES.HOME);
   };
 
   const handleClickMoveToWorkerMypage = () => {
