@@ -82,10 +82,7 @@ export const editUserInfoValidation = z
       .string()
       .min(1, { message: requiredStr })
       .email({ message: '잘못된 이메일 형식입니다' }),
-    phoneNumber: z
-      .string()
-      .min(1, { message: requiredStr })
-      .regex(phoneNumberRegex, '잘못된 전화번호 형식입니다'),
+    phoneNumber: z.string().optional(),
     password: z.string().optional(),
     newPassword: z.string().optional(),
     newPasswordConfirm: z.string().optional(),
@@ -94,36 +91,50 @@ export const editUserInfoValidation = z
     // provider가 'local'일 때만 비밀번호 검증 로직 실행
     console.log('In validation', data.provider);
     if (data.provider === 'local') {
-      if (!data.password) {
+      if (!data.phoneNumber) {
         ctx.addIssue({
-          path: ['passoword'],
+          path: ['phoneNumber'],
           message: requiredStr,
           code: z.ZodIssueCode.custom,
         });
+      } else if (data.phoneNumber && !phoneNumberRegex.test(data.phoneNumber)) {
+        ctx.addIssue({
+          path: ['phoneNumber'],
+          message: '잘못된 전화번호 형식입니다.',
+          code: z.ZodIssueCode.custom,
+        });
+      }
 
-        if (data.newPassword && data.newPassword.length < 8) {
-          ctx.addIssue({
-            path: ['newPassword'],
-            message: '8자 이상이어야 합니다.',
-            code: z.ZodIssueCode.custom,
-          });
-        }
+      if (!data.password) {
+        ctx.addIssue({
+          path: ['password'],
+          message: requiredStr,
+          code: z.ZodIssueCode.custom,
+        });
+      }
 
-        if (data.newPassword && !passwordRegex.test(data.newPassword)) {
-          ctx.addIssue({
-            path: ['newPassword'],
-            message: '영문/숫자/특수문자를 모두 포함해야 합니다.',
-            code: z.ZodIssueCode.custom,
-          });
-        }
+      if (data.newPassword && data.newPassword.length < 8) {
+        ctx.addIssue({
+          path: ['newPassword'],
+          message: '8자 이상이어야 합니다.',
+          code: z.ZodIssueCode.custom,
+        });
+      }
 
-        if (data.newPassword !== data.newPasswordConfirm) {
-          ctx.addIssue({
-            path: ['newPasswordConfirm'],
-            message: '비밀번호가 일치하지 않습니다.',
-            code: z.ZodIssueCode.custom,
-          });
-        }
+      if (data.newPassword && !passwordRegex.test(data.newPassword)) {
+        ctx.addIssue({
+          path: ['newPassword'],
+          message: '영문/숫자/특수문자를 모두 포함해야 합니다.',
+          code: z.ZodIssueCode.custom,
+        });
+      }
+
+      if (data.newPassword !== data.newPasswordConfirm) {
+        ctx.addIssue({
+          path: ['newPasswordConfirm'],
+          message: '비밀번호가 일치하지 않습니다.',
+          code: z.ZodIssueCode.custom,
+        });
       }
     }
   });

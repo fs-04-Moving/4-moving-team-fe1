@@ -27,6 +27,8 @@ export default function SendingEstimatesPage() {
           pageSize: ITEMS_PER_PAGE,
         });
 
+        console.log('list in page', list);
+
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const parsedList = list

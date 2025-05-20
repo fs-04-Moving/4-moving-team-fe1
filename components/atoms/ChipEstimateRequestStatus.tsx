@@ -1,5 +1,6 @@
 type Props = {
   type: string;
+  price?: number;
 };
 
 /**
@@ -13,7 +14,7 @@ type Props = {
  * @returns {JSX.Element} 선택된 견적 상태에 맞는 스타일이 적용된 칩 컴포넌트.
  *
  */
-function ChipEstimateRequestStatus({ type }: Props) {
+function ChipEstimateRequestStatus({ type, price }: Props) {
   if (type === 'rejected') return null;
 
   return (
@@ -21,7 +22,7 @@ function ChipEstimateRequestStatus({ type }: Props) {
       className={`inline-flex items-center align-middle gap-0.5 rounded-sm text-[13px] lg:text-[16px] px-1.5 py-0.5 lg:py-1 font-semibold w-fit bg-[#F2F3F8] text-[#242945] `}
     >
       <span className="leading-none relative top-[1px]">
-        {type === 'assigned' && '견적 확정 대기'}
+        {type === 'assigned' ? (price ? '견적 확정 대기' : '견적 대기') : '견적 확정 대기'}
       </span>
     </span>
   );

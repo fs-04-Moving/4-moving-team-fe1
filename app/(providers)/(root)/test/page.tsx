@@ -1,24 +1,30 @@
 'use client';
 
-import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
+import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
 
 function page() {
   return (
     <div>
-      <CustomerCardInEstimate
-        serviceType="smallMove"
-        status="assigned"
-        customerName="김인서"
+      <WorkerCardInWating
+        profileImage="/images/driver1.png"
+        nickname="김이사"
+        experience={8}
+        confirmedEstimatesCount={342}
+        isFavorite={true}
+        favoritesCount={128}
+        services={['smallMove', 'homeMove']}
+        isDirectEstimate={true}
+        isConfirmed={false}
+        estimateRequestStatus={'confirmed'}
+        price={210000}
+        status="general" // 실제 Enum 값으로 대체 필요
         movingDate={new Date('2024-07-01')}
         departure="서울시 중구"
         destination="경기도 수원시"
-        isConfirmed={false}
-        requestDate={new Date('2024-06-30')}
-        price={undefined}
-        onSendEstimate={() => console.log('견적 보내기')}
-        onReject={() => console.log('반려')}
-        onViewDetail={() => console.log('상세보기')}
-        rejectionMessage={'반려시 작성한 메시지'}
+        onConfirm={() => console.log('견적 확정하기 클릭')}
+        onViewDetail={() => console.log('상세 보기 클릭')}
+        reviewsAverage={4.7}
+        reviewsCount={108}
       />
     </div>
   );

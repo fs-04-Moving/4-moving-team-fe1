@@ -31,8 +31,6 @@ export default function PendingEstimatesPage() {
     retry: 0,
   });
 
-  console.log('data in page', data);
-
   const estimates = data?.estimates ?? [];
   const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
@@ -106,7 +104,7 @@ export default function PendingEstimatesPage() {
         {estimates.map((estimate) => (
           <WorkerCardInWating
             key={estimate.id}
-            isConfirm={estimate.isConfirmed}
+            isConfirmed={estimate.isConfirmed}
             profileImage={estimate.profileImage}
             nickname={estimate.nickname}
             experience={estimate.experience}
@@ -122,6 +120,7 @@ export default function PendingEstimatesPage() {
             destination={estimate.destination}
             reviewsAverage={estimate.rating ?? 0}
             reviewsCount={estimate.reviewsCount}
+            estimateRequestStatus={estimate.estimateRequestStatus}
             onConfirm={() => handleConfirm(estimate.id, estimate.price)}
             onViewDetail={() => {
               router.push(ROUTES.CUSTOMER.ESTIMATES.DETAIL(estimate.id));

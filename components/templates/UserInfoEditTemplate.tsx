@@ -11,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { editUserInfoValidation } from '@/constants/formValidation';
 import clsx from 'clsx';
 import { UserInfoEditFormValues } from '@/types/dtos/user.dto';
+import { useRouter } from 'next/navigation';
 
 interface UserInfoEditTemplateProps {
   defaultValues: UserInfoEditFormValues;
@@ -57,6 +58,7 @@ function UserInfoEditTemplate({ defaultValues, onSubmit }: UserInfoEditTemplateP
     resolver: zodResolver(editUserInfoValidation),
   });
 
+  const router = useRouter();
   const fixedHeightClassName = clsx('lg:h-[140px]');
 
   return (
@@ -134,7 +136,7 @@ function UserInfoEditTemplate({ defaultValues, onSubmit }: UserInfoEditTemplateP
             )}
           </div>
           <div className="flex flex-col-reverse gap-2 mt-8 w-[327px] lg:w-full lg:gap-8 lg:flex-row lg:mt-15">
-            <ButtonOutlined>취소</ButtonOutlined>
+            <ButtonOutlined onClick={() => router.back()}>취소</ButtonOutlined>
             <ButtonSolid disabled={!formState.isValid}>수정하기</ButtonSolid>
           </div>
         </form>

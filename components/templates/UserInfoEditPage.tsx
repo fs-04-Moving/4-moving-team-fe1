@@ -6,19 +6,31 @@ import UserInfoEditTemplate from '@/components/templates/UserInfoEditTemplate';
 import { useUserInfoQuery } from '@/hooks/useUserInfoQuery';
 import { UserInfoEditFormValues } from '@/types/dtos/user.dto';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
 
 function UserInfoEditPage() {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { data, isLoading, isError } = useUserInfoQuery();
 
   const mutation = useMutation({
     mutationFn: userApi.updateUserInfo,
     onSuccess: () => {
-      alert('정보가 성공적으로 수정되었습니다.');
+      Swal.fire({
+        text: '정보가 성공적으로 수정되었습니다.',
+        icon: 'success',
+        confirmButtonText: '확인',
+      }).then(() => router.push('/'));
       queryClient.invalidateQueries({ queryKey: ['customerInfo'] });
+      queryClient.invalidateQueries({ queryKey: ['me'] });
     },
     onError: () => {
-      alert('정보 수정에 실패했습니다. 비밀번호를 확인해 주세요.');
+      Swal.fire({
+        text: '정보 수정에 실패했습니다. 비밀번호를 확인해 주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
     },
   });
 

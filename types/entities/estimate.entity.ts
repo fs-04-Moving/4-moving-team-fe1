@@ -25,6 +25,7 @@ export interface Estimate {
   requestDate: Date;
   rejectionMessage?: string;
   isFavorite: boolean;
+  estimateRequestStatus: string;
   comment?: string;
 }
 
