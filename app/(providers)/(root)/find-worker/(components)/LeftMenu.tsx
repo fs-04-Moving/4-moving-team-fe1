@@ -96,6 +96,7 @@ function FilterArea() {
         {isLoggedIn && (
           <div className="flex flex-col gap-4 w-[640px] max-w-full">
             <h3 className="text-xl font-semibold">찜한 기사님</h3>
+            {!data && !isLoading && <p className="text-GrayScale-500">찜한 기사님이 없습니다.</p>}
             {data &&
               !isLoading &&
               data.list.map((worker) => (

@@ -19,7 +19,7 @@ interface FormValues {
 function TopMenu() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       keyword: searchParams.get('search') || '',
     },
@@ -32,7 +32,8 @@ function TopMenu() {
     setServiceAreaParam(searchParams.get('serviceArea'));
     setServiceTypeParam(searchParams.get('serviceType'));
     setOrderByParam(searchParams.get('orderBy'));
-  }, [searchParams]);
+    reset({ keyword: searchParams.get('search') || '' });
+  }, [searchParams, reset]);
 
   const handleAreaSelect = (area: string, code?: string) => {
     const newParams = new URLSearchParams(searchParams);

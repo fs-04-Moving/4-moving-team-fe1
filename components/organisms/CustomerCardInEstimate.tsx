@@ -22,7 +22,7 @@ type Props = {
   onReject?: () => void;
   onViewDetail?: () => void;
   showOverlay?: boolean;
-  rejectionMessage?: string;
+  rejectedMessage?: string;
 };
 
 /**
@@ -77,7 +77,7 @@ function CustomerCardInEstimate({
   onReject,
   onViewDetail,
   showOverlay,
-  rejectionMessage,
+  rejectedMessage,
 }: Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
@@ -100,7 +100,7 @@ function CustomerCardInEstimate({
   const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
   const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
 
-  const onViewRejectedMessage = (rejectedMessage: string) => {
+  const onViewRejectedMessage = (rejectedMessage?: string) => {
     Swal.fire({
       title: '반려 메시지',
       text: rejectedMessage,
@@ -175,7 +175,7 @@ function CustomerCardInEstimate({
               <div className="max-w-[108px] lg:max-w-[123px]">
                 <ButtonOutlined
                   intent="active"
-                  onClick={() => onViewRejectedMessage(rejectionMessage ?? '')}
+                  onClick={() => onViewRejectedMessage(rejectedMessage)}
                 >
                   <span className="text-[14px] lg:text-[16px] px-3">상세보기</span>
                 </ButtonOutlined>
