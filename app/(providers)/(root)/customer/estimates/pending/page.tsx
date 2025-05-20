@@ -32,7 +32,6 @@ export default function PendingEstimatesPage() {
   const estimates = data?.estimates ?? [];
   const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-  const unconfirmedEstimates = estimates.filter((e) => !e.isConfirmed);
 
   const handleConfirm = async (estimateId: string, price?: number) => {
     if (!price || price <= 0) {
@@ -68,14 +67,6 @@ export default function PendingEstimatesPage() {
     );
   }
 
-  if (unconfirmedEstimates.length === 0) {
-    return (
-      <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
-        <EmptyListMessage message="대기중인 견적이 없습니다." />
-      </div>
-    );
-  }
-
   return (
     <div className="bg-BackGround-200 min-h-full ">
       <div className="p-8 lg:p-10 bg-BackGround-200"></div>
@@ -88,7 +79,7 @@ export default function PendingEstimatesPage() {
           gap-y-8 lg:gap-y-12
         "
       >
-        {unconfirmedEstimates.map((estimate) => (
+        {estimates.map((estimate) => (
           <WorkerCardInWating
             key={estimate.id}
             profileImage={estimate.profileImage}
