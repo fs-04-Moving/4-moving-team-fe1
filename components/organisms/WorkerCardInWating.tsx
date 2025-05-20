@@ -25,6 +25,7 @@ type Props = {
   destination: string;
   reviewsAverage: number;
   reviewsCount: number;
+  isConfirm: boolean;
   onConfirm?: () => void;
   onViewDetail?: () => void;
 };
@@ -93,6 +94,7 @@ function WorkerCardInWating({
   destination,
   reviewsAverage,
   reviewsCount,
+  isConfirm,
   onConfirm,
   onViewDetail,
 }: Props) {
@@ -108,48 +110,63 @@ function WorkerCardInWating({
   const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
 
   return (
-    <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
-      <div className="flex gap-2.5">
-        <ChipEstimateRequestStatus type={status} />
-        {services.map((service, index) => (
-          <ChipMovingType key={index} type={service} isShort={true} />
-        ))}
-        {isDirectEstimate ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
-      </div>
-      {/* 기사 소개 박스 */}
-      <WorkerInfoBoxA
-        profileImage={profileImage}
-        nickname={nickname}
-        experience={experience}
-        confirmedEstimatesCount={confirmedEstimatesCount}
-        isFavorite={isFavorite}
-        favoritesCount={favoritesCount}
-        reviewsAverage={reviewsAverage}
-        reviewsCount={reviewsCount}
-      />
-      {/* 견적 정보 */}
-      <div className="flex flex-col lg:flex-row gap-3.5 lg:gap-4 text-[14px] lg:text-lg">
-        <div className="flex items-center gap-2 lg:gap-3">
-          <ChipText>이사일</ChipText>
-          <span>{formattedDate}</span>
+    <div className="relative">
+      <div className="flex flex-col justify-between gap-2 shadow-xs bg-GrayScale-50 border-Line-100 border-[0.5px] rounded-2xl w-[327px] h-[398px] md:w-[600px] md:h-[362px] lg:w-[688px] lg:h-[410px] px-3.5 py-4">
+        <div className="flex gap-2.5">
+          <ChipEstimateRequestStatus type={status} />
+          {services.map((service, index) => (
+            <ChipMovingType key={index} type={service} isShort={true} />
+          ))}
+          {isDirectEstimate ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
         </div>
-        <span className="hidden lg:inline-block text-GrayScale-200">|</span>
-        <div className="flex lg:items-center gap-2 lg:gap-3">
-          <ChipText>출발</ChipText>
-          <span>{formattedDeparture}</span>
-          <span className="text-GrayScale-200">|</span>
-          <ChipText>도착</ChipText>
-          <span>{formattedDestination}</span>
+        {/* 기사 소개 박스 */}
+        <WorkerInfoBoxA
+          profileImage={profileImage}
+          nickname={nickname}
+          experience={experience}
+          confirmedEstimatesCount={confirmedEstimatesCount}
+          isFavorite={isFavorite}
+          favoritesCount={favoritesCount}
+          reviewsAverage={reviewsAverage}
+          reviewsCount={reviewsCount}
+        />
+        {/* 견적 정보 */}
+        <div className="flex flex-col lg:flex-row gap-3.5 lg:gap-4 text-[14px] lg:text-lg">
+          <div className="flex items-center gap-2 lg:gap-3">
+            <ChipText>이사일</ChipText>
+            <span>{formattedDate}</span>
+          </div>
+          <span className="hidden lg:inline-block text-GrayScale-200">|</span>
+          <div className="flex lg:items-center gap-2 lg:gap-3">
+            <ChipText>출발</ChipText>
+            <span>{formattedDeparture}</span>
+            <span className="text-GrayScale-200">|</span>
+            <ChipText>도착</ChipText>
+            <span>{formattedDestination}</span>
+          </div>
         </div>
-      </div>
-      <div className="flex justify-end items-end gap-2 lg:gap-4">
-        <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
-        <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
-      </div>
-      {/* 버튼 */}
-      <div className="flex flex-col md:flex-row gap-2">
-        <ButtonSolid onClick={onConfirm}>견적 확정하기</ButtonSolid>
-        <ButtonOutlined onClick={onViewDetail}>상세 보기</ButtonOutlined>
+        <div className="flex justify-end items-end gap-2 lg:gap-4">
+          <span className="text-[14px] lg:text-lg leading-none">견적 금액</span>
+          <span className="text-lg lg:text-2xl font-bold leading-none relative top-[1.5px]">{`${price.toLocaleString()}원`}</span>
+        </div>
+        {/* 버튼 */}
+        <div className="flex flex-col md:flex-row gap-2">
+          <ButtonSolid onClick={onConfirm}>견적 확정하기</ButtonSolid>
+          <ButtonOutlined onClick={onViewDetail}>상세 보기</ButtonOutlined>
+        </div>
+
+        {isConfirm !== false && (
+          <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
+            <div className="flex flex-col items-center gap-4">
+              <p>확정된 견적이에요</p>
+              <div className="max-w-[108px] lg:max-w-[123px]">
+                <ButtonOutlined intent="active" onClick={onViewDetail}>
+                  <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
+                </ButtonOutlined>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
