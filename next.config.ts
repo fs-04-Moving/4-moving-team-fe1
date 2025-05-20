@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'movings.kro.kr',
+        hostname: 'api.movings.kro.kr',
         pathname: '/static/**',
       },
     ],
