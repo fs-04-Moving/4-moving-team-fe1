@@ -13,7 +13,7 @@ const getMyWrittenReviewsServer = async (
 
   const queryParams = new URLSearchParams({
     page: String(page),
-    size: String(pageSize), 
+    pageSize: String(pageSize), 
   }).toString();
 
   const res = await fetch(`${API_URL}/review?${queryParams}`, { 
