@@ -1,6 +1,7 @@
 'use client';
 
 import reviewApi from '@/api/review/review.api';
+import LoadingSpinner from '@/components/atoms/LoadingSpinner';
 import Pagination from '@/components/molecules/Pagination';
 import ChartStarRatingReview from '@/components/organisms/ChartStarRatingReview';
 import ReviewCard from '@/components/organisms/ReviewCard';
@@ -46,9 +47,6 @@ function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewC
   const totalCount = data?.totalCount || 0;
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
-  console.log('🚀 ~ ReviewCardList.tsx:47 ~ ReviewCardList ~ totalCount:', totalCount);
-  console.log('🚀 ~ ReviewCardList.tsx:48 ~ ReviewCardList ~ totalPages:', totalPages);
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -66,7 +64,7 @@ function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewC
     <div className="space-y-6 relative">
       {isLoading && (
         <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center z-10">
-          <div className="loader">로딩 중...</div>
+          <LoadingSpinner size="md" />
         </div>
       )}
 
@@ -96,7 +94,6 @@ function ReviewCardList({ workerId, initialPage = 1, itemsPerPage = 3 }: ReviewC
           </div>
 
           {/* 페이지네이션 */}
-          {/* 은모님 이야기 듣고 1개만 있더라도 넘버 나오게 수정했음 */}
           {totalPages >= 1 && (
             <div className="mt-8 flex justify-center">
               <Pagination

@@ -2,8 +2,10 @@
 
 import { confirmEstimate, getPendingEstimate } from '@/api/estimate/customerOnly/estimate.api';
 import LoadingSpinner from '@/components/atoms/LoadingSpinner';
-import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import Pagination from '@/components/molecules/Pagination'; // ✅ 추가
+import ToastPopUp from '@/components/molecules/toastPopUp';
+import WorkerCardInWating from '@/components/organisms/WorkerCardInWating';
 import ROUTES from '@/constants/routes';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -11,8 +13,6 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import ToastPopUp from '@/components/molecules/toastPopUp';
-import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 
 const PAGE_SIZE = 11; // 페이지 당 항목 수
 
@@ -39,7 +39,7 @@ export default function PendingEstimatesPage() {
     mutationFn: (estimateId: string) => confirmEstimate(estimateId),
     onSuccess: () => {
       Swal.fire('성공', '견적이 확정되었습니다.', 'success').then(() => {
-        queryClient.invalidateQueries({ queryKey: ['pending-estimates', currentPage, PAGE_SIZE] });
+        queryClient.invalidateQueries({ queryKey: ['pending-estimates'] });
       });
     },
     onError: (error) => {
