@@ -39,9 +39,6 @@ function EstimateSend(props: Props) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['receivedEstimateRequests'] });
     },
-    onError: () => {
-      alert('에러');
-    },
   });
 
   const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
