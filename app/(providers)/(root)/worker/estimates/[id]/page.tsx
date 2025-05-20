@@ -2,13 +2,13 @@
 
 import { getEstimateDetailByWorker } from '@/api/estimate/workerOnly/estimate.api';
 
+import EmptyListMessage from '@/components/molecules/EmptyListMessage';
+import ShareSocial from '@/components/molecules/ShareSocial';
+import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
 import EstimateDetailInfo from '@/components/organisms/EstimateDetailInfo';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ShareSocial from '@/components/molecules/ShareSocial';
-import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
-import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 
 export default function EstimatesDetailPage() {
   const params = useParams();
@@ -94,7 +94,7 @@ export default function EstimatesDetailPage() {
           />
 
           {/* Mobile/Tablet 공유 버튼 */}
-          <div className="block lg:hidden md:-mt-[36px] -mt-[48px]">
+          <div className="inline lg:hidden ">
             <ShareSocial text="견적서 공유하기" />
           </div>
           <div className="lg:hidden w-full h-px bg-gray-100" />
