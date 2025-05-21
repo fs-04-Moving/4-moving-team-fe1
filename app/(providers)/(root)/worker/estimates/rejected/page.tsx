@@ -27,10 +27,28 @@ export default function RejectedEstimatesPage() {
           pageSize: ITEMS_PER_PAGE,
         });
 
-        setEstimates(list);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const parsedList = list
+          .map((item) => ({
+            ...item,
+            movingDate: safeParseDate(item.movingDate),
+            requestDate: safeParseDate(item.requestDate),
+          }))
+          .sort((a, b) => {
+            const aIsPastOrToday = a.movingDate <= today;
+            const bIsPastOrToday = b.movingDate <= today;
+
+            if (aIsPastOrToday && !bIsPastOrToday) return 1;
+            if (!aIsPastOrToday && bIsPastOrToday) return -1;
+
+            return a.movingDate.getTime() - b.movingDate.getTime();
+          });
+
+        setEstimates(parsedList);
         setTotalCount(totalCount);
       } catch (err) {
-        console.error('반려 견적 데이터를 불러오는 데 실패했어요', err);
+        console.error('견적 데이터를 불러오는 데 실패했어요', err);
       } finally {
         setLoading(false);
       }
@@ -39,6 +57,10 @@ export default function RejectedEstimatesPage() {
     fetchEstimates();
   }, [currentPage]);
 
+  function safeParseDate(input: string | Date): Date {
+    const date = new Date(input);
+    return isNaN(date.getTime()) ? new Date('2099-12-31') : date;
+  }
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
   if (loading) return <div className="text-center mt-12">로딩 중...</div>;
@@ -62,7 +84,7 @@ export default function RejectedEstimatesPage() {
                     serviceType={card.serviceType}
                     status={card.status}
                     customerName={card.customerName}
-                    movingDate={new Date(card.movingDate)}
+                    movingDate={card.movingDate}
                     departure={card.departure.split(' ').slice(0, 2).join(' ')}
                     destination={card.destination.split(' ').slice(0, 2).join(' ')}
                     isConfirmed={card.isConfirmed}
