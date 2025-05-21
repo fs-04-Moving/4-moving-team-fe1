@@ -20,7 +20,6 @@ export const Default: Story = {
     isFavorite: true,
     favoritesCount: 128,
     services: ['smallMove', 'homeMove'] as ServiceType[],
-    isDirectEstimate: true,
     price: 210000,
     status: 'general',
     movingDate: new Date('2024-07-01'),

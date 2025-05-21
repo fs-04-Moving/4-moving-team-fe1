@@ -81,14 +81,14 @@ function EstimateCardList({ estimateRequestId }: Props) {
               nickname={estimate.nickname}
               experience={estimate.experience}
               confirmedEstimatesCount={estimate.confirmedEstimatesCount}
-              isFavorite={false}
+              isFavorite={estimate.isFavorite}
               favoritesCount={estimate.favoritesCount}
               services={[estimate.serviceType]}
-              isDirectEstimate={false}
               price={estimate.price ?? 0}
               reviewsAverage={estimate.rating ?? 0}
               reviewsCount={estimate.reviewsCount}
               summary={estimate.summary}
+              status={estimate.status}
             />
           </div>
         ))}
