@@ -5,11 +5,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation'; // Next.js의 router import 추가
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 interface RequestEstimateButtonProps {
   workerId: string;
+  buttonStatus: string;
 }
 
 // API 에러 응답 타입 정의
@@ -18,11 +19,19 @@ interface ApiErrorResponse {
   statusCode?: number;
 }
 
-function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
+function RequestEstimateButton({ workerId, buttonStatus }: RequestEstimateButtonProps) {
   const { isLoggedIn } = useAuth();
   const [hasRequested, setHasRequested] = useState(false); // 이미 요청했는지 상태 추가
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (buttonStatus === 'available') {
+      setHasRequested(false);
+    } else {
+      setHasRequested(true);
+    }
+  }, [buttonStatus]);
 
   // 지정 견적 요청 mutation 설정
   const assignedEstimateMutation = useMutation({
@@ -31,7 +40,7 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
       queryClient.invalidateQueries({ queryKey: ['worker', workerId] });
       queryClient.invalidateQueries({ queryKey: ['workers'] });
       queryClient.invalidateQueries({ queryKey: ['pending-estimates'] });
-      setHasRequested(true);
+
       Swal.fire({
         title: '견적요청 성공!',
         text: '지정 견적요청이 성공적으로 전송되었습니다.',
@@ -46,7 +55,7 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
       // 견적이 있는경우
       if (error.message?.includes('already')) {
         errorMessage = '이미 견적이 존재합니다';
-        setHasRequested(true);
+
         Swal.fire({
           title: errorMessage,
           icon: 'info',
@@ -95,8 +104,16 @@ function RequestEstimateButton({ workerId }: RequestEstimateButtonProps) {
     assignedEstimateMutation.mutate(workerId);
   };
 
+  let buttonText = '';
+  console.log(buttonStatus);
+  if (buttonStatus === 'available') {
+    buttonText = '지정 견적 요청하기';
+  } else if (buttonStatus === 'alreadyConfirmed') {
+    buttonText = '견적을 이미 확정하셨습니다.';
+  } else {
+    buttonText = '지정 견적 요청이 존재합니다.';
+  }
   // 버튼 텍스트 결정
-  const buttonText = '지정 견적 요청하기';
 
   return (
     <ButtonSolid onClick={handleClick} disabled={hasRequested}>

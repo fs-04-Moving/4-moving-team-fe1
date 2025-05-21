@@ -115,6 +115,7 @@ function WorkerDetailClient({ workerId }: WorkerDetailClientProps) {
                 workerId={workerId}
                 workerName={workerData.nickname}
                 isFavorite={workerData.isFavorite}
+                buttonStatus={workerData.buttonStatus}
               />
             </div>
           </section>
