@@ -9,6 +9,7 @@ import { Estimate } from '@/types/entities/estimate.entity';
 import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
 import ROUTES from '@/constants/routes';
+import CustomerCardInEstimate from '@/components/organisms/CustomerCardInEstimate';
 
 const ITEMS_PER_PAGE = 4;
 
@@ -67,6 +68,8 @@ export default function SendingEstimatesPage() {
 
   if (loading) return <div className="text-center mt-12">로딩 중...</div>;
 
+  console.log('estimates', estimates);
+
   return (
     <ProtectedPageWrapper>
       <div className="bg-[#FAFAFA] min-h-screen w-full pt-10 flex flex-col items-center gap-[24px] md:gap-[32px] lg:gap-[48px]">
@@ -86,7 +89,8 @@ export default function SendingEstimatesPage() {
                   className="w-[328px] md:w-[600px] lg:w-[688px] cursor-pointer"
                   onClick={() => router.push(ROUTES.WORKER.ESTIMATES.DETAIL(card.id))}
                 >
-                  <CustomerCardInEstimateModal
+                  <CustomerCardInEstimate
+                    requestDate={card.requestDate}
                     serviceType={card.serviceType}
                     status={card.status}
                     customerName={card.customerName}

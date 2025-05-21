@@ -13,7 +13,6 @@ function page() {
         isFavorite={true}
         favoritesCount={128}
         services={['smallMove', 'homeMove']}
-        isDirectEstimate={true}
         isConfirmed={false}
         estimateRequestStatus={'confirmed'}
         price={210000}
