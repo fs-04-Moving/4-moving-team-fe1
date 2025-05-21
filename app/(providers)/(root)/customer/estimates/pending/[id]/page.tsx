@@ -75,12 +75,24 @@ export default function Page() {
     enabled: !!estimate?.workerId,
   });
 
+  // useEffect(() => {
+  //   if (favoriteData) {
+  //     setLiked(favoriteData.isLiked);
+
+  //     if (isFirstLoad) {
+  //       setLikeCount(favoriteData.count);
+  //       setIsFirstLoad(false);
+  //     } else {
+  //       setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : Math.max(0, prev - 1)));
+  //     }
+  //   }
+  // }, [favoriteData, isFirstLoad]);
   useEffect(() => {
     if (favoriteData) {
       setLiked(favoriteData.isLiked);
 
       if (isFirstLoad) {
-        setLikeCount(favoriteData.count);
+        setLikeCount(favoriteData.count ?? 0); // 🔒 안전하게 기본값 처리
         setIsFirstLoad(false);
       } else {
         setLikeCount((prev) => (favoriteData.isLiked ? prev + 1 : Math.max(0, prev - 1)));
