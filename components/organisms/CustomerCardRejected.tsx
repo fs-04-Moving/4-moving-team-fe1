@@ -170,7 +170,7 @@ function CustomerCardInRejected({
                   intent="active"
                   onClick={() => onViewRejectedMessage(rejectionMessage ?? '')}
                 >
-                  <span className="text-[14px] lg:text-[16px] px-3">상세보기</span>
+                  <span className="text-[14px] lg:text-[16px] px-3">반려 메세지 보기</span>
                 </ButtonOutlined>
               </div>
             </div>
