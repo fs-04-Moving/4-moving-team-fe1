@@ -120,8 +120,23 @@ export default function Page() {
             reviewsCount={estimate.reviewsCount}
             summary={estimate.summary}
             experience={estimate.experience.toString()}
+            status={estimate.status}
           />
         </div>
+        {/* 기사님 코멘트 */}
+        {estimate.comment && (
+          <div>
+            <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
+            <div className="flex flex-col gap-y-4 lg:gap-y-8">
+              <p className="text-[#1F1F1F] text-[16px] lg:text-[24px] font-[600]">
+                기사님의 코멘트
+              </p>
+              <p className="text-[#1F1F1F] text-[20px] lg:text-[24px] font-[400]">
+                {estimate.comment}
+              </p>
+            </div>
+          </div>
+        )}
 
         <div className="border-[#F2F2F2] border-[1px] sm:my-6 lg:my-10"></div>
 
