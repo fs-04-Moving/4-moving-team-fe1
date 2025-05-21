@@ -171,7 +171,7 @@ function CustomerCardInEstimate({
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
           {!hasPrice && isRejected && (
             <div className="flex flex-col items-center gap-4">
-              <p>반려된 요청이에요</p>
+              <p>반려한 요청이에요</p>
               <div className="max-w-[108px] lg:max-w-[123px]">
                 <ButtonOutlined
                   intent="active"
