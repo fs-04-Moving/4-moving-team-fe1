@@ -32,6 +32,9 @@ export default function RejectedEstimatesPage() {
           movingDate: isNaN(new Date(item.movingDate).getTime())
             ? new Date(0)
             : new Date(item.movingDate),
+          requestDate: isNaN(new Date(item.requestDate).getTime())
+            ? new Date()
+            : new Date(item.requestDate),
         }));
 
         setEstimates(parsedList);
