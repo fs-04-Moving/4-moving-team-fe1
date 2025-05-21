@@ -16,12 +16,11 @@ type Props = {
   departure: string;
   destination: string;
   isConfirmed: boolean;
-  requestDate: Date;
+  requestDate?: Date;
   price?: number;
   onSendEstimate?: () => void;
   onReject?: () => void;
   onViewDetail?: () => void;
-  showOverlay?: boolean;
   rejectionMessage?: string;
 };
 
@@ -76,8 +75,8 @@ function CustomerCardInEstimate({
   onSendEstimate,
   onReject,
   onViewDetail,
-  showOverlay,
   rejectionMessage,
+  isConfirmed,
 }: Props) {
   const currentDate = new Date();
   const isPastMovingDate = isBefore(movingDate, currentDate);
@@ -92,10 +91,13 @@ function CustomerCardInEstimate({
 
   const formattedMovingDate = formatDateFnsKorean(movingDate);
 
-  const fomattedRequestDate = formatDistanceToNow(requestDate, {
-    addSuffix: true,
-    locale: ko,
-  });
+  let fomattedRequestDate;
+  if (requestDate) {
+    fomattedRequestDate = formatDistanceToNow(requestDate, {
+      addSuffix: true,
+      locale: ko,
+    });
+  }
 
   const formattedDeparture = departure.split(' ').slice(0, 2).join(' ');
   const formattedDestination = destination.split(' ').slice(0, 2).join(' ');
@@ -167,7 +169,7 @@ function CustomerCardInEstimate({
         )}
       </div>
       {/* 조건 만족시 오버레이 */}
-      {showOverlay !== false && (isRejected || isPastMovingDate) && (
+      {(isRejected || isPastMovingDate || isConfirmed) && (
         <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
           {!hasPrice && isRejected && (
             <div className="flex flex-col items-center gap-4">
@@ -182,9 +184,19 @@ function CustomerCardInEstimate({
               </div>
             </div>
           )}
-          {hasPrice && isPastMovingDate && (
+          {hasPrice && isPastMovingDate && !isConfirmed && (
             <div className="flex flex-col items-center gap-4">
-              <p>이사 완료된 견적이에요</p>
+              <p>이미 이사가 끝난 견적이에요</p>
+              <div className="max-w-[108px] lg:max-w-[123px]">
+                <ButtonOutlined intent="active" onClick={onViewDetail}>
+                  <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>
+                </ButtonOutlined>
+              </div>
+            </div>
+          )}
+          {hasPrice && isConfirmed && (
+            <div className="flex flex-col items-center gap-4">
+              <p>고객님이 견적을 확정했어요</p>
               <div className="max-w-[108px] lg:max-w-[123px]">
                 <ButtonOutlined intent="active" onClick={onViewDetail}>
                   <span className="text-[14px] lg:text-[16px] px-3">견적 상세보기</span>

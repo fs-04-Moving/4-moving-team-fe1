@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Pagination from '@/components/molecules/Pagination';
 import ProtectedPageWrapper from '@/components/atoms/ProtectedPageWrapper';
-import CustomerCardInEstimateModal from '@/components/organisms/CustomerCardInEstimateModal';
 import { Estimate } from '@/types/entities/estimate.entity';
 import { getSentEstimates } from '@/api/estimate/workerOnly/estimate.api';
 import EmptyListMessage from '@/components/molecules/EmptyListMessage';
@@ -36,7 +35,7 @@ export default function SendingEstimatesPage() {
           .map((item) => ({
             ...item,
             movingDate: safeParseDate(item.movingDate),
-            requestDate: safeParseDate(item.requestDate),
+            // requestDate: safeParseDate(item.requestDate),
           }))
           .sort((a, b) => {
             const aIsPastOrToday = a.movingDate <= today;
@@ -90,7 +89,7 @@ export default function SendingEstimatesPage() {
                   onClick={() => router.push(ROUTES.WORKER.ESTIMATES.DETAIL(card.id))}
                 >
                   <CustomerCardInEstimate
-                    requestDate={card.requestDate}
+                    requestDate={card.createdAt}
                     serviceType={card.serviceType}
                     status={card.status}
                     customerName={card.customerName}

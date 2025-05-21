@@ -41,6 +41,7 @@ export default function Page() {
       try {
         const data = await getEstimateDetailByCustomer(id);
         if (data) {
+          console.log('detail data', data);
           setEstimate(data);
           setLikeCount(data.favoritesCount);
         } else {
