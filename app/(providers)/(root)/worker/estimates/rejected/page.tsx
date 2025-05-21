@@ -27,17 +27,7 @@ export default function RejectedEstimatesPage() {
           pageSize: ITEMS_PER_PAGE,
         });
 
-        const parsedList = list.map((item) => ({
-          ...item,
-          movingDate: isNaN(new Date(item.movingDate).getTime())
-            ? new Date(0)
-            : new Date(item.movingDate),
-          requestDate: isNaN(new Date(item.requestDate).getTime())
-            ? new Date()
-            : new Date(item.requestDate),
-        }));
-
-        setEstimates(parsedList);
+        setEstimates(list);
         setTotalCount(totalCount);
       } catch (err) {
         console.error('반려 견적 데이터를 불러오는 데 실패했어요', err);
@@ -72,11 +62,11 @@ export default function RejectedEstimatesPage() {
                     serviceType={card.serviceType}
                     status={card.status}
                     customerName={card.customerName}
-                    movingDate={card.movingDate}
+                    movingDate={new Date(card.movingDate)}
                     departure={card.departure.split(' ').slice(0, 2).join(' ')}
                     destination={card.destination.split(' ').slice(0, 2).join(' ')}
                     isConfirmed={card.isConfirmed}
-                    requestDate={card.requestDate}
+                    requestDate={new Date(card.requestDate)}
                     price={card.price}
                     onViewDetail={() => {
                       router.push(ROUTES.WORKER.ESTIMATES.DETAIL(card.id));
