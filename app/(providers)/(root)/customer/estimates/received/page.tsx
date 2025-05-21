@@ -45,7 +45,7 @@ function ReceivedPage() {
   if (totalCount === 0) {
     return (
       <div className="w-full flex justify-center items-center mt-[50px] min-h-[370px]">
-        <EmptyListMessage message="진행중인 견적이 없습니다." />
+        <EmptyListMessage message="완료된 견적이 없습니다." />
       </div>
     );
   }
