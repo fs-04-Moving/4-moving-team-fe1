@@ -1,5 +1,6 @@
 import { UpdateUserInfoDto, UserInfoEditFormValues } from '@/types/dtos/user.dto';
 import { client, errorHandler } from '../client';
+import { string } from 'zod';
 
 // 내 정보 조회
 const getUserMe = async () => {
@@ -41,10 +42,21 @@ const updateUserInfo = async (dto: UserInfoEditFormValues) => {
   }
 };
 
+const readNotification = async (id: string) => {
+  try {
+    const url = `/notification/${id}/read`;
+    const response = await client.patch(url);
+    return response.data;
+  } catch (e) {
+    errorHandler(e);
+  }
+};
+
 const userApi = {
   getUserMe,
   getUserInfo,
   updateUserInfo,
+  readNotification,
 };
 
 export default userApi;
