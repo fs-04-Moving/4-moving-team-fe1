@@ -21,7 +21,6 @@ export const Default: Story = {
     isFavorite: true,
     favoritesCount: 136,
     services: ['smallMove', 'homeMove'],
-    isDirectEstimate: true,
     price: 1800000,
     reviewsAverage: 4.7,
     reviewsCount: 108,

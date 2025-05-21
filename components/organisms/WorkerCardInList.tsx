@@ -12,10 +12,10 @@ type Props = {
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
-  isDirectEstimate: boolean;
   price: number;
   reviewsAverage: number;
   reviewsCount: number;
+  status: string;
 };
 
 /**
@@ -32,7 +32,6 @@ type Props = {
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열
- * @param {boolean} isDirectEstimate - 지정 견적 여부
  * @param {number} price - 견적 금액
  * @param {number} reviewsAverage - 리뷰 평균
  * @param {number} reviewsCount - 리뷰 개수
@@ -47,7 +46,6 @@ type Props = {
  *   isFavorite={true}
  *   favoritesCount={136}
  *   services={['smallMove', 'homeMove']}
- *   isDirectEstimate={true}
  *   price={1800000}
  *   reviewsAverage={4.7}
  *   reviewsCount={108}
@@ -62,7 +60,7 @@ function WorkerCardInList({
   isFavorite,
   favoritesCount,
   services,
-  isDirectEstimate,
+  status,
   price,
   reviewsAverage,
   reviewsCount,
@@ -78,7 +76,7 @@ function WorkerCardInList({
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
-        {isDirectEstimate ? <ChipEstimateStatus type="assigned" /> : ''}
+        {status === 'assigned' ? <ChipEstimateStatus type="assigned" /> : ''}
       </div>
       {/* 기사 한줄 소개 */}
       <div className="text-[14px] lg:text-2xl">{summary}</div>
