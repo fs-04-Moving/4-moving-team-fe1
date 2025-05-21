@@ -27,6 +27,7 @@ export interface Estimate {
   isFavorite: boolean;
   estimateRequestStatus: string;
   comment?: string;
+  createdAt?: Date;
 }
 
 export type ServiceTypeKor = '소형이사' | '가정이사' | '사무실이사';

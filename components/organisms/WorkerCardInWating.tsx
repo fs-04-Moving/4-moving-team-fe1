@@ -8,6 +8,7 @@ import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
 import ChipText from '../atoms/ChipText';
 import WorkerInfoBoxA from './WorkerInfoBoxA';
+import Swal from 'sweetalert2';
 
 type Props = {
   profileImage: string;
@@ -17,7 +18,6 @@ type Props = {
   isFavorite: boolean;
   favoritesCount: number;
   services: ServiceType[];
-  isDirectEstimate: boolean;
   price: number;
   status: EstimateStatus;
   movingDate: Date;
@@ -26,6 +26,7 @@ type Props = {
   reviewsAverage: number;
   reviewsCount: number;
   isConfirmed: boolean;
+  rejectionMessage?: string;
   estimateRequestStatus: string;
   onConfirm?: () => void;
   onViewDetail?: () => void;
@@ -47,8 +48,8 @@ type Props = {
  * @param {boolean} isFavorite - 사용자가 해당 기사를 찜했는지 여부
  * @param {number} favoritesCount - 이 기사를 찜한 총 사용자 수
  * @param {ServiceType[]} services - 기사가 제공하는 이사 서비스 유형 배열 (예: ['smallMove', 'homeMove'])
- * @param {boolean} isDirectEstimate - 지정 견적 여부
  * @param {boolean} isConfirmed - 견적 확정 여부
+ * @param {string} rejectionMessage - 기사가 반려한 메시지 입니다.
  * @param {number} price - 견적 금액 (단위: 원)
  * @param {EstimateStatus} status - 견적 요청 상태
  * @param {Date} movingDate - 이사일 (날짜 객체)
@@ -68,8 +69,8 @@ type Props = {
  *   confirmedEstimatesCount={342}
  *   isFavorite={true}
  *   favoritesCount={128}
+ *   rejectionMessage={'기사가 반려한 메시지 입니다'}
  *   services={['smallMove', 'homeMove']}
- *   isDirectEstimate={true}
  *   price={210000}
  *   status="general" // 실제 Enum 값으로 대체 필요
  *   movingDate={new Date('2024-07-01')}
@@ -91,7 +92,6 @@ function WorkerCardInWating({
   isFavorite,
   favoritesCount,
   services,
-  isDirectEstimate,
   price,
   status,
   movingDate,
@@ -100,6 +100,7 @@ function WorkerCardInWating({
   reviewsAverage,
   reviewsCount,
   isConfirmed,
+  rejectionMessage,
   estimateRequestStatus,
   onConfirm,
   onViewDetail,
@@ -125,7 +126,7 @@ function WorkerCardInWating({
           {services.map((service, index) => (
             <ChipMovingType key={index} type={service} isShort={true} />
           ))}
-          {isDirectEstimate ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
+          {status !== 'general' ? <ChipEstimateStatus type="assigned" isShort={true} /> : ''}
         </div>
         {/* 기사 소개 박스 */}
         <WorkerInfoBoxA
@@ -163,7 +164,7 @@ function WorkerCardInWating({
           <ButtonOutlined onClick={onViewDetail}>상세 보기</ButtonOutlined>
         </div>
 
-        {isConfirmed === true && (
+        {status !== 'rejected' && isConfirmed === true && (
           <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
             <div className="flex flex-col items-center gap-4">
               <p>확정된 견적이에요</p>
@@ -175,10 +176,33 @@ function WorkerCardInWating({
             </div>
           </div>
         )}
-        {estimateRequestStatus === 'confirmed' && isConfirmed === false && (
+        {status !== 'rejected' &&
+          estimateRequestStatus === 'confirmed' &&
+          isConfirmed === false && (
+            <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
+              <div className="flex flex-col items-center gap-4">
+                <p>이미 마감된 견적이에요.</p>
+              </div>
+            </div>
+          )}
+        {status === 'rejected' && isConfirmed === false && (
           <div className="absolute inset-0 flex flex-col gap-4 items-center justify-center bg-black/65 text-white z-10 rounded-2xl max-w-[327px] md:max-w-[600px] lg:max-w-[955px] ">
             <div className="flex flex-col items-center gap-4">
-              <p>이미 마감된 견적이에요.</p>
+              <p>기사님이 견적을 반려했어요.</p>
+              <div className="max-w-[108px] lg:max-w-[123px]">
+                <ButtonOutlined
+                  intent="active"
+                  onClick={() =>
+                    Swal.fire({
+                      icon: 'info',
+                      text: rejectionMessage,
+                      confirmButtonText: '확인',
+                    })
+                  }
+                >
+                  <span className="text-[14px] lg:text-[16px] px-3">메시지 보기</span>
+                </ButtonOutlined>
+              </div>
             </div>
           </div>
         )}

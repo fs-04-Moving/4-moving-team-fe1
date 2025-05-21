@@ -1,3 +1,4 @@
+import ChipEstimateStatus from '../atoms/ChipEstimateStatus';
 import ChipMovingType from '../atoms/ChipMovingType';
 import UserAvartar from '../atoms/UserAvartar';
 import LikeCount from '../molecules/LikeCount';
@@ -15,6 +16,7 @@ export type WorkerCardInDetailProps = {
   services: string[];
   reviewsAverage: number;
   reviewsCount: number;
+  status: string;
 };
 
 /**
@@ -57,6 +59,7 @@ function WorkerCardInDetail({
   services,
   reviewsAverage,
   reviewsCount,
+  status,
 }: WorkerCardInDetailProps) {
   console.log(experience, confirmedEstimatesCount);
   return (
@@ -65,10 +68,13 @@ function WorkerCardInDetail({
         {services.map((service, index) => (
           <ChipMovingType key={index} type={service} />
         ))}
+        {status === 'assigned' && <ChipEstimateStatus type="assigned" />}
       </div>
       {/* 기사 소개 박스 */}
       {/* 기사 코멘트 */}
-      <div className="text-GrayScale-600 text-[14px] font-normal lg:text-xl">{summary}</div>
+      <div className="text-GrayScale-600 text-[14px] font-normal lg:text-2xl lg:font-medium">
+        {summary}
+      </div>
       <div className="flex justify-between items-center gap-3 shadow-xs bg-GrayScale-50 border-Line-100 border-[1px] rounded-md p-2.5 lg:pr-4 h-[78px] lg:gap-6 lg:h-[112px]">
         <UserAvartar imgUrl={profileImage} sizeInLarge={80} />
         <div className="flex-1 flex flex-col justify-between h-[58px] lg:h-[68px]">

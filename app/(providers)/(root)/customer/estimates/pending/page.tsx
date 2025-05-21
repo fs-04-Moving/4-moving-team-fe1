@@ -31,6 +31,8 @@ export default function PendingEstimatesPage() {
     retry: 0,
   });
 
+  console.log('data in page', data);
+
   const estimates = data?.estimates ?? [];
   const totalCount = data?.totalCount ?? 0;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
@@ -105,6 +107,7 @@ export default function PendingEstimatesPage() {
           <WorkerCardInWating
             key={estimate.id}
             isConfirmed={estimate.isConfirmed}
+            rejectionMessage={estimate.rejectionMessage}
             profileImage={estimate.profileImage}
             nickname={estimate.nickname}
             experience={estimate.experience}
@@ -112,7 +115,6 @@ export default function PendingEstimatesPage() {
             isFavorite={estimate.isFavorite ?? false}
             favoritesCount={estimate.favoritesCount}
             services={[estimate.serviceType]}
-            isDirectEstimate={estimate.status === 'assigned'}
             price={estimate.price}
             status={estimate.status}
             movingDate={estimate.movingDate}
