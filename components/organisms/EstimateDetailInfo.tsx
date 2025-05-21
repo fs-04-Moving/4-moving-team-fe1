@@ -61,10 +61,10 @@ function EstimateDetailInfo({
   };
 
   return (
-    <div className="w-full flex flex-col gap-6 lg:gap-10">
+    <div className="w-full max-w-[955px] flex flex-col gap-6 lg:gap-10">
       <h2 className="text-[16px] md:text-[16px] lg:text-[24px] font-[600]">견적 정보</h2>
       <div
-        className="w-full md:h-[208px] lg:h-[258px] bg-BackGround-100 rounded-2xl p-4 md:p-0 border"
+        className="max-w-[955px] md:h-[208px] lg:h-[258px] box-border bg-BackGround-100 rounded-2xl p-4 md:p-0 border"
         style={{ borderColor: '#F2F2F2' }}
       >
         <div className="flex flex-col gap-2.5 md:px-6 md:py-6 lg:px-10 lg:py-8">
