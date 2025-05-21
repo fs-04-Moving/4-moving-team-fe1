@@ -14,6 +14,8 @@ import DropdownProfile from './DropdownProfile';
 import UserProfile from './UserProfile';
 import ROUTES from '@/constants/routes';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import userApi from '@/api/user/user.api';
 
 interface Props {
   user: GetUserMe;
@@ -35,6 +37,17 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
   const [notificationPopupPos, setNotificationPopupPos] = useState({
     top: 0,
     right: 0,
+  });
+
+  const { mutate: markAsRead } = useMutation({
+    mutationFn: userApi.readNotification,
+    onSuccess: (_, id) => {
+      // 성공 시 프론트 상태 업데이트
+      setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)));
+    },
+    onError: (error) => {
+      console.error('알림 읽음 처리 실패:', error);
+    },
   });
 
   // 자주 사용되진 않으나 Dropdown컴포넌트에 전달되어 사용되므로
@@ -149,6 +162,7 @@ export default function LoggedInMenu({ user, onOpenMenu }: Props) {
             onClose={() => setIsShowNotificationsPopup(false)}
             ref={popupNotificationRef}
             position={notificationPopupPos} // 위치 전달
+            onMarkAsRead={markAsRead}
           />
         </Portal>
       )}
